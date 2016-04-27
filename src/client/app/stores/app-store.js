@@ -10,14 +10,12 @@ class AppStore extends Store {
     constructor() {
         super('AppStore');
         this.logger.debug('Initializing AppStore');
-        this.initialize('images', []);
-        this.initialize('lastFlickrRequest', 0);
+        this.initialize('user', {});
     }
 
     onAction(actionType, data)
     {
         this.logger.debug(`Received Action ${actionType} with data`, data);
-
     }
 }
 
