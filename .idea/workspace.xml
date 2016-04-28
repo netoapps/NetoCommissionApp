@@ -2,28 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2ba304f8-cb5f-41b1-b303-561ec0e3357d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/client/app/stores/login-store.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/client/app/views/agents-page.jsx" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/client/app/views/commissions-page.jsx" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/client/app/views/login-page.jsx" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/client/app/views/right-panel.jsx" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/client/app/services/router-container.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/client/app/views/login.jsx" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/client/app/stores/app-store.js" afterPath="$PROJECT_DIR$/src/client/app/stores/data-store.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/client/app/views/dashboard.jsx" afterPath="$PROJECT_DIR$/src/client/app/views/dashboard-page.jsx" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/client/app/views/signup.jsx" afterPath="$PROJECT_DIR$/src/client/app/views/signup-page.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/client/app/actions/app-actions.js" afterPath="$PROJECT_DIR$/src/client/app/actions/app-actions.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/client/app/app.jsx" afterPath="$PROJECT_DIR$/src/client/app/app.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/client/app/constants/app-constants.js" afterPath="$PROJECT_DIR$/src/client/app/constants/app-constants.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/client/app/constants/strings.js" afterPath="$PROJECT_DIR$/src/client/app/constants/strings.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/client/app/services/auth-service.js" afterPath="$PROJECT_DIR$/src/client/app/services/auth-service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/client/app/views/top-bar.jsx" afterPath="$PROJECT_DIR$/src/client/app/views/top-bar.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/client/app/views/user-box.jsx" afterPath="$PROJECT_DIR$/src/client/app/views/user-box.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/client/index.html" afterPath="$PROJECT_DIR$/src/client/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/client/public/css/app.css" afterPath="$PROJECT_DIR$/src/client/public/css/app.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/client/public/js/bundle.js" afterPath="$PROJECT_DIR$/src/client/public/js/bundle.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/client/public/js/bundle.js.map" afterPath="$PROJECT_DIR$/src/client/public/js/bundle.js.map" />
     </list>
     <ignored path="NetoCommissionApp.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -44,103 +23,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="app.jsx" pinned="false" current-in-tab="false">
+      <file leaf-file-name="app.jsx" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/client/app/app.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="32" column="19" selection-start-line="32" selection-start-column="19" selection-end-line="32" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="signup-page.jsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/client/app/views/signup-page.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="dashboard-page.jsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/client/app/views/dashboard-page.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="15" column="42" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="top-bar.jsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/client/app/views/top-bar.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="user-box.jsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/client/app/views/user-box.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="1" column="14" selection-start-line="1" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="right-panel.jsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/client/app/views/right-panel.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="1" column="32" selection-start-line="1" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="strings.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/client/app/constants/strings.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#41#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app.css" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/client/public/css/app.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.42473745">
-              <caret line="103" column="13" selection-start-line="103" selection-start-column="13" selection-end-line="103" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="agents-page.jsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/client/app/views/agents-page.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="15" column="39" selection-start-line="15" selection-start-column="39" selection-end-line="15" selection-end-column="39" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="commissions-page.jsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/client/app/views/commissions-page.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="15" column="44" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="44" />
+            <state vertical-scroll-proportion="-0.4857143">
+              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -200,8 +87,8 @@
         <option value="$PROJECT_DIR$/src/client/app/views/agents-page.jsx" />
         <option value="$PROJECT_DIR$/src/client/app/constants/strings.js" />
         <option value="$PROJECT_DIR$/src/client/app/views/right-panel.jsx" />
-        <option value="$PROJECT_DIR$/src/client/app/app.jsx" />
         <option value="$PROJECT_DIR$/src/client/public/css/app.css" />
+        <option value="$PROJECT_DIR$/src/client/app/app.jsx" />
       </list>
     </option>
   </component>
@@ -874,49 +761,33 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/app/views/commissions-page.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2802198">
+          <caret line="15" column="44" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/client/app/views/agents-page.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.2802198">
           <caret line="15" column="39" selection-start-line="15" selection-start-column="39" selection-end-line="15" selection-end-column="39" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/client/app/views/signup-page.jsx">
+    <entry file="file://$PROJECT_DIR$/src/client/public/css/app.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/client/app/views/dashboard-page.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="42" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/client/app/views/top-bar.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/client/app/views/user-box.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1" column="14" selection-start-line="1" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.504084">
+          <caret line="107" column="1" selection-start-line="107" selection-start-column="1" selection-end-line="107" selection-end-column="1" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/app/constants/strings.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.2802198">
           <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
           <folding>
             <element signature="e#0#41#0" expanded="false" />
@@ -926,32 +797,48 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/app/views/right-panel.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.01868132">
           <caret line="1" column="32" selection-start-line="1" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/client/app/views/commissions-page.jsx">
+    <entry file="file://$PROJECT_DIR$/src/client/app/views/user-box.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="44" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="44" />
+        <state vertical-scroll-proportion="0.01868132">
+          <caret line="1" column="14" selection-start-line="1" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/app/views/top-bar.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35494506">
+          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/app/views/dashboard-page.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2802198">
+          <caret line="15" column="42" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/app/views/signup-page.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.01868132">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/app/app.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="32" column="19" selection-start-line="32" selection-start-column="19" selection-end-line="32" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/client/public/css/app.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42473745">
-          <caret line="103" column="13" selection-start-line="103" selection-start-column="13" selection-end-line="103" selection-end-column="13" />
+        <state vertical-scroll-proportion="-0.4857143">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
           <folding />
         </state>
       </provider>

@@ -100,11 +100,6 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	//import AppDispatcher from './dispatcher/app-dispatcher';
-	//import AppContainerView from './views/app-container-view.jsx';
-	
-	
-	//import AppActions from './actions/app-actions';
 	
 	//AppDispatcher.dispatch('APPINIT');
 	
@@ -189,46 +184,6 @@
 	        _react2.default.createElement(_reactRouter.Route, { path: '/app/agents', component: _agentsPage2.default })
 	    )
 	), document.getElementById('content'));
-	
-	//render((
-	//    <Router history={browserHistory}>
-	//        <Route path="/" component={App}>
-	//            <Route path="login" component={Login} />
-	//            <Route path="signup" component={Signup} />
-	//            <Route path="dashboard" component={Dashboard} /* onEnter={requireAuth}*/ />
-	//        </Route>
-	//    </Router>
-	//), document.getElementById('content'))
-
-	//AuthService.login()
-
-	//let jwt = localStorage.getItem('jwt');
-	//if (jwt) {
-	//    AppActions.loginUser(jwt);
-	//}
-
-	//render((
-	//    <Router history={browserHistory}>
-	//        <Route handler={AppView}>
-	//            <Route name="login" handler={Login}/>
-	//            <Route name="signup" handler={Signup}/>
-	//            <Route name="dashboard" path="/" handler={Dashboard}/>
-	//        </Route>
-	//    </Router>
-	//), document.getElementById('app-content'));
-
-	//var routes = (
-	//
-	//);
-
-	//var router = new Router.create({routes});
-	//RouterContainer.set(router);
-	//
-	//RouterContainer.set(router);
-
-	//router.run(routes,function (Handler) {
-	//    React.render(<Handler />, document.getElementById('app-content'));
-	//});
 
 /***/ },
 /* 1 */
