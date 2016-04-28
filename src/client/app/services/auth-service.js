@@ -2,7 +2,6 @@
  * Created by asaf on 27/04/2016.
  */
 import request from 'reqwest';
-import {LOGIN_URL, SIGNUP_URL} from '../constants/app-constants';
 import AppActions from '../actions/app-actions';
 
 class AuthService {
@@ -12,21 +11,23 @@ class AuthService {
         this.pretendRequest(email,password,(res) => {
             if (res.authenticated)
             {
-                localStorage.token = res.token
+                localStorage.apiToken = res.apiToken
+                localStorage.fullName = res.fullName
+                localStorage.gender = res.gender
                 if (callback)
-                    callback(true,"success")
+                    callback(true)
                 this.onChange(true)
             }
             else
             {
                 if (callback)
-                    callback(false,"login failure")
+                    callback(false)
                 this.onChange(false)
             }
         })
 
         //request({
-        //    url: LOGIN_URL,
+        //    url: AppConstants.LOGIN_URL,
         //    type: 'json',
         //    method: 'POST',
         //    crossOrigin: true,
@@ -54,27 +55,41 @@ class AuthService {
             if (email === 'karin@neto-finance.co.il' && pass === '1111') {
                 callback({
                     authenticated: true,
-                    token: Math.random().toString(36).substring(7)
+                    apiToken: Math.random().toString(36).substring(7),
+                    fullName: "קרין בוזלי לוי",
+                    gender: "1"
                 })
-            } else {
-                callback({ authenticated: false })
+            }
+            else
+            {
+                callback({
+                    authenticated: false,
+                    apiToken: "",
+                    fullName: "",
+                    gender: ""
+                })
             }
         }, 0)
     }
 
-    getToken()
+    getLoginData()
     {
-        return localStorage.apiToken
+        return { apiToken: localStorage.apiToken,
+                 fullName: localStorage.fullName,
+                 gender: localStorage.gender}
     }
     logout()
     {
-        AppActions.logoutUser();
+        delete localStorage.apiToken
+        delete localStorage.fullName
+        delete localStorage.gender
+        this.onChange(false)
     }
 
     signup(username, password, extra)
     {
         //return this.handleAuth(when(request({
-        //    url: SIGNUP_URL,
+        //    url: AppConstants.SIGNUP_URL,
         //    method: 'POST',
         //    crossOrigin: true,
         //    type: 'json',
@@ -86,7 +101,7 @@ class AuthService {
 
     loggedIn()
     {
-        return localStorage.apiToken != null
+        return !!localStorage.apiToken
     }
 
     onChange() {}

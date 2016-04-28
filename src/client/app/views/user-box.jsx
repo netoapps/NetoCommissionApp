@@ -1,28 +1,30 @@
 import React from 'react';
+import { strings } from '../constants/strings'
+import AuthService from '../services/auth-service'
 
 class UserBox extends React.Component {
 
     constructor(props) {
         super(props);
     }
-
+    onLogout(e)
+    {
+        e.preventDefault();
+        this.props.onLogout()
+    }
     render() {
         return (
             <div className="user-box hcontainer-no-wrap">
-                <img className="user-avatar" src={this.props.user.avatar} alt="" />
+                <img className="user-avatar" src={this.props.loginData.gender == "0" ? "../public/images/avatar-male.png":"../public/images/avatar-female.png"} alt="" />
                 <div className="user-box-info">
-                    <div className="user-box-name">{this.props.user.name + " " + this.props.user.familyName}</div>
-                    <p className="user-box-logout-button"><a href="/logout">{strings.disconnect}</a></p>
+                    <div className="user-box-name">{this.props.loginData.fullName}</div>
+                    <button className="user-box-logout-button" onClick={this.onLogout.bind(this)}>{strings.disconnect}</button>
                 </div>
             </div>
         );
     }
-
 }
 
-UserBox.propTypes = {
-    user: React.PropTypes.object.isRequired
-};
 
 
 export default UserBox;

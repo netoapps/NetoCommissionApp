@@ -1,4 +1,5 @@
 import React from 'react';
+import UserBox from './user-box.jsx';
 
 class TopBar extends React.Component {
 
@@ -8,14 +9,14 @@ class TopBar extends React.Component {
 
     render() {
         return <div>
-            <div className="fixed top-bar shadow">
+            <div className="fixed top-bar">
                 <div className="top-bar-container hcontainer-no-wrap">
-                    <img className="top-bar-logo" src="./public/images/neto-logo.png"/>
+                    <img className="top-bar-logo" src="../public/images/neto-logo.png"/>
+                    <UserBox loginData={this.props.loginData} onLogout={this.props.onLogout}/>
                 </div>
             </div>
         </div>
     }
-
 }
 
 

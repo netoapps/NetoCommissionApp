@@ -63,17 +63,35 @@
 	
 	var _authService2 = _interopRequireDefault(_authService);
 	
-	var _login = __webpack_require__(/*! ./views/login.jsx */ 236);
+	var _loginPage = __webpack_require__(/*! ./views/login-page.jsx */ 234);
 	
-	var _login2 = _interopRequireDefault(_login);
+	var _loginPage2 = _interopRequireDefault(_loginPage);
 	
-	var _signup = __webpack_require__(/*! ./views/signup.jsx */ 237);
+	var _signupPage = __webpack_require__(/*! ./views/signup-page.jsx */ 236);
 	
-	var _signup2 = _interopRequireDefault(_signup);
+	var _signupPage2 = _interopRequireDefault(_signupPage);
 	
-	var _dashboard = __webpack_require__(/*! ./views/dashboard.jsx */ 238);
+	var _dashboardPage = __webpack_require__(/*! ./views/dashboard-page.jsx */ 237);
 	
-	var _dashboard2 = _interopRequireDefault(_dashboard);
+	var _dashboardPage2 = _interopRequireDefault(_dashboardPage);
+	
+	var _commissionsPage = __webpack_require__(/*! ./views/commissions-page.jsx */ 241);
+	
+	var _commissionsPage2 = _interopRequireDefault(_commissionsPage);
+	
+	var _agentsPage = __webpack_require__(/*! ./views/agents-page.jsx */ 242);
+	
+	var _agentsPage2 = _interopRequireDefault(_agentsPage);
+	
+	var _topBar = __webpack_require__(/*! ./views/top-bar.jsx */ 238);
+	
+	var _topBar2 = _interopRequireDefault(_topBar);
+	
+	var _rightPanel = __webpack_require__(/*! ./views/right-panel.jsx */ 240);
+	
+	var _rightPanel2 = _interopRequireDefault(_rightPanel);
+	
+	var _strings = __webpack_require__(/*! ./constants/strings */ 235);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -90,10 +108,10 @@
 	
 	//AppDispatcher.dispatch('APPINIT');
 	
-	function requireAuth(nextState, replace) {
-	    if (!_authService2.default.loggedIn()) {
+	function isAuthenticated(nextState, replace) {
+	    if (_authService2.default.loggedIn()) {
 	        replace({
-	            pathname: '/',
+	            pathname: '/app/dashboard',
 	            state: { nextPathname: nextState.location.pathname }
 	        });
 	    }
@@ -108,23 +126,33 @@
 	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this));
 	
 	        _this.state = {
-	            loggedIn: _authService2.default.loggedIn()
+	            loginData: _authService2.default.getLoginData()
 	        };
 	        return _this;
 	    }
 	
 	    _createClass(App, [{
-	        key: 'updateAuth',
-	        value: function updateAuth(loggedIn) {
-	            this.setState({
-	                loggedIn: loggedIn
-	            });
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {}
+	    }, {
+	        key: 'onPanelItemClick',
+	        value: function onPanelItemClick(item) {
+	            console.log(item);
+	            if (_strings.strings.dashboard === item) {
+	                this.context.router.push('/app/dashboard');
+	            }
+	            if (_strings.strings.commissions === item) {
+	                this.context.router.push('/app/commissions');
+	            }
+	            if (_strings.strings.agents === item) {
+	                this.context.router.push('/app/agents');
+	            }
 	        }
 	    }, {
-	        key: 'componentWillMount',
-	        value: function componentWillMount() {
-	            _authService2.default.onChange = this.updateAuth.bind(this);
-	            _authService2.default.login();
+	        key: 'onLogout',
+	        value: function onLogout() {
+	            _authService2.default.logout();
+	            this.context.router.push('/');
 	        }
 	    }, {
 	        key: 'render',
@@ -132,7 +160,9 @@
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                this.state.loggedIn ? this.props.children : _react2.default.createElement(_login2.default, null)
+	                _react2.default.createElement(_topBar2.default, { loginData: this.state.loginData, onLogout: this.onLogout.bind(this) }),
+	                _react2.default.createElement(_rightPanel2.default, { onPanelItemClick: this.onPanelItemClick.bind(this) }),
+	                this.props.children
 	            );
 	        }
 	    }]);
@@ -140,18 +170,38 @@
 	    return App;
 	}(_react2.default.Component);
 	
+	//Important!! This adds the router object to context
+	
+	
+	App.contextTypes = {
+	    router: _react2.default.PropTypes.object.isRequired
+	};
+	
 	(0, _reactDom.render)(_react2.default.createElement(
 	    _reactRouter.Router,
 	    { history: _reactRouter.browserHistory },
+	    _react2.default.createElement(_reactRouter.Route, { path: '/', component: _loginPage2.default, onEnter: isAuthenticated }),
 	    _react2.default.createElement(
 	        _reactRouter.Route,
-	        { path: '/', component: App },
-	        _react2.default.createElement(_reactRouter.Route, { path: 'login', component: _login2.default }),
-	        _react2.default.createElement(_reactRouter.Route, { path: 'signup', component: _signup2.default }),
-	        _react2.default.createElement(_reactRouter.Route, { path: 'dashboard', component: _dashboard2.default, onEnter: requireAuth })
+	        { path: '/app', component: App },
+	        _react2.default.createElement(_reactRouter.Route, { path: '/app/dashboard', component: _dashboardPage2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: '/app/commissions', component: _commissionsPage2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: '/app/agents', component: _agentsPage2.default })
 	    )
 	), document.getElementById('content'));
 	
+	//render((
+	//    <Router history={browserHistory}>
+	//        <Route path="/" component={App}>
+	//            <Route path="login" component={Login} />
+	//            <Route path="signup" component={Signup} />
+	//            <Route path="dashboard" component={Dashboard} /* onEnter={requireAuth}*/ />
+	//        </Route>
+	//    </Router>
+	//), document.getElementById('content'))
+
+	//AuthService.login()
+
 	//let jwt = localStorage.getItem('jwt');
 	//if (jwt) {
 	//    AppActions.loginUser(jwt);
@@ -26255,9 +26305,7 @@
 	
 	var _reqwest2 = _interopRequireDefault(_reqwest);
 	
-	var _appConstants = __webpack_require__(/*! ../constants/app-constants */ 228);
-	
-	var _appActions = __webpack_require__(/*! ../actions/app-actions */ 229);
+	var _appActions = __webpack_require__(/*! ../actions/app-actions */ 228);
 	
 	var _appActions2 = _interopRequireDefault(_appActions);
 	
@@ -26277,17 +26325,19 @@
 	
 	            this.pretendRequest(email, password, function (res) {
 	                if (res.authenticated) {
-	                    localStorage.token = res.token;
-	                    if (callback) callback(true, "success");
+	                    localStorage.apiToken = res.apiToken;
+	                    localStorage.fullName = res.fullName;
+	                    localStorage.gender = res.gender;
+	                    if (callback) callback(true);
 	                    _this.onChange(true);
 	                } else {
-	                    if (callback) callback(false, "login failure");
+	                    if (callback) callback(false);
 	                    _this.onChange(false);
 	                }
 	            });
 	
 	            //request({
-	            //    url: LOGIN_URL,
+	            //    url: AppConstants.LOGIN_URL,
 	            //    type: 'json',
 	            //    method: 'POST',
 	            //    crossOrigin: true,
@@ -26315,28 +26365,40 @@
 	                if (email === 'karin@neto-finance.co.il' && pass === '1111') {
 	                    callback({
 	                        authenticated: true,
-	                        token: Math.random().toString(36).substring(7)
+	                        apiToken: Math.random().toString(36).substring(7),
+	                        fullName: "קרין בוזלי לוי",
+	                        gender: "1"
 	                    });
 	                } else {
-	                    callback({ authenticated: false });
+	                    callback({
+	                        authenticated: false,
+	                        apiToken: "",
+	                        fullName: "",
+	                        gender: ""
+	                    });
 	                }
 	            }, 0);
 	        }
 	    }, {
-	        key: 'getToken',
-	        value: function getToken() {
-	            return localStorage.apiToken;
+	        key: 'getLoginData',
+	        value: function getLoginData() {
+	            return { apiToken: localStorage.apiToken,
+	                fullName: localStorage.fullName,
+	                gender: localStorage.gender };
 	        }
 	    }, {
 	        key: 'logout',
 	        value: function logout() {
-	            _appActions2.default.logoutUser();
+	            delete localStorage.apiToken;
+	            delete localStorage.fullName;
+	            delete localStorage.gender;
+	            this.onChange(false);
 	        }
 	    }, {
 	        key: 'signup',
 	        value: function signup(username, password, extra) {
 	            //return this.handleAuth(when(request({
-	            //    url: SIGNUP_URL,
+	            //    url: AppConstants.SIGNUP_URL,
 	            //    method: 'POST',
 	            //    crossOrigin: true,
 	            //    type: 'json',
@@ -26348,7 +26410,7 @@
 	    }, {
 	        key: 'loggedIn',
 	        value: function loggedIn() {
-	            return localStorage.apiToken != null;
+	            return !!localStorage.apiToken;
 	        }
 	    }, {
 	        key: 'onChange',
@@ -27010,32 +27072,6 @@
 
 /***/ },
 /* 228 */
-/*!***************************************************!*\
-  !*** ./src/client/app/constants/app-constants.js ***!
-  \***************************************************/
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	/**
-	 * Created by asaf on 27/04/2016.
-	 */
-	var BASE_URL = 'http://localhost:3001/';
-	exports.default = {
-	    BASE_URL: BASE_URL,
-	    LOGIN_URL: BASE_URL + 'sessions/create',
-	    SIGNUP_URL: BASE_URL + 'users',
-	
-	    //Actions
-	    LOGIN_USER: 'LOGIN_USER',
-	    LOGOUT_USER: 'LOGOUT_USER'
-	};
-
-/***/ },
-/* 229 */
 /*!***********************************************!*\
   !*** ./src/client/app/actions/app-actions.js ***!
   \***********************************************/
@@ -27046,25 +27082,27 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.ActionType = undefined;
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by asaf on 25/04/2016.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
 	
 	
-	var _appDispatcher = __webpack_require__(/*! ../dispatcher/app-dispatcher.js */ 230);
+	var _appDispatcher = __webpack_require__(/*! ../dispatcher/app-dispatcher.js */ 229);
 	
 	var _appDispatcher2 = _interopRequireDefault(_appDispatcher);
-	
-	var _appConstants = __webpack_require__(/*! ../constants/app-constants */ 228);
-	
-	var _routerContainer = __webpack_require__(/*! ../services/router-container */ 235);
-	
-	var _routerContainer2 = _interopRequireDefault(_routerContainer);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var ActionType = {
+	
+	    USER_LOGGED_IN: 'USER_LOGGED_IN',
+	    USER_LOGGED_OUT: 'USER_LOGGED_OUT'
+	};
+	exports.ActionType = ActionType;
 	
 	var AppActions = function () {
 	    function AppActions() {
@@ -27072,42 +27110,22 @@
 	    }
 	
 	    _createClass(AppActions, null, [{
-	        key: 'loginUser',
-	
-	
-	        /// LOGIN / LOGOUT ACTIONS
-	        value: function loginUser(jwt) {
-	            var savedJwt = localStorage.getItem('jwt');
+	        key: 'userLoggedIn',
+	        value: function userLoggedIn(apiToken, fullName, gender) {
 	            _appDispatcher2.default.dispatch({
-	                actionType: _appConstants.LOGIN_USER,
-	                jwt: jwt
+	                actionType: ActionType.USER_LOGGED_IN,
+	                apiToken: apiToken,
+	                fullName: fullName,
+	                gender: gender
 	            });
-	
-	            if (savedJwt !== jwt) {
-	                var nextPath = _routerContainer2.default.get().getCurrentQuery().nextPath || '/';
-	                _routerContainer2.default.get().transitionTo(nextPath);
-	                localStorage.setItem('jwt', jwt);
-	            }
-	            //dispatcher.dispatch('NAVIGATE', { location: newRoute });
 	        }
 	    }, {
-	        key: 'logoutUser',
-	        value: function logoutUser(jwt) {
-	            _routerContainer2.default.get().transitionTo('/login');
-	            localStorage.removeItem('jwt');
+	        key: 'userLoggedOut',
+	        value: function userLoggedOut() {
 	            _appDispatcher2.default.dispatch({
-	                actionType: _appConstants.LOGOUT_USER
+	                actionType: ActionType.USER_LOGGED_OUT
 	            });
 	        }
-	
-	        //static requestFlickrData(tag) {
-	        //    dispatcher.dispatch('REQUEST-FLICKR-DATA', { tag: tag });
-	        //}
-	        //
-	        //static processFlickrData(data) {
-	        //    dispatcher.dispatch('PROCESS-FLICKR-DATA', data);
-	        //}
-	
 	    }]);
 	
 	    return AppActions;
@@ -27116,7 +27134,7 @@
 	exports.default = AppActions;
 
 /***/ },
-/* 230 */
+/* 229 */
 /*!*****************************************************!*\
   !*** ./src/client/app/dispatcher/app-dispatcher.js ***!
   \*****************************************************/
@@ -27128,7 +27146,7 @@
 	    value: true
 	});
 	
-	var _dispatcher = __webpack_require__(/*! ../lib/dispatcher.js */ 231);
+	var _dispatcher = __webpack_require__(/*! ../lib/dispatcher.js */ 230);
 	
 	var _dispatcher2 = _interopRequireDefault(_dispatcher);
 	
@@ -27142,7 +27160,7 @@
 	exports.default = dispatcher;
 
 /***/ },
-/* 231 */
+/* 230 */
 /*!******************************************!*\
   !*** ./src/client/app/lib/dispatcher.js ***!
   \******************************************/
@@ -27156,15 +27174,15 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _events = __webpack_require__(/*! events */ 232);
+	var _events = __webpack_require__(/*! events */ 231);
 	
 	var _events2 = _interopRequireDefault(_events);
 	
-	var _logger = __webpack_require__(/*! ./logger */ 233);
+	var _logger = __webpack_require__(/*! ./logger */ 232);
 	
 	var _logger2 = _interopRequireDefault(_logger);
 	
-	var _objectAssign = __webpack_require__(/*! object-assign */ 234);
+	var _objectAssign = __webpack_require__(/*! object-assign */ 233);
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
@@ -27296,7 +27314,7 @@
 	exports.default = Dispatcher;
 
 /***/ },
-/* 232 */
+/* 231 */
 /*!********************************************************!*\
   !*** (webpack)/~/node-libs-browser/~/events/events.js ***!
   \********************************************************/
@@ -27603,7 +27621,7 @@
 
 
 /***/ },
-/* 233 */
+/* 232 */
 /*!**************************************!*\
   !*** ./src/client/app/lib/logger.js ***!
   \**************************************/
@@ -27618,7 +27636,7 @@
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /* eslint-disable no-console */
 	
 	
-	var _objectAssign = __webpack_require__(/*! object-assign */ 234);
+	var _objectAssign = __webpack_require__(/*! object-assign */ 233);
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
@@ -27773,7 +27791,7 @@
 	exports.default = Logger;
 
 /***/ },
-/* 234 */
+/* 233 */
 /*!**********************************!*\
   !*** ./~/object-assign/index.js ***!
   \**********************************/
@@ -27821,35 +27839,10 @@
 
 
 /***/ },
-/* 235 */
-/*!*****************************************************!*\
-  !*** ./src/client/app/services/router-container.js ***!
-  \*****************************************************/
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	/**
-	 * Created by asaf on 27/04/2016.
-	 */
-	var _router = null;
-	exports.default = {
-	  set: function set(router) {
-	    return _router = router;
-	  },
-	  get: function get() {
-	    return _router;
-	  }
-	};
-
-/***/ },
-/* 236 */
-/*!****************************************!*\
-  !*** ./src/client/app/views/login.jsx ***!
-  \****************************************/
+/* 234 */
+/*!*********************************************!*\
+  !*** ./src/client/app/views/login-page.jsx ***!
+  \*********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27867,6 +27860,8 @@
 	var _authService = __webpack_require__(/*! ../services/auth-service */ 225);
 	
 	var _authService2 = _interopRequireDefault(_authService);
+	
+	var _strings = __webpack_require__(/*! ../constants/strings */ 235);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -27888,13 +27883,11 @@
 	            username: '',
 	            password: ''
 	        };
+	        _this.errorMessage = "";
 	        return _this;
 	    }
 	
 	    _createClass(Login, [{
-	        key: 'handleLogin',
-	        value: function handleLogin(loggedIn, message) {}
-	    }, {
 	        key: 'login',
 	        value: function login(e) {
 	            var _this2 = this;
@@ -27903,25 +27896,14 @@
 	
 	            this.state.email = this.refs.email.value;
 	            this.state.password = this.refs.password.value;
-	
-	            _authService2.default.login(this.state.email, this.state.password, function (loggedIn, message) {
+	            this.errorMessage = "";
+	            this.errorMessageClassName = "";
+	            _authService2.default.login(this.state.email, this.state.password, function (loggedIn) {
 	                if (loggedIn) {
-	                    console.log("logged in!!");
-	
-	                    //const { location } = this.props
-	                    //
-	                    //if (location.state && location.state.nextPathname)
-	                    //{
-	                    //    this.props.router.replace(location.state.nextPathname)
-	                    //}
-	                    //else
-	                    //{
-	                    //    //this.props.router.replace('/dashboard')
-	                    //    this.context.router.push('/dashboard')
-	                    //}
-	                    _this2.context.router.push('/dashboard');
+	                    _this2.context.router.push('/app/dashboard');
 	                } else {
-	                    alert("There's an error logging in - " + message);
+	                    _this2.errorMessage = _strings.strings.loginErrorMessage;
+	                    _this2.errorMessageClassName = "login-page-alert";
 	                }
 	            }.bind(this));
 	        }
@@ -27930,39 +27912,54 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
-	                { className: 'login' },
+	                { className: 'login-page' },
 	                _react2.default.createElement(
-	                    'h1',
-	                    null,
-	                    'Login'
-	                ),
-	                _react2.default.createElement(
-	                    'form',
-	                    { role: 'form' },
+	                    'div',
+	                    { className: 'login-page-container login-page-center' },
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'form-group' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { htmlFor: 'username' },
-	                            'Username'
-	                        ),
-	                        _react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'email', ref: 'email', placeholder: 'Email' })
+	                        { className: 'login-page-neto-logo-container' },
+	                        _react2.default.createElement('img', { className: 'login-page-neto-logo', src: './public/images/neto-logo.png' })
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'form-group' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { htmlFor: 'password' },
-	                            'Password'
-	                        ),
-	                        _react2.default.createElement('input', { type: 'password', className: 'form-control', id: 'password', ref: 'password', placeholder: 'Password' })
+	                        { className: 'login-page-neto-doc-name' },
+	                        _strings.strings.appName
 	                    ),
 	                    _react2.default.createElement(
-	                        'button',
-	                        { type: 'submit', className: 'btn btn-default', onClick: this.login.bind(this) },
-	                        'Submit'
+	                        'div',
+	                        { className: this.errorMessageClassName },
+	                        this.errorMessage
+	                    ),
+	                    _react2.default.createElement(
+	                        'form',
+	                        { className: 'left-align' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            null,
+	                            _react2.default.createElement('input', { type: 'text', className: 'login-page-input', id: 'email', ref: 'email', placeholder: _strings.strings.email })
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            null,
+	                            _react2.default.createElement('input', { type: 'password', className: 'login-page-input', id: 'password', ref: 'password', placeholder: _strings.strings.password })
+	                        ),
+	                        _react2.default.createElement(
+	                            'button',
+	                            { type: 'submit', className: 'login-page-button', onClick: this.login.bind(this) },
+	                            _strings.strings.connect
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'p',
+	                        null,
+	                        _strings.strings.needAccount,
+	                        _react2.default.createElement(
+	                            'a',
+	                            { href: '/user-signup-request' },
+	                            ' ',
+	                            _strings.strings.sendRegisterRequest
+	                        )
 	                    )
 	                )
 	            );
@@ -27981,10 +27978,42 @@
 	};
 
 /***/ },
-/* 237 */
-/*!*****************************************!*\
-  !*** ./src/client/app/views/signup.jsx ***!
-  \*****************************************/
+/* 235 */
+/*!*********************************************!*\
+  !*** ./src/client/app/constants/strings.js ***!
+  \*********************************************/
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	/**
+	 * Created by asaf on 27/04/2016.
+	 */
+	
+	var strings = {
+	    appName: "נטו - עמלות סוכן",
+	    email: "דואר אלקטרוני",
+	    password: "סיסמה",
+	    disconnect: "התנתק",
+	    connect: "התחבר",
+	    needAccount: "צריך חשבון?",
+	    sendRegisterRequest: "שלח בקשה להרשם",
+	    loginErrorMessage: "שם משתמש או סיסמה שגויים",
+	    dashboard: "ראשי",
+	    commissions: "עמלות",
+	    agents: "סוכנים"
+	};
+	
+	exports.strings = strings;
+
+/***/ },
+/* 236 */
+/*!**********************************************!*\
+  !*** ./src/client/app/views/signup-page.jsx ***!
+  \**********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28102,10 +28131,10 @@
 	exports.default = Signup;
 
 /***/ },
-/* 238 */
-/*!********************************************!*\
-  !*** ./src/client/app/views/dashboard.jsx ***!
-  \********************************************/
+/* 237 */
+/*!*************************************************!*\
+  !*** ./src/client/app/views/dashboard-page.jsx ***!
+  \*************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28120,9 +28149,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _topBar = __webpack_require__(/*! ./top-bar.jsx */ 239);
+	var _authService = __webpack_require__(/*! ../services/auth-service */ 225);
 	
-	var _topBar2 = _interopRequireDefault(_topBar);
+	var _authService2 = _interopRequireDefault(_authService);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -28135,10 +28164,16 @@
 	var Dashboard = function (_React$Component) {
 	    _inherits(Dashboard, _React$Component);
 	
-	    function Dashboard() {
+	    function Dashboard(props) {
 	        _classCallCheck(this, Dashboard);
 	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Dashboard).apply(this, arguments));
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Dashboard).call(this, props));
+	
+	        _this.state = {
+	            loginData: _authService2.default.getLoginData()
+	        };
+	
+	        return _this;
 	    }
 	
 	    _createClass(Dashboard, [{
@@ -28146,8 +28181,8 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
-	                null,
-	                _react2.default.createElement(_topBar2.default, null)
+	                { className: 'dashboard-page' },
+	                'Dashboard'
 	            );
 	        }
 	    }]);
@@ -28155,16 +28190,23 @@
 	    return Dashboard;
 	}(_react2.default.Component);
 	
+	//Important!! This adds the router object to context
+	
+	
+	Dashboard.contextTypes = {
+	    router: _react2.default.PropTypes.object.isRequired
+	};
+	
 	exports.default = Dashboard;
 
 /***/ },
-/* 239 */
+/* 238 */
 /*!******************************************!*\
   !*** ./src/client/app/views/top-bar.jsx ***!
   \******************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -28175,6 +28217,10 @@
 	var _react = __webpack_require__(/*! react */ 1);
 	
 	var _react2 = _interopRequireDefault(_react);
+	
+	var _userBox = __webpack_require__(/*! ./user-box.jsx */ 239);
+	
+	var _userBox2 = _interopRequireDefault(_userBox);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -28194,18 +28240,19 @@
 	    }
 	
 	    _createClass(TopBar, [{
-	        key: "render",
+	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
-	                "div",
+	                'div',
 	                null,
 	                _react2.default.createElement(
-	                    "div",
-	                    { className: "fixed top-bar shadow" },
+	                    'div',
+	                    { className: 'fixed top-bar' },
 	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "top-bar-container hcontainer-no-wrap" },
-	                        _react2.default.createElement("img", { className: "top-bar-logo", src: "./public/images/neto-logo.png" })
+	                        'div',
+	                        { className: 'top-bar-container hcontainer-no-wrap' },
+	                        _react2.default.createElement('img', { className: 'top-bar-logo', src: '../public/images/neto-logo.png' }),
+	                        _react2.default.createElement(_userBox2.default, { loginData: this.props.loginData, onLogout: this.props.onLogout })
 	                    )
 	                )
 	            );
@@ -28216,6 +28263,323 @@
 	}(_react2.default.Component);
 	
 	exports.default = TopBar;
+
+/***/ },
+/* 239 */
+/*!*******************************************!*\
+  !*** ./src/client/app/views/user-box.jsx ***!
+  \*******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _strings = __webpack_require__(/*! ../constants/strings */ 235);
+	
+	var _authService = __webpack_require__(/*! ../services/auth-service */ 225);
+	
+	var _authService2 = _interopRequireDefault(_authService);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var UserBox = function (_React$Component) {
+	    _inherits(UserBox, _React$Component);
+	
+	    function UserBox(props) {
+	        _classCallCheck(this, UserBox);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(UserBox).call(this, props));
+	    }
+	
+	    _createClass(UserBox, [{
+	        key: 'onLogout',
+	        value: function onLogout(e) {
+	            e.preventDefault();
+	            this.props.onLogout();
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'user-box hcontainer-no-wrap' },
+	                _react2.default.createElement('img', { className: 'user-avatar', src: this.props.loginData.gender == "0" ? "../public/images/avatar-male.png" : "../public/images/avatar-female.png", alt: '' }),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'user-box-info' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'user-box-name' },
+	                        this.props.loginData.fullName
+	                    ),
+	                    _react2.default.createElement(
+	                        'button',
+	                        { className: 'user-box-logout-button', onClick: this.onLogout.bind(this) },
+	                        _strings.strings.disconnect
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return UserBox;
+	}(_react2.default.Component);
+	
+	exports.default = UserBox;
+
+/***/ },
+/* 240 */
+/*!**********************************************!*\
+  !*** ./src/client/app/views/right-panel.jsx ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _strings = __webpack_require__(/*! ../constants/strings */ 235);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var RightPanelItem = function (_React$Component) {
+	    _inherits(RightPanelItem, _React$Component);
+	
+	    function RightPanelItem(props) {
+	        _classCallCheck(this, RightPanelItem);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(RightPanelItem).call(this, props));
+	    }
+	
+	    _createClass(RightPanelItem, [{
+	        key: 'onClick',
+	        value: function onClick() {
+	            this.props.onPanelItemClick(this.props.title);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'right-panel-item' },
+	                    _react2.default.createElement(
+	                        'button',
+	                        { className: 'right-panel-item-button', onClick: this.onClick.bind(this) },
+	                        this.props.title
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return RightPanelItem;
+	}(_react2.default.Component);
+	
+	var RightPanel = function (_React$Component2) {
+	    _inherits(RightPanel, _React$Component2);
+	
+	    function RightPanel(props) {
+	        _classCallCheck(this, RightPanel);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(RightPanel).call(this, props));
+	    }
+	
+	    _createClass(RightPanel, [{
+	        key: 'onPanelItemClick',
+	        value: function onPanelItemClick(item) {
+	            this.props.onPanelItemClick(item);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'fixed right-panel' },
+	                    _react2.default.createElement(RightPanelItem, { title: _strings.strings.dashboard, onPanelItemClick: this.onPanelItemClick.bind(this) }),
+	                    _react2.default.createElement(RightPanelItem, { title: _strings.strings.commissions, onPanelItemClick: this.onPanelItemClick.bind(this) }),
+	                    _react2.default.createElement(RightPanelItem, { title: _strings.strings.agents, onPanelItemClick: this.onPanelItemClick.bind(this) })
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return RightPanel;
+	}(_react2.default.Component);
+	
+	exports.default = RightPanel;
+
+/***/ },
+/* 241 */
+/*!***************************************************!*\
+  !*** ./src/client/app/views/commissions-page.jsx ***!
+  \***************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _authService = __webpack_require__(/*! ../services/auth-service */ 225);
+	
+	var _authService2 = _interopRequireDefault(_authService);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Commissions = function (_React$Component) {
+	    _inherits(Commissions, _React$Component);
+	
+	    function Commissions(props) {
+	        _classCallCheck(this, Commissions);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Commissions).call(this, props));
+	
+	        _this.state = {
+	            loginData: _authService2.default.getLoginData()
+	        };
+	
+	        return _this;
+	    }
+	
+	    _createClass(Commissions, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'commissions-page' },
+	                'Commissions'
+	            );
+	        }
+	    }]);
+	
+	    return Commissions;
+	}(_react2.default.Component);
+	
+	//Important!! This adds the router object to context
+	
+	
+	Commissions.contextTypes = {
+	    router: _react2.default.PropTypes.object.isRequired
+	};
+	
+	exports.default = Commissions;
+
+/***/ },
+/* 242 */
+/*!**********************************************!*\
+  !*** ./src/client/app/views/agents-page.jsx ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _authService = __webpack_require__(/*! ../services/auth-service */ 225);
+	
+	var _authService2 = _interopRequireDefault(_authService);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Agents = function (_React$Component) {
+	    _inherits(Agents, _React$Component);
+	
+	    function Agents(props) {
+	        _classCallCheck(this, Agents);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Agents).call(this, props));
+	
+	        _this.state = {
+	            loginData: _authService2.default.getLoginData()
+	        };
+	
+	        return _this;
+	    }
+	
+	    _createClass(Agents, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'agents-page' },
+	                'Agents'
+	            );
+	        }
+	    }]);
+	
+	    return Agents;
+	}(_react2.default.Component);
+	
+	//Important!! This adds the router object to context
+	
+	
+	Agents.contextTypes = {
+	    router: _react2.default.PropTypes.object.isRequired
+	};
+	
+	exports.default = Agents;
 
 /***/ }
 /******/ ]);

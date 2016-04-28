@@ -4,19 +4,25 @@ import { browserHistory, Router, Route, Link } from 'react-router'
 //import AppDispatcher from './dispatcher/app-dispatcher';
 //import AppContainerView from './views/app-container-view.jsx';
 import AuthService from './services/auth-service'
-import Login from './views/login.jsx'
-import Signup from './views/signup.jsx'
-import Dashboard from './views/dashboard.jsx'
+import Login from './views/login-page.jsx'
+import Signup from './views/signup-page.jsx'
+import Dashboard from './views/dashboard-page.jsx'
+import Commissions from './views/commissions-page.jsx'
+import Agents from './views/agents-page.jsx'
+import TopBar from './views/top-bar.jsx';
+import RightPanel from './views/right-panel.jsx';
+import { strings } from './constants/strings'
+
 //import AppActions from './actions/app-actions';
 
 //AppDispatcher.dispatch('APPINIT');
 
-function requireAuth(nextState, replace)
+function isAuthenticated(nextState, replace)
 {
-    if (!AuthService.loggedIn())
+    if (AuthService.loggedIn())
     {
         replace({
-            pathname: '/',
+            pathname: '/app/dashboard',
             state: { nextPathname: nextState.location.pathname }
         })
     }
@@ -27,42 +33,74 @@ class App extends React.Component {
     constructor() {
         super()
         this.state = {
-            loggedIn: AuthService.loggedIn()
+            loginData: AuthService.getLoginData()
         };
     }
-    updateAuth(loggedIn)
+
+    componentWillMount()
     {
-        this.setState(
-            {
-            loggedIn: loggedIn
-        })
     }
-    componentWillMount() {
-        AuthService.onChange = this.updateAuth.bind(this)
-        AuthService.login()
-    }
-    render()
+
+    onPanelItemClick(item)
     {
+        console.log(item)
+        if(strings.dashboard === item)
+        {
+            this.context.router.push('/app/dashboard')
+        }
+        if(strings.commissions === item)
+        {
+            this.context.router.push('/app/commissions')
+        }
+        if(strings.agents === item)
+        {
+            this.context.router.push('/app/agents')
+        }
+    }
+    onLogout()
+    {
+        AuthService.logout()
+        this.context.router.push('/')
+    }
+    render () {
         return (
             <div>
-                { this.state.loggedIn ? (this.props.children) : (<Login />)}
+                <TopBar loginData={this.state.loginData}  onLogout={this.onLogout.bind(this)}/>
+                <RightPanel onPanelItemClick={this.onPanelItemClick.bind(this)}/>
+                {this.props.children}
             </div>
         );
     }
 }
 
+//Important!! This adds the router object to context
+App.contextTypes = {
+    router: React.PropTypes.object.isRequired
+}
+
 
 render((
     <Router history={browserHistory}>
-        <Route path="/" component={App}>
-            <Route path="login" component={Login} />
-            <Route path="signup" component={Signup} />
-            <Route path="dashboard" component={Dashboard} onEnter={requireAuth} />
+        <Route path="/" component={Login} onEnter={isAuthenticated}/>
+        <Route path="/app" component={App} >
+            <Route path="/app/dashboard" component={Dashboard} />
+            <Route path="/app/commissions" component={Commissions} />
+            <Route path="/app/agents" component={Agents} />
         </Route>
-    </Router>
+   </Router>
 ), document.getElementById('content'))
 
+//render((
+//    <Router history={browserHistory}>
+//        <Route path="/" component={App}>
+//            <Route path="login" component={Login} />
+//            <Route path="signup" component={Signup} />
+//            <Route path="dashboard" component={Dashboard} /* onEnter={requireAuth}*/ />
+//        </Route>
+//    </Router>
+//), document.getElementById('content'))
 
+//AuthService.login()
 
 
 //let jwt = localStorage.getItem('jwt');

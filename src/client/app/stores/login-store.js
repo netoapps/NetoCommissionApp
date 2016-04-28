@@ -1,15 +1,16 @@
 /**
- * Created by asaf on 25/04/2016.
+ * Created by asaf on 28/04/2016.
  */
+
 import Store from '../lib/store.js';
 import dispatcher from '../dispatcher/app-dispatcher.js';
 import Actions from '../actions/app-actions.js';
 
-class AppStore extends Store {
+class LoginStore extends Store {
 
     constructor() {
-        super('AppStore');
-        this.logger.debug('Initializing AppStore');
+        super('LoginStore');
+        this.logger.debug('Initializing DataStore');
         this.initialize('user', {});
     }
 
@@ -19,6 +20,6 @@ class AppStore extends Store {
     }
 }
 
-var appStore = new AppStore();
-dispatcher.registerStore(appStore);
-export default appStore;
+var loginStore = new LoginStore();
+dispatcher.registerStore(loginStore);
+export default loginStore;
