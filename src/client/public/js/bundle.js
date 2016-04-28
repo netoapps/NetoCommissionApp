@@ -27867,7 +27867,7 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
-	                { className: 'login-page' },
+	                { className: 'login-page animated fadeIn' },
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'login-page-container login-page-center' },
@@ -28136,7 +28136,7 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
-	                { className: 'dashboard-page' },
+	                { className: 'dashboard-page animated fadeIn' },
 	                'Dashboard'
 	            );
 	        }
@@ -28202,7 +28202,7 @@
 	                null,
 	                _react2.default.createElement(
 	                    'div',
-	                    { className: 'fixed top-bar' },
+	                    { className: 'fixed top-bar animated fadeInDown' },
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'top-bar-container hcontainer-no-wrap' },
@@ -28343,6 +28343,18 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	
+	            var className = "";
+	            if (_strings.strings.dashboard === this.props.title) {
+	                className = "right-panel-item-button right-panel-item-button-dashboard";
+	            }
+	            if (_strings.strings.commissions === this.props.title) {
+	                className = "right-panel-item-button right-panel-item-button-commissions";
+	            }
+	            if (_strings.strings.agents === this.props.title) {
+	                className = "right-panel-item-button right-panel-item-button-agents";
+	            }
+	
 	            return _react2.default.createElement(
 	                'div',
 	                null,
@@ -28351,7 +28363,7 @@
 	                    { className: 'right-panel-item' },
 	                    _react2.default.createElement(
 	                        'button',
-	                        { className: 'right-panel-item-button', onClick: this.onClick.bind(this) },
+	                        { className: className, onClick: this.onClick.bind(this) },
 	                        this.props.title
 	                    )
 	                )
@@ -28384,7 +28396,7 @@
 	                null,
 	                _react2.default.createElement(
 	                    'div',
-	                    { className: 'fixed right-panel' },
+	                    { className: 'fixed right-panel animated fadeInRight' },
 	                    _react2.default.createElement(RightPanelItem, { title: _strings.strings.dashboard, onPanelItemClick: this.onPanelItemClick.bind(this) }),
 	                    _react2.default.createElement(RightPanelItem, { title: _strings.strings.commissions, onPanelItemClick: this.onPanelItemClick.bind(this) }),
 	                    _react2.default.createElement(RightPanelItem, { title: _strings.strings.agents, onPanelItemClick: this.onPanelItemClick.bind(this) })
@@ -28449,7 +28461,7 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
-	                { className: 'commissions-page' },
+	                { className: 'commissions-page animated fadeIn' },
 	                'Commissions'
 	            );
 	        }
@@ -28518,7 +28530,7 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
-	                { className: 'agents-page' },
+	                { className: 'agents-page animated fadeIn' },
 	                'Agents'
 	            );
 	        }

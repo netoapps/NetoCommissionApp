@@ -104,16 +104,29 @@ body
     height: 50px;
 }
 
+.right-panel-item-button-dashboard
+{
+    background: url('../images/dashboard.png') no-repeat right center;
+}
+.right-panel-item-button-commissions
+{
+    background: url('../images/commissions.png') no-repeat right center;
+}
+.right-panel-item-button-agents
+{
+    background: url('../images/agents.png') no-repeat right center;
+}
+
 .right-panel-item-button
 {
+    text-align: right;
     height: 100%;
     width: 100%;
     color: #d8d8d8;
     border:none;
     margin:0;
-    padding:0;
+    padding-right: 50px;
     font-size: 15px;
-    background-color: #363636;
     font-weight: lighter;
 }
 

@@ -13,7 +13,7 @@ class Agents extends React.Component {
 
     render () {
         return (
-            <div className="agents-page">
+            <div className="agents-page animated fadeIn">
                 Agents
             </div>
         );

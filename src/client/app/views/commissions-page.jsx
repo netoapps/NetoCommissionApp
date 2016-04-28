@@ -13,7 +13,7 @@ class Commissions extends React.Component {
 
     render () {
         return (
-            <div className="commissions-page">
+            <div className="commissions-page animated fadeIn">
                 Commissions
             </div>
         );

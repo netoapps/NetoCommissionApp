@@ -13,7 +13,7 @@ class Dashboard extends React.Component {
 
     render () {
         return (
-            <div className="dashboard-page">
+            <div className="dashboard-page animated fadeIn">
                 Dashboard
             </div>
         );

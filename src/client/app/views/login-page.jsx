@@ -37,7 +37,7 @@ export default class Login extends React.Component {
 
     render() {
         return (
-            <div className="login-page">
+            <div className="login-page animated fadeIn">
                 <div className="login-page-container login-page-center">
                     <div className="login-page-neto-logo-container">
                         <img className="login-page-neto-logo" src="./public/images/neto-logo.png"/>
