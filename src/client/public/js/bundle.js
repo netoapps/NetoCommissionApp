@@ -28116,19 +28116,114 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var Dashboard = function (_React$Component) {
-	    _inherits(Dashboard, _React$Component);
+	var DashboardRankTable = function (_React$Component) {
+	    _inherits(DashboardRankTable, _React$Component);
+	
+	    function DashboardRankTable(props) {
+	        _classCallCheck(this, DashboardRankTable);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardRankTable).call(this, props));
+	    }
+	
+	    _createClass(DashboardRankTable, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement('div', { className: 'dashboard-large-box dashboard-rank-table shadow' });
+	        }
+	    }]);
+	
+	    return DashboardRankTable;
+	}(_react2.default.Component);
+	
+	var DashboardCommissionChangeChart = function (_React$Component2) {
+	    _inherits(DashboardCommissionChangeChart, _React$Component2);
+	
+	    function DashboardCommissionChangeChart(props) {
+	        _classCallCheck(this, DashboardCommissionChangeChart);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardCommissionChangeChart).call(this, props));
+	    }
+	
+	    _createClass(DashboardCommissionChangeChart, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement('div', { className: 'dashboard-large-box dashboard-commission-change-chart shadow' });
+	        }
+	    }]);
+	
+	    return DashboardCommissionChangeChart;
+	}(_react2.default.Component);
+	
+	var DashboardMonthTotalCommissions = function (_React$Component3) {
+	    _inherits(DashboardMonthTotalCommissions, _React$Component3);
+	
+	    function DashboardMonthTotalCommissions(props) {
+	        _classCallCheck(this, DashboardMonthTotalCommissions);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardMonthTotalCommissions).call(this, props));
+	    }
+	
+	    _createClass(DashboardMonthTotalCommissions, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement('div', { className: 'dashboard-small-box dashboard-month-total-commissions shadow' });
+	        }
+	    }]);
+	
+	    return DashboardMonthTotalCommissions;
+	}(_react2.default.Component);
+	
+	var DashboardTotalAgents = function (_React$Component4) {
+	    _inherits(DashboardTotalAgents, _React$Component4);
+	
+	    function DashboardTotalAgents(props) {
+	        _classCallCheck(this, DashboardTotalAgents);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardTotalAgents).call(this, props));
+	    }
+	
+	    _createClass(DashboardTotalAgents, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement('div', { className: 'dashboard-small-box dashboard-total-agents shadow' });
+	        }
+	    }]);
+	
+	    return DashboardTotalAgents;
+	}(_react2.default.Component);
+	
+	var DashboardTotalInvestments = function (_React$Component5) {
+	    _inherits(DashboardTotalInvestments, _React$Component5);
+	
+	    function DashboardTotalInvestments(props) {
+	        _classCallCheck(this, DashboardTotalInvestments);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardTotalInvestments).call(this, props));
+	    }
+	
+	    _createClass(DashboardTotalInvestments, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement('div', { className: 'dashboard-small-box dashboard-total-investments shadow' });
+	        }
+	    }]);
+	
+	    return DashboardTotalInvestments;
+	}(_react2.default.Component);
+	
+	var Dashboard = function (_React$Component6) {
+	    _inherits(Dashboard, _React$Component6);
 	
 	    function Dashboard(props) {
 	        _classCallCheck(this, Dashboard);
 	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Dashboard).call(this, props));
+	        var _this6 = _possibleConstructorReturn(this, Object.getPrototypeOf(Dashboard).call(this, props));
 	
-	        _this.state = {
+	        _this6.state = {
 	            loginData: _authService2.default.getLoginData()
 	        };
 	
-	        return _this;
+	        return _this6;
 	    }
 	
 	    _createClass(Dashboard, [{
@@ -28137,7 +28232,19 @@
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'dashboard-page animated fadeIn' },
-	                'Dashboard'
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'dashboard-page-section hcontainer-no-wrap' },
+	                    _react2.default.createElement(DashboardRankTable, null),
+	                    _react2.default.createElement(DashboardCommissionChangeChart, null)
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'dashboard-page-section hcontainer-no-wrap' },
+	                    _react2.default.createElement(DashboardMonthTotalCommissions, null),
+	                    _react2.default.createElement(DashboardTotalAgents, null),
+	                    _react2.default.createElement(DashboardTotalInvestments, null)
+	                )
 	            );
 	        }
 	    }]);

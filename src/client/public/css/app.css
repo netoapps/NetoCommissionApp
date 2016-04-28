@@ -87,6 +87,16 @@ body
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
+    box-shadow: 0px 1px 0px #CFCFCF;
+    -webkit-box-shadow: 0px 1px 0px #CFCFCF;
+    -moz-box-shadow: 0px 1px 0px #CFCFCF;
+}
+
+.shadow
+{
+    box-shadow: 0px 1px 3px #bababa;
+    -webkit-box-shadow: 0px 1px 3px #bababa;
+    -moz-box-shadow: 0px 1px 3px #bababa;
 }
 
 .right-panel
@@ -384,10 +394,15 @@ body
 {
     width: calc(100% - 250px);
     height: calc(100% - 64px);
-    //background-color: red;
     position: absolute;
     top: 64px;
     right: 250px;
+}
+
+.dashboard-page-section
+{
+    display: flex;
+    justify-content: center;
 }
 
 .commissions-page
@@ -408,4 +423,43 @@ body
     position: absolute;
     top: 64px;
     right: 250px;
+}
+
+.dashboard-large-box
+{
+    width: 600px;
+    height: 370px;
+    background-color: white;
+    margin: 30px;
+}
+
+.dashboard-small-box {
+    width: 380px;
+    height: 220px;
+    background-color: white;
+    margin: 30px;
+}
+
+.dashboard-commission-change-chart
+{
+
+}
+
+.dashboard-rank-table
+{
+}
+
+.dashboard-month-total-commissions
+{
+
+}
+
+.dashboard-total-agents
+{
+
+}
+
+.dashboard-total-investments
+{
+
 }
