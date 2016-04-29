@@ -16,8 +16,8 @@ module.exports.registerRoutes = function(app){
 
     var apiRouter = express.Router();
     apiRouter.all('*', passport.authenticate('api', {session: false}));
-    //apiRouter.post('/analyze',upload.single('file'),excel.analyze);
-    apiRouter.post('/analyze',excel.analyze);
+    apiRouter.post('/analyze',upload.single('file'),excel.analyze);
+    //apiRouter.post('/analyze',excel.analyze);
     apiRouter.get('/agent/salaries/year/:year/month/:month',agents.getSalariesForDate);
     //Agents
     apiRouter.get('/agent/:id',agents.getAgent);

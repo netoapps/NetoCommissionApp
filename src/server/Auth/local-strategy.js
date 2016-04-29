@@ -13,7 +13,7 @@ module.exports.config = function () {
     // LOCAL LOGIN =============================================================
     // =========================================================================
     passport.use('local-login', new LocalStrategy({
-            // by default, local strategy uses username and password, we will override with email
+            // by default, local strategy uses username and password
             usernameField: 'username',
             passwordField: 'password',
             passReqToCallback: true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
@@ -60,7 +60,7 @@ module.exports.config = function () {
         },
         function (req, username, password, done) {
             if (username)
-                username = username.toLowerCase(); // Use lower-case e-mails to avoid case-sensitive e-mail matching
+                username = username.toLowerCase(); // Use lower-case to avoid case-sensitive e-mail matching
 
             // asynchronous
             process.nextTick(function () {
@@ -75,7 +75,7 @@ module.exports.config = function () {
                         return done(err);
 
                     if (user)
-                        return done(null, false, 'The email address you\'ve provided is already registered');
+                        return done(null, false, 'The username address you\'ve provided is already registered');
 
 
                     // create the user

@@ -6,6 +6,7 @@ var config = require('./config');
 var mongoose = require('mongoose');
 var express = require('express');
 var bodyParser = require('body-parser');
+var morgan = require('morgan');
 var routing = require('./Routes');
 
 var passport = require('./Auth/passport');
@@ -18,10 +19,11 @@ function NetoCommisionAppServer(){
 
         //Start express application
         var app = express();
+        //app.use(morgan('Request::method URL::url ResponseTime::response-time'));
         app.use(bodyParser.json({limit: '50mb'}));
         app.use(bodyParser.urlencoded({ extended: true, limit: '50mb'}));
         app.use(express.static(__dirname + '/../client')); //Should be changed to public directory
-
+        app.use(morgan('Request::method URL::url ResponseTime::response-time')); //Some logging
         //Init passport
         passport.init(app);
 

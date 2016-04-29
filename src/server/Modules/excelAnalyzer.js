@@ -11,17 +11,21 @@ module.exports.analyze = function (req, res) {
     if (!req.body || !req.body.params ||!req.body.params.companyName) {
         return res.status(400).json({err: 'missing company name'});
     }
-    //if (!req.file || req.file === 'undefined') {
-    //    return res.status(400).json({err: 'failed upload file'});
-    //}
-    req.file = {path:'./agents2.xlsx'};
+    if (!req.file || req.file === 'undefined') {
+        return res.status(400).json({err: 'failed upload file'});
+    }
+    
     var companyName = req.body.params.companyName;
     var salaryParams = req.body.params;
     var today = new Date();
 
     console.log('doing company: ' + companyName);
-    var workbook = xlsx.readFile(req.file.path);
-    //fs.unlink(req.file.path);
+    try {
+        var workbook = xlsx.readFile(req.file.path);
+        fs.unlink(req.file.path);
+    }catch(err){
+        return res.status(400).json({err: err});
+    }
     var salaries = xlsx.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]);
     async.each(salaries, function (value, callback) {
         var agentId = value['1'];
