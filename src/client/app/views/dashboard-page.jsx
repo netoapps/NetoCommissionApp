@@ -1,7 +1,7 @@
 import React from 'react';
 import AuthService from '../services/auth-service'
 
-class DashboardRankTable extends React.Component {
+class DashboardDateSelect extends React.Component {
 
     constructor(props) {
         super(props);
@@ -10,7 +10,21 @@ class DashboardRankTable extends React.Component {
 
     render () {
         return (
-            <div className="dashboard-large-box dashboard-rank-table shadow">
+            <div className="dashboard-date-box shadow">
+            </div>
+        );
+    }
+}
+
+class DashboardRankTable extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+    }
+    render () {
+        return (
+            <div className="dashboard-rank-table shadow">
             </div>
         );
     }
@@ -25,7 +39,7 @@ class DashboardCommissionChangeChart extends React.Component {
 
     render () {
         return (
-            <div className="dashboard-large-box dashboard-commission-change-chart shadow">
+            <div className="dashboard-commission-change-chart shadow">
             </div>
         );
     }
@@ -40,13 +54,13 @@ class DashboardMonthTotalCommissions extends React.Component {
 
     render () {
         return (
-            <div className="dashboard-small-box dashboard-month-total-commissions shadow">
+            <div className="dashboard-month-total-commissions shadow">
             </div>
         );
     }
 }
 
-class DashboardTotalAgents extends React.Component {
+class DashboardMonthTotalAgents extends React.Component {
 
     constructor(props) {
         super(props);
@@ -55,7 +69,7 @@ class DashboardTotalAgents extends React.Component {
 
     render () {
         return (
-            <div className="dashboard-small-box dashboard-total-agents shadow">
+            <div className="dashboard-month-total-agents shadow">
             </div>
         );
     }
@@ -70,12 +84,28 @@ class DashboardTotalInvestments extends React.Component {
 
     render () {
         return (
-            <div className="dashboard-small-box dashboard-total-investments shadow">
+            <div className="dashboard-total-investments shadow">
             </div>
         );
     }
 }
 
+class DashboardMonthStats extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+    }
+
+    render () {
+        return (
+                <div className="hcontainer-no-wrap">
+                    <DashboardMonthTotalCommissions />
+                    <DashboardMonthTotalAgents />
+                </div>
+        );
+    }
+}
 
 class Dashboard extends React.Component {
 
@@ -90,26 +120,47 @@ class Dashboard extends React.Component {
     render () {
         return (
             <div className="dashboard-page animated fadeIn">
-
-                <div className="dashboard-page-section hcontainer-no-wrap">
-                    <DashboardRankTable />
-                    <DashboardCommissionChangeChart />
+                <DashboardDateSelect />
+                <div className="hcontainer-no-wrap">
+                    <DashboardRankTable  />
+                    <div className="dashboard-horizontal-spacer"/>
+                    <div className="dashboard-stats-container">
+                        <div className="hcontainer-no-wrap dashboard-stats-container-top">
+                            <DashboardMonthTotalCommissions />
+                            <div className="dashboard-horizontal-spacer"/>
+                            <DashboardMonthTotalAgents />
+                        </div>
+                        <div className="dashboard-vertical-spacer"/>
+                        <DashboardTotalInvestments />
+                    </div>
                 </div>
-
-                <div className="dashboard-page-section hcontainer-no-wrap">
-                    <DashboardMonthTotalCommissions />
-                    <DashboardTotalAgents />
-                    <DashboardTotalInvestments />
-                </div>
-
             </div>
         );
     }
 }
 
+
+
+
+//<DashboardCommissionChangeChart />
+
+//<div className="dashboard-page-section hcontainer-no-wrap">
+//    <DashboardRankTable />
+//    <DashboardCommissionChangeChart />
+//</div>
+//
+//<div className="dashboard-page-section hcontainer-no-wrap">
+//<DashboardMonthTotalCommissions />
+//<DashboardTotalAgents />
+//<DashboardTotalInvestments />
+//</div>
+
 //Important!! This adds the router object to context
 Dashboard.contextTypes = {
     router: React.PropTypes.object.isRequired
 }
+
+
+
 
 export default Dashboard;

@@ -46,6 +46,9 @@ class RightPanel extends React.Component {
     render() {
         return <div>
             <div className="fixed right-panel animated fadeInRight">
+                <div className="top-bar-logo-container">
+                    <img className="top-bar-logo" src="../public/images/neto-logo.png"/>
+                </div>
                 <RightPanelItem title={strings.dashboard} onPanelItemClick={this.onPanelItemClick.bind(this)}/>
                 <RightPanelItem title={strings.commissions} onPanelItemClick={this.onPanelItemClick.bind(this)}/>
                 <RightPanelItem title={strings.agents} onPanelItemClick={this.onPanelItemClick.bind(this)}/>

@@ -77,8 +77,9 @@ body
 {
     top: 0;
     left: 0;
+    right: 250px;
     width: 100%;
-    height: 64px;
+    height: 70px;
     background: white;
 
     /*This makes div occupy full width*/
@@ -87,9 +88,7 @@ body
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
-    box-shadow: 0px 1px 0px #CFCFCF;
-    -webkit-box-shadow: 0px 1px 0px #CFCFCF;
-    -moz-box-shadow: 0px 1px 0px #CFCFCF;
+    border-bottom: 1px solid #cfd0d4;
 }
 
 .shadow
@@ -101,17 +100,29 @@ body
 
 .right-panel
 {
-    top: 64px;
-    bottom: 0px;
-    height: 100%;
+    top: 0;
+    /*bottom: 5px;*/
+    height: calc(100% - 5px);
     width: 250px;
-    background-color: #363636;
+    background-color: #2f3436;
+    border-bottom: 5px solid #4f875a;
 }
 
 .right-panel-item
 {
     width: 250px;
     height: 50px;
+}
+
+.right-panel-bottom-color
+{
+    right: 0px;
+    bottom: 55px;
+    height: 5px;
+    width: 250px;
+    background-color: #4f875a;
+    position: fixed;
+    z-index: 999999;
 }
 
 .right-panel-item-button-dashboard
@@ -143,12 +154,12 @@ body
 .right-panel-item-button:hover
 {
     outline:none;
-    background-color: #292929;
+    background-color: #1e2223;
 }
 .right-panel-item-button:active
 {
     outline:none;
-    background-color: #222222;
+    background-color: #25292a;
 }
 
 .right-panel-item-button:focus
@@ -305,10 +316,17 @@ body
     width: 100%;
 }
 
+.top-bar-logo-container
+{
+    width: 250px;
+    height: 70px;
+    background-color: #25292a;
+    border-bottom: 1px solid #35393a;
+}
+
 .top-bar-logo
 {
-    margin-left:110px;
-    margin-right:10px;
+    margin: 13px 5px 13px 110px;
     min-height:44px;
     min-width: 125px;
 }
@@ -316,7 +334,7 @@ body
 .user-box
 {
     width: 300px;
-    margin-right: 5px;
+    margin-right: 20px;
 }
 
 .user-avatar {
@@ -392,52 +410,91 @@ body
 
 .dashboard-page
 {
-    width: calc(100% - 250px);
-    height: calc(100% - 64px);
+    /*width: calc(100% - 250px);*/
+    /*height: calc(100% - 170px);*/
+    /*width: 100px;*/
+    /*height: 100px;*/
     position: absolute;
-    top: 64px;
-    right: 250px;
+    top: 100px;
+    right: 280px;
+    left: 30px;
+    bottom: 30px;
+    /*margin: 20px;*/
+    /*background-color: #5f5b59;*/
 }
 
-.dashboard-page-section
+.dashboard-date-box
 {
-    display: flex;
-    justify-content: center;
+    width: 150px;
+    height: 30px;
+    background-color: white;
+    margin-bottom: 20px;
 }
+
+/*.dashboard-page-section*/
+/*{*/
+    /*display: flex;*/
+    /*justify-content: center;*/
+/*}*/
 
 .commissions-page
 {
     width: calc(100% - 250px);
-    height: calc(100% - 64px);
+    height: calc(100% - 70px);
     //background-color: green;
     position: absolute;
-    top: 64px;
+    top: 70px;
     right: 250px;
 }
 
 .agents-page
 {
     width: calc(100% - 250px);
-    height: calc(100% - 64px);
+    height: calc(100% - 70px);
     //background-color: blue;
     position: absolute;
-    top: 64px;
+    top: 70px;
     right: 250px;
 }
 
-.dashboard-large-box
+/*.dashboard-large-box*/
+/*{*/
+    /*width: 600px;*/
+    /*height: 370px;*/
+    /*background-color: white;*/
+    /*margin: 30px;*/
+/*}*/
+
+/*.dashboard-small-box {*/
+    /*width: 380px;*/
+    /*height: 220px;*/
+    /*background-color: white;*/
+    /*margin: 30px;*/
+/*}*/
+
+.dashboard-horizontal-spacer
 {
-    width: 600px;
+    width: 20px;
     height: 370px;
-    background-color: white;
-    margin: 30px;
 }
 
-.dashboard-small-box {
-    width: 380px;
-    height: 220px;
-    background-color: white;
-    margin: 30px;
+.dashboard-vertical-spacer
+{
+    height: 20px;
+    width: 100%;
+}
+
+.dashboard-stats-container
+{
+    width: calc(50% - 10px);
+    height: 370px;
+}
+
+.dashboard-stats-container-top
+{
+    width: 100%;
+    height: 175px;
+    /*background-color: white;*/
 }
 
 .dashboard-commission-change-chart
@@ -447,19 +504,28 @@ body
 
 .dashboard-rank-table
 {
+    width: calc(50% - 10px);
+    height: 370px;
+    background-color: white;
 }
 
 .dashboard-month-total-commissions
 {
-
+    width: calc(50% - 10px);
+    height: 175px;
+    background-color: white;
 }
 
-.dashboard-total-agents
+.dashboard-month-total-agents
 {
-
+    width: calc(50% - 10px);
+    height: 175px;
+    background-color: white;
 }
 
 .dashboard-total-investments
 {
-
+    width: 100%;
+    height: 175px;
+    background-color: white;
 }

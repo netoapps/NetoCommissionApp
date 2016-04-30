@@ -132,7 +132,6 @@
 	    }, {
 	        key: 'onPanelItemClick',
 	        value: function onPanelItemClick(item) {
-	            console.log(item);
 	            if (_strings.strings.dashboard === item) {
 	                this.context.router.push('/app/dashboard');
 	            }
@@ -28116,8 +28115,27 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var DashboardRankTable = function (_React$Component) {
-	    _inherits(DashboardRankTable, _React$Component);
+	var DashboardDateSelect = function (_React$Component) {
+	    _inherits(DashboardDateSelect, _React$Component);
+	
+	    function DashboardDateSelect(props) {
+	        _classCallCheck(this, DashboardDateSelect);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardDateSelect).call(this, props));
+	    }
+	
+	    _createClass(DashboardDateSelect, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement('div', { className: 'dashboard-date-box shadow' });
+	        }
+	    }]);
+	
+	    return DashboardDateSelect;
+	}(_react2.default.Component);
+	
+	var DashboardRankTable = function (_React$Component2) {
+	    _inherits(DashboardRankTable, _React$Component2);
 	
 	    function DashboardRankTable(props) {
 	        _classCallCheck(this, DashboardRankTable);
@@ -28128,15 +28146,15 @@
 	    _createClass(DashboardRankTable, [{
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement('div', { className: 'dashboard-large-box dashboard-rank-table shadow' });
+	            return _react2.default.createElement('div', { className: 'dashboard-rank-table shadow' });
 	        }
 	    }]);
 	
 	    return DashboardRankTable;
 	}(_react2.default.Component);
 	
-	var DashboardCommissionChangeChart = function (_React$Component2) {
-	    _inherits(DashboardCommissionChangeChart, _React$Component2);
+	var DashboardCommissionChangeChart = function (_React$Component3) {
+	    _inherits(DashboardCommissionChangeChart, _React$Component3);
 	
 	    function DashboardCommissionChangeChart(props) {
 	        _classCallCheck(this, DashboardCommissionChangeChart);
@@ -28147,15 +28165,15 @@
 	    _createClass(DashboardCommissionChangeChart, [{
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement('div', { className: 'dashboard-large-box dashboard-commission-change-chart shadow' });
+	            return _react2.default.createElement('div', { className: 'dashboard-commission-change-chart shadow' });
 	        }
 	    }]);
 	
 	    return DashboardCommissionChangeChart;
 	}(_react2.default.Component);
 	
-	var DashboardMonthTotalCommissions = function (_React$Component3) {
-	    _inherits(DashboardMonthTotalCommissions, _React$Component3);
+	var DashboardMonthTotalCommissions = function (_React$Component4) {
+	    _inherits(DashboardMonthTotalCommissions, _React$Component4);
 	
 	    function DashboardMonthTotalCommissions(props) {
 	        _classCallCheck(this, DashboardMonthTotalCommissions);
@@ -28166,34 +28184,34 @@
 	    _createClass(DashboardMonthTotalCommissions, [{
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement('div', { className: 'dashboard-small-box dashboard-month-total-commissions shadow' });
+	            return _react2.default.createElement('div', { className: 'dashboard-month-total-commissions shadow' });
 	        }
 	    }]);
 	
 	    return DashboardMonthTotalCommissions;
 	}(_react2.default.Component);
 	
-	var DashboardTotalAgents = function (_React$Component4) {
-	    _inherits(DashboardTotalAgents, _React$Component4);
+	var DashboardMonthTotalAgents = function (_React$Component5) {
+	    _inherits(DashboardMonthTotalAgents, _React$Component5);
 	
-	    function DashboardTotalAgents(props) {
-	        _classCallCheck(this, DashboardTotalAgents);
+	    function DashboardMonthTotalAgents(props) {
+	        _classCallCheck(this, DashboardMonthTotalAgents);
 	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardTotalAgents).call(this, props));
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardMonthTotalAgents).call(this, props));
 	    }
 	
-	    _createClass(DashboardTotalAgents, [{
+	    _createClass(DashboardMonthTotalAgents, [{
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement('div', { className: 'dashboard-small-box dashboard-total-agents shadow' });
+	            return _react2.default.createElement('div', { className: 'dashboard-month-total-agents shadow' });
 	        }
 	    }]);
 	
-	    return DashboardTotalAgents;
+	    return DashboardMonthTotalAgents;
 	}(_react2.default.Component);
 	
-	var DashboardTotalInvestments = function (_React$Component5) {
-	    _inherits(DashboardTotalInvestments, _React$Component5);
+	var DashboardTotalInvestments = function (_React$Component6) {
+	    _inherits(DashboardTotalInvestments, _React$Component6);
 	
 	    function DashboardTotalInvestments(props) {
 	        _classCallCheck(this, DashboardTotalInvestments);
@@ -28204,26 +28222,50 @@
 	    _createClass(DashboardTotalInvestments, [{
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement('div', { className: 'dashboard-small-box dashboard-total-investments shadow' });
+	            return _react2.default.createElement('div', { className: 'dashboard-total-investments shadow' });
 	        }
 	    }]);
 	
 	    return DashboardTotalInvestments;
 	}(_react2.default.Component);
 	
-	var Dashboard = function (_React$Component6) {
-	    _inherits(Dashboard, _React$Component6);
+	var DashboardMonthStats = function (_React$Component7) {
+	    _inherits(DashboardMonthStats, _React$Component7);
+	
+	    function DashboardMonthStats(props) {
+	        _classCallCheck(this, DashboardMonthStats);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardMonthStats).call(this, props));
+	    }
+	
+	    _createClass(DashboardMonthStats, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'hcontainer-no-wrap' },
+	                _react2.default.createElement(DashboardMonthTotalCommissions, null),
+	                _react2.default.createElement(DashboardMonthTotalAgents, null)
+	            );
+	        }
+	    }]);
+	
+	    return DashboardMonthStats;
+	}(_react2.default.Component);
+	
+	var Dashboard = function (_React$Component8) {
+	    _inherits(Dashboard, _React$Component8);
 	
 	    function Dashboard(props) {
 	        _classCallCheck(this, Dashboard);
 	
-	        var _this6 = _possibleConstructorReturn(this, Object.getPrototypeOf(Dashboard).call(this, props));
+	        var _this8 = _possibleConstructorReturn(this, Object.getPrototypeOf(Dashboard).call(this, props));
 	
-	        _this6.state = {
+	        _this8.state = {
 	            loginData: _authService2.default.getLoginData()
 	        };
 	
-	        return _this6;
+	        return _this8;
 	    }
 	
 	    _createClass(Dashboard, [{
@@ -28232,18 +28274,25 @@
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'dashboard-page animated fadeIn' },
+	                _react2.default.createElement(DashboardDateSelect, null),
 	                _react2.default.createElement(
 	                    'div',
-	                    { className: 'dashboard-page-section hcontainer-no-wrap' },
+	                    { className: 'hcontainer-no-wrap' },
 	                    _react2.default.createElement(DashboardRankTable, null),
-	                    _react2.default.createElement(DashboardCommissionChangeChart, null)
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'dashboard-page-section hcontainer-no-wrap' },
-	                    _react2.default.createElement(DashboardMonthTotalCommissions, null),
-	                    _react2.default.createElement(DashboardTotalAgents, null),
-	                    _react2.default.createElement(DashboardTotalInvestments, null)
+	                    _react2.default.createElement('div', { className: 'dashboard-horizontal-spacer' }),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'dashboard-stats-container' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'hcontainer-no-wrap dashboard-stats-container-top' },
+	                            _react2.default.createElement(DashboardMonthTotalCommissions, null),
+	                            _react2.default.createElement('div', { className: 'dashboard-horizontal-spacer' }),
+	                            _react2.default.createElement(DashboardMonthTotalAgents, null)
+	                        ),
+	                        _react2.default.createElement('div', { className: 'dashboard-vertical-spacer' }),
+	                        _react2.default.createElement(DashboardTotalInvestments, null)
+	                    )
 	                )
 	            );
 	        }
@@ -28251,6 +28300,19 @@
 	
 	    return Dashboard;
 	}(_react2.default.Component);
+	
+	//<DashboardCommissionChangeChart />
+	
+	//<div className="dashboard-page-section hcontainer-no-wrap">
+	//    <DashboardRankTable />
+	//    <DashboardCommissionChangeChart />
+	//</div>
+	//
+	//<div className="dashboard-page-section hcontainer-no-wrap">
+	//<DashboardMonthTotalCommissions />
+	//<DashboardTotalAgents />
+	//<DashboardTotalInvestments />
+	//</div>
 	
 	//Important!! This adds the router object to context
 	
@@ -28313,7 +28375,6 @@
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'top-bar-container hcontainer-no-wrap' },
-	                        _react2.default.createElement('img', { className: 'top-bar-logo', src: '../public/images/neto-logo.png' }),
 	                        _react2.default.createElement(_userBox2.default, { loginData: this.props.loginData, onLogout: this.props.onLogout })
 	                    )
 	                )
@@ -28504,6 +28565,11 @@
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'fixed right-panel animated fadeInRight' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'top-bar-logo-container' },
+	                        _react2.default.createElement('img', { className: 'top-bar-logo', src: '../public/images/neto-logo.png' })
+	                    ),
 	                    _react2.default.createElement(RightPanelItem, { title: _strings.strings.dashboard, onPanelItemClick: this.onPanelItemClick.bind(this) }),
 	                    _react2.default.createElement(RightPanelItem, { title: _strings.strings.commissions, onPanelItemClick: this.onPanelItemClick.bind(this) }),
 	                    _react2.default.createElement(RightPanelItem, { title: _strings.strings.agents, onPanelItemClick: this.onPanelItemClick.bind(this) })

@@ -40,7 +40,6 @@ class App extends React.Component {
 
     onPanelItemClick(item)
     {
-        console.log(item)
         if(strings.dashboard === item)
         {
             this.context.router.push('/app/dashboard')
