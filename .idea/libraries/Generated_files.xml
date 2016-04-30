@@ -2,17 +2,17 @@
   <library name="Generated files" type="javaScript">
     <properties>
       <sourceFilesUrls>
-        <item url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/inpath/test/inpath-compiled.js" />
-        <item url="file://$PROJECT_DIR$/node_modules/sudo/lib/sudo-compiled.js" />
+        <item url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/inpath/example-compiled.js" />
+        <item url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/pidof/lib/pidof-compiled.js" />
         <item url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/read/node_modules/mute-stream/mute-compiled.js" />
         <item url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/read/lib/read-compiled.js" />
-        <item url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/pidof/lib/pidof-compiled.js" />
-        <item url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/inpath/example-compiled.js" />
-        <item url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/pidof/test/pidof-compiled.js" />
-        <item url="file://$PROJECT_DIR$/src/client/public/js/bundle-compiled.js" />
-        <item url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/pidof/example-compiled.js" />
+        <item url="file://$PROJECT_DIR$/node_modules/sudo/lib/sudo-compiled.js" />
         <item url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/inpath/lib/inpath-compiled.js" />
         <item url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/read/node_modules/mute-stream/test/basic-compiled.js" />
+        <item url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/pidof/test/pidof-compiled.js" />
+        <item url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/inpath/test/inpath-compiled.js" />
+        <item url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/pidof/example-compiled.js" />
+        <item url="file://$PROJECT_DIR$/src/client/public/js/bundle-compiled.js" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
@@ -181,17 +181,17 @@
       <root url="file://$PROJECT_DIR$/node_modules/i/test/inflector/cases-compiled.js" />
       <root url="file://$PROJECT_DIR$/node_modules/i/test/inflector/methods-test-compiled.js" />
       <root url="file://$PROJECT_DIR$/node_modules/i/test/utils/string-test-compiled.js" />
-      <root url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/inpath/test/inpath-compiled.js" />
-      <root url="file://$PROJECT_DIR$/node_modules/sudo/lib/sudo-compiled.js" />
+      <root url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/inpath/example-compiled.js" />
+      <root url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/pidof/lib/pidof-compiled.js" />
       <root url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/read/node_modules/mute-stream/mute-compiled.js" />
       <root url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/read/lib/read-compiled.js" />
-      <root url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/pidof/lib/pidof-compiled.js" />
-      <root url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/inpath/example-compiled.js" />
-      <root url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/pidof/test/pidof-compiled.js" />
-      <root url="file://$PROJECT_DIR$/src/client/public/js/bundle-compiled.js" />
-      <root url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/pidof/example-compiled.js" />
+      <root url="file://$PROJECT_DIR$/node_modules/sudo/lib/sudo-compiled.js" />
       <root url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/inpath/lib/inpath-compiled.js" />
       <root url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/read/node_modules/mute-stream/test/basic-compiled.js" />
+      <root url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/pidof/test/pidof-compiled.js" />
+      <root url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/inpath/test/inpath-compiled.js" />
+      <root url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/pidof/example-compiled.js" />
+      <root url="file://$PROJECT_DIR$/src/client/public/js/bundle-compiled.js" />
     </CLASSES>
     <SOURCES />
   </library>
