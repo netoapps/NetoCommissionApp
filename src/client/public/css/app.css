@@ -499,7 +499,9 @@ body
 
 .dashboard-commission-change-chart
 {
-
+    width: 100%;
+    height: 370px;
+    background-color: white;
 }
 
 .dashboard-rank-table

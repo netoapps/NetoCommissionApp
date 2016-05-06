@@ -75,19 +75,19 @@
 	
 	var _dashboardPage2 = _interopRequireDefault(_dashboardPage);
 	
-	var _commissionsPage = __webpack_require__(/*! ./views/commissions-page.jsx */ 241);
+	var _commissionsPage = __webpack_require__(/*! ./views/commissions-page.jsx */ 238);
 	
 	var _commissionsPage2 = _interopRequireDefault(_commissionsPage);
 	
-	var _agentsPage = __webpack_require__(/*! ./views/agents-page.jsx */ 242);
+	var _agentsPage = __webpack_require__(/*! ./views/agents-page.jsx */ 239);
 	
 	var _agentsPage2 = _interopRequireDefault(_agentsPage);
 	
-	var _topBar = __webpack_require__(/*! ./views/top-bar.jsx */ 238);
+	var _topBar = __webpack_require__(/*! ./views/top-bar.jsx */ 240);
 	
 	var _topBar2 = _interopRequireDefault(_topBar);
 	
-	var _rightPanel = __webpack_require__(/*! ./views/right-panel.jsx */ 240);
+	var _rightPanel = __webpack_require__(/*! ./views/right-panel.jsx */ 242);
 	
 	var _rightPanel2 = _interopRequireDefault(_rightPanel);
 	
@@ -28115,19 +28115,101 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+	function getMonthName(monthNum) {
+	    var monthOptions = ["ינואר", "פברואר", "מרץ", "אפריל", "מאי", "יוני", "יולי", "אוגוסט", "ספטמבר", "אוקטובר", "נובמבר", "דצמבר"];
+	
+	    if (monthNum > 12 || monthNum < 1) {
+	        return monthOptions[0];
+	    }
+	    return monthOptions[monthNum - 1];
+	}
+	
 	var DashboardDateSelect = function (_React$Component) {
 	    _inherits(DashboardDateSelect, _React$Component);
 	
 	    function DashboardDateSelect(props) {
 	        _classCallCheck(this, DashboardDateSelect);
 	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardDateSelect).call(this, props));
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardDateSelect).call(this, props));
+	
+	        var date = new Date();
+	        var currentMonth = date.getMonth();
+	        var currentYear = date.getFullYear();
+	
+	        _this.state = {
+	            selectedMonth: getMonthName(currentMonth),
+	            selectedYear: currentYear.toString()
+	        };
+	        return _this;
 	    }
 	
 	    _createClass(DashboardDateSelect, [{
+	        key: 'onMonthChange',
+	        value: function onMonthChange(event) {
+	            event.preventDefault();
+	            if (event.target.value != this.state.selectedMonth) {
+	                this.setState({ selectedMonth: event.target.value });
+	            }
+	        }
+	    }, {
+	        key: 'onYearChange',
+	        value: function onYearChange(event) {
+	            event.preventDefault();
+	            if (event.target.value != this.state.selectedYear) {
+	                this.setState({ selectedYear: event.target.value });
+	            }
+	        }
+	    }, {
+	        key: 'onLoadClick',
+	        value: function onLoadClick() {}
+	    }, {
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement('div', { className: 'dashboard-date-box shadow' });
+	
+	            var monthOptions = [];
+	            for (var option = 1; option <= 12; option++) {
+	                var monthName = getMonthName(option);
+	                monthOptions[option] = _react2.default.createElement(
+	                    'option',
+	                    { key: option, value: monthName },
+	                    monthName
+	                );
+	            }
+	
+	            var yearOptions = [];
+	            var date = new Date();
+	            var currentYear = date.getFullYear();
+	            currentYear = currentYear < 9999 ? currentYear : 2050;
+	            option = 0;
+	            for (var startYear = 2010; startYear <= currentYear; startYear++) {
+	                var yearName = startYear.toString();
+	                yearOptions[option] = _react2.default.createElement(
+	                    'option',
+	                    { key: option, value: yearName },
+	                    yearName
+	                );
+	                option++;
+	            }
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'dashboard-date-box hcontainer-no-wrap' },
+	                _react2.default.createElement(
+	                    'select',
+	                    { onChange: this.onMonthChange.bind(this), defaultValue: this.state.selectedMonth },
+	                    monthOptions
+	                ),
+	                _react2.default.createElement(
+	                    'select',
+	                    { onChange: this.onYearChange.bind(this), defaultValue: this.state.selectedYear },
+	                    yearOptions
+	                ),
+	                _react2.default.createElement(
+	                    'button',
+	                    { className: '', onClick: this.onLoadClick.bind(this) },
+	                    "טען"
+	                )
+	            );
 	        }
 	    }]);
 	
@@ -28293,7 +28375,9 @@
 	                        _react2.default.createElement('div', { className: 'dashboard-vertical-spacer' }),
 	                        _react2.default.createElement(DashboardTotalInvestments, null)
 	                    )
-	                )
+	                ),
+	                _react2.default.createElement('div', { className: 'dashboard-vertical-spacer' }),
+	                _react2.default.createElement(DashboardCommissionChangeChart, null)
 	            );
 	        }
 	    }]);
@@ -28325,6 +28409,144 @@
 
 /***/ },
 /* 238 */
+/*!***************************************************!*\
+  !*** ./src/client/app/views/commissions-page.jsx ***!
+  \***************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _authService = __webpack_require__(/*! ../services/auth-service */ 225);
+	
+	var _authService2 = _interopRequireDefault(_authService);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Commissions = function (_React$Component) {
+	    _inherits(Commissions, _React$Component);
+	
+	    function Commissions(props) {
+	        _classCallCheck(this, Commissions);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Commissions).call(this, props));
+	
+	        _this.state = {
+	            loginData: _authService2.default.getLoginData()
+	        };
+	
+	        return _this;
+	    }
+	
+	    _createClass(Commissions, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'commissions-page animated fadeIn' },
+	                'Commissions'
+	            );
+	        }
+	    }]);
+	
+	    return Commissions;
+	}(_react2.default.Component);
+	
+	//Important!! This adds the router object to context
+	
+	
+	Commissions.contextTypes = {
+	    router: _react2.default.PropTypes.object.isRequired
+	};
+	
+	exports.default = Commissions;
+
+/***/ },
+/* 239 */
+/*!**********************************************!*\
+  !*** ./src/client/app/views/agents-page.jsx ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _authService = __webpack_require__(/*! ../services/auth-service */ 225);
+	
+	var _authService2 = _interopRequireDefault(_authService);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Agents = function (_React$Component) {
+	    _inherits(Agents, _React$Component);
+	
+	    function Agents(props) {
+	        _classCallCheck(this, Agents);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Agents).call(this, props));
+	
+	        _this.state = {
+	            loginData: _authService2.default.getLoginData()
+	        };
+	
+	        return _this;
+	    }
+	
+	    _createClass(Agents, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'agents-page animated fadeIn' },
+	                'Agents'
+	            );
+	        }
+	    }]);
+	
+	    return Agents;
+	}(_react2.default.Component);
+	
+	//Important!! This adds the router object to context
+	
+	
+	Agents.contextTypes = {
+	    router: _react2.default.PropTypes.object.isRequired
+	};
+	
+	exports.default = Agents;
+
+/***/ },
+/* 240 */
 /*!******************************************!*\
   !*** ./src/client/app/views/top-bar.jsx ***!
   \******************************************/
@@ -28342,7 +28564,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _userBox = __webpack_require__(/*! ./user-box.jsx */ 239);
+	var _userBox = __webpack_require__(/*! ./user-box.jsx */ 241);
 	
 	var _userBox2 = _interopRequireDefault(_userBox);
 	
@@ -28388,7 +28610,7 @@
 	exports.default = TopBar;
 
 /***/ },
-/* 239 */
+/* 241 */
 /*!*******************************************!*\
   !*** ./src/client/app/views/user-box.jsx ***!
   \*******************************************/
@@ -28466,7 +28688,7 @@
 	exports.default = UserBox;
 
 /***/ },
-/* 240 */
+/* 242 */
 /*!**********************************************!*\
   !*** ./src/client/app/views/right-panel.jsx ***!
   \**********************************************/
@@ -28582,144 +28804,6 @@
 	}(_react2.default.Component);
 	
 	exports.default = RightPanel;
-
-/***/ },
-/* 241 */
-/*!***************************************************!*\
-  !*** ./src/client/app/views/commissions-page.jsx ***!
-  \***************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _authService = __webpack_require__(/*! ../services/auth-service */ 225);
-	
-	var _authService2 = _interopRequireDefault(_authService);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Commissions = function (_React$Component) {
-	    _inherits(Commissions, _React$Component);
-	
-	    function Commissions(props) {
-	        _classCallCheck(this, Commissions);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Commissions).call(this, props));
-	
-	        _this.state = {
-	            loginData: _authService2.default.getLoginData()
-	        };
-	
-	        return _this;
-	    }
-	
-	    _createClass(Commissions, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'commissions-page animated fadeIn' },
-	                'Commissions'
-	            );
-	        }
-	    }]);
-	
-	    return Commissions;
-	}(_react2.default.Component);
-	
-	//Important!! This adds the router object to context
-	
-	
-	Commissions.contextTypes = {
-	    router: _react2.default.PropTypes.object.isRequired
-	};
-	
-	exports.default = Commissions;
-
-/***/ },
-/* 242 */
-/*!**********************************************!*\
-  !*** ./src/client/app/views/agents-page.jsx ***!
-  \**********************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _authService = __webpack_require__(/*! ../services/auth-service */ 225);
-	
-	var _authService2 = _interopRequireDefault(_authService);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Agents = function (_React$Component) {
-	    _inherits(Agents, _React$Component);
-	
-	    function Agents(props) {
-	        _classCallCheck(this, Agents);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Agents).call(this, props));
-	
-	        _this.state = {
-	            loginData: _authService2.default.getLoginData()
-	        };
-	
-	        return _this;
-	    }
-	
-	    _createClass(Agents, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'agents-page animated fadeIn' },
-	                'Agents'
-	            );
-	        }
-	    }]);
-	
-	    return Agents;
-	}(_react2.default.Component);
-	
-	//Important!! This adds the router object to context
-	
-	
-	Agents.contextTypes = {
-	    router: _react2.default.PropTypes.object.isRequired
-	};
-	
-	exports.default = Agents;
 
 /***/ }
 /******/ ]);
