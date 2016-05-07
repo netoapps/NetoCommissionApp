@@ -30,6 +30,11 @@ body
     flex-flow: row nowrap;
 }
 
+.fixed-size-button
+{
+    min-width: 110px;  !important;
+    max-width: 110px;  !important;
+}
 
 .right-align
 {
@@ -471,6 +476,12 @@ body
     /*background-color: white;*/
     /*margin: 30px;*/
 /*}*/
+
+.dashboard-buttons-horizontal-spacer
+{
+    width: 10px;
+    height: 100%;
+}
 
 .dashboard-horizontal-spacer
 {

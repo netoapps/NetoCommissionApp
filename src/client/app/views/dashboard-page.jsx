@@ -3,6 +3,7 @@ import AuthService from '../services/auth-service'
 import Button from 'muicss/lib/react/button'
 import Dropdown from 'muicss/lib/react/dropdown';
 import DropdownItem from 'muicss/lib/react/dropdown-item';
+import FixedWidthDropdown from './FixedWidthDropdown.jsx';
 
 
 function getMonthName(monthNum)
@@ -69,15 +70,14 @@ class DashboardDateSelect extends React.Component {
 
         return (
             <div className="hcontainer-no-wrap">
-
-                <Dropdown label={this.state.selectedMonth} alignMenu="right" >
-                    {months}
-                </Dropdown>
-
-                <Dropdown label={this.state.selectedYear} alignMenu="right" >
+                <FixedWidthDropdown label={this.state.selectedMonth} alignMenu="right" >
+                        {months}
+                </FixedWidthDropdown>
+                <div className="dashboard-buttons-horizontal-spacer"/>
+                <FixedWidthDropdown className="fixed-size-button" label={this.state.selectedYear} alignMenu="right" >
                     {years}
-                </Dropdown>
-
+                </FixedWidthDropdown>
+                <div className="dashboard-buttons-horizontal-spacer"/>
                 <Button className="shadow" onClick={this.onLoadClick.bind(this)} color="primary">{"טען"}</Button>
             </div>
         );
@@ -166,7 +166,6 @@ class DashboardMonthStats extends React.Component {
         super(props);
 
     }
-
     render () {
         return (
                 <div className="hcontainer-no-wrap">
@@ -184,9 +183,7 @@ class Dashboard extends React.Component {
         this.state = {
             loginData: AuthService.getLoginData()
         };
-
     }
-
     render () {
         return (
             <div className="dashboard-page animated fadeIn">

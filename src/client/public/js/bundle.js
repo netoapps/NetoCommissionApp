@@ -75,19 +75,19 @@
 	
 	var _dashboardPage2 = _interopRequireDefault(_dashboardPage);
 	
-	var _commissionsPage = __webpack_require__(/*! ./views/commissions-page.jsx */ 241);
+	var _commissionsPage = __webpack_require__(/*! ./views/commissions-page.jsx */ 242);
 	
 	var _commissionsPage2 = _interopRequireDefault(_commissionsPage);
 	
-	var _agentsPage = __webpack_require__(/*! ./views/agents-page.jsx */ 242);
+	var _agentsPage = __webpack_require__(/*! ./views/agents-page.jsx */ 243);
 	
 	var _agentsPage2 = _interopRequireDefault(_agentsPage);
 	
-	var _topBar = __webpack_require__(/*! ./views/top-bar.jsx */ 243);
+	var _topBar = __webpack_require__(/*! ./views/top-bar.jsx */ 244);
 	
 	var _topBar2 = _interopRequireDefault(_topBar);
 	
-	var _rightPanel = __webpack_require__(/*! ./views/right-panel.jsx */ 245);
+	var _rightPanel = __webpack_require__(/*! ./views/right-panel.jsx */ 246);
 	
 	var _rightPanel2 = _interopRequireDefault(_rightPanel);
 	
@@ -27872,6 +27872,10 @@
 	
 	var _dropdownItem2 = _interopRequireDefault(_dropdownItem);
 	
+	var _FixedWidthDropdown = __webpack_require__(/*! ./FixedWidthDropdown.jsx */ 241);
+	
+	var _FixedWidthDropdown2 = _interopRequireDefault(_FixedWidthDropdown);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -27955,15 +27959,17 @@
 	                'div',
 	                { className: 'hcontainer-no-wrap' },
 	                _react2.default.createElement(
-	                    _dropdown2.default,
+	                    _FixedWidthDropdown2.default,
 	                    { label: this.state.selectedMonth, alignMenu: 'right' },
 	                    months
 	                ),
+	                _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
 	                _react2.default.createElement(
-	                    _dropdown2.default,
-	                    { label: this.state.selectedYear, alignMenu: 'right' },
+	                    _FixedWidthDropdown2.default,
+	                    { className: 'fixed-size-button', label: this.state.selectedYear, alignMenu: 'right' },
 	                    years
 	                ),
+	                _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
 	                _react2.default.createElement(
 	                    _button2.default,
 	                    { className: 'shadow', onClick: this.onLoadClick.bind(this), color: 'primary' },
@@ -28106,7 +28112,6 @@
 	        _this8.state = {
 	            loginData: _authService2.default.getLoginData()
 	        };
-	
 	        return _this8;
 	    }
 	
@@ -29599,6 +29604,257 @@
 
 /***/ },
 /* 241 */
+/*!*****************************************************!*\
+  !*** ./src/client/app/views/FixedWidthDropdown.jsx ***!
+  \*****************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _button = __webpack_require__(/*! muicss/lib/react/button */ 233);
+	
+	var _button2 = _interopRequireDefault(_button);
+	
+	var _caret = __webpack_require__(/*! muicss/lib/react/caret */ 239);
+	
+	var _caret2 = _interopRequireDefault(_caret);
+	
+	var _jqLite = __webpack_require__(/*! muicss/lib/js/lib/jqLite */ 235);
+	
+	var jqLite = _interopRequireWildcard(_jqLite);
+	
+	var _util = __webpack_require__(/*! muicss/lib/js/lib/util */ 236);
+	
+	var util = _interopRequireWildcard(_util);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var PropTypes = _react2.default.PropTypes,
+	    dropdownClass = 'mui-dropdown',
+	    menuClass = 'mui-dropdown__menu',
+	    openClass = 'mui--is-open',
+	    rightClass = 'mui-dropdown__menu--right';
+	
+	/**
+	 * Dropdown constructor
+	 * @class
+	 */
+	
+	var FixedWidthDropdown = function (_React$Component) {
+	    _inherits(FixedWidthDropdown, _React$Component);
+	
+	    function FixedWidthDropdown(props) {
+	        _classCallCheck(this, FixedWidthDropdown);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FixedWidthDropdown).call(this, props));
+	
+	        _this.state = {
+	            opened: false,
+	            menuTop: 0
+	        };
+	
+	        var cb = util.callback;
+	        _this.selectCB = cb(_this, 'select');
+	        _this.onClickCB = cb(_this, 'onClick');
+	        _this.onOutsideClickCB = cb(_this, 'onOutsideClick');
+	        return _this;
+	    }
+	
+	    _createClass(FixedWidthDropdown, [{
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            document.addEventListener('click', this.onOutsideClickCB);
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            document.removeEventListener('click', this.onOutsideClickCB);
+	        }
+	    }, {
+	        key: 'onClick',
+	        value: function onClick(ev) {
+	            // only left clicks
+	            if (ev.button !== 0) return;
+	
+	            // exit if toggle button is disabled
+	            if (this.props.disabled) return;
+	
+	            if (!ev.defaultPrevented) {
+	                this.toggle();
+	
+	                // execute <Dropdown> onClick method
+	                var onClickFn = this.props.onClick;
+	                onClickFn && onClickFn(ev);
+	            }
+	        }
+	    }, {
+	        key: 'toggle',
+	        value: function toggle() {
+	            // exit if no menu element
+	            if (!this.props.children) {
+	                return util.raiseError('Dropdown menu element not found');
+	            }
+	
+	            if (this.state.opened) this.close();else this.open();
+	        }
+	    }, {
+	        key: 'open',
+	        value: function open() {
+	            // position menu element below toggle button
+	            var wrapperRect = this.refs.wrapperEl.getBoundingClientRect(),
+	                toggleRect = void 0;
+	
+	            toggleRect = this.refs.button.refs.buttonEl.getBoundingClientRect();
+	
+	            this.setState({
+	                opened: true,
+	                menuTop: toggleRect.top - wrapperRect.top + toggleRect.height
+	            });
+	        }
+	    }, {
+	        key: 'close',
+	        value: function close() {
+	            this.setState({ opened: false });
+	        }
+	    }, {
+	        key: 'select',
+	        value: function select(ev) {
+	            // onSelect callback
+	            if (this.props.onSelect && ev.target.tagName === 'A') {
+	                this.props.onSelect(ev.target.getAttribute('data-mui-value'));
+	            }
+	
+	            // close menu
+	            if (!ev.defaultPrevented) this.close();
+	        }
+	    }, {
+	        key: 'onOutsideClick',
+	        value: function onOutsideClick(ev) {
+	            var isClickInside = this.refs.wrapperEl.contains(ev.target);
+	            if (!isClickInside) this.close();
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var buttonEl = void 0,
+	                menuEl = void 0,
+	                labelEl = void 0;
+	
+	            // build label
+	            if (jqLite.type(this.props.label) === 'string') {
+	                labelEl = _react2.default.createElement(
+	                    'span',
+	                    null,
+	                    this.props.label,
+	                    ' ',
+	                    _react2.default.createElement(_caret2.default, null)
+	                );
+	            } else {
+	                labelEl = this.props.label;
+	            }
+	
+	            buttonEl = _react2.default.createElement(
+	                _button2.default,
+	                { className: 'fixed-size-button shadow',
+	                    ref: 'button',
+	                    type: 'button',
+	                    onClick: this.onClickCB,
+	                    color: this.props.color,
+	                    variant: this.props.variant,
+	                    size: this.props.size,
+	                    disabled: this.props.disabled
+	                },
+	                labelEl
+	            );
+	
+	            if (this.state.opened) {
+	                var cs = {};
+	
+	                cs[menuClass] = true;
+	                cs[openClass] = this.state.opened;
+	                cs[rightClass] = this.props.alignMenu === 'right';
+	                cs = util.classNames(cs);
+	
+	                menuEl = _react2.default.createElement(
+	                    'ul',
+	                    {
+	                        ref: 'menuEl',
+	                        className: cs,
+	                        style: { top: this.state.menuTop },
+	                        onClick: this.selectCB
+	                    },
+	                    this.props.children
+	                );
+	            }
+	
+	            //let { className, children, onClick, ...other } = this.props;
+	            var _props = this.props;
+	            var className = _props.className;
+	            var children = _props.children;
+	            var onClick = _props.onClick;
+	
+	
+	            return _react2.default.createElement(
+	                'div',
+	                {
+	                    ref: 'wrapperEl',
+	                    className: dropdownClass + ' ' + className
+	                },
+	                buttonEl,
+	                menuEl
+	            );
+	        }
+	    }]);
+	
+	    return FixedWidthDropdown;
+	}(_react2.default.Component);
+	
+	FixedWidthDropdown.propTypes = {
+	    color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),
+	    variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
+	    size: PropTypes.oneOf(['default', 'small', 'large']),
+	    label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+	    alignMenu: PropTypes.oneOf(['left', 'right']),
+	    onClick: PropTypes.func,
+	    onSelect: PropTypes.func,
+	    disabled: PropTypes.bool
+	};
+	
+	FixedWidthDropdown.defaultProps = {
+	    className: '',
+	    color: 'default',
+	    variant: 'default',
+	    size: 'default',
+	    label: '',
+	    alignMenu: 'left',
+	    onClick: null,
+	    onSelect: null,
+	    disabled: false
+	};
+	
+	/** Define module API */
+	exports.default = FixedWidthDropdown;
+
+/***/ },
+/* 242 */
 /*!***************************************************!*\
   !*** ./src/client/app/views/commissions-page.jsx ***!
   \***************************************************/
@@ -29667,7 +29923,7 @@
 	exports.default = Commissions;
 
 /***/ },
-/* 242 */
+/* 243 */
 /*!**********************************************!*\
   !*** ./src/client/app/views/agents-page.jsx ***!
   \**********************************************/
@@ -29736,7 +29992,7 @@
 	exports.default = Agents;
 
 /***/ },
-/* 243 */
+/* 244 */
 /*!******************************************!*\
   !*** ./src/client/app/views/top-bar.jsx ***!
   \******************************************/
@@ -29754,7 +30010,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _userBox = __webpack_require__(/*! ./user-box.jsx */ 244);
+	var _userBox = __webpack_require__(/*! ./user-box.jsx */ 245);
 	
 	var _userBox2 = _interopRequireDefault(_userBox);
 	
@@ -29800,7 +30056,7 @@
 	exports.default = TopBar;
 
 /***/ },
-/* 244 */
+/* 245 */
 /*!*******************************************!*\
   !*** ./src/client/app/views/user-box.jsx ***!
   \*******************************************/
@@ -29878,7 +30134,7 @@
 	exports.default = UserBox;
 
 /***/ },
-/* 245 */
+/* 246 */
 /*!**********************************************!*\
   !*** ./src/client/app/views/right-panel.jsx ***!
   \**********************************************/
@@ -29898,7 +30154,7 @@
 	
 	var _strings = __webpack_require__(/*! ../constants/strings */ 230);
 	
-	var _FlatRippleButton = __webpack_require__(/*! ./FlatRippleButton.jsx */ 246);
+	var _FlatRippleButton = __webpack_require__(/*! ./FlatRippleButton.jsx */ 247);
 	
 	var _FlatRippleButton2 = _interopRequireDefault(_FlatRippleButton);
 	
@@ -30004,7 +30260,7 @@
 	exports.default = RightPanel;
 
 /***/ },
-/* 246 */
+/* 247 */
 /*!***************************************************!*\
   !*** ./src/client/app/views/FlatRippleButton.jsx ***!
   \***************************************************/

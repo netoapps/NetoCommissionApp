@@ -26,6 +26,8 @@ function NetoCommisionAppServer(){
         //Init passport
         passport.init(app);
 
+
+        ////// to start without mongoose //////
         var nodb = false;
         process.argv.forEach(function (val, index, array) {
             if(val === "nodb")
@@ -38,6 +40,7 @@ function NetoCommisionAppServer(){
         {
             mongoose.connect(config.db.connectionString,config.db.options);
         }
+        ///////////////////////////////////////
 
         //Set API/Auth routings
         routing.registerRoutes(app);
