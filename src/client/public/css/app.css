@@ -143,7 +143,7 @@ body
     text-align: right;
     height: 100%;
     width: 100%;
-    color: #d8d8d8;
+    color: #b9b9b9;
     border:none;
     margin:0;
     padding-right: 50px;
@@ -154,20 +154,20 @@ body
 .right-panel-item-button:hover
 {
     outline:none;
-    background-color: #1e2223;
-}
-.right-panel-item-button:active
-{
-    outline:none;
-    background-color: #25292a;
+    background-color: #282d2f;
 }
 
 .right-panel-item-button:focus
 {
     outline:none;
+    color: #ffffff;
+    background-color: #282d2f;
 }
 
-
+.right-panel-item-button:active
+{
+    outline:none;
+}
 
 .login-page
 {
@@ -426,8 +426,8 @@ body
 .dashboard-date-box
 {
     width: 150px;
-    height: 30px;
-    background-color: white;
+    maheight: 30px;
+    /*background-color: white;*/
     margin-bottom: 20px;
 }
 
@@ -499,7 +499,9 @@ body
 
 .dashboard-commission-change-chart
 {
-
+    width: 100%;
+    height: 370px;
+    background-color: white;
 }
 
 .dashboard-rank-table

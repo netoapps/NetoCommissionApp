@@ -8,7 +8,6 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var routing = require('./Routes');
-
 var passport = require('./Auth/passport');
 
 
@@ -27,8 +26,18 @@ function NetoCommisionAppServer(){
         //Init passport
         passport.init(app);
 
+        var nodb = false;
+        process.argv.forEach(function (val, index, array) {
+            if(val === "nodb")
+            {
+                nodb = true;
+            }
+        });
         //connect to database
-        mongoose.connect(config.db.connectionString,config.db.options);
+        if (!nodb)
+        {
+            mongoose.connect(config.db.connectionString,config.db.options);
+        }
 
         //Set API/Auth routings
         routing.registerRoutes(app);
@@ -38,7 +47,7 @@ function NetoCommisionAppServer(){
     };
 
     self.start = function(){
-        const port = process.env.PORT || 3000;
+        const port = process.env.PORT || 8090;
         self.app.listen(port , function(){
             console.log('started server, listening on: '+port);
         });

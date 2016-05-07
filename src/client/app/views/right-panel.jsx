@@ -1,5 +1,7 @@
 import React from 'react';
 import { strings } from '../constants/strings'
+import FlatRippleButton from './FlatRippleButton.jsx'
+import Button from 'muicss/lib/react/button'
 
 class RightPanelItem extends React.Component {
 
@@ -28,7 +30,7 @@ class RightPanelItem extends React.Component {
 
         return <div>
             <div className="right-panel-item">
-                <button className={className} onClick={this.onClick.bind(this)}>{this.props.title}</button>
+                <FlatRippleButton className={className} onClick={this.onClick.bind(this)}>{this.props.title}</FlatRippleButton>
             </div>
         </div>
     }

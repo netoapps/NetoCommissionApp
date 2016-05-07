@@ -11,7 +11,6 @@ import TopBar from './views/top-bar.jsx';
 import RightPanel from './views/right-panel.jsx';
 import { strings } from './constants/strings'
 
-
 //AppDispatcher.dispatch('APPINIT');
 
 function isAuthenticated(nextState, replace)
@@ -36,6 +35,7 @@ class App extends React.Component {
 
     componentWillMount()
     {
+
     }
 
     onPanelItemClick(item)
