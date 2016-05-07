@@ -4,6 +4,7 @@ import Button from 'muicss/lib/react/button'
 import Dropdown from 'muicss/lib/react/dropdown';
 import DropdownItem from 'muicss/lib/react/dropdown-item';
 
+
 function getMonthName(monthNum)
 {
     var monthOptions = ["ינואר","פברואר","מרץ","אפריל","מאי","יוני","יולי","אוגוסט","ספטמבר","אוקטובר","נובמבר","דצמבר"];
@@ -30,6 +31,7 @@ class DashboardDateSelect extends React.Component {
             selectedYear: currentYear.toString()
         }
     }
+
     onMonthChange(item)
     {
         if(item.props.value != this.state.selectedMonth)
@@ -48,21 +50,8 @@ class DashboardDateSelect extends React.Component {
     {
 
     }
-    //getChildContext()
-    //{
-    //    return {
-    //        muiTheme: ThemeManager.getMuiTheme(MyRawTheme),
-    //    };
-    //}
-    render () {
 
-        //var monthOptions = [];
-        //for(var option = 1; option <= 12; option++)
-        //{
-        //    var monthName = getMonthName(option)
-        //   // monthOptions[option] = <option key={option} value={monthName}>{monthName}</option>
-        //    monthOptions[option] = <MenuItem value={option} primaryText={monthName} asaf="asd"/>
-        //}
+    render () {
 
         const months = [];
         for (let i = 1; i <= 12; i++ ) {
@@ -77,23 +66,6 @@ class DashboardDateSelect extends React.Component {
             var yearName = i.toString()
             years.push(<DropdownItem onClick={this.onYearChange.bind(this)} value={yearName} key={i}>{yearName}</DropdownItem>);
         }
-
-        //var yearOptions = [];
-        //var date = new Date();
-        //var currentYear = date.getFullYear();
-        //currentYear = currentYear < 9999 ? currentYear:2050;
-        //var option = 0;
-        //for(var startYear = 2010; startYear <= currentYear; startYear++)
-        //{
-        //    var yearName = startYear.toString();
-        //    yearOptions[option] = <option key={option} value={yearName}>{yearName}</option>
-        //    option++;
-        //}
-
-        //let style = {
-        //    minWidth: 120,
-        //    maxWidth: 120,
-        //}
 
         return (
             <div className="hcontainer-no-wrap">
@@ -112,15 +84,6 @@ class DashboardDateSelect extends React.Component {
     }
 }
 
-
-//<select onChange={this.onMonthChange.bind(this)} defaultValue={this.state.selectedMonth} >
-//    {monthOptions}
-//</select>
-
-//                <button className="" onClick={this.onLoadClick.bind(this)}>{"טען"}</button>
-//<select onChange={this.onYearChange.bind(this)} defaultValue={this.state.selectedYear}>
-//    {yearOptions}
-//</select>
 
 
 class DashboardRankTable extends React.Component {
@@ -247,22 +210,6 @@ class Dashboard extends React.Component {
         );
     }
 }
-
-
-
-
-//<DashboardCommissionChangeChart />
-
-//<div className="dashboard-page-section hcontainer-no-wrap">
-//    <DashboardRankTable />
-//    <DashboardCommissionChangeChart />
-//</div>
-//
-//<div className="dashboard-page-section hcontainer-no-wrap">
-//<DashboardMonthTotalCommissions />
-//<DashboardTotalAgents />
-//<DashboardTotalInvestments />
-//</div>
 
 //Important!! This adds the router object to context
 Dashboard.contextTypes = {

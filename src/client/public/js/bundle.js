@@ -27925,24 +27925,9 @@
 	    }, {
 	        key: 'onLoadClick',
 	        value: function onLoadClick() {}
-	        //getChildContext()
-	        //{
-	        //    return {
-	        //        muiTheme: ThemeManager.getMuiTheme(MyRawTheme),
-	        //    };
-	        //}
-	
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	
-	            //var monthOptions = [];
-	            //for(var option = 1; option <= 12; option++)
-	            //{
-	            //    var monthName = getMonthName(option)
-	            //   // monthOptions[option] = <option key={option} value={monthName}>{monthName}</option>
-	            //    monthOptions[option] = <MenuItem value={option} primaryText={monthName} asaf="asd"/>
-	            //}
 	
 	            var months = [];
 	            for (var i = 1; i <= 12; i++) {
@@ -27965,23 +27950,6 @@
 	                    yearName
 	                ));
 	            }
-	
-	            //var yearOptions = [];
-	            //var date = new Date();
-	            //var currentYear = date.getFullYear();
-	            //currentYear = currentYear < 9999 ? currentYear:2050;
-	            //var option = 0;
-	            //for(var startYear = 2010; startYear <= currentYear; startYear++)
-	            //{
-	            //    var yearName = startYear.toString();
-	            //    yearOptions[option] = <option key={option} value={yearName}>{yearName}</option>
-	            //    option++;
-	            //}
-	
-	            //let style = {
-	            //    minWidth: 120,
-	            //    maxWidth: 120,
-	            //}
 	
 	            return _react2.default.createElement(
 	                'div',
@@ -28007,15 +27975,6 @@
 	
 	    return DashboardDateSelect;
 	}(_react2.default.Component);
-	
-	//<select onChange={this.onMonthChange.bind(this)} defaultValue={this.state.selectedMonth} >
-	//    {monthOptions}
-	//</select>
-	
-	//                <button className="" onClick={this.onLoadClick.bind(this)}>{"טען"}</button>
-	//<select onChange={this.onYearChange.bind(this)} defaultValue={this.state.selectedYear}>
-	//    {yearOptions}
-	//</select>
 	
 	var DashboardRankTable = function (_React$Component2) {
 	    _inherits(DashboardRankTable, _React$Component2);
@@ -28185,19 +28144,6 @@
 	
 	    return Dashboard;
 	}(_react2.default.Component);
-	
-	//<DashboardCommissionChangeChart />
-	
-	//<div className="dashboard-page-section hcontainer-no-wrap">
-	//    <DashboardRankTable />
-	//    <DashboardCommissionChangeChart />
-	//</div>
-	//
-	//<div className="dashboard-page-section hcontainer-no-wrap">
-	//<DashboardMonthTotalCommissions />
-	//<DashboardTotalAgents />
-	//<DashboardTotalInvestments />
-	//</div>
 	
 	//Important!! This adds the router object to context
 	
