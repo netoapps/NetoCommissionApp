@@ -46,6 +46,20 @@ body
     direction: ltr;
 }
 
+.green
+{
+    color: #598a62;
+}
+
+.blue
+{
+    color: #4286b4;
+}
+
+.red
+{
+    color: #d03007;
+}
 
 .fixed
 {
@@ -462,20 +476,6 @@ body
     right: 250px;
 }
 
-/*.dashboard-large-box*/
-/*{*/
-    /*width: 600px;*/
-    /*height: 370px;*/
-    /*background-color: white;*/
-    /*margin: 30px;*/
-/*}*/
-
-/*.dashboard-small-box {*/
-    /*width: 380px;*/
-    /*height: 220px;*/
-    /*background-color: white;*/
-    /*margin: 30px;*/
-/*}*/
 
 .dashboard-buttons-horizontal-spacer
 {
@@ -522,18 +522,14 @@ body
     background-color: white;
 }
 
-.dashboard-month-total-commissions
-{
-    width: calc(50% - 10px);
-    height: 175px;
-    background-color: white;
-}
+
 
 .dashboard-month-total-agents
 {
     width: calc(50% - 10px);
     height: 175px;
     background-color: white;
+    padding-top:20px ;
 }
 
 .dashboard-total-investments
@@ -541,4 +537,49 @@ body
     width: 100%;
     height: 175px;
     background-color: white;
+    padding-top:20px ;
+}
+
+.dashboard-month-total-commissions
+{
+    width: calc(50% - 10px);
+    height: 175px;
+    background-color: white;
+    padding-top:20px ;
+}
+
+.dashboard-box-title
+{
+    text-align: center;
+    color: #505050;
+    width: 100%;
+    height: 40px;
+    background-color: transparent;
+    font-size: 20px;
+    font-weight: bold;
+    /*margin-top: 20px;*/
+}
+
+.dashboard-box-value
+{
+    direction: ltr;
+    text-align: center;
+    /*color: #4286b4;*/
+    width: 100%;
+    height: 45px;
+    background-color: transparent;
+    font-size: 40px;
+    /*font-weight: bold;*/
+}
+
+.dashboard-box-change
+{
+    direction: ltr;
+    text-align: center;
+    /*color: #3d8e4c;*/
+    width: 100%;
+    height: 30px;
+    background-color: transparent;
+    font-size: 20px;
+    margin-top: 24px;
 }

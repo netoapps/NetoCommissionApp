@@ -13,7 +13,11 @@ let strings = {
     loginErrorMessage: "שם משתמש או סיסמה שגויים",
     dashboard: "ראשי",
     commissions: "עמלות",
-    agents: "סוכנים"
+    agents: "סוכנים",
+    totalCommissions: "סה״כ עמלות",
+    totalAgents: "סה״כ סוכנים",
+    totalInvestments: "סה״כ השקעות",
+    load: "טען"
 }
 
 export { strings }

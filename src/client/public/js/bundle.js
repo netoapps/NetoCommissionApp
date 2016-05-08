@@ -75,19 +75,19 @@
 	
 	var _dashboardPage2 = _interopRequireDefault(_dashboardPage);
 	
-	var _commissionsPage = __webpack_require__(/*! ./views/commissions-page.jsx */ 242);
+	var _commissionsPage = __webpack_require__(/*! ./views/commissions-page.jsx */ 243);
 	
 	var _commissionsPage2 = _interopRequireDefault(_commissionsPage);
 	
-	var _agentsPage = __webpack_require__(/*! ./views/agents-page.jsx */ 243);
+	var _agentsPage = __webpack_require__(/*! ./views/agents-page.jsx */ 244);
 	
 	var _agentsPage2 = _interopRequireDefault(_agentsPage);
 	
-	var _topBar = __webpack_require__(/*! ./views/top-bar.jsx */ 244);
+	var _topBar = __webpack_require__(/*! ./views/top-bar.jsx */ 245);
 	
 	var _topBar2 = _interopRequireDefault(_topBar);
 	
-	var _rightPanel = __webpack_require__(/*! ./views/right-panel.jsx */ 246);
+	var _rightPanel = __webpack_require__(/*! ./views/right-panel.jsx */ 247);
 	
 	var _rightPanel2 = _interopRequireDefault(_rightPanel);
 	
@@ -27711,7 +27711,11 @@
 	    loginErrorMessage: "שם משתמש או סיסמה שגויים",
 	    dashboard: "ראשי",
 	    commissions: "עמלות",
-	    agents: "סוכנים"
+	    agents: "סוכנים",
+	    totalCommissions: "סה״כ עמלות",
+	    totalAgents: "סה״כ סוכנים",
+	    totalInvestments: "סה״כ השקעות",
+	    load: "טען"
 	};
 	
 	exports.strings = strings;
@@ -27876,6 +27880,8 @@
 	
 	var _FixedWidthDropdown2 = _interopRequireDefault(_FixedWidthDropdown);
 	
+	var _strings = __webpack_require__(/*! ../constants/strings */ 230);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -27893,13 +27899,13 @@
 	    return monthOptions[monthNum - 1];
 	}
 	
-	var DashboardDateSelect = function (_React$Component) {
-	    _inherits(DashboardDateSelect, _React$Component);
+	var DashboardToolbar = function (_React$Component) {
+	    _inherits(DashboardToolbar, _React$Component);
 	
-	    function DashboardDateSelect(props) {
-	        _classCallCheck(this, DashboardDateSelect);
+	    function DashboardToolbar(props) {
+	        _classCallCheck(this, DashboardToolbar);
 	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardDateSelect).call(this, props));
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardToolbar).call(this, props));
 	
 	        var date = new Date();
 	        var currentMonth = date.getMonth();
@@ -27912,7 +27918,7 @@
 	        return _this;
 	    }
 	
-	    _createClass(DashboardDateSelect, [{
+	    _createClass(DashboardToolbar, [{
 	        key: 'onMonthChange',
 	        value: function onMonthChange(item) {
 	            if (item.props.value != this.state.selectedMonth) {
@@ -27970,16 +27976,18 @@
 	                    years
 	                ),
 	                _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
 	                _react2.default.createElement(
 	                    _button2.default,
 	                    { className: 'shadow', onClick: this.onLoadClick.bind(this), color: 'primary' },
-	                    "טען"
+	                    _strings.strings.load
 	                )
 	            );
 	        }
 	    }]);
 	
-	    return DashboardDateSelect;
+	    return DashboardToolbar;
 	}(_react2.default.Component);
 	
 	var DashboardRankTable = function (_React$Component2) {
@@ -28026,13 +28034,68 @@
 	    function DashboardMonthTotalCommissions(props) {
 	        _classCallCheck(this, DashboardMonthTotalCommissions);
 	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardMonthTotalCommissions).call(this, props));
+	        var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardMonthTotalCommissions).call(this, props));
+	
+	        _this4.state = {
+	            value: 233423432,
+	            change: 3.2
+	        };
+	
+	        return _this4;
 	    }
 	
 	    _createClass(DashboardMonthTotalCommissions, [{
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement('div', { className: 'dashboard-month-total-commissions shadow' });
+	
+	            var value = this.state.value.toString();
+	            value = parseFloat(value.replace(/,/g, "")).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	
+	            var change = this.state.change;
+	            var changeIcon = "../public/images/change-up.png";
+	            var changeColor = "green";
+	            if (change < 0) {
+	                changeIcon = "../public/images/change-down.png";
+	                changeColor = "red";
+	            }
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'dashboard-month-total-commissions shadow' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'dashboard-box-title' },
+	                    _strings.strings.totalCommissions
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'dashboard-box-value blue' },
+	                    _react2.default.createElement(
+	                        'small',
+	                        null,
+	                        "₪",
+	                        ' '
+	                    ),
+	                    _react2.default.createElement(
+	                        'b',
+	                        null,
+	                        value
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: "dashboard-box-change " + changeColor },
+	                    change,
+	                    _react2.default.createElement(
+	                        'small',
+	                        null,
+	                        ' ',
+	                        "%"
+	                    ),
+	                    ' ',
+	                    _react2.default.createElement('img', { src: changeIcon })
+	                )
+	            );
 	        }
 	    }]);
 	
@@ -28045,13 +28108,60 @@
 	    function DashboardMonthTotalAgents(props) {
 	        _classCallCheck(this, DashboardMonthTotalAgents);
 	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardMonthTotalAgents).call(this, props));
+	        var _this5 = _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardMonthTotalAgents).call(this, props));
+	
+	        _this5.state = {
+	            value: 999,
+	            change: 3.4
+	        };
+	        return _this5;
 	    }
 	
 	    _createClass(DashboardMonthTotalAgents, [{
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement('div', { className: 'dashboard-month-total-agents shadow' });
+	
+	            var value = this.state.value.toString();
+	
+	            var change = this.state.change;
+	            var changeIcon = "../public/images/change-up.png";
+	            var changeColor = "green";
+	            if (change < 0) {
+	                changeIcon = "../public/images/change-down.png";
+	                changeColor = "red";
+	            }
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'dashboard-month-total-agents shadow' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'dashboard-box-title' },
+	                    _strings.strings.totalAgents
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'dashboard-box-value blue' },
+	                    _react2.default.createElement(
+	                        'b',
+	                        null,
+	                        value
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: "dashboard-box-change " + changeColor },
+	                    change,
+	                    _react2.default.createElement(
+	                        'small',
+	                        null,
+	                        ' ',
+	                        "%"
+	                    ),
+	                    ' ',
+	                    _react2.default.createElement('img', { src: changeIcon })
+	                )
+	            );
 	        }
 	    }]);
 	
@@ -28064,13 +28174,67 @@
 	    function DashboardTotalInvestments(props) {
 	        _classCallCheck(this, DashboardTotalInvestments);
 	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardTotalInvestments).call(this, props));
+	        var _this6 = _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardTotalInvestments).call(this, props));
+	
+	        _this6.state = {
+	            value: 433423432,
+	            change: -1.2
+	        };
+	        return _this6;
 	    }
 	
 	    _createClass(DashboardTotalInvestments, [{
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement('div', { className: 'dashboard-total-investments shadow' });
+	
+	            var value = this.state.value.toString();
+	            value = parseFloat(value.replace(/,/g, "")).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	
+	            var change = this.state.change;
+	            var changeIcon = "../public/images/change-up.png";
+	            var changeColor = "green";
+	            if (change < 0) {
+	                changeIcon = "../public/images/change-down.png";
+	                changeColor = "red";
+	            }
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'dashboard-total-investments shadow' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'dashboard-box-title' },
+	                    _strings.strings.totalInvestments
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'dashboard-box-value blue' },
+	                    _react2.default.createElement(
+	                        'small',
+	                        null,
+	                        "₪",
+	                        ' '
+	                    ),
+	                    _react2.default.createElement(
+	                        'b',
+	                        null,
+	                        value
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: "dashboard-box-change " + changeColor },
+	                    change,
+	                    _react2.default.createElement(
+	                        'small',
+	                        null,
+	                        ' ',
+	                        "%"
+	                    ),
+	                    ' ',
+	                    _react2.default.createElement('img', { src: changeIcon })
+	                )
+	            );
 	        }
 	    }]);
 	
@@ -28121,7 +28285,7 @@
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'dashboard-page animated fadeIn' },
-	                _react2.default.createElement(DashboardDateSelect, null),
+	                _react2.default.createElement(DashboardToolbar, null),
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'hcontainer-no-wrap' },
@@ -29854,7 +30018,8 @@
 	exports.default = FixedWidthDropdown;
 
 /***/ },
-/* 242 */
+/* 242 */,
+/* 243 */
 /*!***************************************************!*\
   !*** ./src/client/app/views/commissions-page.jsx ***!
   \***************************************************/
@@ -29923,7 +30088,7 @@
 	exports.default = Commissions;
 
 /***/ },
-/* 243 */
+/* 244 */
 /*!**********************************************!*\
   !*** ./src/client/app/views/agents-page.jsx ***!
   \**********************************************/
@@ -29992,7 +30157,7 @@
 	exports.default = Agents;
 
 /***/ },
-/* 244 */
+/* 245 */
 /*!******************************************!*\
   !*** ./src/client/app/views/top-bar.jsx ***!
   \******************************************/
@@ -30010,7 +30175,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _userBox = __webpack_require__(/*! ./user-box.jsx */ 245);
+	var _userBox = __webpack_require__(/*! ./user-box.jsx */ 246);
 	
 	var _userBox2 = _interopRequireDefault(_userBox);
 	
@@ -30056,7 +30221,7 @@
 	exports.default = TopBar;
 
 /***/ },
-/* 245 */
+/* 246 */
 /*!*******************************************!*\
   !*** ./src/client/app/views/user-box.jsx ***!
   \*******************************************/
@@ -30134,7 +30299,7 @@
 	exports.default = UserBox;
 
 /***/ },
-/* 246 */
+/* 247 */
 /*!**********************************************!*\
   !*** ./src/client/app/views/right-panel.jsx ***!
   \**********************************************/
@@ -30154,7 +30319,7 @@
 	
 	var _strings = __webpack_require__(/*! ../constants/strings */ 230);
 	
-	var _FlatRippleButton = __webpack_require__(/*! ./FlatRippleButton.jsx */ 247);
+	var _FlatRippleButton = __webpack_require__(/*! ./FlatRippleButton.jsx */ 248);
 	
 	var _FlatRippleButton2 = _interopRequireDefault(_FlatRippleButton);
 	
@@ -30260,7 +30425,7 @@
 	exports.default = RightPanel;
 
 /***/ },
-/* 247 */
+/* 248 */
 /*!***************************************************!*\
   !*** ./src/client/app/views/FlatRippleButton.jsx ***!
   \***************************************************/

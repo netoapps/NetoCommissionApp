@@ -4,6 +4,7 @@ import Button from 'muicss/lib/react/button'
 import Dropdown from 'muicss/lib/react/dropdown';
 import DropdownItem from 'muicss/lib/react/dropdown-item';
 import FixedWidthDropdown from './FixedWidthDropdown.jsx';
+import { strings } from '../constants/strings'
 
 
 function getMonthName(monthNum)
@@ -17,8 +18,7 @@ function getMonthName(monthNum)
     return monthOptions[monthNum - 1];
 }
 
-class DashboardDateSelect extends React.Component {
-
+class DashboardToolbar extends React.Component {
 
     constructor(props) {
         super(props);
@@ -78,7 +78,9 @@ class DashboardDateSelect extends React.Component {
                     {years}
                 </FixedWidthDropdown>
                 <div className="dashboard-buttons-horizontal-spacer"/>
-                <Button className="shadow" onClick={this.onLoadClick.bind(this)} color="primary">{"טען"}</Button>
+                <div className="dashboard-buttons-horizontal-spacer"/>
+                <div className="dashboard-buttons-horizontal-spacer"/>
+                <Button className="shadow" onClick={this.onLoadClick.bind(this)} color="primary">{strings.load}</Button>
             </div>
         );
     }
@@ -120,11 +122,35 @@ class DashboardMonthTotalCommissions extends React.Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            value: 233423432,
+            change: 3.2
+        }
+
     }
 
     render () {
+
+        var value = this.state.value.toString();
+        value = parseFloat(value.replace(/,/g, ""))
+            .toFixed(0)
+            .toString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+        var change = this.state.change
+        var changeIcon = "../public/images/change-up.png"
+        var changeColor = "green"
+        if(change < 0)
+        {
+            changeIcon = "../public/images/change-down.png"
+            changeColor = "red"
+        }
+
         return (
             <div className="dashboard-month-total-commissions shadow">
+                <div className="dashboard-box-title">{strings.totalCommissions}</div>
+                <div className="dashboard-box-value blue"><small>{"₪"}&nbsp;</small><b>{value}</b></div>
+                <div className={"dashboard-box-change " + changeColor}>{change}<small>&nbsp;{"%"}</small>&nbsp;<img src={changeIcon}/></div>
             </div>
         );
     }
@@ -134,12 +160,31 @@ class DashboardMonthTotalAgents extends React.Component {
 
     constructor(props) {
         super(props);
-
+        this.state = {
+            value: 999,
+            change: 3.4
+        }
     }
 
     render () {
+
+        var value = this.state.value.toString();
+
+        var change = this.state.change
+        var changeIcon = "../public/images/change-up.png"
+        var changeColor = "green"
+        if(change < 0)
+        {
+            changeIcon = "../public/images/change-down.png"
+            changeColor = "red"
+        }
+
+
         return (
             <div className="dashboard-month-total-agents shadow">
+                <div className="dashboard-box-title">{strings.totalAgents}</div>
+                <div className="dashboard-box-value blue"><b>{value}</b></div>
+                <div className={"dashboard-box-change " + changeColor}>{change}<small>&nbsp;{"%"}</small>&nbsp;<img src={changeIcon}/></div>
             </div>
         );
     }
@@ -149,12 +194,34 @@ class DashboardTotalInvestments extends React.Component {
 
     constructor(props) {
         super(props);
-
+        this.state = {
+            value: 433423432,
+            change: -1.2
+        }
     }
 
     render () {
+
+        var value = this.state.value.toString();
+        value = parseFloat(value.replace(/,/g, ""))
+            .toFixed(0)
+            .toString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+        var change = this.state.change
+        var changeIcon = "../public/images/change-up.png"
+        var changeColor = "green"
+        if(change < 0)
+        {
+            changeIcon = "../public/images/change-down.png"
+            changeColor = "red"
+        }
+
         return (
             <div className="dashboard-total-investments shadow">
+                <div className="dashboard-box-title">{strings.totalInvestments}</div>
+                <div className="dashboard-box-value blue"><small>{"₪"}&nbsp;</small><b>{value}</b></div>
+                <div className={"dashboard-box-change " + changeColor}>{change}<small>&nbsp;{"%"}</small>&nbsp;<img src={changeIcon}/></div>
             </div>
         );
     }
@@ -187,7 +254,7 @@ class Dashboard extends React.Component {
     render () {
         return (
             <div className="dashboard-page animated fadeIn">
-                <DashboardDateSelect />
+                <DashboardToolbar />
                 <div className="hcontainer-no-wrap">
                     <DashboardRankTable  />
                     <div className="dashboard-horizontal-spacer"/>

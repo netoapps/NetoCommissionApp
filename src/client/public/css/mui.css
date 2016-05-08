@@ -728,17 +728,21 @@ h4, h5, h6 {
 
 .mui-btn--primary {
   color: #FFF;
-  background-color: #2196F3;
+
+  background-color: #4286b4;
+
 }
 
 .mui-btn--primary:hover, .mui-btn--primary:focus, .mui-btn--primary:active {
   color: #FFF;
-  background-color: #39a1f4;
+  /*background-color: #39a1f4;*/
+  background-color: #448fbe;
 }
 
 .mui-btn--primary[disabled]:hover, .mui-btn--primary[disabled]:focus, .mui-btn--primary[disabled]:active {
   color: #FFF;
-  background-color: #2196F3;
+  /*background-color: #2196F3;*/
+  background-color: #448fbe;
 }
 
 .mui-btn--primary.mui-btn--flat {
