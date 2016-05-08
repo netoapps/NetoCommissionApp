@@ -510,9 +510,10 @@ body
 
 .dashboard-commission-change-chart
 {
-    width: 100%;
+    /*width: 100%;*/
     height: 370px;
     background-color: white;
+    padding:50px;
 }
 
 .dashboard-rank-table
