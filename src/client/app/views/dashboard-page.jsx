@@ -7,6 +7,9 @@ import FixedWidthDropdown from './FixedWidthDropdown.jsx';
 import { strings } from '../constants/strings'
 import {Chart} from "react-chartjs";
 import {Bar} from "react-chartjs";
+import Table from './table.jsx';
+
+
 
 var monthOptions = ["ינואר","פברואר","מרץ","אפריל","מאי","יוני","יולי","אוגוסט","ספטמבר","אוקטובר","נובמבר","דצמבר"];
 
@@ -97,8 +100,64 @@ class DashboardRankTable extends React.Component {
 
     }
     render () {
+
+
+        var columns = [
+
+            {
+                title: "שם סוכן",
+                key: "agentName",
+                width: "col-33-33",
+                type: 'read-only',
+                color: 'normal'
+            },
+            {
+                title: "עמלות",
+                key: "commission",
+                width: "col-33-33",
+                type: 'read-only-currency',
+                color: 'normal'
+            },
+            {
+                title: "שינוי (עמלות)",
+                key: "commissionChange",
+                width: "col-33-33",
+                type: 'read-only-percent',
+                color: 'red-green'
+            },
+            {
+                title: "גודל תיק",
+                key: "totalInvestments",
+                width: "col-33-33",
+                type: 'read-only-currency',
+                color: 'normal'
+            },
+            {
+                title: "שינוי (גודל תיק)",
+                key: "totalInvestmentsChange",
+                width: "col-33-33",
+                type: 'read-only-percent',
+                color: 'red-green'
+            }
+
+        ]
+
+        var data = [
+                    {agentName: "קרין בוזלי", commission: "23234233", commissionChange: "2.3", totalInvestments: "23234233", totalInvestmentsChange: "2.3"},
+                    {agentName: "עידן כץ", commission: "43234233", commissionChange: "2.3", totalInvestments: "23234233", totalInvestmentsChange: "2.3"},
+                    {agentName: "מסי", commission: "33224233", commissionChange: "-2.3", totalInvestments: "23234233", totalInvestmentsChange: "6.3"},
+                    {agentName: "מסי", commission: "33224233", commissionChange: "-2.3", totalInvestments: "23234233", totalInvestmentsChange: "6.3"},
+                    {agentName: "מסי", commission: "33224233", commissionChange: "-2.3", totalInvestments: "23234233", totalInvestmentsChange: "6.3"},
+                    {agentName: "מסי", commission: "33224233", commissionChange: "-2.3", totalInvestments: "23234233", totalInvestmentsChange: "6.3"},
+                    {agentName: "קריזבז", commission: "13234233", commissionChange: "1.3", totalInvestments: "23234233", totalInvestmentsChange: "2.3"},
+                    {agentName: "קרין בוזלי", commission: "23234233", commissionChange: "2.3", totalInvestments: "23234233", totalInvestmentsChange: "-2.3"},
+                    {agentName: "קרין בוזלי", commission: "23234233", commissionChange: "2.3", totalInvestments: "23234233", totalInvestmentsChange: "2.3"},
+                    ]
+
         return (
             <div className="dashboard-rank-table shadow">
+                <Table columns={columns}
+                       data={data}/>
             </div>
         );
     }
@@ -123,7 +182,7 @@ class DashboardCommissionChangeChart extends React.Component {
                     borderWidth: 1,
                     hoverBackgroundColor: "rgba(255,99,132,0.4)",
                     hoverBorderColor: "rgba(255,99,132,1)",
-                    data: [65, 59, 80, 81, 56, 55, 40],
+                    data: [165, 59, 80, 81, 256, 55, 40],
                     fillColor: "#4286b4"
                 }
             ]
@@ -141,7 +200,10 @@ class DashboardCommissionChangeChart extends React.Component {
 
         return (
             <div className="dashboard-commission-change-chart shadow">
-                <Bar data={data} options={chartOptions} width="600" height="200"/>
+                <div className="dashboard-box-title">{strings.totalInvestmentsChange}</div>
+                <div className="dashboard-commission-change-chart-box">
+                    <Bar data={data} options={chartOptions} width="600" height="400"/>
+                </div>
             </div>
         );
     }
@@ -257,21 +319,6 @@ class DashboardTotalInvestments extends React.Component {
     }
 }
 
-class DashboardMonthStats extends React.Component {
-
-    constructor(props) {
-        super(props);
-
-    }
-    render () {
-        return (
-                <div className="hcontainer-no-wrap">
-                    <DashboardMonthTotalCommissions />
-                    <DashboardMonthTotalAgents />
-                </div>
-        );
-    }
-}
 
 class Dashboard extends React.Component {
 

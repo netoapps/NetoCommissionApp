@@ -16,8 +16,13 @@ let strings = {
     agents: "סוכנים",
     totalCommissions: "סה״כ עמלות",
     totalAgents: "סה״כ סוכנים",
-    totalInvestments: "סה״כ השקעות",
-    load: "טען"
+    totalInvestments: "סה״כ גודל תיק",
+    totalInvestmentsChange: "עמלות (מיליונים)",
+    load: "טען",
+    dragFileHere: "גרור קובץ עמלות לכאן",
+    companyAssignment: "שיוך לחברה",
+    validDate: "תאריך נכונות",
+    uploadFile: "העלה קובץ"
 }
 
 export { strings }

@@ -28135,8 +28135,13 @@
 	    agents: "סוכנים",
 	    totalCommissions: "סה״כ עמלות",
 	    totalAgents: "סה״כ סוכנים",
-	    totalInvestments: "סה״כ השקעות",
-	    load: "טען"
+	    totalInvestments: "סה״כ גודל תיק",
+	    totalInvestmentsChange: "עמלות (מיליונים)",
+	    load: "טען",
+	    dragFileHere: "גרור קובץ עמלות לכאן",
+	    companyAssignment: "שיוך לחברה",
+	    validDate: "תאריך נכונות",
+	    uploadFile: "העלה קובץ"
 	};
 	
 	exports.strings = strings;
@@ -28305,6 +28310,10 @@
 	
 	var _reactChartjs = __webpack_require__(/*! react-chartjs */ 250);
 	
+	var _table = __webpack_require__(/*! ./table.jsx */ 266);
+	
+	var _table2 = _interopRequireDefault(_table);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28426,7 +28435,47 @@
 	    _createClass(DashboardRankTable, [{
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement('div', { className: 'dashboard-rank-table shadow' });
+	
+	            var columns = [{
+	                title: "שם סוכן",
+	                key: "agentName",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "עמלות",
+	                key: "commission",
+	                width: "col-33-33",
+	                type: 'read-only-currency',
+	                color: 'normal'
+	            }, {
+	                title: "שינוי (עמלות)",
+	                key: "commissionChange",
+	                width: "col-33-33",
+	                type: 'read-only-percent',
+	                color: 'red-green'
+	            }, {
+	                title: "גודל תיק",
+	                key: "totalInvestments",
+	                width: "col-33-33",
+	                type: 'read-only-currency',
+	                color: 'normal'
+	            }, {
+	                title: "שינוי (גודל תיק)",
+	                key: "totalInvestmentsChange",
+	                width: "col-33-33",
+	                type: 'read-only-percent',
+	                color: 'red-green'
+	            }];
+	
+	            var data = [{ agentName: "קרין בוזלי", commission: "23234233", commissionChange: "2.3", totalInvestments: "23234233", totalInvestmentsChange: "2.3" }, { agentName: "עידן כץ", commission: "43234233", commissionChange: "2.3", totalInvestments: "23234233", totalInvestmentsChange: "2.3" }, { agentName: "מסי", commission: "33224233", commissionChange: "-2.3", totalInvestments: "23234233", totalInvestmentsChange: "6.3" }, { agentName: "מסי", commission: "33224233", commissionChange: "-2.3", totalInvestments: "23234233", totalInvestmentsChange: "6.3" }, { agentName: "מסי", commission: "33224233", commissionChange: "-2.3", totalInvestments: "23234233", totalInvestmentsChange: "6.3" }, { agentName: "מסי", commission: "33224233", commissionChange: "-2.3", totalInvestments: "23234233", totalInvestmentsChange: "6.3" }, { agentName: "קריזבז", commission: "13234233", commissionChange: "1.3", totalInvestments: "23234233", totalInvestmentsChange: "2.3" }, { agentName: "קרין בוזלי", commission: "23234233", commissionChange: "2.3", totalInvestments: "23234233", totalInvestmentsChange: "-2.3" }, { agentName: "קרין בוזלי", commission: "23234233", commissionChange: "2.3", totalInvestments: "23234233", totalInvestmentsChange: "2.3" }];
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'dashboard-rank-table shadow' },
+	                _react2.default.createElement(_table2.default, { columns: columns,
+	                    data: data })
+	            );
 	        }
 	    }]);
 	
@@ -28455,7 +28504,7 @@
 	                    borderWidth: 1,
 	                    hoverBackgroundColor: "rgba(255,99,132,0.4)",
 	                    hoverBorderColor: "rgba(255,99,132,1)",
-	                    data: [65, 59, 80, 81, 56, 55, 40],
+	                    data: [165, 59, 80, 81, 256, 55, 40],
 	                    fillColor: "#4286b4"
 	                }]
 	            };
@@ -28473,7 +28522,16 @@
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'dashboard-commission-change-chart shadow' },
-	                _react2.default.createElement(_reactChartjs.Bar, { data: data, options: chartOptions, width: '600', height: '200' })
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'dashboard-box-title' },
+	                    _strings.strings.totalInvestmentsChange
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'dashboard-commission-change-chart-box' },
+	                    _react2.default.createElement(_reactChartjs.Bar, { data: data, options: chartOptions, width: '600', height: '400' })
+	                )
 	            );
 	        }
 	    }]);
@@ -28694,42 +28752,18 @@
 	    return DashboardTotalInvestments;
 	}(_react2.default.Component);
 	
-	var DashboardMonthStats = function (_React$Component7) {
-	    _inherits(DashboardMonthStats, _React$Component7);
-	
-	    function DashboardMonthStats(props) {
-	        _classCallCheck(this, DashboardMonthStats);
-	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardMonthStats).call(this, props));
-	    }
-	
-	    _createClass(DashboardMonthStats, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'hcontainer-no-wrap' },
-	                _react2.default.createElement(DashboardMonthTotalCommissions, null),
-	                _react2.default.createElement(DashboardMonthTotalAgents, null)
-	            );
-	        }
-	    }]);
-	
-	    return DashboardMonthStats;
-	}(_react2.default.Component);
-	
-	var Dashboard = function (_React$Component8) {
-	    _inherits(Dashboard, _React$Component8);
+	var Dashboard = function (_React$Component7) {
+	    _inherits(Dashboard, _React$Component7);
 	
 	    function Dashboard(props) {
 	        _classCallCheck(this, Dashboard);
 	
-	        var _this8 = _possibleConstructorReturn(this, Object.getPrototypeOf(Dashboard).call(this, props));
+	        var _this7 = _possibleConstructorReturn(this, Object.getPrototypeOf(Dashboard).call(this, props));
 	
-	        _this8.state = {
+	        _this7.state = {
 	            loginData: _authService2.default.getLoginData()
 	        };
-	        return _this8;
+	        return _this7;
 	    }
 	
 	    _createClass(Dashboard, [{
@@ -34477,6 +34511,28 @@
 	
 	var _authService2 = _interopRequireDefault(_authService);
 	
+	var _strings = __webpack_require__(/*! ../constants/strings */ 238);
+	
+	var _table = __webpack_require__(/*! ./table.jsx */ 266);
+	
+	var _table2 = _interopRequireDefault(_table);
+	
+	var _dropdown = __webpack_require__(/*! muicss/lib/react/dropdown */ 246);
+	
+	var _dropdown2 = _interopRequireDefault(_dropdown);
+	
+	var _dropdownItem = __webpack_require__(/*! muicss/lib/react/dropdown-item */ 248);
+	
+	var _dropdownItem2 = _interopRequireDefault(_dropdownItem);
+	
+	var _FixedWidthDropdown = __webpack_require__(/*! ./FixedWidthDropdown.jsx */ 249);
+	
+	var _FixedWidthDropdown2 = _interopRequireDefault(_FixedWidthDropdown);
+	
+	var _button = __webpack_require__(/*! muicss/lib/react/button */ 241);
+	
+	var _button2 = _interopRequireDefault(_button);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -34485,28 +34541,180 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var Commissions = function (_React$Component) {
-	    _inherits(Commissions, _React$Component);
+	var companyNames = ["כלל", "מנורה", "הראל", "אלטשולר שחם", "ילין לפידות", "מיטב דש"];
 	
-	    function Commissions(props) {
-	        _classCallCheck(this, Commissions);
+	var FileBin = function (_React$Component) {
+	    _inherits(FileBin, _React$Component);
 	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Commissions).call(this, props));
+	    function FileBin(props) {
+	        _classCallCheck(this, FileBin);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FileBin).call(this, props));
 	
 	        _this.state = {
-	            loginData: _authService2.default.getLoginData()
+	            selectedCompany: "כלל",
+	            date: ""
 	        };
 	
 	        return _this;
 	    }
 	
+	    _createClass(FileBin, [{
+	        key: 'onCompanyNameChange',
+	        value: function onCompanyNameChange(item) {
+	            if (item.props.value != this.state.selectedCompany) {
+	                this.setState({ selectedCompany: item.props.value });
+	            }
+	        }
+	    }, {
+	        key: 'onUploadFile',
+	        value: function onUploadFile() {}
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	
+	            var companies = [];
+	            for (var i = 0; i < companyNames.length; i++) {
+	                companies.push(_react2.default.createElement(
+	                    _dropdownItem2.default,
+	                    { onClick: this.onCompanyNameChange.bind(this), value: companyNames[i], key: i },
+	                    companyNames[i]
+	                ));
+	            }
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'commissions-page-file-bin shadow' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'commissions-page-file-bin-drag-area' },
+	                    _react2.default.createElement(
+	                        'strong',
+	                        null,
+	                        _strings.strings.dragFileHere
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'commissions-page-file-bin-settings hcontainer-no-wrap' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'commissions-page-file-bin-settings-text' },
+	                        _strings.strings.companyAssignment
+	                    ),
+	                    _react2.default.createElement(
+	                        _dropdown2.default,
+	                        { label: this.state.selectedCompany, alignMenu: 'right', variant: 'raised' },
+	                        companies
+	                    ),
+	                    _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                    _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                    _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'commissions-page-file-bin-settings-text' },
+	                        _strings.strings.validDate
+	                    ),
+	                    _react2.default.createElement(_FixedWidthDropdown2.default, { className: 'fixed-size-button', label: 'תאריך', alignMenu: 'right' }),
+	                    _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                    _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                    _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                    _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                    _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                    _react2.default.createElement(
+	                        _button2.default,
+	                        { className: 'shadow', onClick: this.onUploadFile.bind(this), color: 'primary' },
+	                        _strings.strings.uploadFile
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return FileBin;
+	}(_react2.default.Component);
+	
+	var Commissions = function (_React$Component2) {
+	    _inherits(Commissions, _React$Component2);
+	
+	    function Commissions(props) {
+	        _classCallCheck(this, Commissions);
+	
+	        var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(Commissions).call(this, props));
+	
+	        _this2.state = {
+	            loginData: _authService2.default.getLoginData()
+	        };
+	
+	        return _this2;
+	    }
+	
 	    _createClass(Commissions, [{
 	        key: 'render',
 	        value: function render() {
+	
+	            var columns = [{
+	                title: "חברה",
+	                key: "companyName",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "סוג תשלום",
+	                key: "paymentType",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "מספר סוכן",
+	                key: "agentNumber",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "שם סוכן",
+	                key: "agentName",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "סה״כ תשלום",
+	                key: "totalPayment",
+	                width: "col-33-33",
+	                type: 'read-only-currency',
+	                color: 'normal'
+	            }, {
+	                title: "סה״כ גודל תיק",
+	                key: "totalInvestments",
+	                width: "col-33-33",
+	                type: 'read-only-currency',
+	                color: 'normal'
+	            }, {
+	                title: "חודש תשלום",
+	                key: "paymentMonth",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "תאריך נכונות",
+	                key: "date",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }];
+	
+	            var data = [{ companyName: "מגדל", paymentType: "היקף", agentNumber: "2342234523", agentName: "קרין בוזלי לוי", totalPayment: "23423", totalInvestments: "12342232", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "אלטשולר שחם", paymentType: "בונוס", agentNumber: "67868", agentName: "לנצמן", totalPayment: "5675", totalInvestments: "34234535", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "מנורה", paymentType: "גמ״ח", agentNumber: "789565", agentName: "לירון בן ציון", totalPayment: "4562", totalInvestments: "78768657", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "ילין לפידות", paymentType: "היקף", agentNumber: "345654", agentName: "ויטלי", totalPayment: "6786", totalInvestments: "3453453", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "ילין לפידות", paymentType: "היקף", agentNumber: "345654", agentName: "ויטלי", totalPayment: "6786", totalInvestments: "3453453", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "מנורה", paymentType: "גמ״ח", agentNumber: "789565", agentName: "לירון בן ציון", totalPayment: "4562", totalInvestments: "78768657", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "ילין לפידות", paymentType: "היקף", agentNumber: "345654", agentName: "ויטלי", totalPayment: "6786", totalInvestments: "3453453", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "אלטשולר שחם", paymentType: "בונוס", agentNumber: "67868", agentName: "לנצמן", totalPayment: "5675", totalInvestments: "34234535", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "מנורה", paymentType: "גמ״ח", agentNumber: "789565", agentName: "לירון בן ציון", totalPayment: "4562", totalInvestments: "78768657", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "מגדל", paymentType: "היקף", agentNumber: "2342234523", agentName: "קרין בוזלי לוי", totalPayment: "23423", totalInvestments: "12342232", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "אלטשולר שחם", paymentType: "בונוס", agentNumber: "67868", agentName: "לנצמן", totalPayment: "5675", totalInvestments: "34234535", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "מנורה", paymentType: "גמ״ח", agentNumber: "789565", agentName: "לירון בן ציון", totalPayment: "4562", totalInvestments: "78768657", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "ילין לפידות", paymentType: "היקף", agentNumber: "345654", agentName: "ויטלי", totalPayment: "6786", totalInvestments: "3453453", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016" }];
+	
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'commissions-page animated fadeIn' },
-	                'Commissions'
+	                _react2.default.createElement(FileBin, null),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'commissions-page-table shadow' },
+	                    _react2.default.createElement(_table2.default, { columns: columns,
+	                        data: data })
+	                )
 	            );
 	        }
 	    }]);
@@ -35100,6 +35308,233 @@
 	
 	/** Define module API */
 	exports.default = FlatRippleButton;
+
+/***/ },
+/* 266 */
+/*!****************************************!*\
+  !*** ./src/client/app/views/table.jsx ***!
+  \****************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var TableCell = function (_React$Component) {
+	    _inherits(TableCell, _React$Component);
+	
+	    function TableCell(props) {
+	        _classCallCheck(this, TableCell);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TableCell).call(this, props));
+	
+	        _this.state = {
+	            value: _this.props.value,
+	            column: _this.props.column
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(TableCell, [{
+	        key: "componentWillReceiveProps",
+	        value: function componentWillReceiveProps(nextProps) {
+	            this.setState({
+	                value: nextProps.value,
+	                column: nextProps.column
+	            });
+	        }
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            var className = "table-cell";
+	            var color = "table-cell-text-color";
+	            var value = this.props.value;
+	            if (this.state.column.type === "read-only-currency") {
+	                value = parseFloat(value.replace(/,/g, "")).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	                value = "₪ " + value;
+	            }
+	            if (this.state.column.type === "read-only-percent") {
+	                value = value + " %";
+	            }
+	
+	            if (this.state.column.color === "red-green") {
+	                if (parseFloat(this.props.value) >= 0) {
+	                    color = "green";
+	                } else {
+	                    color = "red";
+	                }
+	            }
+	
+	            var node = _react2.default.createElement(
+	                "div",
+	                { className: "table-cell-read-only " + color },
+	                value
+	            );
+	            return _react2.default.createElement(
+	                "div",
+	                { className: className + " " + this.state.column.width },
+	                node
+	            );
+	        }
+	    }]);
+	
+	    return TableCell;
+	}(_react2.default.Component);
+	
+	var TableRow = function (_React$Component2) {
+	    _inherits(TableRow, _React$Component2);
+	
+	    function TableRow(props) {
+	        _classCallCheck(this, TableRow);
+	
+	        var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(TableRow).call(this, props));
+	
+	        _this2.state = {
+	            data: _this2.props.data,
+	            columns: _this2.props.columns,
+	            index: _this2.props.index
+	        };
+	        return _this2;
+	    }
+	
+	    _createClass(TableRow, [{
+	        key: "componentWillReceiveProps",
+	        value: function componentWillReceiveProps(nextProps) {
+	            this.setState({
+	                data: nextProps.data,
+	                columns: nextProps.columns,
+	                index: nextProps.index
+	            });
+	        }
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            var tableCells = [];
+	            for (var cell = 0; cell < this.state.columns.length; cell++) {
+	                tableCells[cell] = _react2.default.createElement(TableCell, { key: cell,
+	                    field: this.state.columns[cell].key,
+	                    rowIndex: this.state.index,
+	                    column: this.state.columns[cell],
+	                    value: this.state.data[this.state.columns[cell].key] });
+	            }return _react2.default.createElement(
+	                "div",
+	                { className: "table-row" },
+	                tableCells
+	            );
+	        }
+	    }]);
+	
+	    return TableRow;
+	}(_react2.default.Component);
+	
+	var TableColumn = function (_React$Component3) {
+	    _inherits(TableColumn, _React$Component3);
+	
+	    function TableColumn(props) {
+	        _classCallCheck(this, TableColumn);
+	
+	        var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(TableColumn).call(this, props));
+	
+	        _this3.state = {
+	            column: _this3.props.column
+	        };
+	        return _this3;
+	    }
+	
+	    _createClass(TableColumn, [{
+	        key: "render",
+	        value: function render() {
+	            var className = "table-column " + this.state.column.width;
+	            return _react2.default.createElement(
+	                "div",
+	                { className: className },
+	                this.state.column.title
+	            );
+	        }
+	    }]);
+	
+	    return TableColumn;
+	}(_react2.default.Component);
+	
+	var Table = function (_React$Component4) {
+	    _inherits(Table, _React$Component4);
+	
+	    function Table(props) {
+	        _classCallCheck(this, Table);
+	
+	        var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(Table).call(this, props));
+	
+	        _this4.state = {
+	            columns: props.columns,
+	            data: props.data
+	        };
+	        return _this4;
+	    }
+	
+	    _createClass(Table, [{
+	        key: "componentWillReceiveProps",
+	        value: function componentWillReceiveProps(nextProps) {
+	            this.setState({
+	                columns: nextProps.columns,
+	                data: nextProps.data
+	            });
+	        }
+	    }, {
+	        key: "render",
+	        value: function render() {
+	
+	            var tableColumns = [];
+	            for (var col = 0; col < this.state.columns.length; col++) {
+	                tableColumns[col] = _react2.default.createElement(TableColumn, { key: col,
+	                    column: this.state.columns[col] });
+	            }
+	
+	            var tableRows = [];
+	            for (var row = 0; row < this.state.data.length; row++) {
+	                tableRows[row] = _react2.default.createElement(TableRow, { key: row, index: row,
+	                    data: this.state.data[row],
+	                    columns: this.state.columns });
+	            }return _react2.default.createElement(
+	                "div",
+	                { className: "table" },
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "table-header" },
+	                    tableColumns
+	                ),
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "table-data-container" },
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "table-data" },
+	                        tableRows
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return Table;
+	}(_react2.default.Component);
+	
+	exports.default = Table;
 
 /***/ }
 /******/ ]);

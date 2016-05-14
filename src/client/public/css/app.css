@@ -121,7 +121,7 @@ body
 {
     top: 0;
     /*bottom: 5px;*/
-    height: calc(100% - 5px);
+    height: 100%;
     width: 250px;
     background-color: #2f3436;
     border-bottom: 5px solid #4f875a;
@@ -429,17 +429,13 @@ body
 
 .dashboard-page
 {
-    /*width: calc(100% - 250px);*/
-    /*height: calc(100% - 170px);*/
-    /*width: 100px;*/
-    /*height: 100px;*/
+    min-width: 1500px;
+    /*max-width: 1500px;*/
     position: absolute;
     top: 100px;
     right: 280px;
     left: 30px;
     bottom: 30px;
-    /*margin: 20px;*/
-    /*background-color: #5f5b59;*/
 }
 
 .dashboard-date-box
@@ -458,19 +454,84 @@ body
 
 .commissions-page
 {
-    width: calc(100% - 250px);
-    height: calc(100% - 70px);
-    //background-color: green;
+    min-width: 1500px;
+    /*max-width: 1500px;*/
     position: absolute;
-    top: 70px;
-    right: 250px;
+    top: 100px;
+    right: 280px;
+    left: 30px;
+    bottom: 30px;
+    height: calc(100% - 130px);
+    max-height: calc(100% - 130px);
+    /*background-color: green;*/
+}
+
+.commissions-page-file-bin
+{
+    width: 100%;
+    height: 150px;
+    background-color: white;
+    padding-top: 20px;
+}
+
+
+.commissions-page-file-bin-drag-area
+{
+    width: calc(100% - 40px);
+    height: 70px;
+    /*background-color: green;*/
+    border: 3px dashed grey;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 20px;
+    color: #505050;
+    padding-top: 18px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.commissions-page-file-bin-drag-area:hover
+{
+    background-color: rgba(66, 134, 180, 0.15);
+    color: #4286b4;
+    border: 3px dashed #4286b4;
+
+}
+
+
+.commissions-page-file-bin-settings
+{
+    width: 100%;
+    height: 50px;
+    padding-top: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.commissions-page-file-bin-settings-text
+{
+    padding-top: 15px;
+    padding-left: 10px;
+    font-size: 13px;
+    color: #7b7b7b;
+    font-weight: bold;
+}
+
+.commissions-page-table
+{
+    background-color: white;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 100%;
+    height: calc(100% - 180px);
+    max-height: calc(100% - 180px);
 }
 
 .agents-page
 {
     width: calc(100% - 250px);
-    height: calc(100% - 70px);
-    //background-color: blue;
+    height: calc(100% - 100px);
+    /*background-color: blue;*/
     position: absolute;
     top: 70px;
     right: 250px;
@@ -511,9 +572,15 @@ body
 .dashboard-commission-change-chart
 {
     /*width: 100%;*/
-    height: 370px;
+    height: 450px;
     background-color: white;
-    padding:50px;
+    padding-top: 20px;
+}
+
+.dashboard-commission-change-chart-box
+{
+    height: 390px;
+    padding: 20px 50px;
 }
 
 .dashboard-rank-table
@@ -521,12 +588,14 @@ body
     width: calc(50% - 10px);
     height: 370px;
     background-color: white;
+    padding: 20px;
 }
 
 
 
 .dashboard-month-total-agents
 {
+    min-width: 350px;
     width: calc(50% - 10px);
     height: 175px;
     background-color: white;
@@ -535,6 +604,7 @@ body
 
 .dashboard-total-investments
 {
+    min-width: 700px;
     width: 100%;
     height: 175px;
     background-color: white;
@@ -543,6 +613,7 @@ body
 
 .dashboard-month-total-commissions
 {
+    min-width: 350px;
     width: calc(50% - 10px);
     height: 175px;
     background-color: white;
@@ -552,11 +623,11 @@ body
 .dashboard-box-title
 {
     text-align: center;
-    color: #505050;
+    color: #777777;
     width: 100%;
     height: 40px;
     background-color: transparent;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     /*margin-top: 20px;*/
 }
@@ -584,3 +655,108 @@ body
     font-size: 20px;
     margin-top: 24px;
 }
+
+
+/**** table ******/
+
+.table
+{
+    width: 100%;
+    height: 100%;
+    /*border: 1px solid #d3d3d3;*/
+}
+
+.table-data-container
+{
+    direction: ltr;
+    overflow-y: scroll;
+    height: calc(100% - 50px); /* minus header height*/
+}
+
+.table-data
+{
+    direction: rtl;
+    height: calc(100% - 50px);  /* minus header height*/
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    background: rgba(179, 179, 179, 0.8);
+}
+
+.table-header
+{
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    width: 100%;
+    height: 50px;
+    flex-flow: row nowrap;
+    padding-top: 10px;
+    padding-right: 10px;
+
+    box-shadow: 0px 2px 8px #acacac;
+    -webkit-box-shadow: 0px 2px 8px #acacac;
+    -moz-box-shadow: 0px 2px 8px #acacac;
+    background-color: #4286b4;
+
+}
+
+.table-column
+{
+    font-size: 14px;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+}
+
+.table-cell
+{
+    direction: ltr;
+    min-height: 33px;
+    max-height: 33px;
+}
+
+.table-cell-text-color
+{
+    color: #5b5b5b;
+}
+
+.table-cell-read-only
+{
+    font-size: 14px;
+    /*background-color: #efefef;*/
+    text-align: center;
+    /*height: 33px;*/
+}
+
+.table-row
+{
+    height: 45px;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    width: 100%;
+    flex-flow: row nowrap;
+    border-bottom: 1px solid #e2e2e2;
+    padding-top: 12px;
+}
+
+.col-33-33 { width: 33.3333333333% }
+
+
+/*****************/
