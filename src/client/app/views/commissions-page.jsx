@@ -4,12 +4,11 @@ import { strings } from '../constants/strings'
 import Table from './table.jsx';
 import Dropdown from 'muicss/lib/react/dropdown';
 import DropdownItem from 'muicss/lib/react/dropdown-item';
-import FixedWidthDropdown from './FixedWidthDropdown.jsx';
 import Button from 'muicss/lib/react/button'
+import DatePicker from 'react-datepicker'
+var moment = require('react-datepicker/node_modules/moment');
 
-var companyNames = ["כלל","מנורה","הראל","אלטשולר שחם", "ילין לפידות","מיטב דש"
-
-];
+var companyNames = ["כלל","מנורה","הראל","אלטשולר שחם", "ילין לפידות","מיטב דש"];
 
 
 class FileBin extends React.Component {
@@ -18,7 +17,7 @@ class FileBin extends React.Component {
         super(props);
         this.state = {
             selectedCompany: "כלל",
-            date: ""
+            date: moment()
         };
 
     }
@@ -28,6 +27,12 @@ class FileBin extends React.Component {
         {
             this.setState({selectedCompany: item.props.value});
         }
+    }
+    handleChange(date)
+    {
+        this.setState({
+            date: date
+        });
     }
     onUploadFile()
     {
@@ -54,8 +59,13 @@ class FileBin extends React.Component {
                         <div className="dashboard-buttons-horizontal-spacer"/>
                         <div className="dashboard-buttons-horizontal-spacer"/>
                         <div className="commissions-page-file-bin-settings-text">{strings.validDate}</div>
-                        <FixedWidthDropdown className="fixed-size-button" label="תאריך" alignMenu="right" >
-                        </FixedWidthDropdown>
+                        <div className="commissions-page-file-bin-settings-date">
+                            <DatePicker
+                                selected={this.state.date}
+                                locale='he-IL'
+                                onChange={this.handleChange.bind(this)} />
+                        </div>
+
                         <div className="dashboard-buttons-horizontal-spacer"/>
                         <div className="dashboard-buttons-horizontal-spacer"/>
                         <div className="dashboard-buttons-horizontal-spacer"/>
@@ -143,7 +153,7 @@ class Commissions extends React.Component {
         ]
 
         var data = [
-            {companyName: "מגדל", paymentType: "היקף", agentNumber: "2342234523", agentName: "קרין בוזלי לוי", totalPayment: "23423", totalInvestments: "12342232", paymentMonth: "אפריל", date: "05/11/2016"},
+            {companyName: "מגדל", paymentType: "היקף", agentNumber: "2342234523", agentName: "קרין בוזלי לוי", totalPayment: "23423", totalInvestments: "12342232", paymentMonth: "04/16", date: "05/11/2016"},
             {companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016"},
             {companyName: "אלטשולר שחם", paymentType: "בונוס", agentNumber: "67868", agentName: "לנצמן", totalPayment: "5675", totalInvestments: "34234535", paymentMonth: "אפריל", date: "05/11/2016"},
             {companyName: "מנורה", paymentType: "גמ״ח", agentNumber: "789565", agentName: "לירון בן ציון", totalPayment: "4562", totalInvestments: "78768657", paymentMonth: "אפריל", date: "05/11/2016"},
