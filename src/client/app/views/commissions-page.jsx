@@ -6,6 +6,8 @@ import Dropdown from 'muicss/lib/react/dropdown';
 import DropdownItem from 'muicss/lib/react/dropdown-item';
 import Button from 'muicss/lib/react/button'
 import DatePicker from 'react-datepicker'
+import Dropzone from 'react-dropzone'
+
 var moment = require('react-datepicker/node_modules/moment');
 
 var companyNames = ["כלל","מנורה","הראל","אלטשולר שחם", "ילין לפידות","מיטב דש"];
@@ -38,6 +40,30 @@ class FileBin extends React.Component {
     {
 
     }
+    onDrop(files)
+    {
+        console.log('Received files: ', files);
+
+        var formData = new FormData();
+        for (var i = 0; i < files.length; i++) {
+            formData.append('file', files[i]);
+        }
+
+        // now post a new XHR request
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/upload');
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                console.log('all done: ' + xhr.status);
+            } else {
+                console.log('Something went terribly wrong...');
+            }
+        };
+
+        xhr.send(formData);
+
+
+    }
     render () {
 
         const companies = [];
@@ -46,10 +72,19 @@ class FileBin extends React.Component {
             companies.push(<DropdownItem onClick={this.onCompanyNameChange.bind(this)} value={companyNames[i]} key={i}>{companyNames[i]}</DropdownItem>);
         }
 
+        let style = {
+            backgroundColor: 'transparent',
+            color: '#505050'
+        };
+
+        let activeStyle = {
+            backgroundColor: 'rgba(66, 134, 180, 0.15)'
+        };
+
         return  <div className="commissions-page-file-bin shadow">
-                    <div className="commissions-page-file-bin-drag-area">
-                        <strong>{strings.dragFileHere}</strong>
-                    </div>
+            <Dropzone onDrop={this.onDrop} className="commissions-page-file-bin-drag-area" style={style} activeStyle={activeStyle}>
+                <strong>{strings.dragFileHere}</strong>
+            </Dropzone>
                     <div className="commissions-page-file-bin-settings hcontainer-no-wrap">
                         <div className="commissions-page-file-bin-settings-text">{strings.companyAssignment}</div>
                         <Dropdown label={this.state.selectedCompany} alignMenu="right" variant="raised">
