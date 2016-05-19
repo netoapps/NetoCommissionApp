@@ -7,6 +7,7 @@ import Signup from './views/signup-page.jsx'
 import Dashboard from './views/dashboard-page.jsx'
 import Commissions from './views/commissions-page.jsx'
 import Agents from './views/agents-page.jsx'
+import EditFiles from './views/edit-files-page.jsx'
 import TopBar from './views/top-bar.jsx';
 import RightPanel from './views/right-panel.jsx';
 import { strings } from './constants/strings'
@@ -82,6 +83,7 @@ render((
             <Route path="/app/dashboard" component={Dashboard} />
             <Route path="/app/commissions" component={Commissions} />
             <Route path="/app/agents" component={Agents} />
+            <Route path="/app/edit-files" component={EditFiles} />
         </Route>
    </Router>
 ), document.getElementById('content'))

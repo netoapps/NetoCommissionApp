@@ -239,13 +239,14 @@ body
 
 .login-page-input
 {
-    margin-right: 15px;
-    margin-left: 15px;
+    /*margin-right: 15px;*/
+    /*margin-left: 15px;*/
     margin-bottom: 20px;
     display: block;
-    width: 344px;
+    width: 100%;
     height: 30px;
-    padding: 6px 12px;
+    padding-left: 12px;
+    padding-right: 12px;
     font-size: 14px;
     line-height: 1.42857143;
     color: #343434;
@@ -287,8 +288,8 @@ body
     padding: 0px 15px;
     border: none;
     text-decoration: none;
-    width: 370px;
-    margin: 5px 15px 15px;
+    width: 100%;
+    margin-bottom:15px;
 }
 .login-page-btn:hover {
     background: #5b9366;
@@ -312,6 +313,11 @@ body
     background-image: -o-linear-gradient(top, #366c3f, #37613e);
     background-image: linear-gradient(to bottom, #366c3f, #37613e);
     text-decoration: none;
+}
+
+.login-page-need-account-text
+{
+    font-size: 14px;
 }
 
 .login-page-alert {
@@ -549,6 +555,22 @@ body
 
 }
 
+.commissions-page-file-bin-settings-edit-files-container
+{
+    direction: ltr;
+    height: 100%;
+    /*background-color: red;*/
+    padding-top: 5px;
+    padding-left: 20px;
+    padding-right: 20px;}
+
+.commissions-page-file-bin-settings-edit-files
+{
+    width: 200px;
+    height: 40px;
+
+}
+
 .commissions-page-table
 {
     background-color: white;
@@ -561,12 +583,14 @@ body
 
 .agents-page
 {
-    width: calc(100% - 250px);
-    height: calc(100% - 100px);
-    /*background-color: blue;*/
+    min-width: 1500px;
     position: absolute;
-    top: 70px;
-    right: 250px;
+    top: 100px;
+    right: 280px;
+    left: 30px;
+    bottom: 30px;
+    height: calc(100% - 130px);
+    max-height: calc(100% - 130px);
 }
 
 
@@ -792,3 +816,25 @@ body
 
 
 /*****************/
+
+.edit-files-page
+{
+    min-width: 1500px;
+    position: absolute;
+    top: 100px;
+    right: 280px;
+    left: 30px;
+    bottom: 30px;
+    height: calc(100% - 130px);
+    max-height: calc(100% - 130px);
+}
+
+.edit-files-table
+{
+    background-color: white;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 100%;
+    height: calc(100% - 180px);
+    max-height: calc(100% - 180px);
+}

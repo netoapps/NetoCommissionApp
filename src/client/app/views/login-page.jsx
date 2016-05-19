@@ -53,7 +53,9 @@ export default class Login extends React.Component {
                         </div>
                         <button type="submit" className="login-page-button" onClick={this.login.bind(this)}>{strings.connect}</button>
                     </form>
-                    <p>{strings.needAccount}<a href="/user-signup-request">&nbsp;{strings.sendRegisterRequest}</a></p>
+                    <div className="login-page-need-account-text">
+                        <p>{strings.needAccount}<a href="/user-signup-request">&nbsp;{strings.sendRegisterRequest}</a></p>
+                    </div>
                 </div>
             </div>
         );

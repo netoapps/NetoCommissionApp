@@ -83,6 +83,10 @@
 	
 	var _agentsPage2 = _interopRequireDefault(_agentsPage);
 	
+	var _editFilesPage = __webpack_require__(/*! ./views/edit-files-page.jsx */ 373);
+	
+	var _editFilesPage2 = _interopRequireDefault(_editFilesPage);
+	
 	var _topBar = __webpack_require__(/*! ./views/top-bar.jsx */ 369);
 	
 	var _topBar2 = _interopRequireDefault(_topBar);
@@ -180,7 +184,8 @@
 	        { path: '/app', component: App },
 	        _react2.default.createElement(_reactRouter.Route, { path: '/app/dashboard', component: _dashboardPage2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/app/commissions', component: _commissionsPage2.default }),
-	        _react2.default.createElement(_reactRouter.Route, { path: '/app/agents', component: _agentsPage2.default })
+	        _react2.default.createElement(_reactRouter.Route, { path: '/app/agents', component: _agentsPage2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: '/app/edit-files', component: _editFilesPage2.default })
 	    )
 	), document.getElementById('content'));
 
@@ -28079,14 +28084,18 @@
 	                        )
 	                    ),
 	                    _react2.default.createElement(
-	                        'p',
-	                        null,
-	                        _strings.strings.needAccount,
+	                        'div',
+	                        { className: 'login-page-need-account-text' },
 	                        _react2.default.createElement(
-	                            'a',
-	                            { href: '/user-signup-request' },
-	                            ' ',
-	                            _strings.strings.sendRegisterRequest
+	                            'p',
+	                            null,
+	                            _strings.strings.needAccount,
+	                            _react2.default.createElement(
+	                                'a',
+	                                { href: '/user-signup-request' },
+	                                ' ',
+	                                _strings.strings.sendRegisterRequest
+	                            )
 	                        )
 	                    )
 	                )
@@ -28141,7 +28150,9 @@
 	    dragFileHere: "גרור קובץ עמלות לכאן",
 	    companyAssignment: "שיוך לחברה",
 	    validDate: "תאריך נכונות",
-	    uploadFile: "העלה קובץ"
+	    paymentMonth: "חודש שכר",
+	    uploadFile: "העלה קובץ",
+	    editFiles: "עריכת קבצים"
 	};
 	
 	exports.strings = strings;
@@ -34551,7 +34562,6 @@
 	            if (this.state.column.type === "read-only-percent") {
 	                value = value + " %";
 	            }
-	
 	            if (this.state.column.color === "red-green") {
 	                if (parseFloat(this.props.value) >= 0) {
 	                    color = "green";
@@ -34559,6 +34569,7 @@
 	                    color = "red";
 	                }
 	            }
+	            if (this.state.column.type === "button") {}
 	
 	            var node = _react2.default.createElement(
 	                "div",
@@ -34786,7 +34797,8 @@
 	
 	        _this.state = {
 	            selectedCompany: "כלל",
-	            date: moment()
+	            date: moment(),
+	            files: null
 	        };
 	
 	        return _this;
@@ -34796,29 +34808,30 @@
 	        key: 'onCompanyNameChange',
 	        value: function onCompanyNameChange(item) {
 	            if (item.props.value != this.state.selectedCompany) {
-	                this.setState({ selectedCompany: item.props.value });
+	                this.state.selectedCompany = item.props.value;
+	                this.setState(this.state);
 	            }
 	        }
 	    }, {
 	        key: 'handleChange',
 	        value: function handleChange(date) {
-	            this.setState({
-	                date: date
-	            });
+	            this.state.date = date;
+	            this.setState(this.state);
 	        }
-	    }, {
-	        key: 'onUploadFile',
-	        value: function onUploadFile() {}
 	    }, {
 	        key: 'onDrop',
 	        value: function onDrop(files) {
 	            console.log('Received files: ', files);
-	
+	            this.state.files = files;
+	            this.setState(this.state);
+	        }
+	    }, {
+	        key: 'onUploadFile',
+	        value: function onUploadFile() {
 	            var formData = new FormData();
 	            for (var i = 0; i < files.length; i++) {
 	                formData.append('file', files[i]);
 	            }
-	
 	            // now post a new XHR request
 	            var xhr = new XMLHttpRequest();
 	            xhr.open('POST', '/upload');
@@ -34829,8 +34842,12 @@
 	                    console.log('Something went terribly wrong...');
 	                }
 	            };
-	
 	            xhr.send(formData);
+	        }
+	    }, {
+	        key: 'onEditFiles',
+	        value: function onEditFiles() {
+	            this.context.router.push('/app/edit-files');
 	        }
 	    }, {
 	        key: 'render',
@@ -34868,42 +34885,55 @@
 	                ),
 	                _react2.default.createElement(
 	                    'div',
-	                    { className: 'commissions-page-file-bin-settings hcontainer-no-wrap' },
+	                    { className: 'hcontainer-no-wrap' },
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'commissions-page-file-bin-settings-text' },
-	                        _strings.strings.companyAssignment
+	                        { className: 'commissions-page-file-bin-settings hcontainer-no-wrap' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'commissions-page-file-bin-settings-text' },
+	                            _strings.strings.companyAssignment
+	                        ),
+	                        _react2.default.createElement(
+	                            _dropdown2.default,
+	                            { label: this.state.selectedCompany, alignMenu: 'right', variant: 'raised' },
+	                            companies
+	                        ),
+	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'commissions-page-file-bin-settings-text' },
+	                            _strings.strings.paymentMonth
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'commissions-page-file-bin-settings-date' },
+	                            _react2.default.createElement(_reactDatepicker2.default, {
+	                                selected: this.state.date,
+	                                locale: 'he-IL',
+	                                onChange: this.handleChange.bind(this) })
+	                        ),
+	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                        _react2.default.createElement(
+	                            _button2.default,
+	                            { className: 'shadow', onClick: this.onUploadFile.bind(this), color: 'primary' },
+	                            _strings.strings.uploadFile
+	                        )
 	                    ),
-	                    _react2.default.createElement(
-	                        _dropdown2.default,
-	                        { label: this.state.selectedCompany, alignMenu: 'right', variant: 'raised' },
-	                        companies
-	                    ),
-	                    _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                    _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                    _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'commissions-page-file-bin-settings-text' },
-	                        _strings.strings.validDate
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'commissions-page-file-bin-settings-date' },
-	                        _react2.default.createElement(_reactDatepicker2.default, {
-	                            selected: this.state.date,
-	                            locale: 'he-IL',
-	                            onChange: this.handleChange.bind(this) })
-	                    ),
-	                    _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                    _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                    _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                    _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                    _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                    _react2.default.createElement(
-	                        _button2.default,
-	                        { className: 'shadow', onClick: this.onUploadFile.bind(this), color: 'primary' },
-	                        _strings.strings.uploadFile
+	                        { className: 'commissions-page-file-bin-settings-edit-files-container' },
+	                        _react2.default.createElement(
+	                            _button2.default,
+	                            { className: 'shadow', onClick: this.onEditFiles.bind(this) },
+	                            _strings.strings.editFiles
+	                        )
 	                    )
 	                )
 	            );
@@ -34912,6 +34942,13 @@
 	
 	    return FileBin;
 	}(_react2.default.Component);
+	
+	//Important!! This adds the router object to context
+	
+	
+	FileBin.contextTypes = {
+	    router: _react2.default.PropTypes.object.isRequired
+	};
 	
 	var Commissions = function (_React$Component2) {
 	    _inherits(Commissions, _React$Component2);
@@ -34969,7 +35006,7 @@
 	                type: 'read-only-currency',
 	                color: 'normal'
 	            }, {
-	                title: "חודש תשלום",
+	                title: "חודש שכר",
 	                key: "paymentMonth",
 	                width: "col-33-33",
 	                type: 'read-only',
@@ -50227,6 +50264,128 @@
 	
 	/** Define module API */
 	exports.default = FlatRippleButton;
+
+/***/ },
+/* 373 */
+/*!**************************************************!*\
+  !*** ./src/client/app/views/edit-files-page.jsx ***!
+  \**************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _authService = __webpack_require__(/*! ../services/auth-service */ 229);
+	
+	var _authService2 = _interopRequireDefault(_authService);
+	
+	var _table = __webpack_require__(/*! ./table.jsx */ 260);
+	
+	var _table2 = _interopRequireDefault(_table);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var EditFilesPage = function (_React$Component) {
+	    _inherits(EditFilesPage, _React$Component);
+	
+	    function EditFilesPage(props) {
+	        _classCallCheck(this, EditFilesPage);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(EditFilesPage).call(this, props));
+	
+	        _this.state = {
+	            loginData: _authService2.default.getLoginData()
+	        };
+	
+	        return _this;
+	    }
+	
+	    _createClass(EditFilesPage, [{
+	        key: 'render',
+	        value: function render() {
+	
+	            var columns = [{
+	                title: "שם קובץ",
+	                key: "fileName",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "חברה",
+	                key: "companyName",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "חודש תשלום",
+	                key: "paymentMonth",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "תאריך העלאה",
+	                key: "uploadDate",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }
+	            //},
+	            //{
+	            //    title: "הורדת קובץ",
+	            //    width: "col-33-33",
+	            //    type: 'button',
+	            //    color: 'normal'
+	            //},
+	            //{
+	            //    title: "מחיקת קובץ",
+	            //    width: "col-33-33",
+	            //    type: 'button',
+	            //    color: 'normal'
+	            //}
+	
+	            ];
+	
+	            var data = [{ fileName: "ילין לפידות.xlsx", companyName: "ילין לפידות", paymentMonth: "04/16", uploadDate: "01/04/16" }, { fileName: "ילין לפידות.xlsx", companyName: "ילין לפידות", paymentMonth: "04/16", uploadDate: "01/04/16" }, { fileName: "ילין לפידות.xlsx", companyName: "ילין לפידות", paymentMonth: "04/16", uploadDate: "01/04/16" }];
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'edit-files-page animated fadeIn' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'edit-files-table shadow' },
+	                    _react2.default.createElement(_table2.default, { columns: columns,
+	                        data: data })
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return EditFilesPage;
+	}(_react2.default.Component);
+	
+	//Important!! This adds the router object to context
+	
+	
+	EditFilesPage.contextTypes = {
+	    router: _react2.default.PropTypes.object.isRequired
+	};
+	
+	exports.default = EditFilesPage;
 
 /***/ }
 /******/ ]);

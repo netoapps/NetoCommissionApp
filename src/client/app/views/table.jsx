@@ -34,7 +34,6 @@ class TableCell extends React.Component {
         {
             value = value + " %"
         }
-
         if (this.state.column.color === "red-green")
         {
             if(parseFloat(this.props.value) >= 0)
@@ -45,6 +44,10 @@ class TableCell extends React.Component {
             {
                 color = "red"
             }
+        }
+        if (this.state.column.type === "button")
+        {
+
         }
 
         var node = <div className={"table-cell-read-only " + color}>{value}</div>;

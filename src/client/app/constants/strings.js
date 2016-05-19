@@ -22,7 +22,9 @@ let strings = {
     dragFileHere: "גרור קובץ עמלות לכאן",
     companyAssignment: "שיוך לחברה",
     validDate: "תאריך נכונות",
-    uploadFile: "העלה קובץ"
+    paymentMonth: "חודש שכר",
+    uploadFile: "העלה קובץ",
+    editFiles: "עריכת קבצים"
 }
 
 export { strings }
