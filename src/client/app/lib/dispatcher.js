@@ -61,7 +61,7 @@ export default class Dispatcher {
             throw 'Store Already Exists';
         }
         this.stores[name] = store;
-        this.logger.debug(`Store ${name} registered`);
+        this.logger.info(`Store ${name} registered`);
     }
 
     /**

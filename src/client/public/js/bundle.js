@@ -83,15 +83,15 @@
 	
 	var _agentsPage2 = _interopRequireDefault(_agentsPage);
 	
-	var _editFilesPage = __webpack_require__(/*! ./views/edit-files-page.jsx */ 373);
+	var _editFilesPage = __webpack_require__(/*! ./views/edit-files-page.jsx */ 369);
 	
 	var _editFilesPage2 = _interopRequireDefault(_editFilesPage);
 	
-	var _topBar = __webpack_require__(/*! ./views/top-bar.jsx */ 369);
+	var _topBar = __webpack_require__(/*! ./views/top-bar.jsx */ 372);
 	
 	var _topBar2 = _interopRequireDefault(_topBar);
 	
-	var _rightPanel = __webpack_require__(/*! ./views/right-panel.jsx */ 371);
+	var _rightPanel = __webpack_require__(/*! ./views/right-panel.jsx */ 374);
 	
 	var _rightPanel2 = _interopRequireDefault(_rightPanel);
 	
@@ -27281,7 +27281,8 @@
 	var ActionType = {
 	
 	    USER_LOGGED_IN: 'USER_LOGGED_IN',
-	    USER_LOGGED_OUT: 'USER_LOGGED_OUT'
+	    USER_LOGGED_OUT: 'USER_LOGGED_OUT',
+	    DELETE_COMMISSION_DOC: 'DELETE_COMMISSION_DOC'
 	};
 	exports.ActionType = ActionType;
 	
@@ -27293,8 +27294,7 @@
 	    _createClass(AppActions, null, [{
 	        key: 'userLoggedIn',
 	        value: function userLoggedIn(apiToken, fullName, gender) {
-	            _appDispatcher2.default.dispatch({
-	                actionType: ActionType.USER_LOGGED_IN,
+	            _appDispatcher2.default.dispatch(ActionType.USER_LOGGED_IN, {
 	                apiToken: apiToken,
 	                fullName: fullName,
 	                gender: gender
@@ -27303,8 +27303,14 @@
 	    }, {
 	        key: 'userLoggedOut',
 	        value: function userLoggedOut() {
-	            _appDispatcher2.default.dispatch({
-	                actionType: ActionType.USER_LOGGED_OUT
+	            _appDispatcher2.default.dispatch(ActionType.USER_LOGGED_OUT, {});
+	        }
+	    }, {
+	        key: 'deleteCommissionFile',
+	        value: function deleteCommissionFile(fileName, callback) {
+	            _appDispatcher2.default.dispatch(ActionType.DELETE_COMMISSION_DOC, {
+	                fileName: fileName,
+	                callback: callback
 	            });
 	        }
 	    }]);
@@ -27444,7 +27450,7 @@
 	                throw 'Store Already Exists';
 	            }
 	            this.stores[name] = store;
-	            this.logger.debug('Store ' + name + ' registered');
+	            this.logger.info('Store ' + name + ' registered');
 	        }
 	
 	        /**
@@ -34506,7 +34512,7 @@
   \****************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -34517,6 +34523,10 @@
 	var _react = __webpack_require__(/*! react */ 1);
 	
 	var _react2 = _interopRequireDefault(_react);
+	
+	var _button = __webpack_require__(/*! muicss/lib/react/button */ 241);
+	
+	var _button2 = _interopRequireDefault(_button);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -34542,7 +34552,7 @@
 	    }
 	
 	    _createClass(TableCell, [{
-	        key: "componentWillReceiveProps",
+	        key: 'componentWillReceiveProps',
 	        value: function componentWillReceiveProps(nextProps) {
 	            this.setState({
 	                value: nextProps.value,
@@ -34550,18 +34560,13 @@
 	            });
 	        }
 	    }, {
-	        key: "render",
+	        key: 'render',
 	        value: function render() {
 	            var className = "table-cell";
 	            var color = "table-cell-text-color";
-	            var value = this.props.value;
-	            if (this.state.column.type === "read-only-currency") {
-	                value = parseFloat(value.replace(/,/g, "")).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	                value = "₪ " + value;
-	            }
-	            if (this.state.column.type === "read-only-percent") {
-	                value = value + " %";
-	            }
+	            //var value = this.props.value;
+	            var node = null;
+	
 	            if (this.state.column.color === "red-green") {
 	                if (parseFloat(this.props.value) >= 0) {
 	                    color = "green";
@@ -34569,15 +34574,57 @@
 	                    color = "red";
 	                }
 	            }
-	            if (this.state.column.type === "button") {}
 	
-	            var node = _react2.default.createElement(
-	                "div",
-	                { className: "table-cell-read-only " + color },
-	                value
-	            );
+	            if (this.state.column.type === "read-only") {
+	                node = _react2.default.createElement(
+	                    'div',
+	                    { className: "table-cell-read-only " + color },
+	                    this.props.value
+	                );
+	            }
+	            if (this.state.column.type === "read-only-currency") {
+	                var value = this.props.value;
+	                value = parseFloat(value.replace(/,/g, "")).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	                value = "₪ " + value;
+	                node = _react2.default.createElement(
+	                    'div',
+	                    { className: "table-cell-read-only " + color },
+	                    value
+	                );
+	            }
+	            if (this.state.column.type === "read-only-percent") {
+	                var value = this.props.value;
+	                value = value + " %";
+	                node = _react2.default.createElement(
+	                    'div',
+	                    { className: "table-cell-read-only " + color },
+	                    value
+	                );
+	            }
+	            if (this.state.column.type === "action") {
+	                var actions = [];
+	                for (var index = 0; index < this.props.value.length; index++) {
+	                    var action = this.props.value[index];
+	                    var className = "table-button " + action.color;
+	                    actions.push(_react2.default.createElement(
+	                        'button',
+	                        { key: index, className: className, onClick: function (action) {
+	                                action.action(this.props.rowIndex);
+	                            }.bind(this, action) },
+	                        action.name
+	                    ));
+	                    actions.push(_react2.default.createElement('div', { key: this.props.value.length + index, className: 'table-button-spacer' }));
+	                }
+	                node = _react2.default.createElement(
+	                    'div',
+	                    { className: "table-cell-read-only hcontainer-no-wrap table-button-container " + color },
+	                    actions
+	                );
+	            }
+	
+	            //var node = <div className={"table-cell-read-only " + color}>{value}</div>;
 	            return _react2.default.createElement(
-	                "div",
+	                'div',
 	                { className: className + " " + this.state.column.width },
 	                node
 	            );
@@ -34604,7 +34651,7 @@
 	    }
 	
 	    _createClass(TableRow, [{
-	        key: "componentWillReceiveProps",
+	        key: 'componentWillReceiveProps',
 	        value: function componentWillReceiveProps(nextProps) {
 	            this.setState({
 	                data: nextProps.data,
@@ -34613,7 +34660,7 @@
 	            });
 	        }
 	    }, {
-	        key: "render",
+	        key: 'render',
 	        value: function render() {
 	            var tableCells = [];
 	            for (var cell = 0; cell < this.state.columns.length; cell++) {
@@ -34623,8 +34670,8 @@
 	                    column: this.state.columns[cell],
 	                    value: this.state.data[this.state.columns[cell].key] });
 	            }return _react2.default.createElement(
-	                "div",
-	                { className: "table-row" },
+	                'div',
+	                { className: 'table-row' },
 	                tableCells
 	            );
 	        }
@@ -34648,11 +34695,11 @@
 	    }
 	
 	    _createClass(TableColumn, [{
-	        key: "render",
+	        key: 'render',
 	        value: function render() {
 	            var className = "table-column " + this.state.column.width;
 	            return _react2.default.createElement(
-	                "div",
+	                'div',
 	                { className: className },
 	                this.state.column.title
 	            );
@@ -34678,7 +34725,7 @@
 	    }
 	
 	    _createClass(Table, [{
-	        key: "componentWillReceiveProps",
+	        key: 'componentWillReceiveProps',
 	        value: function componentWillReceiveProps(nextProps) {
 	            this.setState({
 	                columns: nextProps.columns,
@@ -34686,7 +34733,7 @@
 	            });
 	        }
 	    }, {
-	        key: "render",
+	        key: 'render',
 	        value: function render() {
 	
 	            var tableColumns = [];
@@ -34701,19 +34748,19 @@
 	                    data: this.state.data[row],
 	                    columns: this.state.columns });
 	            }return _react2.default.createElement(
-	                "div",
-	                { className: "table" },
+	                'div',
+	                { className: 'table' },
 	                _react2.default.createElement(
-	                    "div",
-	                    { className: "table-header" },
+	                    'div',
+	                    { className: 'table-header' },
 	                    tableColumns
 	                ),
 	                _react2.default.createElement(
-	                    "div",
-	                    { className: "table-data-container" },
+	                    'div',
+	                    { className: 'table-data-container' },
 	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "table-data" },
+	                        'div',
+	                        { className: 'table-data' },
 	                        tableRows
 	                    )
 	                )
@@ -49758,6 +49805,548 @@
 
 /***/ },
 /* 369 */
+/*!**************************************************!*\
+  !*** ./src/client/app/views/edit-files-page.jsx ***!
+  \**************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _authService = __webpack_require__(/*! ../services/auth-service */ 229);
+	
+	var _authService2 = _interopRequireDefault(_authService);
+	
+	var _table = __webpack_require__(/*! ./table.jsx */ 260);
+	
+	var _table2 = _interopRequireDefault(_table);
+	
+	var _appActions = __webpack_require__(/*! ../actions/app-actions */ 232);
+	
+	var _appActions2 = _interopRequireDefault(_appActions);
+	
+	var _dataStore = __webpack_require__(/*! ../stores/data-store */ 370);
+	
+	var _dataStore2 = _interopRequireDefault(_dataStore);
+	
+	var _appActions3 = __webpack_require__(/*! ../actions/app-actions.js */ 232);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var EditFilesPage = function (_React$Component) {
+	    _inherits(EditFilesPage, _React$Component);
+	
+	    function EditFilesPage(props) {
+	        _classCallCheck(this, EditFilesPage);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(EditFilesPage).call(this, props));
+	
+	        _this.state = {
+	            loginData: _authService2.default.getLoginData(),
+	            filesData: _dataStore2.default.getFilesData()
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(EditFilesPage, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            _dataStore2.default.addEventListener(_appActions3.ActionType.DELETE_COMMISSION_DOC, this.onDeleteFile.bind(this));
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            _dataStore2.default.removeEventListener(_appActions3.ActionType.DELETE_COMMISSION_DOC, this.onDeleteFile);
+	        }
+	    }, {
+	        key: 'onDeleteFile',
+	        value: function onDeleteFile() {
+	            this.state.filesData = _dataStore2.default.getFilesData();
+	            this.setState(this.state);
+	        }
+	    }, {
+	        key: 'onDeleteFileClicked',
+	        value: function onDeleteFileClicked(rowIndex) {
+	            console.log("delete file at row " + rowIndex);
+	
+	            var deleteInProgress = false;
+	            if (deleteInProgress) return;
+	
+	            var fileName = this.state.filesData[rowIndex].fileName;
+	
+	            swal({
+	                title: "אישור מחיקת מסמך",
+	                text: "למחוק מסמך זה לצמיתות מהמערכת?",
+	                type: "warning",
+	                showCancelButton: true,
+	                confirmButtonColor: "#DD6B55",
+	                confirmButtonText: "כן, מחק את המסמך מהמערכת",
+	                cancelButtonText: "בטל",
+	                closeOnConfirm: false,
+	                showLoaderOnConfirm: false
+	            }, function (isConfirm) {
+	                if (isConfirm) {
+	                    _appActions2.default.deleteCommissionFile(fileName, function (status) {
+	                        if (status == 'success') {
+	                            swal({
+	                                title: "",
+	                                text: "המסמך נמחק לצמיתות מהמערכת!",
+	                                type: "success",
+	                                timer: 1500,
+	                                showConfirmButton: false
+	                            });
+	                            console.log('Data was deleted successfully from server!');
+	                        } else console.error('Error while deleting data from server!');
+	                        deleteInProgress = true;
+	                    });
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'onDownloadFileClicked',
+	        value: function onDownloadFileClicked(rowIndex) {
+	            console.log("download file at row " + rowIndex);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	
+	            var columns = [{
+	                title: "שם קובץ",
+	                key: "fileName",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "חברה",
+	                key: "companyName",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "חודש תשלום",
+	                key: "paymentMonth",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "תאריך העלאה",
+	                key: "uploadDate",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "הערות",
+	                key: "notes",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "פעולות",
+	                key: "actions",
+	                width: "col-33-33",
+	                type: 'action',
+	                color: 'normal'
+	            }
+	            //},
+	            //{
+	            //    title: "הורדת קובץ",
+	            //    width: "col-33-33",
+	            //    type: 'button',
+	            //    color: 'normal'
+	            //},
+	            //{
+	            //    title: "מחיקת קובץ",
+	            //    width: "col-33-33",
+	            //    type: 'button',
+	            //    color: 'normal'
+	            //}
+	
+	            ];
+	
+	            var deleteAction = { name: "מחק", action: this.onDeleteFileClicked.bind(this), color: "red" };
+	            var downloadAction = { name: "הורד", action: this.onDownloadFileClicked.bind(this), color: "blue" };
+	
+	            var filesData = [];
+	            for (var file = 0; file < this.state.filesData.length; file++) {
+	                var fileData = this.state.filesData[file];
+	                fileData["actions"] = [downloadAction, deleteAction];
+	                filesData.push(fileData);
+	            }
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'edit-files-page animated fadeIn' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'edit-files-table shadow' },
+	                    _react2.default.createElement(_table2.default, { columns: columns,
+	                        data: filesData })
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return EditFilesPage;
+	}(_react2.default.Component);
+	
+	//Important!! This adds the router object to context
+	
+	
+	EditFilesPage.contextTypes = {
+	    router: _react2.default.PropTypes.object.isRequired
+	};
+	
+	exports.default = EditFilesPage;
+
+/***/ },
+/* 370 */
+/*!*********************************************!*\
+  !*** ./src/client/app/stores/data-store.js ***!
+  \*********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _store = __webpack_require__(/*! ../lib/store.js */ 371);
+	
+	var _store2 = _interopRequireDefault(_store);
+	
+	var _appDispatcher = __webpack_require__(/*! ../dispatcher/app-dispatcher.js */ 233);
+	
+	var _appDispatcher2 = _interopRequireDefault(_appDispatcher);
+	
+	var _appActions = __webpack_require__(/*! ../actions/app-actions.js */ 232);
+	
+	var _appActions2 = _interopRequireDefault(_appActions);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by asaf on 25/04/2016.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	
+	
+	var DataStore = function (_Store) {
+	    _inherits(DataStore, _Store);
+	
+	    function DataStore() {
+	        _classCallCheck(this, DataStore);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(DataStore).call(this, 'DataStore'));
+	
+	        _this.logger.debug('Initializing DataStore');
+	        _this.initialize('user', {});
+	
+	        var files = [{ fileName: "ילין לפידות.xlsx", companyName: "ילין לפידות", paymentMonth: "04/16", uploadDate: "01/04/16", notes: "במבה קטנה" }, { fileName: "ילין לפידות.xlsx", companyName: "ילין לפידות", paymentMonth: "04/16", uploadDate: "01/04/16", notes: "במבה קטנה ויפה" }, { fileName: "ילין לפידות.xlsx", companyName: "ילין לפידות", paymentMonth: "04/16", uploadDate: "01/04/16", notes: "במבה קטנה ושמנמנה" }];
+	        _this.initialize('files', files);
+	        return _this;
+	    }
+	
+	    _createClass(DataStore, [{
+	        key: 'getFilesData',
+	        value: function getFilesData() {
+	            return this.get('files');
+	        }
+	    }, {
+	        key: 'deleteFile',
+	        value: function deleteFile(data) {
+	            var files = this.get('files');
+	
+	            for (var file = 0; file < files.length; file++) {
+	                if (data.fileName === files[file].fileName) {
+	                    files.splice(file, 1);
+	                    data.callback("success");
+	                    this.logger.debug('delete doc ' + data.fileName);
+	                    this.eventbus.emit(_appActions.ActionType.DELETE_COMMISSION_DOC);
+	                    break;
+	                }
+	            }
+	        }
+	
+	        /* Handle actions */
+	
+	    }, {
+	        key: 'onAction',
+	        value: function onAction(actionType, data) {
+	            this.logger.debug('Received Action ${actionType} with data', data);
+	            switch (actionType) {
+	                case _appActions.ActionType.DELETE_COMMISSION_DOC:
+	                    this.deleteFile(data);
+	                    break;
+	            }
+	        }
+	    }]);
+	
+	    return DataStore;
+	}(_store2.default);
+	
+	var dataStore = new DataStore();
+	_appDispatcher2.default.registerStore(dataStore);
+	exports.default = dataStore;
+
+/***/ },
+/* 371 */
+/*!*************************************!*\
+  !*** ./src/client/app/lib/store.js ***!
+  \*************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _events = __webpack_require__(/*! events */ 235);
+	
+	var _events2 = _interopRequireDefault(_events);
+	
+	var _logger = __webpack_require__(/*! ./logger */ 236);
+	
+	var _logger2 = _interopRequireDefault(_logger);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var Store = function () {
+	    /**
+	     * A Flux-like Store Interface
+	     *
+	     * @constructor
+	     * @this {Store}
+	     * @param {string} name The name of the store
+	     */
+	
+	    function Store(name) {
+	        _classCallCheck(this, Store);
+	
+	        this.storeName = name;
+	        this.registeredViews = {};
+	        this.storeData = {};
+	        this.eventbus = new _events2.default();
+	        this.logger = new _logger2.default(this.storeName);
+	
+	        this.logger.debug('Registering local event bus listener for STORE_CHANGED event');
+	        this.eventbus.on('STORE_CHANGED', this.onStoreChange.bind(this));
+	    }
+	
+	    /**
+	     * Read-only Property for the name of the store
+	     */
+	
+	
+	    _createClass(Store, [{
+	        key: 'addEventListener',
+	
+	
+	        /**
+	         * Dummy onAction() method to catch failures in sub-classing the
+	         * Store appropriately.
+	         */
+	
+	        value: function addEventListener(event, callback) {
+	            this.eventbus.on(event, callback);
+	        }
+	    }, {
+	        key: 'removeEventListener',
+	        value: function removeEventListener(event, callback) {
+	            this.eventbus.removeListener(event, callback);
+	        }
+	
+	        /**
+	         * Dummy onAction() method to catch failures in sub-classing the
+	         * Store appropriately.
+	         */
+	
+	    }, {
+	        key: 'onAction',
+	        value: function onAction() {
+	            this.logger.error('Invalid Store - Must define onAction method');
+	        }
+	
+	        /**
+	         * A view needs to be able to register itself with the store to receive
+	         * notifications of updates to the store
+	         *
+	         * @param {function} callback the method to call back
+	         * @returns {string} an ID to be used when un-registering
+	         */
+	
+	    }, {
+	        key: 'registerView',
+	        value: function registerView(callback) {
+	            var id = this.storeName + '-' + this.guid;
+	            this.logger.debug('Registering new View Callback and returning ID ' + id);
+	            this.registeredViews[id] = callback;
+	            return id;
+	        }
+	
+	        /**
+	         * A view also needs to be able to de-register itself with the store to
+	         * stop receiving notifications of updates to the store.
+	         *
+	         * @param {string} id the ID from the call to registerView()
+	         * @param {boolean} force don't throw an error if it doesn't exist
+	         */
+	
+	    }, {
+	        key: 'deregisterView',
+	        value: function deregisterView(id) {
+	            var force = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
+	
+	            this.logger.debug('deregisterView(' + id + ', ' + force + ')');
+	            if (id in this.registeredViews) {
+	                this.logger.debug('Deregistering View Callback with ID ' + id);
+	                delete this.registeredViews[id];
+	            } else {
+	                if (!force) {
+	                    throw 'Invalid View Registration ID';
+	                }
+	            }
+	        }
+	
+	        /**
+	         * Emit a change store event on the private Event Bus
+	         */
+	
+	    }, {
+	        key: 'changeStore',
+	        value: function changeStore() {
+	            this.logger.debug('Emitting Store Change Event');
+	            this.eventbus.emit('STORE_CHANGED');
+	        }
+	
+	        /**
+	         * Pass on change store events to the registered views
+	         */
+	
+	    }, {
+	        key: 'onStoreChange',
+	        value: function onStoreChange() {
+	            for (var viewID in this.registeredViews) {
+	                this.logger.debug('Sending Store Change Event to View Registration ' + viewID);
+	                this.registeredViews[viewID]();
+	            }
+	        }
+	
+	        /**
+	         * Initialize the store with a key-value pair
+	         *
+	         * @param {string} key the key name
+	         * @param {object} value the key value
+	         */
+	
+	    }, {
+	        key: 'initialize',
+	        value: function initialize(key, value) {
+	            this.storeData[key] = value;
+	        }
+	
+	        /**
+	         * Set a key in the store to a new value
+	         *
+	         * @param {string} key the key name
+	         * @param {object} value the key value
+	         * @throws exception if the key does not exist
+	         */
+	
+	    }, {
+	        key: 'set',
+	        value: function set(key, value) {
+	            var squashEvent = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
+	
+	            this.logger.debug('Setting ' + key + '=' + value);
+	            if (key in this.storeData) {
+	                this.storeData[key] = value;
+	                if (!squashEvent) {
+	                    this.changeStore();
+	                }
+	            } else {
+	                throw 'Unknown key ' + key + ' in store';
+	            }
+	        }
+	
+	        /**
+	         * Retrieve a key in the store
+	         *
+	         * @param {string} key the key name
+	         * @returns {object} the key value
+	         * @throws exception if the key does not exist
+	         */
+	
+	    }, {
+	        key: 'get',
+	        value: function get(key) {
+	            if (key in this.storeData) {
+	                return this.storeData[key];
+	            } else {
+	                throw 'Unknown key ' + key + ' in store';
+	            }
+	        }
+	
+	        /**
+	         * Generate an RFC-4122 Version 4 compliant Unique ID.  We only need
+	         * pseudo IDs since we are salting with the name of the store.
+	         *
+	         * @return {string}
+	         */
+	
+	    }, {
+	        key: 'name',
+	        get: function get() {
+	            return this.storeName;
+	        }
+	    }, {
+	        key: 'guid',
+	        get: function get() {
+	            var u = '',
+	                i = 0;
+	            while (i++ < 36) {
+	                var c = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'[i - 1],
+	                    r = Math.random() * 16 | 0,
+	                    v = c === 'x' ? r : r & 0x3 | 0x8;
+	                u += c === '-' || c === '4' ? c : v.toString(16);
+	            }
+	            return u;
+	        }
+	    }]);
+	
+	    return Store;
+	}();
+	
+	exports.default = Store;
+
+/***/ },
+/* 372 */
 /*!******************************************!*\
   !*** ./src/client/app/views/top-bar.jsx ***!
   \******************************************/
@@ -49775,7 +50364,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _userBox = __webpack_require__(/*! ./user-box.jsx */ 370);
+	var _userBox = __webpack_require__(/*! ./user-box.jsx */ 373);
 	
 	var _userBox2 = _interopRequireDefault(_userBox);
 	
@@ -49821,7 +50410,7 @@
 	exports.default = TopBar;
 
 /***/ },
-/* 370 */
+/* 373 */
 /*!*******************************************!*\
   !*** ./src/client/app/views/user-box.jsx ***!
   \*******************************************/
@@ -49899,7 +50488,7 @@
 	exports.default = UserBox;
 
 /***/ },
-/* 371 */
+/* 374 */
 /*!**********************************************!*\
   !*** ./src/client/app/views/right-panel.jsx ***!
   \**********************************************/
@@ -49919,7 +50508,7 @@
 	
 	var _strings = __webpack_require__(/*! ../constants/strings */ 238);
 	
-	var _FlatRippleButton = __webpack_require__(/*! ./FlatRippleButton.jsx */ 372);
+	var _FlatRippleButton = __webpack_require__(/*! ./FlatRippleButton.jsx */ 375);
 	
 	var _FlatRippleButton2 = _interopRequireDefault(_FlatRippleButton);
 	
@@ -50025,7 +50614,7 @@
 	exports.default = RightPanel;
 
 /***/ },
-/* 372 */
+/* 375 */
 /*!***************************************************!*\
   !*** ./src/client/app/views/FlatRippleButton.jsx ***!
   \***************************************************/
@@ -50264,128 +50853,6 @@
 	
 	/** Define module API */
 	exports.default = FlatRippleButton;
-
-/***/ },
-/* 373 */
-/*!**************************************************!*\
-  !*** ./src/client/app/views/edit-files-page.jsx ***!
-  \**************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _authService = __webpack_require__(/*! ../services/auth-service */ 229);
-	
-	var _authService2 = _interopRequireDefault(_authService);
-	
-	var _table = __webpack_require__(/*! ./table.jsx */ 260);
-	
-	var _table2 = _interopRequireDefault(_table);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var EditFilesPage = function (_React$Component) {
-	    _inherits(EditFilesPage, _React$Component);
-	
-	    function EditFilesPage(props) {
-	        _classCallCheck(this, EditFilesPage);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(EditFilesPage).call(this, props));
-	
-	        _this.state = {
-	            loginData: _authService2.default.getLoginData()
-	        };
-	
-	        return _this;
-	    }
-	
-	    _createClass(EditFilesPage, [{
-	        key: 'render',
-	        value: function render() {
-	
-	            var columns = [{
-	                title: "שם קובץ",
-	                key: "fileName",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "חברה",
-	                key: "companyName",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "חודש תשלום",
-	                key: "paymentMonth",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "תאריך העלאה",
-	                key: "uploadDate",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }
-	            //},
-	            //{
-	            //    title: "הורדת קובץ",
-	            //    width: "col-33-33",
-	            //    type: 'button',
-	            //    color: 'normal'
-	            //},
-	            //{
-	            //    title: "מחיקת קובץ",
-	            //    width: "col-33-33",
-	            //    type: 'button',
-	            //    color: 'normal'
-	            //}
-	
-	            ];
-	
-	            var data = [{ fileName: "ילין לפידות.xlsx", companyName: "ילין לפידות", paymentMonth: "04/16", uploadDate: "01/04/16" }, { fileName: "ילין לפידות.xlsx", companyName: "ילין לפידות", paymentMonth: "04/16", uploadDate: "01/04/16" }, { fileName: "ילין לפידות.xlsx", companyName: "ילין לפידות", paymentMonth: "04/16", uploadDate: "01/04/16" }];
-	
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'edit-files-page animated fadeIn' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'edit-files-table shadow' },
-	                    _react2.default.createElement(_table2.default, { columns: columns,
-	                        data: data })
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return EditFilesPage;
-	}(_react2.default.Component);
-	
-	//Important!! This adds the router object to context
-	
-	
-	EditFilesPage.contextTypes = {
-	    router: _react2.default.PropTypes.object.isRequired
-	};
-	
-	exports.default = EditFilesPage;
 
 /***/ }
 /******/ ]);

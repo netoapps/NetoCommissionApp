@@ -20,11 +20,27 @@ export default class Store {
         this.eventbus.on('STORE_CHANGED', this.onStoreChange.bind(this));
     }
 
+
     /**
      * Read-only Property for the name of the store
      */
     get name() {
         return this.storeName;
+    }
+
+    /**
+     * Dummy onAction() method to catch failures in sub-classing the
+     * Store appropriately.
+     */
+
+    addEventListener(event,callback)
+    {
+        this.eventbus.on(event, callback);
+    }
+
+    removeEventListener(event,callback)
+    {
+        this.eventbus.removeListener(event, callback);
     }
 
     /**

@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from 'muicss/lib/react/button'
 
 class TableCell extends React.Component {
 
@@ -17,23 +18,14 @@ class TableCell extends React.Component {
             column: nextProps.column,
         })
     }
+
     render()
     {
         var className = "table-cell";
         var color = "table-cell-text-color";
-        var value = this.props.value;
-        if (this.state.column.type === "read-only-currency")
-        {
-            value = parseFloat(value.replace(/,/g, ""))
-                .toFixed(0)
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            value = "₪ " + value
-        }
-        if (this.state.column.type === "read-only-percent")
-        {
-            value = value + " %"
-        }
+        //var value = this.props.value;
+        var node = null;
+
         if (this.state.column.color === "red-green")
         {
             if(parseFloat(this.props.value) >= 0)
@@ -45,12 +37,41 @@ class TableCell extends React.Component {
                 color = "red"
             }
         }
-        if (this.state.column.type === "button")
+
+        if (this.state.column.type === "read-only") {
+            node = <div className={"table-cell-read-only " + color}>{this.props.value}</div>;
+        }
+        if (this.state.column.type === "read-only-currency")
         {
+            var value = this.props.value;
+            value = parseFloat(value.replace(/,/g, ""))
+                .toFixed(0)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            value = "₪ " + value
+            node = <div className={"table-cell-read-only " + color}>{value}</div>;
 
         }
+        if (this.state.column.type === "read-only-percent")
+        {
+            var value = this.props.value;
+            value = value + " %"
+            node = <div className={"table-cell-read-only " + color}>{value}</div>;
+        }
+        if (this.state.column.type === "action")
+        {
+            const actions = [];
+            for(var index = 0 ; index < this.props.value.length; index++)
+            {
+                var action = this.props.value[index]
+                var className = "table-button " + action.color
+                actions.push(<button key={index} className={className} onClick={ function(action) { action.action(this.props.rowIndex) }.bind(this,action)}>{action.name}</button>)
+                actions.push(<div key={this.props.value.length + index} className="table-button-spacer"/>)
+            }
+            node = <div className={"table-cell-read-only hcontainer-no-wrap table-button-container " + color}>{actions}</div>;
+        }
 
-        var node = <div className={"table-cell-read-only " + color}>{value}</div>;
+        //var node = <div className={"table-cell-read-only " + color}>{value}</div>;
         return ( <div className={className + " " + this.state.column.width}>
             {node}
         </div>);

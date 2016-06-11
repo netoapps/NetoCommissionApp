@@ -1,15 +1,85 @@
 import React from 'react';
 import AuthService from '../services/auth-service'
 import Table from './table.jsx';
+import AppActions from '../actions/app-actions'
+import AppStore from '../stores/data-store'
+import {ActionType} from '../actions/app-actions.js';
 
 class EditFilesPage extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            loginData: AuthService.getLoginData()
-        };
 
+        this.state = {
+            loginData: AuthService.getLoginData(),
+            filesData: AppStore.getFilesData()
+        };
+    }
+
+    componentDidMount()
+    {
+        AppStore.addEventListener(ActionType.DELETE_COMMISSION_DOC, this.onDeleteFile.bind(this));
+    }
+
+    componentWillUnmount()
+    {
+        AppStore.removeEventListener(ActionType.DELETE_COMMISSION_DOC,this.onDeleteFile);
+    }
+    onDeleteFile()
+    {
+        this.state.filesData = AppStore.getFilesData()
+        this.setState(this.state)
+    }
+    onDeleteFileClicked(rowIndex)
+    {
+        console.log("delete file at row " + rowIndex)
+
+        var deleteInProgress = false;
+        if(deleteInProgress)
+            return;
+
+        var fileName = this.state.filesData[rowIndex].fileName
+
+        swal({
+                title: "אישור מחיקת מסמך",
+                text: "למחוק מסמך זה לצמיתות מהמערכת?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "כן, מחק את המסמך מהמערכת",
+                cancelButtonText: "בטל",
+                closeOnConfirm: false,
+                showLoaderOnConfirm: false
+            },
+            function(isConfirm)
+            {
+                if (isConfirm)
+                {
+                    AppActions.deleteCommissionFile(fileName,function (status)
+                    {
+                        if(status == 'success')
+                        {
+                            swal(
+                                {
+                                    title: "",
+                                    text: "המסמך נמחק לצמיתות מהמערכת!",
+                                    type: "success",
+                                    timer: 1500,
+                                    showConfirmButton: false
+                                }
+                            )
+                            console.log('Data was deleted successfully from server!');
+                        }
+                        else
+                            console.error('Error while deleting data from server!');
+                        deleteInProgress = true;
+                    });
+                }
+            });
+    }
+    onDownloadFileClicked(rowIndex)
+    {
+        console.log("download file at row " + rowIndex)
     }
 
     render () {
@@ -43,6 +113,20 @@ class EditFilesPage extends React.Component {
                 width: "col-33-33",
                 type: 'read-only',
                 color: 'normal'
+            },
+            {
+                title: "הערות",
+                key: "notes",
+                width: "col-33-33",
+                type: 'read-only',
+                color: 'normal'
+            },
+            {
+                title: "פעולות",
+                key: "actions",
+                width: "col-33-33",
+                type: 'action',
+                color: 'normal'
             }
             //},
             //{
@@ -60,17 +144,22 @@ class EditFilesPage extends React.Component {
 
         ]
 
-        var data = [
-            {fileName: "ילין לפידות.xlsx", companyName: "ילין לפידות", paymentMonth: "04/16", uploadDate: "01/04/16"},
-            {fileName: "ילין לפידות.xlsx", companyName: "ילין לפידות", paymentMonth: "04/16", uploadDate: "01/04/16"},
-            {fileName: "ילין לפידות.xlsx", companyName: "ילין לפידות", paymentMonth: "04/16", uploadDate: "01/04/16"}
-        ]
+        var deleteAction = {name: "מחק", action: this.onDeleteFileClicked.bind(this),color: "red"}
+        var downloadAction = {name: "הורד", action: this.onDownloadFileClicked.bind(this),color: "blue"}
+
+        var filesData = []
+        for(var file = 0; file < this.state.filesData.length; file++)
+        {
+            var fileData = this.state.filesData[file]
+            fileData["actions"] = [downloadAction,deleteAction]
+            filesData.push(fileData)
+        }
 
         return (
             <div className="edit-files-page animated fadeIn">
                 <div className="edit-files-table shadow">
                     <Table columns={columns}
-                           data={data}/>
+                           data={filesData}/>
                 </div>
             </div>
         );
