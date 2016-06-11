@@ -24,7 +24,8 @@ let strings = {
     validDate: "תאריך נכונות",
     paymentMonth: "חודש שכר",
     uploadFile: "העלה קובץ",
-    editFiles: "עריכת קבצים"
+    editFiles: "עריכת קבצים",
+    notes: "הערות"
 }
 
 export { strings }

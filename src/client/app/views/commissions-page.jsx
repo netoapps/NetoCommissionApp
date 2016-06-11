@@ -1,14 +1,15 @@
-import React from 'react';
+import React from 'react'
 import AuthService from '../services/auth-service'
 import { strings } from '../constants/strings'
-import Table from './table.jsx';
-import Dropdown from 'muicss/lib/react/dropdown';
-import DropdownItem from 'muicss/lib/react/dropdown-item';
+import Table from './table.jsx'
+import Dropdown from 'muicss/lib/react/dropdown'
+import DropdownItem from 'muicss/lib/react/dropdown-item'
 import Button from 'muicss/lib/react/button'
 import DatePicker from 'react-datepicker'
 import Dropzone from 'react-dropzone'
+import TextBox from './text-box.jsx'
 
-var moment = require('react-datepicker/node_modules/moment');
+var moment = require('react-datepicker/node_modules/moment')
 
 var companyNames = ["כלל","מנורה","הראל","אלטשולר שחם", "ילין לפידות","מיטב דש"];
 
@@ -20,7 +21,8 @@ class FileBin extends React.Component {
         this.state = {
             selectedCompany: "כלל",
             date: moment(),
-            files: null
+            files: null,
+            note: "בדיקה"
         };
 
     }
@@ -62,9 +64,15 @@ class FileBin extends React.Component {
         };
         xhr.send(formData);
     }
+
     onEditFiles()
     {
         this.context.router.push('/app/edit-files')
+    }
+
+    onFileNoteBlur(e)
+    {
+
     }
 
     render () {
@@ -99,12 +107,16 @@ class FileBin extends React.Component {
                             <div className="dashboard-buttons-horizontal-spacer"/>
                             <div className="commissions-page-file-bin-settings-text">{strings.paymentMonth}</div>
                             <div className="commissions-page-file-bin-settings-date">
-                                <DatePicker
-                                    selected={this.state.date}
-                                    locale='he-IL'
-                                    onChange={this.handleChange.bind(this)} />
+                                <DatePicker selected={this.state.date} locale='he-IL' onChange={this.handleChange.bind(this)} />
                             </div>
 
+                            <div className="dashboard-buttons-horizontal-spacer"/>
+                            <div className="dashboard-buttons-horizontal-spacer"/>
+                            <div className="dashboard-buttons-horizontal-spacer"/>
+                            <div className="commissions-page-file-bin-settings-text">{strings.notes}</div>
+                                    <textarea className="commissions-page-file-note"
+                                      value={this.state.notes}
+                                      onBlur={this.onFileNoteBlur.bind(this)}/>
                             <div className="dashboard-buttons-horizontal-spacer"/>
                             <div className="dashboard-buttons-horizontal-spacer"/>
                             <div className="dashboard-buttons-horizontal-spacer"/>

@@ -3,7 +3,7 @@ import AuthService from '../services/auth-service'
 import Table from './table.jsx';
 import AppActions from '../actions/app-actions'
 import AppStore from '../stores/data-store'
-import {ActionType} from '../actions/app-actions.js';
+import {ActionType} from '../actions/app-actions.js'
 
 class EditFilesPage extends React.Component {
 

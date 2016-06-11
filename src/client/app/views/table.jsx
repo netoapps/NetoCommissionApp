@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from 'muicss/lib/react/button'
+import FlatRippleButton from './FlatRippleButton.jsx'
 
 class TableCell extends React.Component {
 
@@ -65,7 +65,8 @@ class TableCell extends React.Component {
             {
                 var action = this.props.value[index]
                 var className = "table-button " + action.color
-                actions.push(<button key={index} className={className} onClick={ function(action) { action.action(this.props.rowIndex) }.bind(this,action)}>{action.name}</button>)
+                //actions.push(<button key={index} className={className} onClick={ function(action) { action.action(this.props.rowIndex) }.bind(this,action)}>{action.name}</button>)
+                actions.push(<FlatRippleButton key={index} className={className} onClick={ function(action) { action.action(this.props.rowIndex) }.bind(this,action)}>{action.name}</FlatRippleButton>)
                 actions.push(<div key={this.props.value.length + index} className="table-button-spacer"/>)
             }
             node = <div className={"table-cell-read-only hcontainer-no-wrap table-button-container " + color}>{actions}</div>;
