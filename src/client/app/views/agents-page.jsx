@@ -10,9 +10,25 @@ class Agents extends React.Component {
 
     constructor(props) {
         super(props);
+
+        var agentsData = [
+            {name: "קרין בוזלי לוי", idNumber: "123456789", status: "פעיל"},
+            {name: "עידן כץ", idNumber: "987654321", status: "פעיל"},
+            {name: "תומר", idNumber: "1212121212", status: "לא פעיל"}
+        ]
+
+        var partnershipsData = [
+            {names: "קרין בוזלי לוי, ויטלי", idNumbers: "123456789, 3534534543", status: "פעיל"},
+            {names: "עידן כץ, קרין", idNumbers: "3453444,48765432", status: "פעיל"},
+            {names: "תומר, מסי", idNumbers: "234234345,3534543", status: "לא פעיל"}
+        ]
+
+
         this.state = {
             loginData: AuthService.getLoginData(),
-            selectedTab: 0
+            selectedTab: 0,
+            agentsData:agentsData,
+            partnershipsData:partnershipsData
         };
     }
     onNewAgent()
@@ -29,6 +45,26 @@ class Agents extends React.Component {
         this.state.selectedTab = i
         this.setState(this.state)
         console.log(arguments);
+    }
+
+    onDeleteAgentClicked(rowIndex)
+    {
+        console.log("onDeleteAgentClicked " + rowIndex)
+    }
+
+    onEditAgentClicked(rowIndex)
+    {
+        console.log("onEditAgentClicked " + rowIndex)
+    }
+
+    onDeletePartnershipsClicked(rowIndex)
+    {
+        console.log("onDeletePartnershipsClicked " + rowIndex)
+    }
+
+    onEditPartnershipsClicked(rowIndex)
+    {
+        console.log("onEditPartnershipsClicked " + rowIndex)
     }
 
     render () {
@@ -55,14 +91,27 @@ class Agents extends React.Component {
                 width: "col-33-33",
                 type: 'read-only',
                 color: 'normal'
+            },
+            {
+                title: "פעולות",
+                key: "actions",
+                width: "col-33-33",
+                type: 'action',
+                color: 'normal'
             }
         ]
 
-        var agentsData = [
-            {name: "קרין בוזלי לוי", idNumber: "123456789", status: "פעיל"},
-            {name: "עידן כץ", idNumber: "987654321", status: "פעיל"},
-            {name: "תומר", idNumber: "1212121212", status: "לא פעיל"}
-        ]
+
+
+        var deleteAgentAction = {name: "מחיקה", action: this.onDeleteAgentClicked.bind(this),color: "red"}
+        var editAgentAction = {name: "עריכה", action: this.onEditAgentClicked.bind(this),color: "blue"}
+        var agentsDataWithActions = []
+        for(var file = 0; file < this.state.agentsData.length; file++)
+        {
+            var agentData = this.state.agentsData[file]
+            agentData["actions"] = [editAgentAction,deleteAgentAction]
+            agentsDataWithActions.push(agentData)
+        }
 
 
         var partnershipColumns = [
@@ -87,25 +136,26 @@ class Agents extends React.Component {
                 width: "col-33-33",
                 type: 'read-only',
                 color: 'normal'
+            },
+            {
+                title: "פעולות",
+                key: "actions",
+                width: "col-33-33",
+                type: 'action',
+                color: 'normal'
             }
         ]
-        var partnershipData = [
-            {names: "קרין בוזלי לוי, ויטלי", idNumbers: "123456789, 3534534543", status: "פעיל"},
-            {names: "עידן כץ, קרין", idNumbers: "3453444,48765432", status: "פעיל"},
-            {names: "תומר, מסי", idNumbers: "234234345,3534543", status: "לא פעיל"}
-        ]
 
-
-        //    <div className="agents-page-tab-container">
-        //    <div className="agents-page-vertical-spacer"/>
-        //    <Button className="shadow" onClick={this.onNewPartnership.bind(this)} color="primary">{strings.createNewPartnership}</Button>
-        //<div className="agents-page-vertical-spacer"/>
-        //
-        //
-        //<div className="agents-page-table">
-        //    <Table columns={columns} data={data}/>
-        //    </div>
-        //    </div>
+        var deletePartnershipsDataAction = {name: "מחיקה", action: this.onDeletePartnershipsClicked.bind(this),color: "red"}
+        var editPartnershipsAction = {name: "עריכה", action: this.onEditPartnershipsClicked.bind(this),color: "blue"}
+        var partnershipsDataWithActions = []
+        for(var file = 0; file < this.state.partnershipsData.length; file++)
+        {
+            var partnershipData = this.state.partnershipsData[file]
+            partnershipData["actions"] = [editPartnershipsAction,deletePartnershipsDataAction]
+            partnershipsDataWithActions.push(partnershipData)
+        }
+        
 
         return (
             <div className="agents-page animated fadeIn">
@@ -117,7 +167,7 @@ class Agents extends React.Component {
                             <Button className="shadow" onClick={this.onNewAgent.bind(this)} color="primary">{strings.createNewAgent}</Button>
                             <div className="agents-page-vertical-spacer"/>
                             <div className="agents-page-table">
-                                <Table columns={agentsColumns} data={agentsData}/>
+                                <Table columns={agentsColumns} data={agentsDataWithActions}/>
                             </div>
                         </div>
 
@@ -129,7 +179,7 @@ class Agents extends React.Component {
                             <Button className="shadow" onClick={this.onNewAgent.bind(this)} color="primary">{strings.createNewPartnership}</Button>
                             <div className="agents-page-vertical-spacer"/>
                             <div className="agents-page-table">
-                                <Table columns={partnershipColumns} data={partnershipData}/>
+                                <Table columns={partnershipColumns} data={partnershipsDataWithActions}/>
                             </div>
                         </div>
 

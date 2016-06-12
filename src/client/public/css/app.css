@@ -876,7 +876,7 @@ body
 {
     min-width: 1200px;
     position: absolute;
-    top: 100px;
+    top: 70px;
     right: 280px;
     left: 30px;
     bottom: 30px;
@@ -892,6 +892,7 @@ body
     width: 100%;
     height: calc(100% - 180px);
     max-height: calc(100% - 180px);
+    padding: 20px;
 }
 
 /****  agents-page ******/

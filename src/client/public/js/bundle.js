@@ -49815,9 +49815,15 @@
 	
 	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Agents).call(this, props));
 	
+	        var agentsData = [{ name: "קרין בוזלי לוי", idNumber: "123456789", status: "פעיל" }, { name: "עידן כץ", idNumber: "987654321", status: "פעיל" }, { name: "תומר", idNumber: "1212121212", status: "לא פעיל" }];
+	
+	        var partnershipsData = [{ names: "קרין בוזלי לוי, ויטלי", idNumbers: "123456789, 3534534543", status: "פעיל" }, { names: "עידן כץ, קרין", idNumbers: "3453444,48765432", status: "פעיל" }, { names: "תומר, מסי", idNumbers: "234234345,3534543", status: "לא פעיל" }];
+	
 	        _this.state = {
 	            loginData: _authService2.default.getLoginData(),
-	            selectedTab: 0
+	            selectedTab: 0,
+	            agentsData: agentsData,
+	            partnershipsData: partnershipsData
 	        };
 	        return _this;
 	    }
@@ -49838,6 +49844,26 @@
 	            this.state.selectedTab = i;
 	            this.setState(this.state);
 	            console.log(arguments);
+	        }
+	    }, {
+	        key: 'onDeleteAgentClicked',
+	        value: function onDeleteAgentClicked(rowIndex) {
+	            console.log("onDeleteAgentClicked " + rowIndex);
+	        }
+	    }, {
+	        key: 'onEditAgentClicked',
+	        value: function onEditAgentClicked(rowIndex) {
+	            console.log("onEditAgentClicked " + rowIndex);
+	        }
+	    }, {
+	        key: 'onDeletePartnershipsClicked',
+	        value: function onDeletePartnershipsClicked(rowIndex) {
+	            console.log("onDeletePartnershipsClicked " + rowIndex);
+	        }
+	    }, {
+	        key: 'onEditPartnershipsClicked',
+	        value: function onEditPartnershipsClicked(rowIndex) {
+	            console.log("onEditPartnershipsClicked " + rowIndex);
 	        }
 	    }, {
 	        key: 'render',
@@ -49861,9 +49887,22 @@
 	                width: "col-33-33",
 	                type: 'read-only',
 	                color: 'normal'
+	            }, {
+	                title: "פעולות",
+	                key: "actions",
+	                width: "col-33-33",
+	                type: 'action',
+	                color: 'normal'
 	            }];
 	
-	            var agentsData = [{ name: "קרין בוזלי לוי", idNumber: "123456789", status: "פעיל" }, { name: "עידן כץ", idNumber: "987654321", status: "פעיל" }, { name: "תומר", idNumber: "1212121212", status: "לא פעיל" }];
+	            var deleteAgentAction = { name: "מחיקה", action: this.onDeleteAgentClicked.bind(this), color: "red" };
+	            var editAgentAction = { name: "עריכה", action: this.onEditAgentClicked.bind(this), color: "blue" };
+	            var agentsDataWithActions = [];
+	            for (var file = 0; file < this.state.agentsData.length; file++) {
+	                var agentData = this.state.agentsData[file];
+	                agentData["actions"] = [editAgentAction, deleteAgentAction];
+	                agentsDataWithActions.push(agentData);
+	            }
 	
 	            var partnershipColumns = [{
 	                title: "שותפים",
@@ -49883,19 +49922,22 @@
 	                width: "col-33-33",
 	                type: 'read-only',
 	                color: 'normal'
+	            }, {
+	                title: "פעולות",
+	                key: "actions",
+	                width: "col-33-33",
+	                type: 'action',
+	                color: 'normal'
 	            }];
-	            var partnershipData = [{ names: "קרין בוזלי לוי, ויטלי", idNumbers: "123456789, 3534534543", status: "פעיל" }, { names: "עידן כץ, קרין", idNumbers: "3453444,48765432", status: "פעיל" }, { names: "תומר, מסי", idNumbers: "234234345,3534543", status: "לא פעיל" }];
 	
-	            //    <div className="agents-page-tab-container">
-	            //    <div className="agents-page-vertical-spacer"/>
-	            //    <Button className="shadow" onClick={this.onNewPartnership.bind(this)} color="primary">{strings.createNewPartnership}</Button>
-	            //<div className="agents-page-vertical-spacer"/>
-	            //
-	            //
-	            //<div className="agents-page-table">
-	            //    <Table columns={columns} data={data}/>
-	            //    </div>
-	            //    </div>
+	            var deletePartnershipsDataAction = { name: "מחיקה", action: this.onDeletePartnershipsClicked.bind(this), color: "red" };
+	            var editPartnershipsAction = { name: "עריכה", action: this.onEditPartnershipsClicked.bind(this), color: "blue" };
+	            var partnershipsDataWithActions = [];
+	            for (var file = 0; file < this.state.partnershipsData.length; file++) {
+	                var partnershipData = this.state.partnershipsData[file];
+	                partnershipData["actions"] = [editPartnershipsAction, deletePartnershipsDataAction];
+	                partnershipsDataWithActions.push(partnershipData);
+	            }
 	
 	            return _react2.default.createElement(
 	                'div',
@@ -49919,7 +49961,7 @@
 	                            _react2.default.createElement(
 	                                'div',
 	                                { className: 'agents-page-table' },
-	                                _react2.default.createElement(_table2.default, { columns: agentsColumns, data: agentsData })
+	                                _react2.default.createElement(_table2.default, { columns: agentsColumns, data: agentsDataWithActions })
 	                            )
 	                        )
 	                    ),
@@ -49939,7 +49981,7 @@
 	                            _react2.default.createElement(
 	                                'div',
 	                                { className: 'agents-page-table' },
-	                                _react2.default.createElement(_table2.default, { columns: partnershipColumns, data: partnershipData })
+	                                _react2.default.createElement(_table2.default, { columns: partnershipColumns, data: partnershipsDataWithActions })
 	                            )
 	                        )
 	                    )
@@ -50119,25 +50161,10 @@
 	                width: "col-33-33",
 	                type: 'action',
 	                color: 'normal'
-	            }
-	            //},
-	            //{
-	            //    title: "הורדת קובץ",
-	            //    width: "col-33-33",
-	            //    type: 'button',
-	            //    color: 'normal'
-	            //},
-	            //{
-	            //    title: "מחיקת קובץ",
-	            //    width: "col-33-33",
-	            //    type: 'button',
-	            //    color: 'normal'
-	            //}
+	            }];
 	
-	            ];
-	
-	            var deleteAction = { name: "מחק", action: this.onDeleteFileClicked.bind(this), color: "red" };
-	            var downloadAction = { name: "הורד", action: this.onDownloadFileClicked.bind(this), color: "blue" };
+	            var deleteAction = { name: "מחיקה", action: this.onDeleteFileClicked.bind(this), color: "red" };
+	            var downloadAction = { name: "הורדה", action: this.onDownloadFileClicked.bind(this), color: "blue" };
 	
 	            var filesData = [];
 	            for (var file = 0; file < this.state.filesData.length; file++) {

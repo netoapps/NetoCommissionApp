@@ -128,24 +128,11 @@ class EditFilesPage extends React.Component {
                 type: 'action',
                 color: 'normal'
             }
-            //},
-            //{
-            //    title: "הורדת קובץ",
-            //    width: "col-33-33",
-            //    type: 'button',
-            //    color: 'normal'
-            //},
-            //{
-            //    title: "מחיקת קובץ",
-            //    width: "col-33-33",
-            //    type: 'button',
-            //    color: 'normal'
-            //}
 
         ]
 
-        var deleteAction = {name: "מחק", action: this.onDeleteFileClicked.bind(this),color: "red"}
-        var downloadAction = {name: "הורד", action: this.onDownloadFileClicked.bind(this),color: "blue"}
+        var deleteAction = {name: "מחיקה", action: this.onDeleteFileClicked.bind(this),color: "red"}
+        var downloadAction = {name: "הורדה", action: this.onDownloadFileClicked.bind(this),color: "blue"}
 
         var filesData = []
         for(var file = 0; file < this.state.filesData.length; file++)
