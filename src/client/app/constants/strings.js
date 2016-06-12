@@ -29,7 +29,14 @@ let strings = {
     editFiles: "עריכת קבצים",
     notes: "הערות",
     createNewAgent: "צור סוכן חדש",
-    createNewPartnership: "צור שותפות חדשה"
+    createNewPartnership: "צור שותפות חדשה",
+    newAgentDetails: "פרטי סוכן",
+    newAgentName: "שם פרטי",
+    newAgentFamilyName: "שם משפחה",
+    newAgentId: "מזהה",
+    newAgentPhone: "טלפון",
+    newAgentFax: "פקס",
+    newAgentEmail: "אימייל"
 }
 
 export { strings }

@@ -6,7 +6,7 @@ import { strings } from '../constants/strings'
 import Button from 'muicss/lib/react/button'
 import Table from './table.jsx'
 
-class Agents extends React.Component {
+class AgentsAndPartnerships extends React.Component {
 
     constructor(props) {
         super(props);
@@ -33,11 +33,11 @@ class Agents extends React.Component {
     }
     onNewAgent()
     {
-        this.context.router.push('/app/new-agent')
+        this.context.router.push('/app/agents-and-partnerships/new-agent-page')
     }
     onNewPartnership()
     {
-        this.context.router.push('/app/new-partnership')
+        this.context.router.push('/app/new-partnership-page')
     }
 
     onChangeTab(i, value, tab, ev)
@@ -155,7 +155,7 @@ class Agents extends React.Component {
             partnershipData["actions"] = [editPartnershipsAction,deletePartnershipsDataAction]
             partnershipsDataWithActions.push(partnershipData)
         }
-        
+
 
         return (
             <div className="agents-page animated fadeIn">
@@ -191,8 +191,8 @@ class Agents extends React.Component {
 }
 
 //Important!! This adds the router object to context
-Agents.contextTypes = {
+AgentsAndPartnerships.contextTypes = {
     router: React.PropTypes.object.isRequired
 }
 
-export default Agents;
+export default AgentsAndPartnerships;

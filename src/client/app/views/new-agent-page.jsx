@@ -1,152 +1,20 @@
-import React from 'react'
-import AuthService from '../services/auth-service'
+import React from 'react';
+import Table from './table.jsx';
+import AppActions from '../actions/app-actions'
+import AppStore from '../stores/data-store'
+import {ActionType} from '../actions/app-actions.js'
+import Input from 'muicss/lib/react/input';
 import { strings } from '../constants/strings'
-import Table from './table.jsx'
-import Dropdown from 'muicss/lib/react/dropdown'
-import DropdownItem from 'muicss/lib/react/dropdown-item'
-import Button from 'muicss/lib/react/button'
-import DatePicker from 'react-datepicker'
-import Dropzone from 'react-dropzone'
-import TextBox from './text-box.jsx'
 
-var moment = require('react-datepicker/node_modules/moment')
-
-var companyNames = ["כלל","מנורה","הראל","אלטשולר שחם", "ילין לפידות","מיטב דש"];
-
-
-class FileBin extends React.Component {
+class NewAgentPage extends React.Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
-            selectedCompany: "כלל",
-            date: moment(),
-            files: null,
-            note: "בדיקה"
         };
-
-    }
-    onCompanyNameChange(item)
-    {
-        if(item.props.value != this.state.selectedCompany)
-        {
-            this.state.selectedCompany = item.props.value
-            this.setState(this.state);
-        }
-    }
-    handleChange(date)
-    {
-        this.state.date = date
-        this.setState(this.state)
     }
 
-    onDrop(files)
-    {
-        console.log('Received files: ', files)
-        this.state.files = files
-        this.setState(this.state)
-    }
-    onUploadFile()
-    {
-        var formData = new FormData();
-        for (var i = 0; i < files.length; i++) {
-            formData.append('file', files[i]);
-        }
-        // now post a new XHR request
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/upload');
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                console.log('all done: ' + xhr.status);
-            } else {
-                console.log('Something went terribly wrong...');
-            }
-        };
-        xhr.send(formData);
-    }
-
-    onEditFiles()
-    {
-        this.context.router.push('/app/commissions/edit-files')
-    }
-
-    onFileNoteBlur(e)
-    {
-        console.log(e.target.value)
-    }
-
-    render () {
-
-        const companies = [];
-        for (let i = 0; i < companyNames.length; i++ )
-        {
-            companies.push(<DropdownItem onClick={this.onCompanyNameChange.bind(this)} value={companyNames[i]} key={i}>{companyNames[i]}</DropdownItem>);
-        }
-
-        let style = {
-            backgroundColor: 'transparent',
-            color: '#505050'
-        };
-
-        let activeStyle = {
-            backgroundColor: 'rgba(66, 134, 180, 0.15)'
-        };
-
-        return  <div className="commissions-page-file-bin shadow">
-            <Dropzone onDrop={this.onDrop} className="commissions-page-file-bin-drag-area" style={style} activeStyle={activeStyle}>
-                <strong>{strings.dragFileHere}</strong>
-            </Dropzone>
-            <div className="hcontainer-no-wrap">
-                <div className="commissions-page-file-bin-settings hcontainer-no-wrap">
-                    <div className="commissions-page-file-bin-settings-text">{strings.companyAssignment}</div>
-                    <Dropdown label={this.state.selectedCompany} alignMenu="right" variant="raised">
-                        {companies}
-                    </Dropdown>
-                    <div className="dashboard-buttons-horizontal-spacer"/>
-                    <div className="dashboard-buttons-horizontal-spacer"/>
-                    <div className="dashboard-buttons-horizontal-spacer"/>
-                    <div className="commissions-page-file-bin-settings-text">{strings.paymentMonth}</div>
-                    <div className="commissions-page-file-bin-settings-date">
-                        <DatePicker selected={this.state.date} locale='he-IL' onChange={this.handleChange.bind(this)} />
-                    </div>
-                    <div className="dashboard-buttons-horizontal-spacer"/>
-                    <div className="dashboard-buttons-horizontal-spacer"/>
-                    <div className="dashboard-buttons-horizontal-spacer"/>
-                    <div className="commissions-page-file-bin-settings-text">{strings.notes}</div>
-                        <textarea className="commissions-page-file-note"
-                            value={this.state.notes}
-                            onBlur={this.onFileNoteBlur.bind(this)}/>
-                    <div className="dashboard-buttons-horizontal-spacer"/>
-                    <div className="dashboard-buttons-horizontal-spacer"/>
-                    <div className="dashboard-buttons-horizontal-spacer"/>
-                    <div className="dashboard-buttons-horizontal-spacer"/>
-                    <div className="dashboard-buttons-horizontal-spacer"/>
-                    <Button className="shadow" onClick={this.onUploadFile.bind(this)} color="primary">{strings.uploadFile}</Button>
-                </div>
-                <div className="commissions-page-file-bin-settings-edit-files-container">
-                    <Button className="shadow" onClick={this.onEditFiles.bind(this)}>{strings.editFiles}</Button>
-                </div>
-            </div>
-                </div>
-        ;
-    }
-}
-
-//Important!! This adds the router object to context
-FileBin.contextTypes = {
-    router: React.PropTypes.object.isRequired
-}
-
-
-class Commissions extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            loginData: AuthService.getLoginData()
-        };
-
-    }
 
     render () {
 
@@ -235,23 +103,45 @@ class Commissions extends React.Component {
 
 
         return (
-            <div className="commissions-page animated fadeIn">
-                <FileBin />
-                <div className="commissions-page-table shadow">
-                     <Table columns={columns}
-                            data={data}/>
+            <div className="new-agent-page animated fadeIn">
+                <div className="new-agent-page-title">{strings.newAgentDetails}</div>
+                <div className="new-agent-form hcontainer-no-wrap">
+                    <div className="new-agent-form-item-box">
+                        <Input label={strings.newAgentName} floatingLabel={true} />
+                    </div>
+                    <div className="new-agent-form-horizontal-spacer"/>
+                    <div className="new-agent-form-item-box">
+                        <Input label={strings.newAgentFamilyName} floatingLabel={true} />
+                    </div>
+                    <div className="new-agent-form-horizontal-spacer"/>
+                    <div className="new-agent-form-item-box">
+                        <Input label={strings.newAgentId} floatingLabel={true} />
+                    </div>
                 </div>
-
+                <div className="new-agent-form hcontainer-no-wrap">
+                    <div className="new-agent-form-item-box">
+                        <Input label={strings.newAgentPhone} floatingLabel={true} />
+                    </div>
+                    <div className="new-agent-form-horizontal-spacer"/>
+                    <div className="new-agent-form-item-box">
+                        <Input label={strings.newAgentFax} floatingLabel={true} />
+                    </div>
+                    <div className="new-agent-form-horizontal-spacer"/>
+                    <div className="new-agent-form-item-box">
+                        <Input label={strings.newAgentEmail} floatingLabel={true} />
+                    </div>
+                </div>
+                <div className="new-agent-form-table">
+                    <Table columns={columns} data={data}/>
+                </div>
             </div>
         );
     }
 }
 
 //Important!! This adds the router object to context
-Commissions.contextTypes = {
+NewAgentPage.contextTypes = {
     router: React.PropTypes.object.isRequired
 }
 
-
-
-export default Commissions;
+export default NewAgentPage;
