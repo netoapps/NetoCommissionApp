@@ -49,7 +49,7 @@ class App extends React.Component {
         {
             this.context.router.push('/app/commissions')
         }
-        if(strings.agents === item)
+        if(strings.agentsAndPartnerships === item)
         {
             this.context.router.push('/app/agents')
         }

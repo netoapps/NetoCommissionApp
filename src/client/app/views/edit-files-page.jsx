@@ -158,8 +158,7 @@ class EditFilesPage extends React.Component {
         return (
             <div className="edit-files-page animated fadeIn">
                 <div className="edit-files-table shadow">
-                    <Table columns={columns}
-                           data={filesData}/>
+                    <Table columns={columns} data={filesData}/>
                 </div>
             </div>
         );

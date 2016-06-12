@@ -14,6 +14,8 @@ let strings = {
     dashboard: "ראשי",
     commissions: "עמלות",
     agents: "סוכנים",
+    agentsAndPartnerships: "סוכנים ושותפויות",
+    partnerships: "שותפויות",
     totalCommissions: "סה״כ עמלות",
     totalAgents: "סה״כ סוכנים",
     totalInvestments: "סה״כ גודל תיק",
@@ -25,7 +27,9 @@ let strings = {
     paymentMonth: "חודש שכר",
     uploadFile: "העלה קובץ",
     editFiles: "עריכת קבצים",
-    notes: "הערות"
+    notes: "הערות",
+    createNewAgent: "צור סוכן חדש",
+    createNewPartnership: "צור שותפות חדשה"
 }
 
 export { strings }

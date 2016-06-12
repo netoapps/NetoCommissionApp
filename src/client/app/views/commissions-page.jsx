@@ -72,7 +72,7 @@ class FileBin extends React.Component {
 
     onFileNoteBlur(e)
     {
-
+        console.log(e.target.value)
     }
 
     render () {
@@ -98,31 +98,30 @@ class FileBin extends React.Component {
             </Dropzone>
             <div className="hcontainer-no-wrap">
                 <div className="commissions-page-file-bin-settings hcontainer-no-wrap">
-                            <div className="commissions-page-file-bin-settings-text">{strings.companyAssignment}</div>
-                            <Dropdown label={this.state.selectedCompany} alignMenu="right" variant="raised">
-                                {companies}
-                            </Dropdown>
-                            <div className="dashboard-buttons-horizontal-spacer"/>
-                            <div className="dashboard-buttons-horizontal-spacer"/>
-                            <div className="dashboard-buttons-horizontal-spacer"/>
-                            <div className="commissions-page-file-bin-settings-text">{strings.paymentMonth}</div>
-                            <div className="commissions-page-file-bin-settings-date">
-                                <DatePicker selected={this.state.date} locale='he-IL' onChange={this.handleChange.bind(this)} />
-                            </div>
-
-                            <div className="dashboard-buttons-horizontal-spacer"/>
-                            <div className="dashboard-buttons-horizontal-spacer"/>
-                            <div className="dashboard-buttons-horizontal-spacer"/>
-                            <div className="commissions-page-file-bin-settings-text">{strings.notes}</div>
-                                    <textarea className="commissions-page-file-note"
-                                      value={this.state.notes}
-                                      onBlur={this.onFileNoteBlur.bind(this)}/>
-                            <div className="dashboard-buttons-horizontal-spacer"/>
-                            <div className="dashboard-buttons-horizontal-spacer"/>
-                            <div className="dashboard-buttons-horizontal-spacer"/>
-                            <div className="dashboard-buttons-horizontal-spacer"/>
-                            <div className="dashboard-buttons-horizontal-spacer"/>
-                            <Button className="shadow" onClick={this.onUploadFile.bind(this)} color="primary">{strings.uploadFile}</Button>
+                    <div className="commissions-page-file-bin-settings-text">{strings.companyAssignment}</div>
+                    <Dropdown label={this.state.selectedCompany} alignMenu="right" variant="raised">
+                        {companies}
+                    </Dropdown>
+                    <div className="dashboard-buttons-horizontal-spacer"/>
+                    <div className="dashboard-buttons-horizontal-spacer"/>
+                    <div className="dashboard-buttons-horizontal-spacer"/>
+                    <div className="commissions-page-file-bin-settings-text">{strings.paymentMonth}</div>
+                    <div className="commissions-page-file-bin-settings-date">
+                        <DatePicker selected={this.state.date} locale='he-IL' onChange={this.handleChange.bind(this)} />
+                    </div>
+                    <div className="dashboard-buttons-horizontal-spacer"/>
+                    <div className="dashboard-buttons-horizontal-spacer"/>
+                    <div className="dashboard-buttons-horizontal-spacer"/>
+                    <div className="commissions-page-file-bin-settings-text">{strings.notes}</div>
+                        <textarea className="commissions-page-file-note"
+                            value={this.state.notes}
+                            onBlur={this.onFileNoteBlur.bind(this)}/>
+                    <div className="dashboard-buttons-horizontal-spacer"/>
+                    <div className="dashboard-buttons-horizontal-spacer"/>
+                    <div className="dashboard-buttons-horizontal-spacer"/>
+                    <div className="dashboard-buttons-horizontal-spacer"/>
+                    <div className="dashboard-buttons-horizontal-spacer"/>
+                    <Button className="shadow" onClick={this.onUploadFile.bind(this)} color="primary">{strings.uploadFile}</Button>
                 </div>
                 <div className="commissions-page-file-bin-settings-edit-files-container">
                     <Button className="shadow" onClick={this.onEditFiles.bind(this)}>{strings.editFiles}</Button>
@@ -203,7 +202,7 @@ class Commissions extends React.Component {
                 color: 'normal'
             },
             {
-                title: "תאריך נכונות",
+                title: "תאריך העלאת קובץ",
                 key: "date",
                 width: "col-33-33",
                 type: 'read-only',

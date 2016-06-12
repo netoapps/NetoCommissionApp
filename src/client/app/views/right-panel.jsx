@@ -23,7 +23,7 @@ class RightPanelItem extends React.Component {
         {
             className = "right-panel-item-button right-panel-item-button-commissions"
         }
-        if(strings.agents === this.props.title)
+        if(strings.agentsAndPartnerships === this.props.title)
         {
             className = "right-panel-item-button right-panel-item-button-agents"
         }
@@ -53,7 +53,7 @@ class RightPanel extends React.Component {
                 </div>
                 <RightPanelItem title={strings.dashboard} onPanelItemClick={this.onPanelItemClick.bind(this)}/>
                 <RightPanelItem title={strings.commissions} onPanelItemClick={this.onPanelItemClick.bind(this)}/>
-                <RightPanelItem title={strings.agents} onPanelItemClick={this.onPanelItemClick.bind(this)}/>
+                <RightPanelItem title={strings.agentsAndPartnerships} onPanelItemClick={this.onPanelItemClick.bind(this)}/>
             </div>
         </div>
     }

@@ -142,7 +142,7 @@
 	            if (_strings.strings.commissions === item) {
 	                this.context.router.push('/app/commissions');
 	            }
-	            if (_strings.strings.agents === item) {
+	            if (_strings.strings.agentsAndPartnerships === item) {
 	                this.context.router.push('/app/agents');
 	            }
 	        }
@@ -28148,6 +28148,8 @@
 	    dashboard: "ראשי",
 	    commissions: "עמלות",
 	    agents: "סוכנים",
+	    agentsAndPartnerships: "סוכנים ושותפויות",
+	    partnerships: "שותפויות",
 	    totalCommissions: "סה״כ עמלות",
 	    totalAgents: "סה״כ סוכנים",
 	    totalInvestments: "סה״כ גודל תיק",
@@ -28159,7 +28161,9 @@
 	    paymentMonth: "חודש שכר",
 	    uploadFile: "העלה קובץ",
 	    editFiles: "עריכת קבצים",
-	    notes: "הערות"
+	    notes: "הערות",
+	    createNewAgent: "צור סוכן חדש",
+	    createNewPartnership: "צור שותפות חדשה"
 	};
 	
 	exports.strings = strings;
@@ -34905,7 +34909,9 @@
 	        }
 	    }, {
 	        key: 'onFileNoteBlur',
-	        value: function onFileNoteBlur(e) {}
+	        value: function onFileNoteBlur(e) {
+	            console.log(e.target.value);
+	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
@@ -35077,7 +35083,7 @@
 	                type: 'read-only',
 	                color: 'normal'
 	            }, {
-	                title: "תאריך נכונות",
+	                title: "תאריך העלאת קובץ",
 	                key: "date",
 	                width: "col-33-33",
 	                type: 'read-only',
@@ -49775,6 +49781,24 @@
 	
 	var _authService2 = _interopRequireDefault(_authService);
 	
+	var _tabs = __webpack_require__(/*! muicss/lib/react/tabs */ 377);
+	
+	var _tabs2 = _interopRequireDefault(_tabs);
+	
+	var _tab = __webpack_require__(/*! muicss/lib/react/tab */ 378);
+	
+	var _tab2 = _interopRequireDefault(_tab);
+	
+	var _strings = __webpack_require__(/*! ../constants/strings */ 238);
+	
+	var _button = __webpack_require__(/*! muicss/lib/react/button */ 241);
+	
+	var _button2 = _interopRequireDefault(_button);
+	
+	var _table = __webpack_require__(/*! ./table.jsx */ 260);
+	
+	var _table2 = _interopRequireDefault(_table);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -49792,19 +49816,134 @@
 	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Agents).call(this, props));
 	
 	        _this.state = {
-	            loginData: _authService2.default.getLoginData()
+	            loginData: _authService2.default.getLoginData(),
+	            selectedTab: 0
 	        };
-	
 	        return _this;
 	    }
 	
 	    _createClass(Agents, [{
+	        key: 'onNewAgent',
+	        value: function onNewAgent() {
+	            this.context.router.push('/app/new-agent');
+	        }
+	    }, {
+	        key: 'onNewPartnership',
+	        value: function onNewPartnership() {
+	            this.context.router.push('/app/new-partnership');
+	        }
+	    }, {
+	        key: 'onChangeTab',
+	        value: function onChangeTab(i, value, tab, ev) {
+	            this.state.selectedTab = i;
+	            this.setState(this.state);
+	            console.log(arguments);
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
+	
+	            var agentsColumns = [{
+	                title: "שם",
+	                key: "name",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "מזהה",
+	                key: "idNumber",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "סטטוס",
+	                key: "status",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }];
+	
+	            var agentsData = [{ name: "קרין בוזלי לוי", idNumber: "123456789", status: "פעיל" }, { name: "עידן כץ", idNumber: "987654321", status: "פעיל" }, { name: "תומר", idNumber: "1212121212", status: "לא פעיל" }];
+	
+	            var partnershipColumns = [{
+	                title: "שותפים",
+	                key: "names",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "מזהה",
+	                key: "idNumbers",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "סטטוס",
+	                key: "status",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }];
+	            var partnershipData = [{ names: "קרין בוזלי לוי, ויטלי", idNumbers: "123456789, 3534534543", status: "פעיל" }, { names: "עידן כץ, קרין", idNumbers: "3453444,48765432", status: "פעיל" }, { names: "תומר, מסי", idNumbers: "234234345,3534543", status: "לא פעיל" }];
+	
+	            //    <div className="agents-page-tab-container">
+	            //    <div className="agents-page-vertical-spacer"/>
+	            //    <Button className="shadow" onClick={this.onNewPartnership.bind(this)} color="primary">{strings.createNewPartnership}</Button>
+	            //<div className="agents-page-vertical-spacer"/>
+	            //
+	            //
+	            //<div className="agents-page-table">
+	            //    <Table columns={columns} data={data}/>
+	            //    </div>
+	            //    </div>
+	
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'agents-page animated fadeIn' },
-	                'Agents'
+	                _react2.default.createElement(
+	                    _tabs2.default,
+	                    { onChange: this.onChangeTab.bind(this), justified: true, initialSelectedIndex: this.state.selectedTab },
+	                    _react2.default.createElement(
+	                        _tab2.default,
+	                        { value: 'pane-1', label: _strings.strings.agents },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'agents-page-tab-container' },
+	                            _react2.default.createElement('div', { className: 'agents-page-vertical-spacer' }),
+	                            _react2.default.createElement(
+	                                _button2.default,
+	                                { className: 'shadow', onClick: this.onNewAgent.bind(this), color: 'primary' },
+	                                _strings.strings.createNewAgent
+	                            ),
+	                            _react2.default.createElement('div', { className: 'agents-page-vertical-spacer' }),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'agents-page-table' },
+	                                _react2.default.createElement(_table2.default, { columns: agentsColumns, data: agentsData })
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        _tab2.default,
+	                        { value: 'pane-2', label: _strings.strings.partnerships },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'agents-page-tab-container' },
+	                            _react2.default.createElement('div', { className: 'agents-page-vertical-spacer' }),
+	                            _react2.default.createElement(
+	                                _button2.default,
+	                                { className: 'shadow', onClick: this.onNewAgent.bind(this), color: 'primary' },
+	                                _strings.strings.createNewPartnership
+	                            ),
+	                            _react2.default.createElement('div', { className: 'agents-page-vertical-spacer' }),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'agents-page-table' },
+	                                _react2.default.createElement(_table2.default, { columns: partnershipColumns, data: partnershipData })
+	                            )
+	                        )
+	                    )
+	                )
 	            );
 	        }
 	    }]);
@@ -50013,8 +50152,7 @@
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'edit-files-table shadow' },
-	                    _react2.default.createElement(_table2.default, { columns: columns,
-	                        data: filesData })
+	                    _react2.default.createElement(_table2.default, { columns: columns, data: filesData })
 	                )
 	            );
 	        }
@@ -50567,7 +50705,7 @@
 	            if (_strings.strings.commissions === this.props.title) {
 	                className = "right-panel-item-button right-panel-item-button-commissions";
 	            }
-	            if (_strings.strings.agents === this.props.title) {
+	            if (_strings.strings.agentsAndPartnerships === this.props.title) {
 	                className = "right-panel-item-button right-panel-item-button-agents";
 	            }
 	
@@ -50620,7 +50758,7 @@
 	                    ),
 	                    _react2.default.createElement(RightPanelItem, { title: _strings.strings.dashboard, onPanelItemClick: this.onPanelItemClick.bind(this) }),
 	                    _react2.default.createElement(RightPanelItem, { title: _strings.strings.commissions, onPanelItemClick: this.onPanelItemClick.bind(this) }),
-	                    _react2.default.createElement(RightPanelItem, { title: _strings.strings.agents, onPanelItemClick: this.onPanelItemClick.bind(this) })
+	                    _react2.default.createElement(RightPanelItem, { title: _strings.strings.agentsAndPartnerships, onPanelItemClick: this.onPanelItemClick.bind(this) })
 	                )
 	            );
 	        }
@@ -50975,6 +51113,225 @@
 	}(_react2.default.Component);
 	
 	exports.default = TextBox;
+
+/***/ },
+/* 377 */
+/*!************************************!*\
+  !*** ./~/muicss/lib/react/tabs.js ***!
+  \************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var babelHelpers = __webpack_require__(/*! ./babel-helpers.js */ 242);
+	/**
+	 * MUI React tabs module
+	 * @module react/tabs
+	 */
+	/* jshint quotmark:false */
+	// jscs:disable validateQuoteMarks
+	
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = babelHelpers.interopRequireDefault(_react);
+	
+	var _tab = __webpack_require__(/*! ./tab */ 378);
+	
+	var _tab2 = babelHelpers.interopRequireDefault(_tab);
+	
+	var _util = __webpack_require__(/*! ../js/lib/util */ 244);
+	
+	var util = babelHelpers.interopRequireWildcard(_util);
+	
+	
+	var PropTypes = _react2.default.PropTypes,
+	    tabsBarClass = 'mui-tabs__bar',
+	    tabsBarJustifiedClass = 'mui-tabs__bar--justified',
+	    tabsPaneClass = 'mui-tabs__pane',
+	    isActiveClass = 'mui--is-active';
+	
+	/**
+	 * Tabs constructor
+	 * @class
+	 */
+	
+	var Tabs = function (_React$Component) {
+	  babelHelpers.inherits(Tabs, _React$Component);
+	
+	  function Tabs(props) {
+	    babelHelpers.classCallCheck(this, Tabs);
+	
+	    var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Tabs).call(this, props));
+	
+	    _this.state = { currentSelectedIndex: props.initialSelectedIndex };
+	    return _this;
+	  }
+	
+	  babelHelpers.createClass(Tabs, [{
+	    key: 'onClick',
+	    value: function onClick(i, tab, ev) {
+	      if (i !== this.state.currentSelectedIndex) {
+	        this.setState({ currentSelectedIndex: i });
+	
+	        // onActive callback
+	        if (tab.props.onActive) tab.props.onActive(tab);
+	
+	        // onChange callback
+	        if (this.props.onChange) {
+	          this.props.onChange(i, tab.props.value, tab, ev);
+	        }
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props;
+	      var children = _props.children;
+	      var other = babelHelpers.objectWithoutProperties(_props, ['children']);
+	
+	
+	      var tabEls = [],
+	          paneEls = [],
+	          m = children.length,
+	          selectedIndex = this.state.currentSelectedIndex % m,
+	          isActive = void 0,
+	          item = void 0,
+	          cls = void 0,
+	          i = void 0;
+	
+	      for (i = 0; i < m; i++) {
+	        item = children[i];
+	
+	        // only accept MUITab elements
+	        if (item.type !== _tab2.default) util.raiseError('Expecting MUITab React Element');
+	
+	        isActive = i === selectedIndex ? true : false;
+	
+	        // tab element
+	        tabEls.push(_react2.default.createElement(
+	          'li',
+	          { key: i, className: isActive ? isActiveClass : '' },
+	          _react2.default.createElement(
+	            'a',
+	            { onClick: this.onClick.bind(this, i, item) },
+	            item.props.label
+	          )
+	        ));
+	
+	        // pane element
+	        cls = tabsPaneClass + ' ';
+	        if (isActive) cls += isActiveClass;
+	
+	        paneEls.push(_react2.default.createElement(
+	          'div',
+	          { key: i, className: cls },
+	          item.props.children
+	        ));
+	      }
+	
+	      cls = tabsBarClass;
+	      if (this.props.justified) cls += ' ' + tabsBarJustifiedClass;
+	
+	      return _react2.default.createElement(
+	        'div',
+	        other,
+	        _react2.default.createElement(
+	          'ul',
+	          { className: cls },
+	          tabEls
+	        ),
+	        paneEls
+	      );
+	    }
+	  }]);
+	  return Tabs;
+	}(_react2.default.Component);
+	
+	/** Define module API */
+	
+	
+	Tabs.propTypes = {
+	  initialSelectedIndex: PropTypes.number,
+	  justified: PropTypes.bool,
+	  onChange: PropTypes.func
+	};
+	Tabs.defaultProps = {
+	  className: '',
+	  initialSelectedIndex: 0,
+	  justified: false,
+	  onChange: null
+	};
+	exports.default = Tabs;
+	module.exports = exports['default'];
+
+/***/ },
+/* 378 */
+/*!***********************************!*\
+  !*** ./~/muicss/lib/react/tab.js ***!
+  \***********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var babelHelpers = __webpack_require__(/*! ./babel-helpers.js */ 242);
+	/**
+	 * MUI React tabs module
+	 * @module react/tabs
+	 */
+	/* jshint quotmark:false */
+	// jscs:disable validateQuoteMarks
+	
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = babelHelpers.interopRequireDefault(_react);
+	
+	var PropTypes = _react2.default.PropTypes;
+	
+	/**
+	 * Tab constructor
+	 * @class
+	 */
+	
+	var Tab = function (_React$Component) {
+	  babelHelpers.inherits(Tab, _React$Component);
+	
+	  function Tab() {
+	    babelHelpers.classCallCheck(this, Tab);
+	    return babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(Tab).apply(this, arguments));
+	  }
+	
+	  babelHelpers.createClass(Tab, [{
+	    key: 'render',
+	    value: function render() {
+	      return null;
+	    }
+	  }]);
+	  return Tab;
+	}(_react2.default.Component);
+	
+	/** Define module API */
+	
+	
+	Tab.propTypes = {
+	  value: PropTypes.any,
+	  label: PropTypes.string,
+	  onActive: PropTypes.func
+	};
+	Tab.defaultProps = {
+	  value: null,
+	  label: '',
+	  onActive: null
+	};
+	exports.default = Tab;
+	module.exports = exports['default'];
 
 /***/ }
 /******/ ]);
