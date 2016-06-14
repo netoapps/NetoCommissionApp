@@ -49,12 +49,12 @@ class FileBin extends React.Component {
     onUploadFile()
     {
         var formData = new FormData();
-        for (var i = 0; i < files.length; i++) {
-            formData.append('file', files[i]);
+        for (var i = 0; i < this.state.files.length; i++) {
+            formData.append('file', this.state.files[i]);
         }
         // now post a new XHR request
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/upload');
+        xhr.open('POST', '/commissions/upload');
         xhr.onload = function () {
             if (xhr.status === 200) {
                 console.log('all done: ' + xhr.status);
@@ -93,7 +93,7 @@ class FileBin extends React.Component {
         };
 
         return  <div className="commissions-page-file-bin shadow">
-            <Dropzone onDrop={this.onDrop} className="commissions-page-file-bin-drag-area" style={style} activeStyle={activeStyle}>
+            <Dropzone onDrop={this.onDrop.bind(this)} className="commissions-page-file-bin-drag-area" style={style} activeStyle={activeStyle}>
                 <strong>{strings.dragFileHere}</strong>
             </Dropzone>
             <div className="hcontainer-no-wrap">

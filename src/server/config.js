@@ -26,6 +26,7 @@ module.exports = {
             }
         }
     },
+    datafilesDirectory:'../../datafiles',
     tokens:{
         secret:'ominubyvtcrxrzea'
     }

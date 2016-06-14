@@ -10,7 +10,6 @@ var morgan = require('morgan');
 var routing = require('./Routes');
 var passport = require('./Auth/passport');
 
-
 function NetoCommisionAppServer(){
     var self = this;
 
@@ -60,4 +59,5 @@ function NetoCommisionAppServer(){
 var server = new NetoCommisionAppServer();
 server.init();
 server.start();
+
 
