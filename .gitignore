@@ -30,6 +30,10 @@ build/Release
 node_modules
 src/server/node_modules
 
+#TestData
+src/server/TestData
+src/server/agents_fixed.xlsx
+
 .idea/workspace.xml
 
 .idea/jsLibraryMappings.xml
