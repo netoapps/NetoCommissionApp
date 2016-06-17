@@ -12,7 +12,7 @@ class EditFilesPage extends React.Component {
 
         this.state = {
             loginData: AuthService.getLoginData(),
-            filesData: AppStore.getFilesData()
+            filesData: AppStore.getCommissionFiles()
         };
     }
 
@@ -27,7 +27,7 @@ class EditFilesPage extends React.Component {
     }
     onDeleteFile()
     {
-        this.state.filesData = AppStore.getFilesData()
+        this.state.filesData = AppStore.getCommissionFiles()
         this.setState(this.state)
     }
     onDeleteFileClicked(rowIndex)

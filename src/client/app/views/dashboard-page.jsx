@@ -5,7 +5,7 @@ import Dropdown from 'muicss/lib/react/dropdown';
 import DropdownItem from 'muicss/lib/react/dropdown-item';
 import FixedWidthDropdown from './FixedWidthDropdown.jsx';
 import { strings } from '../constants/strings'
-import {Chart} from "react-chartjs";
+import Chart from "react-chartjs";
 import {Bar} from "react-chartjs";
 import Table from './table.jsx';
 
@@ -187,16 +187,15 @@ class DashboardCommissionChangeChart extends React.Component {
                 }
             ]
         };
+
         var chartOptions = {
-            scales: {
-                xAxes: [{
-                    stacked: true
-                }],
-                yAxes: [{
-                    stacked: true
-                }]
-            }
+            scaleFontFamily: "Tahoma",
+            tooltipFontFamily: "Tahoma",
+            scaleFontSize: 16,
+            responsive: true,
+            maintainAspectRatio: false
         }
+
 
         return (
             <div className="dashboard-commission-change-chart shadow">

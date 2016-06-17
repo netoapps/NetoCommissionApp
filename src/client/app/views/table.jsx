@@ -25,6 +25,7 @@ class TableCell extends React.Component {
         var color = "table-cell-text-color";
         //var value = this.props.value;
         var node = null;
+        var action = null;
 
         if (this.state.column.color === "red-green")
         {
@@ -63,14 +64,22 @@ class TableCell extends React.Component {
             const actions = [];
             for(var index = 0 ; index < this.props.value.length; index++)
             {
-                var action = this.props.value[index]
+                action = this.props.value[index]
                 var className = "table-button " + action.color
-                //actions.push(<button key={index} className={className} onClick={ function(action) { action.action(this.props.rowIndex) }.bind(this,action)}>{action.name}</button>)
-                actions.push(<FlatRippleButton key={index} className={className} onClick={ function(action) { action.action(this.props.rowIndex) }.bind(this,action)}>{action.name}</FlatRippleButton>)
+                actions.push(<FlatRippleButton rippleColor="light" key={index} className={className} onClick={ function(action) { action.action(this.props.rowIndex) }.bind(this,action)}>{action.name}</FlatRippleButton>)
                 actions.push(<div key={this.props.value.length + index} className="table-button-spacer"/>)
             }
             node = <div className={"table-cell-read-only hcontainer-no-wrap table-button-container " + color}>{actions}</div>;
         }
+        if (this.state.column.type === "read-only-button")
+        {
+            action = this.state.column.action
+            var className = "table-button " + this.state.column.color
+            node = <div className={"table-cell-read-only table-button-container " + color}>
+                <FlatRippleButton rippleColor="light" key={index} className={className} onClick={ function(action) { action(this.props.rowIndex) }.bind(this,action)}>{this.props.value}</FlatRippleButton>
+            </div>;
+        }
+
 
         //var node = <div className={"table-cell-read-only " + color}>{value}</div>;
         return ( <div className={className + " " + this.state.column.width}>
@@ -148,13 +157,22 @@ class Table extends React.Component {
         })
     }
 
-    render() {
-
-        var tableColumns = [];
+    render()
+    {
+       var tableColumns = [];
         for(var col = 0; col < this.state.columns.length; col++)
         {
             tableColumns[col] =<TableColumn key={col}
                                             column={this.state.columns[col]} />
+        }
+
+        if(this.state.data == null)
+        {
+            return <div className="table">
+                <div className="table-header">
+                    {tableColumns}
+                </div>
+            </div>;
         }
 
         var tableRows = [];

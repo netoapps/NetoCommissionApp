@@ -911,6 +911,10 @@ h4, h5, h6 {
 .mui-btn-ripple > .mui-ripple-effect-dark {
   background-color: #000000;
 }
+.mui-btn-ripple > .mui-ripple-effect-light {
+  background-color: #4286b4;
+}
+
 
 .mui-btn-ripple--primary > .mui-ripple-effect {
   background-color: #FFF;
@@ -2509,6 +2513,15 @@ body.mui-body--scroll-lock {
 }
 
 .mui-ripple-effect-dark {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  -webkit-animation: mui-ripple-animation 2s;
+  animation: mui-ripple-animation 2s;
+}
+
+.mui-ripple-effect-light {
   position: absolute;
   border-radius: 50%;
   pointer-events: none;

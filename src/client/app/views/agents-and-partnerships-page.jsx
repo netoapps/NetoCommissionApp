@@ -5,39 +5,27 @@ import Tab from 'muicss/lib/react/tab'
 import { strings } from '../constants/strings'
 import Button from 'muicss/lib/react/button'
 import Table from './table.jsx'
+import AppStore from '../stores/data-store'
 
 class AgentsAndPartnerships extends React.Component {
 
     constructor(props) {
         super(props);
 
-        var agentsData = [
-            {name: "קרין בוזלי לוי", idNumber: "123456789", status: "פעיל"},
-            {name: "עידן כץ", idNumber: "987654321", status: "פעיל"},
-            {name: "תומר", idNumber: "1212121212", status: "לא פעיל"}
-        ]
-
-        var partnershipsData = [
-            {names: "קרין בוזלי לוי, ויטלי", idNumbers: "123456789, 3534534543", status: "פעיל"},
-            {names: "עידן כץ, קרין", idNumbers: "3453444,48765432", status: "פעיל"},
-            {names: "תומר, מסי", idNumbers: "234234345,3534543", status: "לא פעיל"}
-        ]
-
-
         this.state = {
             loginData: AuthService.getLoginData(),
             selectedTab: 0,
-            agentsData:agentsData,
-            partnershipsData:partnershipsData
+            agentsData: AppStore.getAgents(),
+            partnershipsData:AppStore.getPartnerships()
         };
     }
     onNewAgent()
     {
-        this.context.router.push('/app/agents-and-partnerships/new-agent-page')
+        this.context.router.push('/app/agents-and-partnerships/agent-page/new')
     }
     onNewPartnership()
     {
-        this.context.router.push('/app/new-partnership-page')
+        this.context.router.push('/app/agents-and-partnerships/partnership-page/new')
     }
 
     onChangeTab(i, value, tab, ev)
@@ -46,7 +34,16 @@ class AgentsAndPartnerships extends React.Component {
         this.setState(this.state)
         console.log(arguments);
     }
-
+    onAgentClicked(rowIndex)
+    {
+        var agentId = this.state.agentsData[rowIndex].idNumber
+        this.context.router.push('/app/agents-and-partnerships/agent-page/'+agentId)
+    }
+    onPartnershipClicked(rowIndex)
+    {
+        //var agentId = this.state.agentsData[rowIndex].idNumber
+        this.context.router.push('/app/agents-and-partnerships/partnership-page/new')
+    }
     onDeleteAgentClicked(rowIndex)
     {
         console.log("onDeleteAgentClicked " + rowIndex)
@@ -75,8 +72,9 @@ class AgentsAndPartnerships extends React.Component {
                 title: "שם",
                 key: "name",
                 width: "col-33-33",
-                type: 'read-only',
-                color: 'normal'
+                type: 'read-only-button',
+                color: 'blue',
+                action: this.onAgentClicked.bind(this)
             },
             {
                 title: "מזהה",
@@ -105,14 +103,17 @@ class AgentsAndPartnerships extends React.Component {
 
         var deleteAgentAction = {name: "מחיקה", action: this.onDeleteAgentClicked.bind(this),color: "red"}
         var editAgentAction = {name: "עריכה", action: this.onEditAgentClicked.bind(this),color: "blue"}
-        var agentsDataWithActions = []
-        for(var file = 0; file < this.state.agentsData.length; file++)
+        var agentsData = []
+        for(var agentIndex = 0; agentIndex < this.state.agentsData.length; agentIndex++)
         {
-            var agentData = this.state.agentsData[file]
-            agentData["actions"] = [editAgentAction,deleteAgentAction]
-            agentsDataWithActions.push(agentData)
-        }
+            var agentData = {}
 
+            agentData["name"] = this.state.agentsData[agentIndex].name + " " + this.state.agentsData[agentIndex].familyName
+            agentData["idNumber"] = this.state.agentsData[agentIndex].idNumber
+            agentData["status"] = this.state.agentsData[agentIndex].active ? "פעיל":"לא פעיל"
+            agentData["actions"] = [editAgentAction,deleteAgentAction]
+            agentsData.push(agentData)
+        }
 
         var partnershipColumns = [
 
@@ -120,8 +121,9 @@ class AgentsAndPartnerships extends React.Component {
                 title: "שותפים",
                 key: "names",
                 width: "col-33-33",
-                type: 'read-only',
-                color: 'normal'
+                type: 'read-only-button',
+                color: 'blue',
+                action: this.onPartnershipClicked.bind(this)
             },
             {
                 title: "מזהה",
@@ -148,12 +150,29 @@ class AgentsAndPartnerships extends React.Component {
 
         var deletePartnershipsDataAction = {name: "מחיקה", action: this.onDeletePartnershipsClicked.bind(this),color: "red"}
         var editPartnershipsAction = {name: "עריכה", action: this.onEditPartnershipsClicked.bind(this),color: "blue"}
-        var partnershipsDataWithActions = []
-        for(var file = 0; file < this.state.partnershipsData.length; file++)
+        var partnershipsData = []
+        for(var partnershipIndex = 0; partnershipIndex < this.state.partnershipsData.length; partnershipIndex++)
         {
-            var partnershipData = this.state.partnershipsData[file]
+            var partnershipData = {}
+            partnershipData["names"] = ""
+            partnershipData["idNumbers"] = ""
+            for(var idIndex = 0; idIndex < this.state.partnershipsData[partnershipIndex].partnersId.length ; idIndex++)
+            {
+                agentData = AppStore.getAgent(this.state.partnershipsData[partnershipIndex].partnersId[idIndex])
+                if(agentData != null)
+                {
+                    partnershipData["names"] += (agentData.name + " " + agentData.familyName)
+                    partnershipData["idNumbers"] += agentData.idNumber
+                    if(idIndex < (this.state.partnershipsData[partnershipIndex].partnersId.length-1))
+                    {
+                        partnershipData["names"] += ", "
+                        partnershipData["idNumbers"] += ", "
+                    }
+                }
+            }
+            partnershipData["status"] = this.state.partnershipsData[partnershipIndex].active ? "פעיל":"לא פעיל"
             partnershipData["actions"] = [editPartnershipsAction,deletePartnershipsDataAction]
-            partnershipsDataWithActions.push(partnershipData)
+            partnershipsData.push(partnershipData)
         }
 
 
@@ -164,10 +183,10 @@ class AgentsAndPartnerships extends React.Component {
 
                         <div className="agents-page-tab-container">
                             <div className="agents-page-vertical-spacer"/>
-                            <Button className="shadow" onClick={this.onNewAgent.bind(this)} color="primary">{strings.createNewAgent}</Button>
+                            <Button className="shadow" onClick={this.onNewAgent.bind(this)} color="primary">{strings.newAgent}</Button>
                             <div className="agents-page-vertical-spacer"/>
                             <div className="agents-page-table">
-                                <Table columns={agentsColumns} data={agentsDataWithActions}/>
+                                <Table columns={agentsColumns} data={agentsData}/>
                             </div>
                         </div>
 
@@ -176,10 +195,10 @@ class AgentsAndPartnerships extends React.Component {
 
                         <div className="agents-page-tab-container">
                             <div className="agents-page-vertical-spacer"/>
-                            <Button className="shadow" onClick={this.onNewAgent.bind(this)} color="primary">{strings.createNewPartnership}</Button>
+                            <Button className="shadow" onClick={this.onNewPartnership.bind(this)} color="primary">{strings.newPartnership}</Button>
                             <div className="agents-page-vertical-spacer"/>
                             <div className="agents-page-table">
-                                <Table columns={partnershipColumns} data={partnershipsDataWithActions}/>
+                                <Table columns={partnershipColumns} data={partnershipsData}/>
                             </div>
                         </div>
 

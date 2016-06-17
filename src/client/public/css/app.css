@@ -637,7 +637,7 @@ body
 
 .dashboard-commission-change-chart
 {
-    /*width: 100%;*/
+    width: 100%;
     height: 450px;
     background-color: white;
     padding-top: 20px;
@@ -652,6 +652,7 @@ body
 .dashboard-rank-table
 {
     width: calc(50% - 10px);
+    min-width: 650px;
     height: 370px;
     background-color: white;
     padding: 20px;
@@ -661,7 +662,7 @@ body
 
 .dashboard-month-total-agents
 {
-    min-width: 350px;
+    min-width: 320px;
     width: calc(50% - 10px);
     height: 175px;
     background-color: white;
@@ -670,7 +671,7 @@ body
 
 .dashboard-total-investments
 {
-    min-width: 700px;
+    min-width: 670px;
     width: 100%;
     height: 175px;
     background-color: white;
@@ -679,7 +680,7 @@ body
 
 .dashboard-month-total-commissions
 {
-    min-width: 350px;
+    min-width: 320px;
     width: calc(50% - 10px);
     height: 175px;
     background-color: white;
@@ -840,7 +841,7 @@ body
     border:none;
     margin:0;
     padding:0;
-    /*width: 60%;*/
+    width: 100%;
 }
 
 .table-button:focus
@@ -986,4 +987,14 @@ body
     width: 100%;
     height: calc(100% - 220px);
     max-height: calc(100% - 220px);
+}
+
+.mui-ripple-effect-dark
+{
+
+}
+
+.mui-ripple-effect-light
+{
+
 }
