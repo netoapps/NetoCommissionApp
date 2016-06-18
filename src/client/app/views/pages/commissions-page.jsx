@@ -1,13 +1,13 @@
 import React from 'react'
-import AuthService from '../services/auth-service'
-import { strings } from '../constants/strings'
-import Table from './table.jsx'
-import Dropdown from 'muicss/lib/react/dropdown'
-import DropdownItem from 'muicss/lib/react/dropdown-item'
-import Button from 'muicss/lib/react/button'
+import AuthService from '../../services/auth-service'
+import { strings } from '../../constants/strings'
+import Table from './../common/table.jsx'
+import Dropdown from '../../../../../node_modules/muicss/lib/react/dropdown'
+import DropdownItem from '../../../../../node_modules/muicss/lib/react/dropdown-item'
+import Button from '../../../../../node_modules/muicss/lib/react/button'
 import DatePicker from 'react-datepicker'
 import Dropzone from 'react-dropzone'
-import TextBox from './text-box.jsx'
+import TextBox from './../common/text-box.jsx'
 
 var moment = require('react-datepicker/node_modules/moment')
 

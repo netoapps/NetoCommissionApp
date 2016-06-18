@@ -2,8 +2,8 @@
 
 import React from 'react';
 
-import * as jqLite from 'muicss/lib/js/lib/jqLite';
-import * as util from 'muicss/lib/js/lib/util';
+import * as jqLite from '../../../../../node_modules/muicss/lib/js/lib/jqLite';
+import * as util from '../../../../../node_modules/muicss/lib/js/lib/util';
 
 let rippleIter = 0;
 

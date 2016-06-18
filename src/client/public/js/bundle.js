@@ -63,35 +63,39 @@
 	
 	var _authService2 = _interopRequireDefault(_authService);
 	
-	var _loginPage = __webpack_require__(/*! ./views/login-page.jsx */ 237);
+	var _loginPage = __webpack_require__(/*! ./views/pages/login-page.jsx */ 389);
 	
 	var _loginPage2 = _interopRequireDefault(_loginPage);
 	
-	var _signupPage = __webpack_require__(/*! ./views/signup-page.jsx */ 239);
+	var _signupPage = __webpack_require__(/*! ./views/pages/signup-page.jsx */ 390);
 	
 	var _signupPage2 = _interopRequireDefault(_signupPage);
 	
-	var _dashboardPage = __webpack_require__(/*! ./views/dashboard-page.jsx */ 240);
+	var _dashboardPage = __webpack_require__(/*! ./views/pages/dashboard-page.jsx */ 391);
 	
 	var _dashboardPage2 = _interopRequireDefault(_dashboardPage);
 	
-	var _commissionsPage = __webpack_require__(/*! ./views/commissions-page.jsx */ 262);
+	var _commissionsPage = __webpack_require__(/*! ./views/pages/commissions-page.jsx */ 392);
 	
 	var _commissionsPage2 = _interopRequireDefault(_commissionsPage);
 	
-	var _agentsAndPartnershipsPage = __webpack_require__(/*! ./views/agents-and-partnerships-page.jsx */ 370);
+	var _agentsAndPartnershipsPage = __webpack_require__(/*! ./views/pages/agents-and-partnerships-page.jsx */ 393);
 	
 	var _agentsAndPartnershipsPage2 = _interopRequireDefault(_agentsAndPartnershipsPage);
 	
-	var _editFilesPage = __webpack_require__(/*! ./views/edit-files-page.jsx */ 375);
+	var _commissionFilesPage = __webpack_require__(/*! ./views/pages/commission-files-page.jsx */ 394);
 	
-	var _editFilesPage2 = _interopRequireDefault(_editFilesPage);
+	var _commissionFilesPage2 = _interopRequireDefault(_commissionFilesPage);
 	
-	var _agentPage = __webpack_require__(/*! ./views/agent-page.jsx */ 376);
+	var _agentPage = __webpack_require__(/*! ./views/pages/agent-page.jsx */ 395);
 	
 	var _agentPage2 = _interopRequireDefault(_agentPage);
 	
-	var _partnershipPage = __webpack_require__(/*! ./views/partnership-page.jsx */ 383);
+	var _agentSalaryPage = __webpack_require__(/*! ./views/pages/agent-salary-page.jsx */ 397);
+	
+	var _agentSalaryPage2 = _interopRequireDefault(_agentSalaryPage);
+	
+	var _partnershipPage = __webpack_require__(/*! ./views/pages/partnership-page.jsx */ 396);
 	
 	var _partnershipPage2 = _interopRequireDefault(_partnershipPage);
 	
@@ -192,8 +196,9 @@
 	        { path: '/app', component: App },
 	        _react2.default.createElement(_reactRouter.Route, { path: '/app/dashboard', component: _dashboardPage2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/app/commissions', component: _commissionsPage2.default }),
-	        _react2.default.createElement(_reactRouter.Route, { path: '/app/commissions/edit-files', component: _editFilesPage2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: '/app/commissions/edit-files', component: _commissionFilesPage2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/app/agents-and-partnerships', component: _agentsAndPartnershipsPage2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: '/app/agents-and-partnerships/agent-salary-page/:agentId', component: _agentSalaryPage2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/app/agents-and-partnerships/agent-page/:agentId', component: _agentPage2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/app/agents-and-partnerships/partnership-page/:partnershipId', component: _partnershipPage2.default })
 	    )
@@ -28201,149 +28206,7 @@
 	exports.default = Logger;
 
 /***/ },
-/* 237 */
-/*!*********************************************!*\
-  !*** ./src/client/app/views/login-page.jsx ***!
-  \*********************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _authService = __webpack_require__(/*! ../services/auth-service */ 229);
-	
-	var _authService2 = _interopRequireDefault(_authService);
-	
-	var _strings = __webpack_require__(/*! ../constants/strings */ 238);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Login = function (_React$Component) {
-	    _inherits(Login, _React$Component);
-	
-	    function Login() {
-	        _classCallCheck(this, Login);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Login).call(this));
-	
-	        _this.state = {
-	            username: '',
-	            password: ''
-	        };
-	        _this.errorMessage = "";
-	        return _this;
-	    }
-	
-	    _createClass(Login, [{
-	        key: 'login',
-	        value: function login(e) {
-	            var _this2 = this;
-	
-	            e.preventDefault();
-	
-	            this.state.email = this.refs.email.value;
-	            this.state.password = this.refs.password.value;
-	            this.errorMessage = "";
-	            this.errorMessageClassName = "";
-	            _authService2.default.login(this.state.email, this.state.password, function (loggedIn) {
-	                if (loggedIn) {
-	                    _this2.context.router.push('/app/dashboard');
-	                } else {
-	                    _this2.errorMessage = _strings.strings.loginErrorMessage;
-	                    _this2.errorMessageClassName = "login-page-alert";
-	                }
-	            }.bind(this));
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'login-page animated fadeIn' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'login-page-container login-page-center' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'login-page-neto-logo-container' },
-	                        _react2.default.createElement('img', { className: 'login-page-neto-logo', src: './public/images/neto-logo.png' })
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'login-page-neto-doc-name' },
-	                        _strings.strings.appName
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: this.errorMessageClassName },
-	                        this.errorMessage
-	                    ),
-	                    _react2.default.createElement(
-	                        'form',
-	                        { className: 'left-align' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            null,
-	                            _react2.default.createElement('input', { type: 'text', className: 'login-page-input', id: 'email', ref: 'email', placeholder: _strings.strings.email })
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            null,
-	                            _react2.default.createElement('input', { type: 'password', className: 'login-page-input', id: 'password', ref: 'password', placeholder: _strings.strings.password })
-	                        ),
-	                        _react2.default.createElement(
-	                            'button',
-	                            { type: 'submit', className: 'login-page-button', onClick: this.login.bind(this) },
-	                            _strings.strings.connect
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'login-page-need-account-text' },
-	                        _react2.default.createElement(
-	                            'p',
-	                            null,
-	                            _strings.strings.needAccount,
-	                            _react2.default.createElement(
-	                                'a',
-	                                { href: '/user-signup-request' },
-	                                ' ',
-	                                _strings.strings.sendRegisterRequest
-	                            )
-	                        )
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return Login;
-	}(_react2.default.Component);
-	
-	//Important!! This adds the router object to context
-	
-	
-	exports.default = Login;
-	Login.contextTypes = {
-	    router: _react2.default.PropTypes.object.isRequired
-	};
-
-/***/ },
+/* 237 */,
 /* 238 */
 /*!*********************************************!*\
   !*** ./src/client/app/constants/strings.js ***!
@@ -28387,14 +28250,15 @@
 	    notes: "הערות",
 	    newAgent: "סוכן חדש",
 	    newPartnership: "שותפות חדשה",
-	    agentPageDetails: "פרטי סוכן",
+	    agentPageDetails: "הגדרות סוכן",
+	    agentSalaryPage: "פרוט שכר",
 	    agentPageName: "שם פרטי",
 	    agentPageFamilyName: "שם משפחה",
 	    agentPageId: "מזהה",
 	    agentPagePhone: "טלפון",
 	    agentPageFax: "פקס",
 	    agentPageEmail: "אימייל",
-	    partnershipPageDetails: "פרטי שותפות",
+	    partnershipPageDetails: "הגדרות שותפות",
 	    partnershipPageName: "שם פרטי",
 	    partnershipPageFamilyName: "שם משפחה",
 	    partnershipPageId: "מזהה",
@@ -28407,670 +28271,8 @@
 	exports.strings = strings;
 
 /***/ },
-/* 239 */
-/*!**********************************************!*\
-  !*** ./src/client/app/views/signup-page.jsx ***!
-  \**********************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _authService = __webpack_require__(/*! ../services/auth-service */ 229);
-	
-	var _authService2 = _interopRequireDefault(_authService);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Signup = function (_React$Component) {
-	    _inherits(Signup, _React$Component);
-	
-	    function Signup() {
-	        _classCallCheck(this, Signup);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Signup).call(this));
-	
-	        _this.state = {
-	            username: '',
-	            password: '',
-	            extra: ''
-	        };
-	        return _this;
-	    }
-	
-	    _createClass(Signup, [{
-	        key: 'signup',
-	        value: function signup(e) {
-	            e.preventDefault();
-	
-	            var usernameInput = this.refs.username;
-	            var passwordInput = this.refs.password;
-	            this.state.username = usernameInput.value;
-	            this.state.password = passwordInput.value;
-	
-	            _authService2.default.signup(this.state.user, this.state.password, this.state.extra).catch(function (err) {
-	                alert("There's an error logging in");
-	                console.log("Error logging in", err);
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'login jumbotron center-block' },
-	                _react2.default.createElement(
-	                    'h1',
-	                    null,
-	                    'Signup'
-	                ),
-	                _react2.default.createElement(
-	                    'form',
-	                    { role: 'form' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { htmlFor: 'username' },
-	                            'Username'
-	                        ),
-	                        _react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'username', ref: 'username', placeholder: 'Username' })
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { htmlFor: 'password' },
-	                            'Password'
-	                        ),
-	                        _react2.default.createElement('input', { type: 'password', className: 'form-control', id: 'password', ref: 'password', placeholder: 'Password' })
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { htmlFor: 'extra' },
-	                            'Extra'
-	                        ),
-	                        _react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'extra', ref: 'extra', placeholder: 'Some extra information' })
-	                    ),
-	                    _react2.default.createElement(
-	                        'button',
-	                        { type: 'submit', className: 'btn btn-default', onClick: this.signup.bind(this) },
-	                        'Submit'
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return Signup;
-	}(_react2.default.Component);
-	
-	exports.default = Signup;
-
-/***/ },
-/* 240 */
-/*!*************************************************!*\
-  !*** ./src/client/app/views/dashboard-page.jsx ***!
-  \*************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _authService = __webpack_require__(/*! ../services/auth-service */ 229);
-	
-	var _authService2 = _interopRequireDefault(_authService);
-	
-	var _button = __webpack_require__(/*! muicss/lib/react/button */ 241);
-	
-	var _button2 = _interopRequireDefault(_button);
-	
-	var _dropdown = __webpack_require__(/*! muicss/lib/react/dropdown */ 246);
-	
-	var _dropdown2 = _interopRequireDefault(_dropdown);
-	
-	var _dropdownItem = __webpack_require__(/*! muicss/lib/react/dropdown-item */ 248);
-	
-	var _dropdownItem2 = _interopRequireDefault(_dropdownItem);
-	
-	var _FixedWidthDropdown = __webpack_require__(/*! ./FixedWidthDropdown.jsx */ 249);
-	
-	var _FixedWidthDropdown2 = _interopRequireDefault(_FixedWidthDropdown);
-	
-	var _strings = __webpack_require__(/*! ../constants/strings */ 238);
-	
-	var _reactChartjs = __webpack_require__(/*! react-chartjs */ 250);
-	
-	var _reactChartjs2 = _interopRequireDefault(_reactChartjs);
-	
-	var _table = __webpack_require__(/*! ./table.jsx */ 260);
-	
-	var _table2 = _interopRequireDefault(_table);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var monthOptions = ["ינואר", "פברואר", "מרץ", "אפריל", "מאי", "יוני", "יולי", "אוגוסט", "ספטמבר", "אוקטובר", "נובמבר", "דצמבר"];
-	
-	function getMonthName(monthNum) {
-	
-	    if (monthNum > 12 || monthNum < 1) {
-	        return monthOptions[0];
-	    }
-	    return monthOptions[monthNum - 1];
-	}
-	
-	var DashboardToolbar = function (_React$Component) {
-	    _inherits(DashboardToolbar, _React$Component);
-	
-	    function DashboardToolbar(props) {
-	        _classCallCheck(this, DashboardToolbar);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardToolbar).call(this, props));
-	
-	        var date = new Date();
-	        var currentMonth = date.getMonth();
-	        var currentYear = date.getFullYear();
-	
-	        _this.state = {
-	            selectedMonth: getMonthName(currentMonth),
-	            selectedYear: currentYear.toString()
-	        };
-	        return _this;
-	    }
-	
-	    _createClass(DashboardToolbar, [{
-	        key: 'onMonthChange',
-	        value: function onMonthChange(item) {
-	            if (item.props.value != this.state.selectedMonth) {
-	                this.setState({ selectedMonth: item.props.value });
-	            }
-	        }
-	    }, {
-	        key: 'onYearChange',
-	        value: function onYearChange(item) {
-	            if (item.props.value != this.state.selectedYear) {
-	                this.setState({ selectedYear: item.props.value });
-	            }
-	        }
-	    }, {
-	        key: 'onLoadClick',
-	        value: function onLoadClick() {}
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	
-	            var months = [];
-	            for (var i = 1; i <= 12; i++) {
-	                var monthName = getMonthName(i);
-	                months.push(_react2.default.createElement(
-	                    _dropdownItem2.default,
-	                    { onClick: this.onMonthChange.bind(this), value: monthName, key: i },
-	                    monthName
-	                ));
-	            }
-	
-	            var years = [];
-	            var date = new Date();
-	            var currentYear = date.getFullYear();
-	            for (var _i = 2012; _i <= currentYear; _i++) {
-	                var yearName = _i.toString();
-	                years.push(_react2.default.createElement(
-	                    _dropdownItem2.default,
-	                    { onClick: this.onYearChange.bind(this), value: yearName, key: _i },
-	                    yearName
-	                ));
-	            }
-	
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'hcontainer-no-wrap' },
-	                _react2.default.createElement(
-	                    _FixedWidthDropdown2.default,
-	                    { label: this.state.selectedMonth, alignMenu: 'right' },
-	                    months
-	                ),
-	                _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                _react2.default.createElement(
-	                    _FixedWidthDropdown2.default,
-	                    { className: 'fixed-size-button', label: this.state.selectedYear, alignMenu: 'right' },
-	                    years
-	                ),
-	                _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                _react2.default.createElement(
-	                    _button2.default,
-	                    { className: 'shadow', onClick: this.onLoadClick.bind(this), color: 'primary' },
-	                    _strings.strings.load
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return DashboardToolbar;
-	}(_react2.default.Component);
-	
-	var DashboardRankTable = function (_React$Component2) {
-	    _inherits(DashboardRankTable, _React$Component2);
-	
-	    function DashboardRankTable(props) {
-	        _classCallCheck(this, DashboardRankTable);
-	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardRankTable).call(this, props));
-	    }
-	
-	    _createClass(DashboardRankTable, [{
-	        key: 'render',
-	        value: function render() {
-	
-	            var columns = [{
-	                title: "שם סוכן",
-	                key: "agentName",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "עמלות",
-	                key: "commission",
-	                width: "col-33-33",
-	                type: 'read-only-currency',
-	                color: 'normal'
-	            }, {
-	                title: "שינוי (עמלות)",
-	                key: "commissionChange",
-	                width: "col-33-33",
-	                type: 'read-only-percent',
-	                color: 'red-green'
-	            }, {
-	                title: "גודל תיק",
-	                key: "totalInvestments",
-	                width: "col-33-33",
-	                type: 'read-only-currency',
-	                color: 'normal'
-	            }, {
-	                title: "שינוי (גודל תיק)",
-	                key: "totalInvestmentsChange",
-	                width: "col-33-33",
-	                type: 'read-only-percent',
-	                color: 'red-green'
-	            }];
-	
-	            var data = [{ agentName: "קרין בוזלי", commission: "23234233", commissionChange: "2.3", totalInvestments: "23234233", totalInvestmentsChange: "2.3" }, { agentName: "עידן כץ", commission: "43234233", commissionChange: "2.3", totalInvestments: "23234233", totalInvestmentsChange: "2.3" }, { agentName: "מסי", commission: "33224233", commissionChange: "-2.3", totalInvestments: "23234233", totalInvestmentsChange: "6.3" }, { agentName: "מסי", commission: "33224233", commissionChange: "-2.3", totalInvestments: "23234233", totalInvestmentsChange: "6.3" }, { agentName: "מסי", commission: "33224233", commissionChange: "-2.3", totalInvestments: "23234233", totalInvestmentsChange: "6.3" }, { agentName: "מסי", commission: "33224233", commissionChange: "-2.3", totalInvestments: "23234233", totalInvestmentsChange: "6.3" }, { agentName: "קריזבז", commission: "13234233", commissionChange: "1.3", totalInvestments: "23234233", totalInvestmentsChange: "2.3" }, { agentName: "קרין בוזלי", commission: "23234233", commissionChange: "2.3", totalInvestments: "23234233", totalInvestmentsChange: "-2.3" }, { agentName: "קרין בוזלי", commission: "23234233", commissionChange: "2.3", totalInvestments: "23234233", totalInvestmentsChange: "2.3" }];
-	
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'dashboard-rank-table shadow' },
-	                _react2.default.createElement(_table2.default, { columns: columns,
-	                    data: data })
-	            );
-	        }
-	    }]);
-	
-	    return DashboardRankTable;
-	}(_react2.default.Component);
-	
-	var DashboardCommissionChangeChart = function (_React$Component3) {
-	    _inherits(DashboardCommissionChangeChart, _React$Component3);
-	
-	    function DashboardCommissionChangeChart(props) {
-	        _classCallCheck(this, DashboardCommissionChangeChart);
-	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardCommissionChangeChart).call(this, props));
-	    }
-	
-	    _createClass(DashboardCommissionChangeChart, [{
-	        key: 'render',
-	        value: function render() {
-	
-	            var data = {
-	                labels: monthOptions,
-	                datasets: [{
-	                    label: "My First dataset",
-	                    backgroundColor: "rgba(215,49,132,0.2)",
-	                    borderColor: "rgba(225,99,132,1)",
-	                    borderWidth: 1,
-	                    hoverBackgroundColor: "rgba(255,99,132,0.4)",
-	                    hoverBorderColor: "rgba(255,99,132,1)",
-	                    data: [165, 59, 80, 81, 256, 55, 40],
-	                    fillColor: "#4286b4"
-	                }]
-	            };
-	
-	            var chartOptions = {
-	                scaleFontFamily: "Tahoma",
-	                tooltipFontFamily: "Tahoma",
-	                scaleFontSize: 16,
-	                responsive: true,
-	                maintainAspectRatio: false
-	            };
-	
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'dashboard-commission-change-chart shadow' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'dashboard-box-title' },
-	                    _strings.strings.totalInvestmentsChange
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'dashboard-commission-change-chart-box' },
-	                    _react2.default.createElement(_reactChartjs.Bar, { data: data, options: chartOptions, width: '600', height: '400' })
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return DashboardCommissionChangeChart;
-	}(_react2.default.Component);
-	
-	var DashboardMonthTotalCommissions = function (_React$Component4) {
-	    _inherits(DashboardMonthTotalCommissions, _React$Component4);
-	
-	    function DashboardMonthTotalCommissions(props) {
-	        _classCallCheck(this, DashboardMonthTotalCommissions);
-	
-	        var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardMonthTotalCommissions).call(this, props));
-	
-	        _this4.state = {
-	            value: 233423432,
-	            change: 3.2
-	        };
-	
-	        return _this4;
-	    }
-	
-	    _createClass(DashboardMonthTotalCommissions, [{
-	        key: 'render',
-	        value: function render() {
-	
-	            var value = this.state.value.toString();
-	            value = parseFloat(value.replace(/,/g, "")).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	
-	            var change = this.state.change;
-	            var changeIcon = "../public/images/change-up.png";
-	            var changeColor = "green";
-	            if (change < 0) {
-	                changeIcon = "../public/images/change-down.png";
-	                changeColor = "red";
-	            }
-	
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'dashboard-month-total-commissions shadow' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'dashboard-box-title' },
-	                    _strings.strings.totalCommissions
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'dashboard-box-value blue' },
-	                    _react2.default.createElement(
-	                        'small',
-	                        null,
-	                        "₪",
-	                        ' '
-	                    ),
-	                    _react2.default.createElement(
-	                        'b',
-	                        null,
-	                        value
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: "dashboard-box-change " + changeColor },
-	                    change,
-	                    _react2.default.createElement(
-	                        'small',
-	                        null,
-	                        ' ',
-	                        "%"
-	                    ),
-	                    ' ',
-	                    _react2.default.createElement('img', { src: changeIcon })
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return DashboardMonthTotalCommissions;
-	}(_react2.default.Component);
-	
-	var DashboardMonthTotalAgents = function (_React$Component5) {
-	    _inherits(DashboardMonthTotalAgents, _React$Component5);
-	
-	    function DashboardMonthTotalAgents(props) {
-	        _classCallCheck(this, DashboardMonthTotalAgents);
-	
-	        var _this5 = _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardMonthTotalAgents).call(this, props));
-	
-	        _this5.state = {
-	            value: 999,
-	            change: 3.4
-	        };
-	        return _this5;
-	    }
-	
-	    _createClass(DashboardMonthTotalAgents, [{
-	        key: 'render',
-	        value: function render() {
-	
-	            var value = this.state.value.toString();
-	
-	            var change = this.state.change;
-	            var changeIcon = "../public/images/change-up.png";
-	            var changeColor = "green";
-	            if (change < 0) {
-	                changeIcon = "../public/images/change-down.png";
-	                changeColor = "red";
-	            }
-	
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'dashboard-month-total-agents shadow' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'dashboard-box-title' },
-	                    _strings.strings.totalAgents
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'dashboard-box-value blue' },
-	                    _react2.default.createElement(
-	                        'b',
-	                        null,
-	                        value
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: "dashboard-box-change " + changeColor },
-	                    change,
-	                    _react2.default.createElement(
-	                        'small',
-	                        null,
-	                        ' ',
-	                        "%"
-	                    ),
-	                    ' ',
-	                    _react2.default.createElement('img', { src: changeIcon })
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return DashboardMonthTotalAgents;
-	}(_react2.default.Component);
-	
-	var DashboardTotalInvestments = function (_React$Component6) {
-	    _inherits(DashboardTotalInvestments, _React$Component6);
-	
-	    function DashboardTotalInvestments(props) {
-	        _classCallCheck(this, DashboardTotalInvestments);
-	
-	        var _this6 = _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardTotalInvestments).call(this, props));
-	
-	        _this6.state = {
-	            value: 433423432,
-	            change: -1.2
-	        };
-	        return _this6;
-	    }
-	
-	    _createClass(DashboardTotalInvestments, [{
-	        key: 'render',
-	        value: function render() {
-	
-	            var value = this.state.value.toString();
-	            value = parseFloat(value.replace(/,/g, "")).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	
-	            var change = this.state.change;
-	            var changeIcon = "../public/images/change-up.png";
-	            var changeColor = "green";
-	            if (change < 0) {
-	                changeIcon = "../public/images/change-down.png";
-	                changeColor = "red";
-	            }
-	
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'dashboard-total-investments shadow' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'dashboard-box-title' },
-	                    _strings.strings.totalInvestments
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'dashboard-box-value blue' },
-	                    _react2.default.createElement(
-	                        'small',
-	                        null,
-	                        "₪",
-	                        ' '
-	                    ),
-	                    _react2.default.createElement(
-	                        'b',
-	                        null,
-	                        value
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: "dashboard-box-change " + changeColor },
-	                    change,
-	                    _react2.default.createElement(
-	                        'small',
-	                        null,
-	                        ' ',
-	                        "%"
-	                    ),
-	                    ' ',
-	                    _react2.default.createElement('img', { src: changeIcon })
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return DashboardTotalInvestments;
-	}(_react2.default.Component);
-	
-	var Dashboard = function (_React$Component7) {
-	    _inherits(Dashboard, _React$Component7);
-	
-	    function Dashboard(props) {
-	        _classCallCheck(this, Dashboard);
-	
-	        var _this7 = _possibleConstructorReturn(this, Object.getPrototypeOf(Dashboard).call(this, props));
-	
-	        _this7.state = {
-	            loginData: _authService2.default.getLoginData()
-	        };
-	        return _this7;
-	    }
-	
-	    _createClass(Dashboard, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'dashboard-page animated fadeIn' },
-	                _react2.default.createElement(DashboardToolbar, null),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'hcontainer-no-wrap' },
-	                    _react2.default.createElement(DashboardRankTable, null),
-	                    _react2.default.createElement('div', { className: 'dashboard-horizontal-spacer' }),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'dashboard-stats-container' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'hcontainer-no-wrap dashboard-stats-container-top' },
-	                            _react2.default.createElement(DashboardMonthTotalCommissions, null),
-	                            _react2.default.createElement('div', { className: 'dashboard-horizontal-spacer' }),
-	                            _react2.default.createElement(DashboardMonthTotalAgents, null)
-	                        ),
-	                        _react2.default.createElement('div', { className: 'dashboard-vertical-spacer' }),
-	                        _react2.default.createElement(DashboardTotalInvestments, null)
-	                    )
-	                ),
-	                _react2.default.createElement('div', { className: 'dashboard-vertical-spacer' }),
-	                _react2.default.createElement(DashboardCommissionChangeChart, null)
-	            );
-	        }
-	    }]);
-	
-	    return Dashboard;
-	}(_react2.default.Component);
-	
-	//Important!! This adds the router object to context
-	
-	
-	Dashboard.contextTypes = {
-	    router: _react2.default.PropTypes.object.isRequired
-	};
-	
-	exports.default = Dashboard;
-
-/***/ },
+/* 239 */,
+/* 240 */,
 /* 241 */
 /*!**************************************!*\
   !*** ./~/muicss/lib/react/button.js ***!
@@ -30514,257 +29716,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 249 */
-/*!*****************************************************!*\
-  !*** ./src/client/app/views/FixedWidthDropdown.jsx ***!
-  \*****************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _button = __webpack_require__(/*! muicss/lib/react/button */ 241);
-	
-	var _button2 = _interopRequireDefault(_button);
-	
-	var _caret = __webpack_require__(/*! muicss/lib/react/caret */ 247);
-	
-	var _caret2 = _interopRequireDefault(_caret);
-	
-	var _jqLite = __webpack_require__(/*! muicss/lib/js/lib/jqLite */ 243);
-	
-	var jqLite = _interopRequireWildcard(_jqLite);
-	
-	var _util = __webpack_require__(/*! muicss/lib/js/lib/util */ 244);
-	
-	var util = _interopRequireWildcard(_util);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var PropTypes = _react2.default.PropTypes,
-	    dropdownClass = 'mui-dropdown',
-	    menuClass = 'mui-dropdown__menu',
-	    openClass = 'mui--is-open',
-	    rightClass = 'mui-dropdown__menu--right';
-	
-	/**
-	 * Dropdown constructor
-	 * @class
-	 */
-	
-	var FixedWidthDropdown = function (_React$Component) {
-	    _inherits(FixedWidthDropdown, _React$Component);
-	
-	    function FixedWidthDropdown(props) {
-	        _classCallCheck(this, FixedWidthDropdown);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FixedWidthDropdown).call(this, props));
-	
-	        _this.state = {
-	            opened: false,
-	            menuTop: 0
-	        };
-	
-	        var cb = util.callback;
-	        _this.selectCB = cb(_this, 'select');
-	        _this.onClickCB = cb(_this, 'onClick');
-	        _this.onOutsideClickCB = cb(_this, 'onOutsideClick');
-	        return _this;
-	    }
-	
-	    _createClass(FixedWidthDropdown, [{
-	        key: 'componentWillMount',
-	        value: function componentWillMount() {
-	            document.addEventListener('click', this.onOutsideClickCB);
-	        }
-	    }, {
-	        key: 'componentWillUnmount',
-	        value: function componentWillUnmount() {
-	            document.removeEventListener('click', this.onOutsideClickCB);
-	        }
-	    }, {
-	        key: 'onClick',
-	        value: function onClick(ev) {
-	            // only left clicks
-	            if (ev.button !== 0) return;
-	
-	            // exit if toggle button is disabled
-	            if (this.props.disabled) return;
-	
-	            if (!ev.defaultPrevented) {
-	                this.toggle();
-	
-	                // execute <Dropdown> onClick method
-	                var onClickFn = this.props.onClick;
-	                onClickFn && onClickFn(ev);
-	            }
-	        }
-	    }, {
-	        key: 'toggle',
-	        value: function toggle() {
-	            // exit if no menu element
-	            if (!this.props.children) {
-	                return util.raiseError('Dropdown menu element not found');
-	            }
-	
-	            if (this.state.opened) this.close();else this.open();
-	        }
-	    }, {
-	        key: 'open',
-	        value: function open() {
-	            // position menu element below toggle button
-	            var wrapperRect = this.refs.wrapperEl.getBoundingClientRect(),
-	                toggleRect = void 0;
-	
-	            toggleRect = this.refs.button.refs.buttonEl.getBoundingClientRect();
-	
-	            this.setState({
-	                opened: true,
-	                menuTop: toggleRect.top - wrapperRect.top + toggleRect.height
-	            });
-	        }
-	    }, {
-	        key: 'close',
-	        value: function close() {
-	            this.setState({ opened: false });
-	        }
-	    }, {
-	        key: 'select',
-	        value: function select(ev) {
-	            // onSelect callback
-	            if (this.props.onSelect && ev.target.tagName === 'A') {
-	                this.props.onSelect(ev.target.getAttribute('data-mui-value'));
-	            }
-	
-	            // close menu
-	            if (!ev.defaultPrevented) this.close();
-	        }
-	    }, {
-	        key: 'onOutsideClick',
-	        value: function onOutsideClick(ev) {
-	            var isClickInside = this.refs.wrapperEl.contains(ev.target);
-	            if (!isClickInside) this.close();
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var buttonEl = void 0,
-	                menuEl = void 0,
-	                labelEl = void 0;
-	
-	            // build label
-	            if (jqLite.type(this.props.label) === 'string') {
-	                labelEl = _react2.default.createElement(
-	                    'span',
-	                    null,
-	                    this.props.label,
-	                    ' ',
-	                    _react2.default.createElement(_caret2.default, null)
-	                );
-	            } else {
-	                labelEl = this.props.label;
-	            }
-	
-	            buttonEl = _react2.default.createElement(
-	                _button2.default,
-	                { className: 'fixed-size-button shadow',
-	                    ref: 'button',
-	                    type: 'button',
-	                    onClick: this.onClickCB,
-	                    color: this.props.color,
-	                    variant: this.props.variant,
-	                    size: this.props.size,
-	                    disabled: this.props.disabled
-	                },
-	                labelEl
-	            );
-	
-	            if (this.state.opened) {
-	                var cs = {};
-	
-	                cs[menuClass] = true;
-	                cs[openClass] = this.state.opened;
-	                cs[rightClass] = this.props.alignMenu === 'right';
-	                cs = util.classNames(cs);
-	
-	                menuEl = _react2.default.createElement(
-	                    'ul',
-	                    {
-	                        ref: 'menuEl',
-	                        className: cs,
-	                        style: { top: this.state.menuTop },
-	                        onClick: this.selectCB
-	                    },
-	                    this.props.children
-	                );
-	            }
-	
-	            //let { className, children, onClick, ...other } = this.props;
-	            var _props = this.props;
-	            var className = _props.className;
-	            var children = _props.children;
-	            var onClick = _props.onClick;
-	
-	
-	            return _react2.default.createElement(
-	                'div',
-	                {
-	                    ref: 'wrapperEl',
-	                    className: dropdownClass + ' ' + className
-	                },
-	                buttonEl,
-	                menuEl
-	            );
-	        }
-	    }]);
-	
-	    return FixedWidthDropdown;
-	}(_react2.default.Component);
-	
-	FixedWidthDropdown.propTypes = {
-	    color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),
-	    variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
-	    size: PropTypes.oneOf(['default', 'small', 'large']),
-	    label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-	    alignMenu: PropTypes.oneOf(['left', 'right']),
-	    onClick: PropTypes.func,
-	    onSelect: PropTypes.func,
-	    disabled: PropTypes.bool
-	};
-	
-	FixedWidthDropdown.defaultProps = {
-	    className: '',
-	    color: 'default',
-	    variant: 'default',
-	    size: 'default',
-	    label: '',
-	    alignMenu: 'left',
-	    onClick: null,
-	    onSelect: null,
-	    disabled: false
-	};
-	
-	/** Define module API */
-	exports.default = FixedWidthDropdown;
-
-/***/ },
+/* 249 */,
 /* 250 */
 /*!**********************************!*\
   !*** ./~/react-chartjs/index.js ***!
@@ -34749,888 +33701,9 @@
 
 
 /***/ },
-/* 260 */
-/*!****************************************!*\
-  !*** ./src/client/app/views/table.jsx ***!
-  \****************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _FlatRippleButton = __webpack_require__(/*! ./FlatRippleButton.jsx */ 261);
-	
-	var _FlatRippleButton2 = _interopRequireDefault(_FlatRippleButton);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var TableCell = function (_React$Component) {
-	    _inherits(TableCell, _React$Component);
-	
-	    function TableCell(props) {
-	        _classCallCheck(this, TableCell);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TableCell).call(this, props));
-	
-	        _this.state = {
-	            value: _this.props.value,
-	            column: _this.props.column
-	        };
-	        return _this;
-	    }
-	
-	    _createClass(TableCell, [{
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            this.setState({
-	                value: nextProps.value,
-	                column: nextProps.column
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var className = "table-cell";
-	            var color = "table-cell-text-color";
-	            //var value = this.props.value;
-	            var node = null;
-	            var action = null;
-	
-	            if (this.state.column.color === "red-green") {
-	                if (parseFloat(this.props.value) >= 0) {
-	                    color = "green";
-	                } else {
-	                    color = "red";
-	                }
-	            }
-	
-	            if (this.state.column.type === "read-only") {
-	                node = _react2.default.createElement(
-	                    'div',
-	                    { className: "table-cell-read-only " + color },
-	                    this.props.value
-	                );
-	            }
-	            if (this.state.column.type === "read-only-currency") {
-	                var value = this.props.value;
-	                value = parseFloat(value.replace(/,/g, "")).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	                value = "₪ " + value;
-	                node = _react2.default.createElement(
-	                    'div',
-	                    { className: "table-cell-read-only " + color },
-	                    value
-	                );
-	            }
-	            if (this.state.column.type === "read-only-percent") {
-	                var value = this.props.value;
-	                value = value + " %";
-	                node = _react2.default.createElement(
-	                    'div',
-	                    { className: "table-cell-read-only " + color },
-	                    value
-	                );
-	            }
-	            if (this.state.column.type === "action") {
-	                var actions = [];
-	                for (var index = 0; index < this.props.value.length; index++) {
-	                    action = this.props.value[index];
-	                    var className = "table-button " + action.color;
-	                    actions.push(_react2.default.createElement(
-	                        _FlatRippleButton2.default,
-	                        { rippleColor: 'light', key: index, className: className, onClick: function (action) {
-	                                action.action(this.props.rowIndex);
-	                            }.bind(this, action) },
-	                        action.name
-	                    ));
-	                    actions.push(_react2.default.createElement('div', { key: this.props.value.length + index, className: 'table-button-spacer' }));
-	                }
-	                node = _react2.default.createElement(
-	                    'div',
-	                    { className: "table-cell-read-only hcontainer-no-wrap table-button-container " + color },
-	                    actions
-	                );
-	            }
-	            if (this.state.column.type === "read-only-button") {
-	                action = this.state.column.action;
-	                var className = "table-button " + this.state.column.color;
-	                node = _react2.default.createElement(
-	                    'div',
-	                    { className: "table-cell-read-only table-button-container " + color },
-	                    _react2.default.createElement(
-	                        _FlatRippleButton2.default,
-	                        { rippleColor: 'light', key: index, className: className, onClick: function (action) {
-	                                action(this.props.rowIndex);
-	                            }.bind(this, action) },
-	                        this.props.value
-	                    )
-	                );
-	            }
-	
-	            //var node = <div className={"table-cell-read-only " + color}>{value}</div>;
-	            return _react2.default.createElement(
-	                'div',
-	                { className: className + " " + this.state.column.width },
-	                node
-	            );
-	        }
-	    }]);
-	
-	    return TableCell;
-	}(_react2.default.Component);
-	
-	var TableRow = function (_React$Component2) {
-	    _inherits(TableRow, _React$Component2);
-	
-	    function TableRow(props) {
-	        _classCallCheck(this, TableRow);
-	
-	        var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(TableRow).call(this, props));
-	
-	        _this2.state = {
-	            data: _this2.props.data,
-	            columns: _this2.props.columns,
-	            index: _this2.props.index
-	        };
-	        return _this2;
-	    }
-	
-	    _createClass(TableRow, [{
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            this.setState({
-	                data: nextProps.data,
-	                columns: nextProps.columns,
-	                index: nextProps.index
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var tableCells = [];
-	            for (var cell = 0; cell < this.state.columns.length; cell++) {
-	                tableCells[cell] = _react2.default.createElement(TableCell, { key: cell,
-	                    field: this.state.columns[cell].key,
-	                    rowIndex: this.state.index,
-	                    column: this.state.columns[cell],
-	                    value: this.state.data[this.state.columns[cell].key] });
-	            }return _react2.default.createElement(
-	                'div',
-	                { className: 'table-row' },
-	                tableCells
-	            );
-	        }
-	    }]);
-	
-	    return TableRow;
-	}(_react2.default.Component);
-	
-	var TableColumn = function (_React$Component3) {
-	    _inherits(TableColumn, _React$Component3);
-	
-	    function TableColumn(props) {
-	        _classCallCheck(this, TableColumn);
-	
-	        var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(TableColumn).call(this, props));
-	
-	        _this3.state = {
-	            column: _this3.props.column
-	        };
-	        return _this3;
-	    }
-	
-	    _createClass(TableColumn, [{
-	        key: 'render',
-	        value: function render() {
-	            var className = "table-column " + this.state.column.width;
-	            return _react2.default.createElement(
-	                'div',
-	                { className: className },
-	                this.state.column.title
-	            );
-	        }
-	    }]);
-	
-	    return TableColumn;
-	}(_react2.default.Component);
-	
-	var Table = function (_React$Component4) {
-	    _inherits(Table, _React$Component4);
-	
-	    function Table(props) {
-	        _classCallCheck(this, Table);
-	
-	        var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(Table).call(this, props));
-	
-	        _this4.state = {
-	            columns: props.columns,
-	            data: props.data
-	        };
-	        return _this4;
-	    }
-	
-	    _createClass(Table, [{
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            this.setState({
-	                columns: nextProps.columns,
-	                data: nextProps.data
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var tableColumns = [];
-	            for (var col = 0; col < this.state.columns.length; col++) {
-	                tableColumns[col] = _react2.default.createElement(TableColumn, { key: col,
-	                    column: this.state.columns[col] });
-	            }
-	
-	            if (this.state.data == null) {
-	                return _react2.default.createElement(
-	                    'div',
-	                    { className: 'table' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'table-header' },
-	                        tableColumns
-	                    )
-	                );
-	            }
-	
-	            var tableRows = [];
-	            for (var row = 0; row < this.state.data.length; row++) {
-	                tableRows[row] = _react2.default.createElement(TableRow, { key: row, index: row,
-	                    data: this.state.data[row],
-	                    columns: this.state.columns });
-	            }return _react2.default.createElement(
-	                'div',
-	                { className: 'table' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'table-header' },
-	                    tableColumns
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'table-data-container' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'table-data' },
-	                        tableRows
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return Table;
-	}(_react2.default.Component);
-	
-	exports.default = Table;
-
-/***/ },
-/* 261 */
-/*!***************************************************!*\
-  !*** ./src/client/app/views/FlatRippleButton.jsx ***!
-  \***************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _jqLite = __webpack_require__(/*! muicss/lib/js/lib/jqLite */ 243);
-	
-	var jqLite = _interopRequireWildcard(_jqLite);
-	
-	var _util = __webpack_require__(/*! muicss/lib/js/lib/util */ 244);
-	
-	var util = _interopRequireWildcard(_util);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var rippleIter = 0;
-	
-	var PropTypes = _react2.default.PropTypes,
-	    btnClass = 'mui-btn-ripple',
-	    rippleClassDark = 'mui-ripple-effect-dark',
-	    rippleClassLight = 'mui-ripple-effect-light',
-	    btnAttrs = { color: 1, variant: 1, size: 1 };
-	
-	/**
-	 * Button element
-	 * @class
-	 */
-	
-	var FlatRippleButton = function (_React$Component) {
-	    _inherits(FlatRippleButton, _React$Component);
-	
-	    function FlatRippleButton(props) {
-	        _classCallCheck(this, FlatRippleButton);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FlatRippleButton).call(this, props));
-	
-	        _this.state = {
-	            ripples: {}
-	        };
-	        return _this;
-	    }
-	
-	    _createClass(FlatRippleButton, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            // disable MUI js
-	            var el = this.refs.buttonEl;
-	            el._muiDropdown = true;
-	            el._muiRipple = true;
-	        }
-	    }, {
-	        key: 'onClick',
-	        value: function onClick(ev) {
-	            var onClickFn = this.props.onClick;
-	            onClickFn && onClickFn(ev);
-	        }
-	    }, {
-	        key: 'onMouseDown',
-	        value: function onMouseDown(ev) {
-	            // get (x, y) position of click
-	            var offset = jqLite.offset(this.refs.buttonEl);
-	
-	            // choose diameter
-	            var diameter = offset.height;
-	            if (this.props.variant === 'fab') diameter = diameter / 2;
-	
-	            // add ripple to state
-	            var ripples = this.state.ripples;
-	            var key = Date.now();
-	
-	            ripples[key] = {
-	                xPos: ev.pageX - offset.left,
-	                yPos: ev.pageY - offset.top,
-	                diameter: diameter,
-	                teardownFn: this.teardownRipple.bind(this, key)
-	            };
-	
-	            this.setState({ ripples: ripples });
-	        }
-	    }, {
-	        key: 'onTouchStart',
-	        value: function onTouchStart(ev) {}
-	    }, {
-	        key: 'teardownRipple',
-	        value: function teardownRipple(key) {
-	            // delete ripple
-	            var ripples = this.state.ripples;
-	            delete ripples[key];
-	            this.setState({ ripples: ripples });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var cls = btnClass,
-	                k = void 0,
-	                v = void 0;
-	
-	            var ripples = this.state.ripples;
-	
-	            // button attributes
-	            for (k in btnAttrs) {
-	                v = this.props[k];
-	                if (v !== 'default') cls += ' ' + btnClass + '--' + v;
-	            }
-	
-	            var rippleColor = rippleClassDark;
-	            if (this.props.rippleColor != null) {
-	                rippleColor = this.props.rippleColor === "dark" ? rippleClassDark : rippleClassLight;
-	            }
-	
-	            return _react2.default.createElement(
-	                'button',
-	                _extends({}, this.props, {
-	                    ref: 'buttonEl',
-	                    className: cls + ' ' + this.props.className,
-	                    onClick: this.onClick.bind(this),
-	                    onMouseDown: this.onMouseDown.bind(this)
-	                }),
-	                this.props.children,
-	                Object.keys(ripples).map(function (k, i) {
-	                    var v = ripples[k];
-	                    return _react2.default.createElement(Ripple, {
-	                        colorClass: rippleColor,
-	                        key: k,
-	                        xPos: v.xPos,
-	                        yPos: v.yPos,
-	                        diameter: v.diameter,
-	                        onTeardown: v.teardownFn
-	                    });
-	                })
-	            );
-	        }
-	    }]);
-	
-	    return FlatRippleButton;
-	}(_react2.default.Component);
-	
-	FlatRippleButton.propTypes = {
-	    color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),
-	    disabled: PropTypes.bool,
-	    size: PropTypes.oneOf(['default', 'small', 'large']),
-	    type: PropTypes.oneOf(['submit', 'button']),
-	    variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
-	    onClick: PropTypes.func
-	};
-	
-	FlatRippleButton.defaultProps = {
-	    className: '',
-	    color: 'dark',
-	    disabled: false,
-	    size: 'default',
-	    type: null,
-	    variant: 'flat',
-	    onClick: null
-	};
-	
-	/**
-	 * Ripple component
-	 * @class
-	 */
-	
-	var Ripple = function (_React$Component2) {
-	    _inherits(Ripple, _React$Component2);
-	
-	    function Ripple() {
-	        _classCallCheck(this, Ripple);
-	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Ripple).apply(this, arguments));
-	    }
-	
-	    _createClass(Ripple, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var _this3 = this;
-	
-	            // trigger teardown in 2 sec
-	            this.teardownTimer = setTimeout(function () {
-	                var fn = _this3.props.onTeardown;
-	                fn && fn();
-	            }, 2000);
-	        }
-	    }, {
-	        key: 'componentWillUnmount',
-	        value: function componentWillUnmount() {
-	            // clear timeout
-	            clearTimeout(this.teardownTimer);
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var diameter = this.props.diameter,
-	                radius = diameter / 2;
-	
-	            var style = {
-	                height: diameter,
-	                width: diameter,
-	                top: this.props.yPos - radius || 0,
-	                left: this.props.xPos - radius || 0
-	            };
-	
-	            return _react2.default.createElement('div', { className: this.props.colorClass, style: style });
-	        }
-	    }]);
-	
-	    return Ripple;
-	}(_react2.default.Component);
-	
-	Ripple.propTypes = {
-	    xPos: PropTypes.number,
-	    yPos: PropTypes.number,
-	    diameter: PropTypes.number,
-	    onTeardown: PropTypes.func
-	};
-	
-	Ripple.defaultProps = {
-	    xPos: 0,
-	    yPos: 0,
-	    diameter: 0,
-	    onTeardown: null
-	};
-	
-	/** Define module API */
-	exports.default = FlatRippleButton;
-
-/***/ },
-/* 262 */
-/*!***************************************************!*\
-  !*** ./src/client/app/views/commissions-page.jsx ***!
-  \***************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _authService = __webpack_require__(/*! ../services/auth-service */ 229);
-	
-	var _authService2 = _interopRequireDefault(_authService);
-	
-	var _strings = __webpack_require__(/*! ../constants/strings */ 238);
-	
-	var _table = __webpack_require__(/*! ./table.jsx */ 260);
-	
-	var _table2 = _interopRequireDefault(_table);
-	
-	var _dropdown = __webpack_require__(/*! muicss/lib/react/dropdown */ 246);
-	
-	var _dropdown2 = _interopRequireDefault(_dropdown);
-	
-	var _dropdownItem = __webpack_require__(/*! muicss/lib/react/dropdown-item */ 248);
-	
-	var _dropdownItem2 = _interopRequireDefault(_dropdownItem);
-	
-	var _button = __webpack_require__(/*! muicss/lib/react/button */ 241);
-	
-	var _button2 = _interopRequireDefault(_button);
-	
-	var _reactDatepicker = __webpack_require__(/*! react-datepicker */ 263);
-	
-	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-	
-	var _reactDropzone = __webpack_require__(/*! react-dropzone */ 368);
-	
-	var _reactDropzone2 = _interopRequireDefault(_reactDropzone);
-	
-	var _textBox = __webpack_require__(/*! ./text-box.jsx */ 369);
-	
-	var _textBox2 = _interopRequireDefault(_textBox);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var moment = __webpack_require__(/*! react-datepicker/~/moment */ 264);
-	
-	var companyNames = ["כלל", "מנורה", "הראל", "אלטשולר שחם", "ילין לפידות", "מיטב דש"];
-	
-	var FileBin = function (_React$Component) {
-	    _inherits(FileBin, _React$Component);
-	
-	    function FileBin(props) {
-	        _classCallCheck(this, FileBin);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FileBin).call(this, props));
-	
-	        _this.state = {
-	            selectedCompany: "כלל",
-	            date: moment(),
-	            files: null,
-	            note: "בדיקה"
-	        };
-	
-	        return _this;
-	    }
-	
-	    _createClass(FileBin, [{
-	        key: 'onCompanyNameChange',
-	        value: function onCompanyNameChange(item) {
-	            if (item.props.value != this.state.selectedCompany) {
-	                this.state.selectedCompany = item.props.value;
-	                this.setState(this.state);
-	            }
-	        }
-	    }, {
-	        key: 'handleChange',
-	        value: function handleChange(date) {
-	            this.state.date = date;
-	            this.setState(this.state);
-	        }
-	    }, {
-	        key: 'onDrop',
-	        value: function onDrop(files) {
-	            console.log('Received files: ', files);
-	            this.state.files = files;
-	            this.setState(this.state);
-	        }
-	    }, {
-	        key: 'onUploadFile',
-	        value: function onUploadFile() {
-	            var formData = new FormData();
-	            for (var i = 0; i < this.state.files.length; i++) {
-	                formData.append('file', this.state.files[i]);
-	            }
-	            // now post a new XHR request
-	            var xhr = new XMLHttpRequest();
-	            xhr.open('POST', '/commissions/upload');
-	            xhr.onload = function () {
-	                if (xhr.status === 200) {
-	                    console.log('all done: ' + xhr.status);
-	                } else {
-	                    console.log('Something went terribly wrong...');
-	                }
-	            };
-	            xhr.send(formData);
-	        }
-	    }, {
-	        key: 'onEditFiles',
-	        value: function onEditFiles() {
-	            this.context.router.push('/app/commissions/edit-files');
-	        }
-	    }, {
-	        key: 'onFileNoteBlur',
-	        value: function onFileNoteBlur(e) {
-	            console.log(e.target.value);
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	
-	            var companies = [];
-	            for (var i = 0; i < companyNames.length; i++) {
-	                companies.push(_react2.default.createElement(
-	                    _dropdownItem2.default,
-	                    { onClick: this.onCompanyNameChange.bind(this), value: companyNames[i], key: i },
-	                    companyNames[i]
-	                ));
-	            }
-	
-	            var style = {
-	                backgroundColor: 'transparent',
-	                color: '#505050'
-	            };
-	
-	            var activeStyle = {
-	                backgroundColor: 'rgba(66, 134, 180, 0.15)'
-	            };
-	
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'commissions-page-file-bin shadow' },
-	                _react2.default.createElement(
-	                    _reactDropzone2.default,
-	                    { onDrop: this.onDrop.bind(this), className: 'commissions-page-file-bin-drag-area', style: style, activeStyle: activeStyle },
-	                    _react2.default.createElement(
-	                        'strong',
-	                        null,
-	                        _strings.strings.dragFileHere
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'hcontainer-no-wrap' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'commissions-page-file-bin-settings hcontainer-no-wrap' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'commissions-page-file-bin-settings-text' },
-	                            _strings.strings.companyAssignment
-	                        ),
-	                        _react2.default.createElement(
-	                            _dropdown2.default,
-	                            { label: this.state.selectedCompany, alignMenu: 'right', variant: 'raised' },
-	                            companies
-	                        ),
-	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'commissions-page-file-bin-settings-text' },
-	                            _strings.strings.paymentMonth
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'commissions-page-file-bin-settings-date' },
-	                            _react2.default.createElement(_reactDatepicker2.default, { selected: this.state.date, locale: 'he-IL', onChange: this.handleChange.bind(this) })
-	                        ),
-	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'commissions-page-file-bin-settings-text' },
-	                            _strings.strings.notes
-	                        ),
-	                        _react2.default.createElement('textarea', { className: 'commissions-page-file-note',
-	                            value: this.state.notes,
-	                            onBlur: this.onFileNoteBlur.bind(this) }),
-	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                        _react2.default.createElement(
-	                            _button2.default,
-	                            { className: 'shadow', onClick: this.onUploadFile.bind(this), color: 'primary' },
-	                            _strings.strings.uploadFile
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'commissions-page-file-bin-settings-edit-files-container' },
-	                        _react2.default.createElement(
-	                            _button2.default,
-	                            { className: 'shadow', onClick: this.onEditFiles.bind(this) },
-	                            _strings.strings.editFiles
-	                        )
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return FileBin;
-	}(_react2.default.Component);
-	
-	//Important!! This adds the router object to context
-	
-	
-	FileBin.contextTypes = {
-	    router: _react2.default.PropTypes.object.isRequired
-	};
-	
-	var Commissions = function (_React$Component2) {
-	    _inherits(Commissions, _React$Component2);
-	
-	    function Commissions(props) {
-	        _classCallCheck(this, Commissions);
-	
-	        var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(Commissions).call(this, props));
-	
-	        _this2.state = {
-	            loginData: _authService2.default.getLoginData()
-	        };
-	
-	        return _this2;
-	    }
-	
-	    _createClass(Commissions, [{
-	        key: 'render',
-	        value: function render() {
-	
-	            var columns = [{
-	                title: "חברה",
-	                key: "companyName",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "סוג תשלום",
-	                key: "paymentType",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "מספר סוכן",
-	                key: "agentNumber",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "שם סוכן",
-	                key: "agentName",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "סה״כ תשלום",
-	                key: "totalPayment",
-	                width: "col-33-33",
-	                type: 'read-only-currency',
-	                color: 'normal'
-	            }, {
-	                title: "סה״כ גודל תיק",
-	                key: "totalInvestments",
-	                width: "col-33-33",
-	                type: 'read-only-currency',
-	                color: 'normal'
-	            }, {
-	                title: "חודש שכר",
-	                key: "paymentMonth",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "תאריך העלאת קובץ",
-	                key: "date",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }];
-	
-	            var data = [{ companyName: "מגדל", paymentType: "היקף", agentNumber: "2342234523", agentName: "קרין בוזלי לוי", totalPayment: "23423", totalInvestments: "12342232", paymentMonth: "04/16", date: "05/11/2016" }, { companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "אלטשולר שחם", paymentType: "בונוס", agentNumber: "67868", agentName: "לנצמן", totalPayment: "5675", totalInvestments: "34234535", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "מנורה", paymentType: "גמ״ח", agentNumber: "789565", agentName: "לירון בן ציון", totalPayment: "4562", totalInvestments: "78768657", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "ילין לפידות", paymentType: "היקף", agentNumber: "345654", agentName: "ויטלי", totalPayment: "6786", totalInvestments: "3453453", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "ילין לפידות", paymentType: "היקף", agentNumber: "345654", agentName: "ויטלי", totalPayment: "6786", totalInvestments: "3453453", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "מנורה", paymentType: "גמ״ח", agentNumber: "789565", agentName: "לירון בן ציון", totalPayment: "4562", totalInvestments: "78768657", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "ילין לפידות", paymentType: "היקף", agentNumber: "345654", agentName: "ויטלי", totalPayment: "6786", totalInvestments: "3453453", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "אלטשולר שחם", paymentType: "בונוס", agentNumber: "67868", agentName: "לנצמן", totalPayment: "5675", totalInvestments: "34234535", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "מנורה", paymentType: "גמ״ח", agentNumber: "789565", agentName: "לירון בן ציון", totalPayment: "4562", totalInvestments: "78768657", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "מגדל", paymentType: "היקף", agentNumber: "2342234523", agentName: "קרין בוזלי לוי", totalPayment: "23423", totalInvestments: "12342232", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "אלטשולר שחם", paymentType: "בונוס", agentNumber: "67868", agentName: "לנצמן", totalPayment: "5675", totalInvestments: "34234535", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "מנורה", paymentType: "גמ״ח", agentNumber: "789565", agentName: "לירון בן ציון", totalPayment: "4562", totalInvestments: "78768657", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "ילין לפידות", paymentType: "היקף", agentNumber: "345654", agentName: "ויטלי", totalPayment: "6786", totalInvestments: "3453453", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016" }];
-	
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'commissions-page animated fadeIn' },
-	                _react2.default.createElement(FileBin, null),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'commissions-page-table shadow' },
-	                    _react2.default.createElement(_table2.default, { columns: columns,
-	                        data: data })
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return Commissions;
-	}(_react2.default.Component);
-	
-	//Important!! This adds the router object to context
-	
-	
-	Commissions.contextTypes = {
-	    router: _react2.default.PropTypes.object.isRequired
-	};
-	
-	exports.default = Commissions;
-
-/***/ },
+/* 260 */,
+/* 261 */,
+/* 262 */,
 /* 263 */
 /*!*********************************************************!*\
   !*** ./~/react-datepicker/dist/react-datepicker.min.js ***!
@@ -50284,386 +48357,8 @@
 	//# sourceMappingURL=index.js.map
 
 /***/ },
-/* 369 */
-/*!*******************************************!*\
-  !*** ./src/client/app/views/text-box.jsx ***!
-  \*******************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var TextBox = function (_React$Component) {
-	    _inherits(TextBox, _React$Component);
-	
-	    function TextBox(props) {
-	        _classCallCheck(this, TextBox);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TextBox).call(this, props));
-	
-	        _this.state = {
-	            notes: _this.props.value
-	        };
-	        return _this;
-	    }
-	
-	    _createClass(TextBox, [{
-	        key: "componentDidMount",
-	        value: function componentDidMount() {
-	            //var maxRowCount = this.props.maxRowCount;
-	            //var id = "#"+this.props.id;
-	            //$(function ()
-	            //{
-	            //    var lines = maxRowCount;
-	            //    $(id).keydown(function(e)
-	            //    {
-	            //        var newLines = $(this).val().split("\n").length;
-	            //        if(e.keyCode == 13 && newLines >= lines)
-	            //            return false;
-	            //    });
-	            //});
-	        }
-	    }, {
-	        key: "onBlur",
-	        value: function onBlur(event) {
-	            event.preventDefault();
-	            if (this.props.onBlur != null) /*&& (event.target.value != this.state.value)*/{
-	                    this.props.onBlur(event.target.value);
-	                }
-	        }
-	    }, {
-	        key: "onChange",
-	        value: function onChange(event) {
-	            event.preventDefault();
-	            this.setState({ notes: event.target.value });
-	        }
-	    }, {
-	        key: "render",
-	        value: function render() {
-	            var rowHeight = 22;
-	            var textBoxStyle = { height: 2 * rowHeight + 4 };
-	
-	            return _react2.default.createElement(
-	                "div",
-	                null,
-	                _react2.default.createElement(
-	                    "form",
-	                    null,
-	                    _react2.default.createElement(
-	                        "label",
-	                        null,
-	                        this.props.title,
-	                        _react2.default.createElement("textarea", { style: textBoxStyle,
-	                            className: "text-box",
-	                            id: this.props.id,
-	                            value: this.state.notes,
-	                            onChange: this.onChange,
-	                            onBlur: this.onBlur })
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return TextBox;
-	}(_react2.default.Component);
-	
-	exports.default = TextBox;
-
-/***/ },
-/* 370 */
-/*!***************************************************************!*\
-  !*** ./src/client/app/views/agents-and-partnerships-page.jsx ***!
-  \***************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _authService = __webpack_require__(/*! ../services/auth-service */ 229);
-	
-	var _authService2 = _interopRequireDefault(_authService);
-	
-	var _tabs = __webpack_require__(/*! muicss/lib/react/tabs */ 371);
-	
-	var _tabs2 = _interopRequireDefault(_tabs);
-	
-	var _tab = __webpack_require__(/*! muicss/lib/react/tab */ 372);
-	
-	var _tab2 = _interopRequireDefault(_tab);
-	
-	var _strings = __webpack_require__(/*! ../constants/strings */ 238);
-	
-	var _button = __webpack_require__(/*! muicss/lib/react/button */ 241);
-	
-	var _button2 = _interopRequireDefault(_button);
-	
-	var _table = __webpack_require__(/*! ./table.jsx */ 260);
-	
-	var _table2 = _interopRequireDefault(_table);
-	
-	var _dataStore = __webpack_require__(/*! ../stores/data-store */ 373);
-	
-	var _dataStore2 = _interopRequireDefault(_dataStore);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var AgentsAndPartnerships = function (_React$Component) {
-	    _inherits(AgentsAndPartnerships, _React$Component);
-	
-	    function AgentsAndPartnerships(props) {
-	        _classCallCheck(this, AgentsAndPartnerships);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AgentsAndPartnerships).call(this, props));
-	
-	        _this.state = {
-	            loginData: _authService2.default.getLoginData(),
-	            selectedTab: 0,
-	            agentsData: _dataStore2.default.getAgents(),
-	            partnershipsData: _dataStore2.default.getPartnerships()
-	        };
-	        return _this;
-	    }
-	
-	    _createClass(AgentsAndPartnerships, [{
-	        key: 'onNewAgent',
-	        value: function onNewAgent() {
-	            this.context.router.push('/app/agents-and-partnerships/agent-page/new');
-	        }
-	    }, {
-	        key: 'onNewPartnership',
-	        value: function onNewPartnership() {
-	            this.context.router.push('/app/agents-and-partnerships/partnership-page/new');
-	        }
-	    }, {
-	        key: 'onChangeTab',
-	        value: function onChangeTab(i, value, tab, ev) {
-	            this.state.selectedTab = i;
-	            this.setState(this.state);
-	            console.log(arguments);
-	        }
-	    }, {
-	        key: 'onAgentClicked',
-	        value: function onAgentClicked(rowIndex) {
-	            var agentId = this.state.agentsData[rowIndex].idNumber;
-	            this.context.router.push('/app/agents-and-partnerships/agent-page/' + agentId);
-	        }
-	    }, {
-	        key: 'onPartnershipClicked',
-	        value: function onPartnershipClicked(rowIndex) {
-	            //var agentId = this.state.agentsData[rowIndex].idNumber
-	            this.context.router.push('/app/agents-and-partnerships/partnership-page/new');
-	        }
-	    }, {
-	        key: 'onDeleteAgentClicked',
-	        value: function onDeleteAgentClicked(rowIndex) {
-	            console.log("onDeleteAgentClicked " + rowIndex);
-	        }
-	    }, {
-	        key: 'onEditAgentClicked',
-	        value: function onEditAgentClicked(rowIndex) {
-	            console.log("onEditAgentClicked " + rowIndex);
-	        }
-	    }, {
-	        key: 'onDeletePartnershipsClicked',
-	        value: function onDeletePartnershipsClicked(rowIndex) {
-	            console.log("onDeletePartnershipsClicked " + rowIndex);
-	        }
-	    }, {
-	        key: 'onEditPartnershipsClicked',
-	        value: function onEditPartnershipsClicked(rowIndex) {
-	            console.log("onEditPartnershipsClicked " + rowIndex);
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	
-	            var agentsColumns = [{
-	                title: "שם",
-	                key: "name",
-	                width: "col-33-33",
-	                type: 'read-only-button',
-	                color: 'blue',
-	                action: this.onAgentClicked.bind(this)
-	            }, {
-	                title: "מזהה",
-	                key: "idNumber",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "סטטוס",
-	                key: "status",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "פעולות",
-	                key: "actions",
-	                width: "col-33-33",
-	                type: 'action',
-	                color: 'normal'
-	            }];
-	
-	            var deleteAgentAction = { name: "מחיקה", action: this.onDeleteAgentClicked.bind(this), color: "red" };
-	            var editAgentAction = { name: "עריכה", action: this.onEditAgentClicked.bind(this), color: "blue" };
-	            var agentsData = [];
-	            for (var agentIndex = 0; agentIndex < this.state.agentsData.length; agentIndex++) {
-	                var agentData = {};
-	
-	                agentData["name"] = this.state.agentsData[agentIndex].name + " " + this.state.agentsData[agentIndex].familyName;
-	                agentData["idNumber"] = this.state.agentsData[agentIndex].idNumber;
-	                agentData["status"] = this.state.agentsData[agentIndex].active ? "פעיל" : "לא פעיל";
-	                agentData["actions"] = [editAgentAction, deleteAgentAction];
-	                agentsData.push(agentData);
-	            }
-	
-	            var partnershipColumns = [{
-	                title: "שותפים",
-	                key: "names",
-	                width: "col-33-33",
-	                type: 'read-only-button',
-	                color: 'blue',
-	                action: this.onPartnershipClicked.bind(this)
-	            }, {
-	                title: "מזהה",
-	                key: "idNumbers",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "סטטוס",
-	                key: "status",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "פעולות",
-	                key: "actions",
-	                width: "col-33-33",
-	                type: 'action',
-	                color: 'normal'
-	            }];
-	
-	            var deletePartnershipsDataAction = { name: "מחיקה", action: this.onDeletePartnershipsClicked.bind(this), color: "red" };
-	            var editPartnershipsAction = { name: "עריכה", action: this.onEditPartnershipsClicked.bind(this), color: "blue" };
-	            var partnershipsData = [];
-	            for (var partnershipIndex = 0; partnershipIndex < this.state.partnershipsData.length; partnershipIndex++) {
-	                var partnershipData = {};
-	                partnershipData["names"] = "";
-	                partnershipData["idNumbers"] = "";
-	                for (var idIndex = 0; idIndex < this.state.partnershipsData[partnershipIndex].partnersId.length; idIndex++) {
-	                    agentData = _dataStore2.default.getAgent(this.state.partnershipsData[partnershipIndex].partnersId[idIndex]);
-	                    if (agentData != null) {
-	                        partnershipData["names"] += agentData.name + " " + agentData.familyName;
-	                        partnershipData["idNumbers"] += agentData.idNumber;
-	                        if (idIndex < this.state.partnershipsData[partnershipIndex].partnersId.length - 1) {
-	                            partnershipData["names"] += ", ";
-	                            partnershipData["idNumbers"] += ", ";
-	                        }
-	                    }
-	                }
-	                partnershipData["status"] = this.state.partnershipsData[partnershipIndex].active ? "פעיל" : "לא פעיל";
-	                partnershipData["actions"] = [editPartnershipsAction, deletePartnershipsDataAction];
-	                partnershipsData.push(partnershipData);
-	            }
-	
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'agents-page animated fadeIn' },
-	                _react2.default.createElement(
-	                    _tabs2.default,
-	                    { onChange: this.onChangeTab.bind(this), justified: true, initialSelectedIndex: this.state.selectedTab },
-	                    _react2.default.createElement(
-	                        _tab2.default,
-	                        { value: 'pane-1', label: _strings.strings.agents },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'agents-page-tab-container' },
-	                            _react2.default.createElement('div', { className: 'agents-page-vertical-spacer' }),
-	                            _react2.default.createElement(
-	                                _button2.default,
-	                                { className: 'shadow', onClick: this.onNewAgent.bind(this), color: 'primary' },
-	                                _strings.strings.newAgent
-	                            ),
-	                            _react2.default.createElement('div', { className: 'agents-page-vertical-spacer' }),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'agents-page-table' },
-	                                _react2.default.createElement(_table2.default, { columns: agentsColumns, data: agentsData })
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        _tab2.default,
-	                        { value: 'pane-2', label: _strings.strings.partnerships },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'agents-page-tab-container' },
-	                            _react2.default.createElement('div', { className: 'agents-page-vertical-spacer' }),
-	                            _react2.default.createElement(
-	                                _button2.default,
-	                                { className: 'shadow', onClick: this.onNewPartnership.bind(this), color: 'primary' },
-	                                _strings.strings.newPartnership
-	                            ),
-	                            _react2.default.createElement('div', { className: 'agents-page-vertical-spacer' }),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'agents-page-table' },
-	                                _react2.default.createElement(_table2.default, { columns: partnershipColumns, data: partnershipsData })
-	                            )
-	                        )
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return AgentsAndPartnerships;
-	}(_react2.default.Component);
-	
-	//Important!! This adds the router object to context
-	
-	
-	AgentsAndPartnerships.contextTypes = {
-	    router: _react2.default.PropTypes.object.isRequired
-	};
-	
-	exports.default = AgentsAndPartnerships;
-
-/***/ },
+/* 369 */,
+/* 370 */,
 /* 371 */
 /*!************************************!*\
   !*** ./~/muicss/lib/react/tabs.js ***!
@@ -50934,6 +48629,11 @@
 	        var files = [{ fileName: "ילין לפידות.xlsx", companyName: "ילין לפידות", paymentMonth: "04/16", uploadDate: "01/04/16", notes: "במבה קטנה" }, { fileName: "ילין לפידות.xlsx", companyName: "ילין לפידות", paymentMonth: "04/16", uploadDate: "01/04/16", notes: "במבה קטנה ויפה" }, { fileName: "ילין לפידות.xlsx", companyName: "ילין לפידות", paymentMonth: "04/16", uploadDate: "01/04/16", notes: "במבה קטנה ושמנמנה" }];
 	        _this.initialize('files', files);
 	
+	        //defaults
+	        //nifraim - 70(agent) 30(company)
+	        //heikef - 55(agent) 45(company)
+	        //bonus - 50(agent) 50(company)
+	
 	        var agents = [{
 	            name: "קרין",
 	            familyName: "בוזלי לוי",
@@ -50942,7 +48642,7 @@
 	            faxNumber: "0521510677",
 	            email: "karin@neto-finance.co.il",
 	            active: true,
-	            companies: [{ companyName: "מגדל", agentNumber: "2342234523", paymentType: "נפרעים", agentPart: "55%", agencyPart: "45%" }, { companyName: "אלטשולר שחם", agentNumber: "234234", paymentType: "היקף", agentPart: "55%", agencyPart: "45%" }, { companyName: "מנורה", agentNumber: "789565", paymentType: "בונוס", agentPart: "55%", agencyPart: "45%" }]
+	            companies: [{ companyName: "מגדל", agentNumber: "2342234523", paymentType: "נפרעים", agentPart: "55", agencyPart: "45" }, { companyName: "אלטשולר שחם", agentNumber: "234234", paymentType: "היקף", agentPart: "55", agencyPart: "45" }, { companyName: "מנורה", agentNumber: "789565", paymentType: "בונוס", agentPart: "55", agencyPart: "45" }]
 	        }, {
 	            name: "עידן",
 	            familyName: "כץ",
@@ -50951,16 +48651,26 @@
 	            faxNumber: "048323746",
 	            email: "idan@neto-finance.co.il",
 	            active: true,
-	            companies: [{ companyName: "מגדל", agentNumber: "57546", paymentType: "נפרעים", agentPart: "55%", agencyPart: "45%" }, { companyName: "אלטשולר שחם", agentNumber: "231", paymentType: "היקף", agentPart: "55%", agencyPart: "45%" }, { companyName: "כלל", agentNumber: "6865", paymentType: "היקף", agentPart: "55%", agencyPart: "45%" }, { companyName: "מנורה", agentNumber: "9789", paymentType: "בונוס", agentPart: "55%", agencyPart: "45%" }]
+	            companies: [{ companyName: "מגדל", agentNumber: "57546", paymentType: "נפרעים", agentPart: "55", agencyPart: "45" }, { companyName: "אלטשולר שחם", agentNumber: "231", paymentType: "היקף", agentPart: "55", agencyPart: "45" }, { companyName: "כלל", agentNumber: "6865", paymentType: "היקף", agentPart: "55", agencyPart: "45" }, { companyName: "מנורה", agentNumber: "9789", paymentType: "בונוס", agentPart: "55", agencyPart: "45" }]
 	        }, {
 	            name: "תומר",
-	            familyName: "משהו",
+	            familyName: "כהן",
 	            idNumber: "22343452",
 	            phoneNumber: "0546747636",
 	            faxNumber: "049324232",
 	            email: "tomer@neto-finance.co.il",
 	            active: false,
-	            companies: [{ companyName: "מגדל", agentNumber: "54633", paymentType: "נפרעים", agentPart: "55%", agencyPart: "45%" }, { companyName: "אלטשולר שחם", agentNumber: "2342", paymentType: "היקף", agentPart: "55%", agencyPart: "45%" }, { companyName: "מנורה", agentNumber: "678678", paymentType: "בונוס", agentPart: "55%", agencyPart: "45%" }]
+	            companies: [{ companyName: "מגדל", agentNumber: "54633", paymentType: "נפרעים", agentPart: "55", agencyPart: "45" }, { companyName: "אלטשולר שחם", agentNumber: "2342", paymentType: "היקף", agentPart: "55", agencyPart: "45" }, { companyName: "מנורה", agentNumber: "678678", paymentType: "בונוס", agentPart: "55", agencyPart: "45" }]
+	        }, {
+	            name: "חומוס",
+	            familyName: "משאושה",
+	            idNumber: "67865443",
+	            phoneNumber: "",
+	            faxNumber: "049324232",
+	            email: "tomer@neto-finance.co.il",
+	            active: false,
+	            companies: null
+	
 	        }];
 	        _this.initialize('agents', agents);
 	
@@ -51278,406 +48988,8 @@
 	exports.default = Store;
 
 /***/ },
-/* 375 */
-/*!**************************************************!*\
-  !*** ./src/client/app/views/edit-files-page.jsx ***!
-  \**************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _authService = __webpack_require__(/*! ../services/auth-service */ 229);
-	
-	var _authService2 = _interopRequireDefault(_authService);
-	
-	var _table = __webpack_require__(/*! ./table.jsx */ 260);
-	
-	var _table2 = _interopRequireDefault(_table);
-	
-	var _appActions = __webpack_require__(/*! ../actions/app-actions */ 232);
-	
-	var _appActions2 = _interopRequireDefault(_appActions);
-	
-	var _dataStore = __webpack_require__(/*! ../stores/data-store */ 373);
-	
-	var _dataStore2 = _interopRequireDefault(_dataStore);
-	
-	var _appActions3 = __webpack_require__(/*! ../actions/app-actions.js */ 232);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var EditFilesPage = function (_React$Component) {
-	    _inherits(EditFilesPage, _React$Component);
-	
-	    function EditFilesPage(props) {
-	        _classCallCheck(this, EditFilesPage);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(EditFilesPage).call(this, props));
-	
-	        _this.state = {
-	            loginData: _authService2.default.getLoginData(),
-	            filesData: _dataStore2.default.getCommissionFiles()
-	        };
-	        return _this;
-	    }
-	
-	    _createClass(EditFilesPage, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            _dataStore2.default.addEventListener(_appActions3.ActionType.DELETE_COMMISSION_DOC, this.onDeleteFile.bind(this));
-	        }
-	    }, {
-	        key: 'componentWillUnmount',
-	        value: function componentWillUnmount() {
-	            _dataStore2.default.removeEventListener(_appActions3.ActionType.DELETE_COMMISSION_DOC, this.onDeleteFile);
-	        }
-	    }, {
-	        key: 'onDeleteFile',
-	        value: function onDeleteFile() {
-	            this.state.filesData = _dataStore2.default.getCommissionFiles();
-	            this.setState(this.state);
-	        }
-	    }, {
-	        key: 'onDeleteFileClicked',
-	        value: function onDeleteFileClicked(rowIndex) {
-	            console.log("delete file at row " + rowIndex);
-	
-	            var deleteInProgress = false;
-	            if (deleteInProgress) return;
-	
-	            var fileName = this.state.filesData[rowIndex].fileName;
-	
-	            swal({
-	                title: "אישור מחיקת מסמך",
-	                text: "למחוק מסמך זה לצמיתות מהמערכת?",
-	                type: "warning",
-	                showCancelButton: true,
-	                confirmButtonColor: "#DD6B55",
-	                confirmButtonText: "כן, מחק את המסמך מהמערכת",
-	                cancelButtonText: "בטל",
-	                closeOnConfirm: false,
-	                showLoaderOnConfirm: false
-	            }, function (isConfirm) {
-	                if (isConfirm) {
-	                    _appActions2.default.deleteCommissionFile(fileName, function (status) {
-	                        if (status == 'success') {
-	                            swal({
-	                                title: "",
-	                                text: "המסמך נמחק לצמיתות מהמערכת!",
-	                                type: "success",
-	                                timer: 1500,
-	                                showConfirmButton: false
-	                            });
-	                            console.log('Data was deleted successfully from server!');
-	                        } else console.error('Error while deleting data from server!');
-	                        deleteInProgress = true;
-	                    });
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'onDownloadFileClicked',
-	        value: function onDownloadFileClicked(rowIndex) {
-	            console.log("download file at row " + rowIndex);
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	
-	            var columns = [{
-	                title: "שם קובץ",
-	                key: "fileName",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "חברה",
-	                key: "companyName",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "חודש תשלום",
-	                key: "paymentMonth",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "תאריך העלאה",
-	                key: "uploadDate",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "הערות",
-	                key: "notes",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "פעולות",
-	                key: "actions",
-	                width: "col-33-33",
-	                type: 'action',
-	                color: 'normal'
-	            }];
-	
-	            var deleteAction = { name: "מחיקה", action: this.onDeleteFileClicked.bind(this), color: "red" };
-	            var downloadAction = { name: "הורדה", action: this.onDownloadFileClicked.bind(this), color: "blue" };
-	
-	            var filesData = [];
-	            for (var file = 0; file < this.state.filesData.length; file++) {
-	                var fileData = this.state.filesData[file];
-	                fileData["actions"] = [downloadAction, deleteAction];
-	                filesData.push(fileData);
-	            }
-	
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'edit-files-page animated fadeIn' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'edit-files-table shadow' },
-	                    _react2.default.createElement(_table2.default, { columns: columns, data: filesData })
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return EditFilesPage;
-	}(_react2.default.Component);
-	
-	//Important!! This adds the router object to context
-	
-	
-	EditFilesPage.contextTypes = {
-	    router: _react2.default.PropTypes.object.isRequired
-	};
-	
-	exports.default = EditFilesPage;
-
-/***/ },
-/* 376 */
-/*!*********************************************!*\
-  !*** ./src/client/app/views/agent-page.jsx ***!
-  \*********************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _table = __webpack_require__(/*! ./table.jsx */ 260);
-	
-	var _table2 = _interopRequireDefault(_table);
-	
-	var _appActions = __webpack_require__(/*! ../actions/app-actions */ 232);
-	
-	var _appActions2 = _interopRequireDefault(_appActions);
-	
-	var _dataStore = __webpack_require__(/*! ../stores/data-store */ 373);
-	
-	var _dataStore2 = _interopRequireDefault(_dataStore);
-	
-	var _appActions3 = __webpack_require__(/*! ../actions/app-actions.js */ 232);
-	
-	var _input = __webpack_require__(/*! muicss/lib/react/input */ 377);
-	
-	var _input2 = _interopRequireDefault(_input);
-	
-	var _strings = __webpack_require__(/*! ../constants/strings */ 238);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var AgentPage = function (_React$Component) {
-	    _inherits(AgentPage, _React$Component);
-	
-	    function AgentPage(props) {
-	        _classCallCheck(this, AgentPage);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AgentPage).call(this, props));
-	
-	        var newAgent = _this.props.params.agentId == "new";
-	        _this.state = {
-	            newAgent: newAgent,
-	            agentData: null
-	        };
-	        return _this;
-	    }
-	
-	    _createClass(AgentPage, [{
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            this.state.newAgent = nextProps.params.agentId == "new";
-	            this.setState(this.state);
-	        }
-	    }, {
-	        key: 'componentWillMount',
-	        value: function componentWillMount() {
-	            if (this.state.newAgent == false) {
-	                this.state.agentData = _dataStore2.default.getAgent(this.props.params.agentId);
-	            }
-	        }
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {}
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	
-	            var columns = [{
-	                title: "חברה",
-	                key: "companyName",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "מספר סוכן",
-	                key: "agentNumber",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "סוג תשלום",
-	                key: "paymentType",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "חלק סוכן",
-	                key: "agentPart",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "חלק סוכנות",
-	                key: "agencyPart",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }];
-	
-	            var name = "",
-	                familyName = "",
-	                idNumber = "",
-	                phoneNumber = "",
-	                faxNumber = "",
-	                email = "",
-	                active = "",
-	                companies = null;
-	            if (this.state.newAgent == false) {
-	                name = this.state.agentData.name;
-	                familyName = this.state.agentData.familyName;
-	                idNumber = this.state.agentData.idNumber;
-	                phoneNumber = this.state.agentData.phoneNumber;
-	                faxNumber = this.state.agentData.faxNumber;
-	                email = this.state.agentData.email;
-	                active = this.state.agentData.active;
-	                companies = this.state.agentData.companies;
-	            }
-	
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'new-agent-page animated fadeIn' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'new-agent-page-title' },
-	                    _strings.strings.agentPageDetails
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'new-agent-form hcontainer-no-wrap' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'new-agent-form-item-box' },
-	                        _react2.default.createElement(_input2.default, { label: _strings.strings.agentPageName, defaultValue: name, floatingLabel: true })
-	                    ),
-	                    _react2.default.createElement('div', { className: 'new-agent-form-horizontal-spacer' }),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'new-agent-form-item-box' },
-	                        _react2.default.createElement(_input2.default, { label: _strings.strings.agentPageFamilyName, defaultValue: familyName, floatingLabel: true })
-	                    ),
-	                    _react2.default.createElement('div', { className: 'new-agent-form-horizontal-spacer' }),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'new-agent-form-item-box' },
-	                        _react2.default.createElement(_input2.default, { label: _strings.strings.agentPageId, defaultValue: idNumber, floatingLabel: true })
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'new-agent-form hcontainer-no-wrap' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'new-agent-form-item-box' },
-	                        _react2.default.createElement(_input2.default, { label: _strings.strings.agentPagePhone, defaultValue: phoneNumber, floatingLabel: true })
-	                    ),
-	                    _react2.default.createElement('div', { className: 'new-agent-form-horizontal-spacer' }),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'new-agent-form-item-box' },
-	                        _react2.default.createElement(_input2.default, { label: _strings.strings.agentPageFax, defaultValue: faxNumber, floatingLabel: true })
-	                    ),
-	                    _react2.default.createElement('div', { className: 'new-agent-form-horizontal-spacer' }),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'new-agent-form-item-box' },
-	                        _react2.default.createElement(_input2.default, { label: _strings.strings.agentPageEmail, defaultValue: email, floatingLabel: true })
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'new-agent-form-table' },
-	                    _react2.default.createElement(_table2.default, { columns: columns, data: companies })
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return AgentPage;
-	}(_react2.default.Component);
-	
-	//Important!! This adds the router object to context
-	
-	
-	AgentPage.contextTypes = {
-	    router: _react2.default.PropTypes.object.isRequired
-	};
-	
-	exports.default = AgentPage;
-
-/***/ },
+/* 375 */,
+/* 376 */,
 /* 377 */
 /*!*************************************!*\
   !*** ./~/muicss/lib/react/input.js ***!
@@ -52213,7 +49525,7 @@
 	
 	var _strings = __webpack_require__(/*! ../constants/strings */ 238);
 	
-	var _FlatRippleButton = __webpack_require__(/*! ./FlatRippleButton.jsx */ 261);
+	var _FlatRippleButton = __webpack_require__(/*! ./common/FlatRippleButton.jsx */ 386);
 	
 	var _FlatRippleButton2 = _interopRequireDefault(_FlatRippleButton);
 	
@@ -52319,9 +49631,923 @@
 	exports.default = RightPanel;
 
 /***/ },
-/* 383 */
+/* 383 */,
+/* 384 */
+/*!************************************************************!*\
+  !*** ./src/client/app/views/common/FixedWidthDropdown.jsx ***!
+  \************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _button = __webpack_require__(/*! ../../../../../~/muicss/lib/react/button */ 241);
+	
+	var _button2 = _interopRequireDefault(_button);
+	
+	var _caret = __webpack_require__(/*! ../../../../../~/muicss/lib/react/caret */ 247);
+	
+	var _caret2 = _interopRequireDefault(_caret);
+	
+	var _jqLite = __webpack_require__(/*! ../../../../../~/muicss/lib/js/lib/jqLite */ 243);
+	
+	var jqLite = _interopRequireWildcard(_jqLite);
+	
+	var _util = __webpack_require__(/*! ../../../../../~/muicss/lib/js/lib/util */ 244);
+	
+	var util = _interopRequireWildcard(_util);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var PropTypes = _react2.default.PropTypes,
+	    dropdownClass = 'mui-dropdown',
+	    menuClass = 'mui-dropdown__menu',
+	    openClass = 'mui--is-open',
+	    rightClass = 'mui-dropdown__menu--right';
+	
+	/**
+	 * Dropdown constructor
+	 * @class
+	 */
+	
+	var FixedWidthDropdown = function (_React$Component) {
+	    _inherits(FixedWidthDropdown, _React$Component);
+	
+	    function FixedWidthDropdown(props) {
+	        _classCallCheck(this, FixedWidthDropdown);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FixedWidthDropdown).call(this, props));
+	
+	        _this.state = {
+	            opened: false,
+	            menuTop: 0
+	        };
+	
+	        var cb = util.callback;
+	        _this.selectCB = cb(_this, 'select');
+	        _this.onClickCB = cb(_this, 'onClick');
+	        _this.onOutsideClickCB = cb(_this, 'onOutsideClick');
+	        return _this;
+	    }
+	
+	    _createClass(FixedWidthDropdown, [{
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            document.addEventListener('click', this.onOutsideClickCB);
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            document.removeEventListener('click', this.onOutsideClickCB);
+	        }
+	    }, {
+	        key: 'onClick',
+	        value: function onClick(ev) {
+	            // only left clicks
+	            if (ev.button !== 0) return;
+	
+	            // exit if toggle button is disabled
+	            if (this.props.disabled) return;
+	
+	            if (!ev.defaultPrevented) {
+	                this.toggle();
+	
+	                // execute <Dropdown> onClick method
+	                var onClickFn = this.props.onClick;
+	                onClickFn && onClickFn(ev);
+	            }
+	        }
+	    }, {
+	        key: 'toggle',
+	        value: function toggle() {
+	            // exit if no menu element
+	            if (!this.props.children) {
+	                return util.raiseError('Dropdown menu element not found');
+	            }
+	
+	            if (this.state.opened) this.close();else this.open();
+	        }
+	    }, {
+	        key: 'open',
+	        value: function open() {
+	            // position menu element below toggle button
+	            var wrapperRect = this.refs.wrapperEl.getBoundingClientRect(),
+	                toggleRect = void 0;
+	
+	            toggleRect = this.refs.button.refs.buttonEl.getBoundingClientRect();
+	
+	            this.setState({
+	                opened: true,
+	                menuTop: toggleRect.top - wrapperRect.top + toggleRect.height
+	            });
+	        }
+	    }, {
+	        key: 'close',
+	        value: function close() {
+	            this.setState({ opened: false });
+	        }
+	    }, {
+	        key: 'select',
+	        value: function select(ev) {
+	            // onSelect callback
+	            if (this.props.onSelect && ev.target.tagName === 'A') {
+	                this.props.onSelect(ev.target.getAttribute('data-mui-value'));
+	            }
+	
+	            // close menu
+	            if (!ev.defaultPrevented) this.close();
+	        }
+	    }, {
+	        key: 'onOutsideClick',
+	        value: function onOutsideClick(ev) {
+	            var isClickInside = this.refs.wrapperEl.contains(ev.target);
+	            if (!isClickInside) this.close();
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var buttonEl = void 0,
+	                menuEl = void 0,
+	                labelEl = void 0;
+	
+	            // build label
+	            if (jqLite.type(this.props.label) === 'string') {
+	                labelEl = _react2.default.createElement(
+	                    'span',
+	                    null,
+	                    this.props.label,
+	                    ' ',
+	                    _react2.default.createElement(_caret2.default, null)
+	                );
+	            } else {
+	                labelEl = this.props.label;
+	            }
+	
+	            buttonEl = _react2.default.createElement(
+	                _button2.default,
+	                { className: 'fixed-size-button shadow',
+	                    ref: 'button',
+	                    type: 'button',
+	                    onClick: this.onClickCB,
+	                    color: this.props.color,
+	                    variant: this.props.variant,
+	                    size: this.props.size,
+	                    disabled: this.props.disabled
+	                },
+	                labelEl
+	            );
+	
+	            if (this.state.opened) {
+	                var cs = {};
+	
+	                cs[menuClass] = true;
+	                cs[openClass] = this.state.opened;
+	                cs[rightClass] = this.props.alignMenu === 'right';
+	                cs = util.classNames(cs);
+	
+	                menuEl = _react2.default.createElement(
+	                    'ul',
+	                    {
+	                        ref: 'menuEl',
+	                        className: cs,
+	                        style: { top: this.state.menuTop },
+	                        onClick: this.selectCB
+	                    },
+	                    this.props.children
+	                );
+	            }
+	
+	            //let { className, children, onClick, ...other } = this.props;
+	            var _props = this.props;
+	            var className = _props.className;
+	            var children = _props.children;
+	            var onClick = _props.onClick;
+	
+	
+	            return _react2.default.createElement(
+	                'div',
+	                {
+	                    ref: 'wrapperEl',
+	                    className: dropdownClass + ' ' + className
+	                },
+	                buttonEl,
+	                menuEl
+	            );
+	        }
+	    }]);
+	
+	    return FixedWidthDropdown;
+	}(_react2.default.Component);
+	
+	FixedWidthDropdown.propTypes = {
+	    color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),
+	    variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
+	    size: PropTypes.oneOf(['default', 'small', 'large']),
+	    label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+	    alignMenu: PropTypes.oneOf(['left', 'right']),
+	    onClick: PropTypes.func,
+	    onSelect: PropTypes.func,
+	    disabled: PropTypes.bool
+	};
+	
+	FixedWidthDropdown.defaultProps = {
+	    className: '',
+	    color: 'default',
+	    variant: 'default',
+	    size: 'default',
+	    label: '',
+	    alignMenu: 'left',
+	    onClick: null,
+	    onSelect: null,
+	    disabled: false
+	};
+	
+	/** Define module API */
+	exports.default = FixedWidthDropdown;
+
+/***/ },
+/* 385 */
+/*!***********************************************!*\
+  !*** ./src/client/app/views/common/table.jsx ***!
+  \***********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _FlatRippleButton = __webpack_require__(/*! ./FlatRippleButton.jsx */ 386);
+	
+	var _FlatRippleButton2 = _interopRequireDefault(_FlatRippleButton);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var TableCell = function (_React$Component) {
+	    _inherits(TableCell, _React$Component);
+	
+	    function TableCell(props) {
+	        _classCallCheck(this, TableCell);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TableCell).call(this, props));
+	
+	        _this.state = {
+	            value: _this.props.value,
+	            column: _this.props.column
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(TableCell, [{
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            this.setState({
+	                value: nextProps.value,
+	                column: nextProps.column
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var className = "table-cell";
+	            var color = "table-cell-text-color";
+	            //var value = this.props.value;
+	            var node = null;
+	            var action = null;
+	
+	            if (this.state.column.color === "red-green") {
+	                if (parseFloat(this.props.value) >= 0) {
+	                    color = "green";
+	                } else {
+	                    color = "red";
+	                }
+	            }
+	            if (this.state.column.type === "read-only") {
+	                node = _react2.default.createElement(
+	                    'div',
+	                    { className: "table-cell-read-only " + color },
+	                    this.props.value
+	                );
+	            }
+	            if (this.state.column.type === "read-only-currency") {
+	                var value = this.props.value;
+	                value = parseFloat(value.replace(/,/g, "")).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	                value = "₪ " + value;
+	                node = _react2.default.createElement(
+	                    'div',
+	                    { className: "table-cell-read-only " + color },
+	                    value
+	                );
+	            }
+	            if (this.state.column.type === "read-only-percent") {
+	                var value = this.props.value;
+	                value = value + " %";
+	                node = _react2.default.createElement(
+	                    'div',
+	                    { className: "table-cell-read-only " + color },
+	                    value
+	                );
+	            }
+	            if (this.state.column.type === "read-only-button") {
+	                action = this.state.column.action;
+	                className = "table-button " + this.state.column.color;
+	                node = _react2.default.createElement(
+	                    'div',
+	                    { className: "table-cell-read-only " + color },
+	                    _react2.default.createElement(
+	                        'button',
+	                        { className: className, onClick: function (action) {
+	                                action(this.props.rowIndex);
+	                            }.bind(this, action) },
+	                        this.props.value
+	                    )
+	                );
+	            }
+	            return _react2.default.createElement(
+	                'div',
+	                { className: className + " " + this.state.column.width },
+	                node
+	            );
+	        }
+	    }]);
+	
+	    return TableCell;
+	}(_react2.default.Component);
+	
+	var TableRow = function (_React$Component2) {
+	    _inherits(TableRow, _React$Component2);
+	
+	    function TableRow(props) {
+	        _classCallCheck(this, TableRow);
+	
+	        var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(TableRow).call(this, props));
+	
+	        _this2.state = {
+	            data: props.data,
+	            columns: props.columns,
+	            index: props.index,
+	            removableRow: !(props.onRemoveRow == null)
+	        };
+	        return _this2;
+	    }
+	
+	    _createClass(TableRow, [{
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            this.setState({
+	                data: nextProps.data,
+	                columns: nextProps.columns,
+	                index: nextProps.index
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var tableCells = [];
+	            for (var cell = 0; cell < this.state.columns.length; cell++) {
+	                tableCells[cell] = _react2.default.createElement(TableCell, { key: cell,
+	                    field: this.state.columns[cell].key,
+	                    rowIndex: this.state.index,
+	                    column: this.state.columns[cell],
+	                    value: this.state.data[this.state.columns[cell].key] });
+	            }var removeRow = null;
+	            if (this.state.removableRow) {
+	                removeRow = _react2.default.createElement('button', { onClick: function (index) {
+	                        this.props.onRemoveRow(index);
+	                    }.bind(this, this.state.index), className: 'table-row-remove-button' });
+	            }
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'table-row' },
+	                removeRow,
+	                tableCells
+	            );
+	        }
+	    }]);
+	
+	    return TableRow;
+	}(_react2.default.Component);
+	
+	var TableColumn = function (_React$Component3) {
+	    _inherits(TableColumn, _React$Component3);
+	
+	    function TableColumn(props) {
+	        _classCallCheck(this, TableColumn);
+	
+	        var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(TableColumn).call(this, props));
+	
+	        _this3.state = {
+	            column: _this3.props.column
+	        };
+	        return _this3;
+	    }
+	
+	    _createClass(TableColumn, [{
+	        key: 'render',
+	        value: function render() {
+	            var className = "table-column " + this.state.column.width;
+	            return _react2.default.createElement(
+	                'div',
+	                { className: className },
+	                this.state.column.title
+	            );
+	        }
+	    }]);
+	
+	    return TableColumn;
+	}(_react2.default.Component);
+	
+	var TableTrashColumn = function (_React$Component4) {
+	    _inherits(TableTrashColumn, _React$Component4);
+	
+	    function TableTrashColumn(props) {
+	        _classCallCheck(this, TableTrashColumn);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(TableTrashColumn).call(this, props));
+	    }
+	
+	    _createClass(TableTrashColumn, [{
+	        key: 'render',
+	        value: function render() {
+	            var className = "table-column-trash";
+	            return _react2.default.createElement('div', { className: className });
+	        }
+	    }]);
+	
+	    return TableTrashColumn;
+	}(_react2.default.Component);
+	
+	var Table = function (_React$Component5) {
+	    _inherits(Table, _React$Component5);
+	
+	    function Table(props) {
+	        _classCallCheck(this, Table);
+	
+	        var _this5 = _possibleConstructorReturn(this, Object.getPrototypeOf(Table).call(this, props));
+	
+	        _this5.state = {
+	            columns: props.columns,
+	            data: props.data,
+	            removableRow: !(props.onRemoveRow == null)
+	        };
+	        return _this5;
+	    }
+	
+	    _createClass(Table, [{
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            this.setState({
+	                columns: nextProps.columns,
+	                data: nextProps.data
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var tableColumns = [];
+	            for (var col = 0; col < this.state.columns.length; col++) {
+	                tableColumns[col] = _react2.default.createElement(TableColumn, { key: col,
+	                    column: this.state.columns[col] });
+	            }
+	
+	            if (this.state.data == null) {
+	                return _react2.default.createElement(
+	                    'div',
+	                    { className: 'table' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'table-header' },
+	                        tableColumns
+	                    )
+	                );
+	            }
+	
+	            var tableRows = [];
+	            for (var row = 0; row < this.state.data.length; row++) {
+	                tableRows[row] = _react2.default.createElement(TableRow, { onRemoveRow: this.props.onRemoveRow,
+	                    key: row, index: row,
+	                    data: this.state.data[row],
+	                    columns: this.state.columns });
+	            }var tableTrashColumn = null;
+	            if (this.state.removableRow) {
+	                tableTrashColumn = _react2.default.createElement(TableTrashColumn, null);
+	            }
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'table' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'table-header' },
+	                    tableTrashColumn,
+	                    tableColumns
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'table-data-container' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'table-data' },
+	                        tableRows
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return Table;
+	}(_react2.default.Component);
+	
+	exports.default = Table;
+
+/***/ },
+/* 386 */
+/*!**********************************************************!*\
+  !*** ./src/client/app/views/common/FlatRippleButton.jsx ***!
+  \**********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _jqLite = __webpack_require__(/*! ../../../../../~/muicss/lib/js/lib/jqLite */ 243);
+	
+	var jqLite = _interopRequireWildcard(_jqLite);
+	
+	var _util = __webpack_require__(/*! ../../../../../~/muicss/lib/js/lib/util */ 244);
+	
+	var util = _interopRequireWildcard(_util);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var rippleIter = 0;
+	
+	var PropTypes = _react2.default.PropTypes,
+	    btnClass = 'mui-btn-ripple',
+	    rippleClassDark = 'mui-ripple-effect-dark',
+	    rippleClassLight = 'mui-ripple-effect-light',
+	    btnAttrs = { color: 1, variant: 1, size: 1 };
+	
+	/**
+	 * Button element
+	 * @class
+	 */
+	
+	var FlatRippleButton = function (_React$Component) {
+	    _inherits(FlatRippleButton, _React$Component);
+	
+	    function FlatRippleButton(props) {
+	        _classCallCheck(this, FlatRippleButton);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FlatRippleButton).call(this, props));
+	
+	        _this.state = {
+	            ripples: {}
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(FlatRippleButton, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            // disable MUI js
+	            var el = this.refs.buttonEl;
+	            el._muiDropdown = true;
+	            el._muiRipple = true;
+	        }
+	    }, {
+	        key: 'onClick',
+	        value: function onClick(ev) {
+	            var onClickFn = this.props.onClick;
+	            onClickFn && onClickFn(ev);
+	        }
+	    }, {
+	        key: 'onMouseDown',
+	        value: function onMouseDown(ev) {
+	            // get (x, y) position of click
+	            var offset = jqLite.offset(this.refs.buttonEl);
+	
+	            // choose diameter
+	            var diameter = offset.height;
+	            if (this.props.variant === 'fab') diameter = diameter / 2;
+	
+	            // add ripple to state
+	            var ripples = this.state.ripples;
+	            var key = Date.now();
+	
+	            ripples[key] = {
+	                xPos: ev.pageX - offset.left,
+	                yPos: ev.pageY - offset.top,
+	                diameter: diameter,
+	                teardownFn: this.teardownRipple.bind(this, key)
+	            };
+	
+	            this.setState({ ripples: ripples });
+	        }
+	    }, {
+	        key: 'onTouchStart',
+	        value: function onTouchStart(ev) {}
+	    }, {
+	        key: 'teardownRipple',
+	        value: function teardownRipple(key) {
+	            // delete ripple
+	            var ripples = this.state.ripples;
+	            delete ripples[key];
+	            this.setState({ ripples: ripples });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var cls = btnClass,
+	                k = void 0,
+	                v = void 0;
+	
+	            var ripples = this.state.ripples;
+	
+	            // button attributes
+	            for (k in btnAttrs) {
+	                v = this.props[k];
+	                if (v !== 'default') cls += ' ' + btnClass + '--' + v;
+	            }
+	
+	            var rippleColor = rippleClassDark;
+	            if (this.props.rippleColor != null) {
+	                rippleColor = this.props.rippleColor === "dark" ? rippleClassDark : rippleClassLight;
+	            }
+	
+	            return _react2.default.createElement(
+	                'button',
+	                _extends({}, this.props, {
+	                    ref: 'buttonEl',
+	                    className: cls + ' ' + this.props.className,
+	                    onClick: this.onClick.bind(this),
+	                    onMouseDown: this.onMouseDown.bind(this)
+	                }),
+	                this.props.children,
+	                Object.keys(ripples).map(function (k, i) {
+	                    var v = ripples[k];
+	                    return _react2.default.createElement(Ripple, {
+	                        colorClass: rippleColor,
+	                        key: k,
+	                        xPos: v.xPos,
+	                        yPos: v.yPos,
+	                        diameter: v.diameter,
+	                        onTeardown: v.teardownFn
+	                    });
+	                })
+	            );
+	        }
+	    }]);
+	
+	    return FlatRippleButton;
+	}(_react2.default.Component);
+	
+	FlatRippleButton.propTypes = {
+	    color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),
+	    disabled: PropTypes.bool,
+	    size: PropTypes.oneOf(['default', 'small', 'large']),
+	    type: PropTypes.oneOf(['submit', 'button']),
+	    variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
+	    onClick: PropTypes.func
+	};
+	
+	FlatRippleButton.defaultProps = {
+	    className: '',
+	    color: 'dark',
+	    disabled: false,
+	    size: 'default',
+	    type: null,
+	    variant: 'flat',
+	    onClick: null
+	};
+	
+	/**
+	 * Ripple component
+	 * @class
+	 */
+	
+	var Ripple = function (_React$Component2) {
+	    _inherits(Ripple, _React$Component2);
+	
+	    function Ripple() {
+	        _classCallCheck(this, Ripple);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Ripple).apply(this, arguments));
+	    }
+	
+	    _createClass(Ripple, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this3 = this;
+	
+	            // trigger teardown in 2 sec
+	            this.teardownTimer = setTimeout(function () {
+	                var fn = _this3.props.onTeardown;
+	                fn && fn();
+	            }, 2000);
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            // clear timeout
+	            clearTimeout(this.teardownTimer);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var diameter = this.props.diameter,
+	                radius = diameter / 2;
+	
+	            var style = {
+	                height: diameter,
+	                width: diameter,
+	                top: this.props.yPos - radius || 0,
+	                left: this.props.xPos - radius || 0
+	            };
+	
+	            return _react2.default.createElement('div', { className: this.props.colorClass, style: style });
+	        }
+	    }]);
+	
+	    return Ripple;
+	}(_react2.default.Component);
+	
+	Ripple.propTypes = {
+	    xPos: PropTypes.number,
+	    yPos: PropTypes.number,
+	    diameter: PropTypes.number,
+	    onTeardown: PropTypes.func
+	};
+	
+	Ripple.defaultProps = {
+	    xPos: 0,
+	    yPos: 0,
+	    diameter: 0,
+	    onTeardown: null
+	};
+	
+	/** Define module API */
+	exports.default = FlatRippleButton;
+
+/***/ },
+/* 387 */
+/*!**************************************************!*\
+  !*** ./src/client/app/views/common/text-box.jsx ***!
+  \**************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var TextBox = function (_React$Component) {
+	    _inherits(TextBox, _React$Component);
+	
+	    function TextBox(props) {
+	        _classCallCheck(this, TextBox);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TextBox).call(this, props));
+	
+	        _this.state = {
+	            notes: _this.props.value
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(TextBox, [{
+	        key: "componentDidMount",
+	        value: function componentDidMount() {
+	            //var maxRowCount = this.props.maxRowCount;
+	            //var id = "#"+this.props.id;
+	            //$(function ()
+	            //{
+	            //    var lines = maxRowCount;
+	            //    $(id).keydown(function(e)
+	            //    {
+	            //        var newLines = $(this).val().split("\n").length;
+	            //        if(e.keyCode == 13 && newLines >= lines)
+	            //            return false;
+	            //    });
+	            //});
+	        }
+	    }, {
+	        key: "onBlur",
+	        value: function onBlur(event) {
+	            event.preventDefault();
+	            if (this.props.onBlur != null) /*&& (event.target.value != this.state.value)*/{
+	                    this.props.onBlur(event.target.value);
+	                }
+	        }
+	    }, {
+	        key: "onChange",
+	        value: function onChange(event) {
+	            event.preventDefault();
+	            this.setState({ notes: event.target.value });
+	        }
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            var rowHeight = 22;
+	            var textBoxStyle = { height: 2 * rowHeight + 4 };
+	
+	            return _react2.default.createElement(
+	                "div",
+	                null,
+	                _react2.default.createElement(
+	                    "form",
+	                    null,
+	                    _react2.default.createElement(
+	                        "label",
+	                        null,
+	                        this.props.title,
+	                        _react2.default.createElement("textarea", { style: textBoxStyle,
+	                            className: "text-box",
+	                            id: this.props.id,
+	                            value: this.state.notes,
+	                            onChange: this.onChange,
+	                            onBlur: this.onBlur })
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return TextBox;
+	}(_react2.default.Component);
+	
+	exports.default = TextBox;
+
+/***/ },
+/* 388 */,
+/* 389 */
 /*!***************************************************!*\
-  !*** ./src/client/app/views/partnership-page.jsx ***!
+  !*** ./src/client/app/views/pages/login-page.jsx ***!
   \***************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
@@ -52337,25 +50563,1814 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _table = __webpack_require__(/*! ./table.jsx */ 260);
+	var _authService = __webpack_require__(/*! ../../services/auth-service */ 229);
+	
+	var _authService2 = _interopRequireDefault(_authService);
+	
+	var _strings = __webpack_require__(/*! ../../constants/strings */ 238);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Login = function (_React$Component) {
+	    _inherits(Login, _React$Component);
+	
+	    function Login() {
+	        _classCallCheck(this, Login);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Login).call(this));
+	
+	        _this.state = {
+	            username: '',
+	            password: ''
+	        };
+	        _this.errorMessage = "";
+	        return _this;
+	    }
+	
+	    _createClass(Login, [{
+	        key: 'login',
+	        value: function login(e) {
+	            var _this2 = this;
+	
+	            e.preventDefault();
+	
+	            this.state.email = this.refs.email.value;
+	            this.state.password = this.refs.password.value;
+	            this.errorMessage = "";
+	            this.errorMessageClassName = "";
+	            _authService2.default.login(this.state.email, this.state.password, function (loggedIn) {
+	                if (loggedIn) {
+	                    _this2.context.router.push('/app/dashboard');
+	                } else {
+	                    _this2.errorMessage = _strings.strings.loginErrorMessage;
+	                    _this2.errorMessageClassName = "login-page-alert";
+	                }
+	            }.bind(this));
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'login-page animated fadeIn' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'login-page-container login-page-center' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'login-page-neto-logo-container' },
+	                        _react2.default.createElement('img', { className: 'login-page-neto-logo', src: './public/images/neto-logo.png' })
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'login-page-neto-doc-name' },
+	                        _strings.strings.appName
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: this.errorMessageClassName },
+	                        this.errorMessage
+	                    ),
+	                    _react2.default.createElement(
+	                        'form',
+	                        { className: 'left-align' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            null,
+	                            _react2.default.createElement('input', { type: 'text', className: 'login-page-input', id: 'email', ref: 'email', placeholder: _strings.strings.email })
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            null,
+	                            _react2.default.createElement('input', { type: 'password', className: 'login-page-input', id: 'password', ref: 'password', placeholder: _strings.strings.password })
+	                        ),
+	                        _react2.default.createElement(
+	                            'button',
+	                            { type: 'submit', className: 'login-page-button', onClick: this.login.bind(this) },
+	                            _strings.strings.connect
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'login-page-need-account-text' },
+	                        _react2.default.createElement(
+	                            'p',
+	                            null,
+	                            _strings.strings.needAccount,
+	                            _react2.default.createElement(
+	                                'a',
+	                                { href: '/user-signup-request' },
+	                                ' ',
+	                                _strings.strings.sendRegisterRequest
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return Login;
+	}(_react2.default.Component);
+	
+	//Important!! This adds the router object to context
+	
+	
+	exports.default = Login;
+	Login.contextTypes = {
+	    router: _react2.default.PropTypes.object.isRequired
+	};
+
+/***/ },
+/* 390 */
+/*!****************************************************!*\
+  !*** ./src/client/app/views/pages/signup-page.jsx ***!
+  \****************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _authService = __webpack_require__(/*! ../../services/auth-service */ 229);
+	
+	var _authService2 = _interopRequireDefault(_authService);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Signup = function (_React$Component) {
+	    _inherits(Signup, _React$Component);
+	
+	    function Signup() {
+	        _classCallCheck(this, Signup);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Signup).call(this));
+	
+	        _this.state = {
+	            username: '',
+	            password: '',
+	            extra: ''
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(Signup, [{
+	        key: 'signup',
+	        value: function signup(e) {
+	            e.preventDefault();
+	
+	            var usernameInput = this.refs.username;
+	            var passwordInput = this.refs.password;
+	            this.state.username = usernameInput.value;
+	            this.state.password = passwordInput.value;
+	
+	            _authService2.default.signup(this.state.user, this.state.password, this.state.extra).catch(function (err) {
+	                alert("There's an error logging in");
+	                console.log("Error logging in", err);
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'login jumbotron center-block' },
+	                _react2.default.createElement(
+	                    'h1',
+	                    null,
+	                    'Signup'
+	                ),
+	                _react2.default.createElement(
+	                    'form',
+	                    { role: 'form' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'form-group' },
+	                        _react2.default.createElement(
+	                            'label',
+	                            { htmlFor: 'username' },
+	                            'Username'
+	                        ),
+	                        _react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'username', ref: 'username', placeholder: 'Username' })
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'form-group' },
+	                        _react2.default.createElement(
+	                            'label',
+	                            { htmlFor: 'password' },
+	                            'Password'
+	                        ),
+	                        _react2.default.createElement('input', { type: 'password', className: 'form-control', id: 'password', ref: 'password', placeholder: 'Password' })
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'form-group' },
+	                        _react2.default.createElement(
+	                            'label',
+	                            { htmlFor: 'extra' },
+	                            'Extra'
+	                        ),
+	                        _react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'extra', ref: 'extra', placeholder: 'Some extra information' })
+	                    ),
+	                    _react2.default.createElement(
+	                        'button',
+	                        { type: 'submit', className: 'btn btn-default', onClick: this.signup.bind(this) },
+	                        'Submit'
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return Signup;
+	}(_react2.default.Component);
+	
+	exports.default = Signup;
+
+/***/ },
+/* 391 */
+/*!*******************************************************!*\
+  !*** ./src/client/app/views/pages/dashboard-page.jsx ***!
+  \*******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _authService = __webpack_require__(/*! ../../services/auth-service */ 229);
+	
+	var _authService2 = _interopRequireDefault(_authService);
+	
+	var _button = __webpack_require__(/*! ../../../../../~/muicss/lib/react/button */ 241);
+	
+	var _button2 = _interopRequireDefault(_button);
+	
+	var _dropdown = __webpack_require__(/*! ../../../../../~/muicss/lib/react/dropdown */ 246);
+	
+	var _dropdown2 = _interopRequireDefault(_dropdown);
+	
+	var _dropdownItem = __webpack_require__(/*! ../../../../../~/muicss/lib/react/dropdown-item */ 248);
+	
+	var _dropdownItem2 = _interopRequireDefault(_dropdownItem);
+	
+	var _FixedWidthDropdown = __webpack_require__(/*! ./../common/FixedWidthDropdown.jsx */ 384);
+	
+	var _FixedWidthDropdown2 = _interopRequireDefault(_FixedWidthDropdown);
+	
+	var _strings = __webpack_require__(/*! ../../constants/strings */ 238);
+	
+	var _reactChartjs = __webpack_require__(/*! react-chartjs */ 250);
+	
+	var _reactChartjs2 = _interopRequireDefault(_reactChartjs);
+	
+	var _table = __webpack_require__(/*! ./../common/table.jsx */ 385);
 	
 	var _table2 = _interopRequireDefault(_table);
 	
-	var _appActions = __webpack_require__(/*! ../actions/app-actions */ 232);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var _appActions2 = _interopRequireDefault(_appActions);
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var _dataStore = __webpack_require__(/*! ../stores/data-store */ 373);
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var monthOptions = ["ינואר", "פברואר", "מרץ", "אפריל", "מאי", "יוני", "יולי", "אוגוסט", "ספטמבר", "אוקטובר", "נובמבר", "דצמבר"];
+	
+	function getMonthName(monthNum) {
+	
+	    if (monthNum > 12 || monthNum < 1) {
+	        return monthOptions[0];
+	    }
+	    return monthOptions[monthNum - 1];
+	}
+	
+	var DashboardToolbar = function (_React$Component) {
+	    _inherits(DashboardToolbar, _React$Component);
+	
+	    function DashboardToolbar(props) {
+	        _classCallCheck(this, DashboardToolbar);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardToolbar).call(this, props));
+	
+	        var date = new Date();
+	        var currentMonth = date.getMonth();
+	        var currentYear = date.getFullYear();
+	
+	        _this.state = {
+	            selectedMonth: getMonthName(currentMonth),
+	            selectedYear: currentYear.toString()
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(DashboardToolbar, [{
+	        key: 'onMonthChange',
+	        value: function onMonthChange(item) {
+	            if (item.props.value != this.state.selectedMonth) {
+	                this.setState({ selectedMonth: item.props.value });
+	            }
+	        }
+	    }, {
+	        key: 'onYearChange',
+	        value: function onYearChange(item) {
+	            if (item.props.value != this.state.selectedYear) {
+	                this.setState({ selectedYear: item.props.value });
+	            }
+	        }
+	    }, {
+	        key: 'onLoadClick',
+	        value: function onLoadClick() {}
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	
+	            var months = [];
+	            for (var i = 1; i <= 12; i++) {
+	                var monthName = getMonthName(i);
+	                months.push(_react2.default.createElement(
+	                    _dropdownItem2.default,
+	                    { onClick: this.onMonthChange.bind(this), value: monthName, key: i },
+	                    monthName
+	                ));
+	            }
+	
+	            var years = [];
+	            var date = new Date();
+	            var currentYear = date.getFullYear();
+	            for (var _i = 2012; _i <= currentYear; _i++) {
+	                var yearName = _i.toString();
+	                years.push(_react2.default.createElement(
+	                    _dropdownItem2.default,
+	                    { onClick: this.onYearChange.bind(this), value: yearName, key: _i },
+	                    yearName
+	                ));
+	            }
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'hcontainer-no-wrap' },
+	                _react2.default.createElement(
+	                    _FixedWidthDropdown2.default,
+	                    { label: this.state.selectedMonth, alignMenu: 'right' },
+	                    months
+	                ),
+	                _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                _react2.default.createElement(
+	                    _FixedWidthDropdown2.default,
+	                    { className: 'fixed-size-button', label: this.state.selectedYear, alignMenu: 'right' },
+	                    years
+	                ),
+	                _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                _react2.default.createElement(
+	                    _button2.default,
+	                    { className: 'shadow', onClick: this.onLoadClick.bind(this), color: 'primary' },
+	                    _strings.strings.load
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return DashboardToolbar;
+	}(_react2.default.Component);
+	
+	var DashboardRankTable = function (_React$Component2) {
+	    _inherits(DashboardRankTable, _React$Component2);
+	
+	    function DashboardRankTable(props) {
+	        _classCallCheck(this, DashboardRankTable);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardRankTable).call(this, props));
+	    }
+	
+	    _createClass(DashboardRankTable, [{
+	        key: 'render',
+	        value: function render() {
+	
+	            var columns = [{
+	                title: "שם סוכן",
+	                key: "agentName",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "עמלות",
+	                key: "commission",
+	                width: "col-33-33",
+	                type: 'read-only-currency',
+	                color: 'normal'
+	            }, {
+	                title: "שינוי (עמלות)",
+	                key: "commissionChange",
+	                width: "col-33-33",
+	                type: 'read-only-percent',
+	                color: 'red-green'
+	            }, {
+	                title: "גודל תיק",
+	                key: "totalInvestments",
+	                width: "col-33-33",
+	                type: 'read-only-currency',
+	                color: 'normal'
+	            }, {
+	                title: "שינוי (גודל תיק)",
+	                key: "totalInvestmentsChange",
+	                width: "col-33-33",
+	                type: 'read-only-percent',
+	                color: 'red-green'
+	            }];
+	
+	            var data = [{ agentName: "קרין בוזלי", commission: "23234233", commissionChange: "2.3", totalInvestments: "23234233", totalInvestmentsChange: "2.3" }, { agentName: "עידן כץ", commission: "43234233", commissionChange: "2.3", totalInvestments: "23234233", totalInvestmentsChange: "2.3" }, { agentName: "מסי", commission: "33224233", commissionChange: "-2.3", totalInvestments: "23234233", totalInvestmentsChange: "6.3" }, { agentName: "מסי", commission: "33224233", commissionChange: "-2.3", totalInvestments: "23234233", totalInvestmentsChange: "6.3" }, { agentName: "מסי", commission: "33224233", commissionChange: "-2.3", totalInvestments: "23234233", totalInvestmentsChange: "6.3" }, { agentName: "מסי", commission: "33224233", commissionChange: "-2.3", totalInvestments: "23234233", totalInvestmentsChange: "6.3" }, { agentName: "קריזבז", commission: "13234233", commissionChange: "1.3", totalInvestments: "23234233", totalInvestmentsChange: "2.3" }, { agentName: "קרין בוזלי", commission: "23234233", commissionChange: "2.3", totalInvestments: "23234233", totalInvestmentsChange: "-2.3" }, { agentName: "קרין בוזלי", commission: "23234233", commissionChange: "2.3", totalInvestments: "23234233", totalInvestmentsChange: "2.3" }];
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'dashboard-rank-table shadow' },
+	                _react2.default.createElement(_table2.default, { columns: columns,
+	                    data: data })
+	            );
+	        }
+	    }]);
+	
+	    return DashboardRankTable;
+	}(_react2.default.Component);
+	
+	var DashboardCommissionChangeChart = function (_React$Component3) {
+	    _inherits(DashboardCommissionChangeChart, _React$Component3);
+	
+	    function DashboardCommissionChangeChart(props) {
+	        _classCallCheck(this, DashboardCommissionChangeChart);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardCommissionChangeChart).call(this, props));
+	    }
+	
+	    _createClass(DashboardCommissionChangeChart, [{
+	        key: 'render',
+	        value: function render() {
+	
+	            var data = {
+	                labels: monthOptions,
+	                datasets: [{
+	                    label: "My First dataset",
+	                    backgroundColor: "rgba(215,49,132,0.2)",
+	                    borderColor: "rgba(225,99,132,1)",
+	                    borderWidth: 1,
+	                    hoverBackgroundColor: "rgba(255,99,132,0.4)",
+	                    hoverBorderColor: "rgba(255,99,132,1)",
+	                    data: [165, 59, 80, 81, 256, 55, 40],
+	                    fillColor: "#4286b4"
+	                }]
+	            };
+	
+	            var chartOptions = {
+	                scaleFontFamily: "Tahoma",
+	                tooltipFontFamily: "Tahoma",
+	                scaleFontSize: 16,
+	                responsive: true,
+	                maintainAspectRatio: false
+	            };
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'dashboard-commission-change-chart shadow' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'dashboard-box-title' },
+	                    _strings.strings.totalInvestmentsChange
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'dashboard-commission-change-chart-box' },
+	                    _react2.default.createElement(_reactChartjs.Bar, { data: data, options: chartOptions, width: '600', height: '400' })
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return DashboardCommissionChangeChart;
+	}(_react2.default.Component);
+	
+	var DashboardMonthTotalCommissions = function (_React$Component4) {
+	    _inherits(DashboardMonthTotalCommissions, _React$Component4);
+	
+	    function DashboardMonthTotalCommissions(props) {
+	        _classCallCheck(this, DashboardMonthTotalCommissions);
+	
+	        var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardMonthTotalCommissions).call(this, props));
+	
+	        _this4.state = {
+	            value: 233423432,
+	            change: 3.2
+	        };
+	
+	        return _this4;
+	    }
+	
+	    _createClass(DashboardMonthTotalCommissions, [{
+	        key: 'render',
+	        value: function render() {
+	
+	            var value = this.state.value.toString();
+	            value = parseFloat(value.replace(/,/g, "")).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	
+	            var change = this.state.change;
+	            var changeIcon = "../public/images/change-up.png";
+	            var changeColor = "green";
+	            if (change < 0) {
+	                changeIcon = "../public/images/change-down.png";
+	                changeColor = "red";
+	            }
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'dashboard-month-total-commissions shadow' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'dashboard-box-title' },
+	                    _strings.strings.totalCommissions
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'dashboard-box-value blue' },
+	                    _react2.default.createElement(
+	                        'small',
+	                        null,
+	                        "₪",
+	                        ' '
+	                    ),
+	                    _react2.default.createElement(
+	                        'b',
+	                        null,
+	                        value
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: "dashboard-box-change " + changeColor },
+	                    change,
+	                    _react2.default.createElement(
+	                        'small',
+	                        null,
+	                        ' ',
+	                        "%"
+	                    ),
+	                    ' ',
+	                    _react2.default.createElement('img', { src: changeIcon })
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return DashboardMonthTotalCommissions;
+	}(_react2.default.Component);
+	
+	var DashboardMonthTotalAgents = function (_React$Component5) {
+	    _inherits(DashboardMonthTotalAgents, _React$Component5);
+	
+	    function DashboardMonthTotalAgents(props) {
+	        _classCallCheck(this, DashboardMonthTotalAgents);
+	
+	        var _this5 = _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardMonthTotalAgents).call(this, props));
+	
+	        _this5.state = {
+	            value: 999,
+	            change: 3.4
+	        };
+	        return _this5;
+	    }
+	
+	    _createClass(DashboardMonthTotalAgents, [{
+	        key: 'render',
+	        value: function render() {
+	
+	            var value = this.state.value.toString();
+	
+	            var change = this.state.change;
+	            var changeIcon = "../public/images/change-up.png";
+	            var changeColor = "green";
+	            if (change < 0) {
+	                changeIcon = "../public/images/change-down.png";
+	                changeColor = "red";
+	            }
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'dashboard-month-total-agents shadow' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'dashboard-box-title' },
+	                    _strings.strings.totalAgents
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'dashboard-box-value blue' },
+	                    _react2.default.createElement(
+	                        'b',
+	                        null,
+	                        value
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: "dashboard-box-change " + changeColor },
+	                    change,
+	                    _react2.default.createElement(
+	                        'small',
+	                        null,
+	                        ' ',
+	                        "%"
+	                    ),
+	                    ' ',
+	                    _react2.default.createElement('img', { src: changeIcon })
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return DashboardMonthTotalAgents;
+	}(_react2.default.Component);
+	
+	var DashboardTotalInvestments = function (_React$Component6) {
+	    _inherits(DashboardTotalInvestments, _React$Component6);
+	
+	    function DashboardTotalInvestments(props) {
+	        _classCallCheck(this, DashboardTotalInvestments);
+	
+	        var _this6 = _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardTotalInvestments).call(this, props));
+	
+	        _this6.state = {
+	            value: 433423432,
+	            change: -1.2
+	        };
+	        return _this6;
+	    }
+	
+	    _createClass(DashboardTotalInvestments, [{
+	        key: 'render',
+	        value: function render() {
+	
+	            var value = this.state.value.toString();
+	            value = parseFloat(value.replace(/,/g, "")).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	
+	            var change = this.state.change;
+	            var changeIcon = "../public/images/change-up.png";
+	            var changeColor = "green";
+	            if (change < 0) {
+	                changeIcon = "../public/images/change-down.png";
+	                changeColor = "red";
+	            }
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'dashboard-total-investments shadow' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'dashboard-box-title' },
+	                    _strings.strings.totalInvestments
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'dashboard-box-value blue' },
+	                    _react2.default.createElement(
+	                        'small',
+	                        null,
+	                        "₪",
+	                        ' '
+	                    ),
+	                    _react2.default.createElement(
+	                        'b',
+	                        null,
+	                        value
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: "dashboard-box-change " + changeColor },
+	                    change,
+	                    _react2.default.createElement(
+	                        'small',
+	                        null,
+	                        ' ',
+	                        "%"
+	                    ),
+	                    ' ',
+	                    _react2.default.createElement('img', { src: changeIcon })
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return DashboardTotalInvestments;
+	}(_react2.default.Component);
+	
+	var Dashboard = function (_React$Component7) {
+	    _inherits(Dashboard, _React$Component7);
+	
+	    function Dashboard(props) {
+	        _classCallCheck(this, Dashboard);
+	
+	        var _this7 = _possibleConstructorReturn(this, Object.getPrototypeOf(Dashboard).call(this, props));
+	
+	        _this7.state = {
+	            loginData: _authService2.default.getLoginData()
+	        };
+	        return _this7;
+	    }
+	
+	    _createClass(Dashboard, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'dashboard-page animated fadeIn' },
+	                _react2.default.createElement(DashboardToolbar, null),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'hcontainer-no-wrap' },
+	                    _react2.default.createElement(DashboardRankTable, null),
+	                    _react2.default.createElement('div', { className: 'dashboard-horizontal-spacer' }),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'dashboard-stats-container' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'hcontainer-no-wrap dashboard-stats-container-top' },
+	                            _react2.default.createElement(DashboardMonthTotalCommissions, null),
+	                            _react2.default.createElement('div', { className: 'dashboard-horizontal-spacer' }),
+	                            _react2.default.createElement(DashboardMonthTotalAgents, null)
+	                        ),
+	                        _react2.default.createElement('div', { className: 'dashboard-vertical-spacer' }),
+	                        _react2.default.createElement(DashboardTotalInvestments, null)
+	                    )
+	                ),
+	                _react2.default.createElement('div', { className: 'dashboard-vertical-spacer' }),
+	                _react2.default.createElement(DashboardCommissionChangeChart, null)
+	            );
+	        }
+	    }]);
+	
+	    return Dashboard;
+	}(_react2.default.Component);
+	
+	//Important!! This adds the router object to context
+	
+	
+	Dashboard.contextTypes = {
+	    router: _react2.default.PropTypes.object.isRequired
+	};
+	
+	exports.default = Dashboard;
+
+/***/ },
+/* 392 */
+/*!*********************************************************!*\
+  !*** ./src/client/app/views/pages/commissions-page.jsx ***!
+  \*********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _authService = __webpack_require__(/*! ../../services/auth-service */ 229);
+	
+	var _authService2 = _interopRequireDefault(_authService);
+	
+	var _strings = __webpack_require__(/*! ../../constants/strings */ 238);
+	
+	var _table = __webpack_require__(/*! ./../common/table.jsx */ 385);
+	
+	var _table2 = _interopRequireDefault(_table);
+	
+	var _dropdown = __webpack_require__(/*! ../../../../../~/muicss/lib/react/dropdown */ 246);
+	
+	var _dropdown2 = _interopRequireDefault(_dropdown);
+	
+	var _dropdownItem = __webpack_require__(/*! ../../../../../~/muicss/lib/react/dropdown-item */ 248);
+	
+	var _dropdownItem2 = _interopRequireDefault(_dropdownItem);
+	
+	var _button = __webpack_require__(/*! ../../../../../~/muicss/lib/react/button */ 241);
+	
+	var _button2 = _interopRequireDefault(_button);
+	
+	var _reactDatepicker = __webpack_require__(/*! react-datepicker */ 263);
+	
+	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
+	
+	var _reactDropzone = __webpack_require__(/*! react-dropzone */ 368);
+	
+	var _reactDropzone2 = _interopRequireDefault(_reactDropzone);
+	
+	var _textBox = __webpack_require__(/*! ./../common/text-box.jsx */ 387);
+	
+	var _textBox2 = _interopRequireDefault(_textBox);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var moment = __webpack_require__(/*! react-datepicker/~/moment */ 264);
+	
+	var companyNames = ["כלל", "מנורה", "הראל", "אלטשולר שחם", "ילין לפידות", "מיטב דש"];
+	
+	var FileBin = function (_React$Component) {
+	    _inherits(FileBin, _React$Component);
+	
+	    function FileBin(props) {
+	        _classCallCheck(this, FileBin);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FileBin).call(this, props));
+	
+	        _this.state = {
+	            selectedCompany: "כלל",
+	            date: moment(),
+	            files: null,
+	            note: "בדיקה"
+	        };
+	
+	        return _this;
+	    }
+	
+	    _createClass(FileBin, [{
+	        key: 'onCompanyNameChange',
+	        value: function onCompanyNameChange(item) {
+	            if (item.props.value != this.state.selectedCompany) {
+	                this.state.selectedCompany = item.props.value;
+	                this.setState(this.state);
+	            }
+	        }
+	    }, {
+	        key: 'handleChange',
+	        value: function handleChange(date) {
+	            this.state.date = date;
+	            this.setState(this.state);
+	        }
+	    }, {
+	        key: 'onDrop',
+	        value: function onDrop(files) {
+	            console.log('Received files: ', files);
+	            this.state.files = files;
+	            this.setState(this.state);
+	        }
+	    }, {
+	        key: 'onUploadFile',
+	        value: function onUploadFile() {
+	            var formData = new FormData();
+	            for (var i = 0; i < this.state.files.length; i++) {
+	                formData.append('file', this.state.files[i]);
+	            }
+	            // now post a new XHR request
+	            var xhr = new XMLHttpRequest();
+	            xhr.open('POST', '/commissions/upload');
+	            xhr.onload = function () {
+	                if (xhr.status === 200) {
+	                    console.log('all done: ' + xhr.status);
+	                } else {
+	                    console.log('Something went terribly wrong...');
+	                }
+	            };
+	            xhr.send(formData);
+	        }
+	    }, {
+	        key: 'onEditFiles',
+	        value: function onEditFiles() {
+	            this.context.router.push('/app/commissions/edit-files');
+	        }
+	    }, {
+	        key: 'onFileNoteBlur',
+	        value: function onFileNoteBlur(e) {
+	            console.log(e.target.value);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	
+	            var companies = [];
+	            for (var i = 0; i < companyNames.length; i++) {
+	                companies.push(_react2.default.createElement(
+	                    _dropdownItem2.default,
+	                    { onClick: this.onCompanyNameChange.bind(this), value: companyNames[i], key: i },
+	                    companyNames[i]
+	                ));
+	            }
+	
+	            var style = {
+	                backgroundColor: 'transparent',
+	                color: '#505050'
+	            };
+	
+	            var activeStyle = {
+	                backgroundColor: 'rgba(66, 134, 180, 0.15)'
+	            };
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'commissions-page-file-bin shadow' },
+	                _react2.default.createElement(
+	                    _reactDropzone2.default,
+	                    { onDrop: this.onDrop.bind(this), className: 'commissions-page-file-bin-drag-area', style: style, activeStyle: activeStyle },
+	                    _react2.default.createElement(
+	                        'strong',
+	                        null,
+	                        _strings.strings.dragFileHere
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'hcontainer-no-wrap' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'commissions-page-file-bin-settings hcontainer-no-wrap' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'commissions-page-file-bin-settings-text' },
+	                            _strings.strings.companyAssignment
+	                        ),
+	                        _react2.default.createElement(
+	                            _dropdown2.default,
+	                            { label: this.state.selectedCompany, alignMenu: 'right', variant: 'raised' },
+	                            companies
+	                        ),
+	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'commissions-page-file-bin-settings-text' },
+	                            _strings.strings.paymentMonth
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'commissions-page-file-bin-settings-date' },
+	                            _react2.default.createElement(_reactDatepicker2.default, { selected: this.state.date, locale: 'he-IL', onChange: this.handleChange.bind(this) })
+	                        ),
+	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'commissions-page-file-bin-settings-text' },
+	                            _strings.strings.notes
+	                        ),
+	                        _react2.default.createElement('textarea', { className: 'commissions-page-file-note',
+	                            value: this.state.notes,
+	                            onBlur: this.onFileNoteBlur.bind(this) }),
+	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                        _react2.default.createElement(
+	                            _button2.default,
+	                            { className: 'shadow', onClick: this.onUploadFile.bind(this), color: 'primary' },
+	                            _strings.strings.uploadFile
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'commissions-page-file-bin-settings-edit-files-container' },
+	                        _react2.default.createElement(
+	                            _button2.default,
+	                            { className: 'shadow', onClick: this.onEditFiles.bind(this) },
+	                            _strings.strings.editFiles
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return FileBin;
+	}(_react2.default.Component);
+	
+	//Important!! This adds the router object to context
+	
+	
+	FileBin.contextTypes = {
+	    router: _react2.default.PropTypes.object.isRequired
+	};
+	
+	var Commissions = function (_React$Component2) {
+	    _inherits(Commissions, _React$Component2);
+	
+	    function Commissions(props) {
+	        _classCallCheck(this, Commissions);
+	
+	        var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(Commissions).call(this, props));
+	
+	        _this2.state = {
+	            loginData: _authService2.default.getLoginData()
+	        };
+	
+	        return _this2;
+	    }
+	
+	    _createClass(Commissions, [{
+	        key: 'render',
+	        value: function render() {
+	
+	            var columns = [{
+	                title: "חברה",
+	                key: "companyName",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "סוג תשלום",
+	                key: "paymentType",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "מספר סוכן",
+	                key: "agentNumber",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "שם סוכן",
+	                key: "agentName",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "סה״כ תשלום",
+	                key: "totalPayment",
+	                width: "col-33-33",
+	                type: 'read-only-currency',
+	                color: 'normal'
+	            }, {
+	                title: "סה״כ גודל תיק",
+	                key: "totalInvestments",
+	                width: "col-33-33",
+	                type: 'read-only-currency',
+	                color: 'normal'
+	            }, {
+	                title: "חודש שכר",
+	                key: "paymentMonth",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "תאריך העלאת קובץ",
+	                key: "date",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }];
+	
+	            var data = [{ companyName: "מגדל", paymentType: "היקף", agentNumber: "2342234523", agentName: "קרין בוזלי לוי", totalPayment: "23423", totalInvestments: "12342232", paymentMonth: "04/16", date: "05/11/2016" }, { companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "אלטשולר שחם", paymentType: "בונוס", agentNumber: "67868", agentName: "לנצמן", totalPayment: "5675", totalInvestments: "34234535", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "מנורה", paymentType: "גמ״ח", agentNumber: "789565", agentName: "לירון בן ציון", totalPayment: "4562", totalInvestments: "78768657", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "ילין לפידות", paymentType: "היקף", agentNumber: "345654", agentName: "ויטלי", totalPayment: "6786", totalInvestments: "3453453", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "ילין לפידות", paymentType: "היקף", agentNumber: "345654", agentName: "ויטלי", totalPayment: "6786", totalInvestments: "3453453", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "מנורה", paymentType: "גמ״ח", agentNumber: "789565", agentName: "לירון בן ציון", totalPayment: "4562", totalInvestments: "78768657", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "ילין לפידות", paymentType: "היקף", agentNumber: "345654", agentName: "ויטלי", totalPayment: "6786", totalInvestments: "3453453", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "אלטשולר שחם", paymentType: "בונוס", agentNumber: "67868", agentName: "לנצמן", totalPayment: "5675", totalInvestments: "34234535", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "מנורה", paymentType: "גמ״ח", agentNumber: "789565", agentName: "לירון בן ציון", totalPayment: "4562", totalInvestments: "78768657", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "מגדל", paymentType: "היקף", agentNumber: "2342234523", agentName: "קרין בוזלי לוי", totalPayment: "23423", totalInvestments: "12342232", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "אלטשולר שחם", paymentType: "בונוס", agentNumber: "67868", agentName: "לנצמן", totalPayment: "5675", totalInvestments: "34234535", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "מנורה", paymentType: "גמ״ח", agentNumber: "789565", agentName: "לירון בן ציון", totalPayment: "4562", totalInvestments: "78768657", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "ילין לפידות", paymentType: "היקף", agentNumber: "345654", agentName: "ויטלי", totalPayment: "6786", totalInvestments: "3453453", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016" }];
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'commissions-page animated fadeIn' },
+	                _react2.default.createElement(FileBin, null),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'commissions-page-table shadow' },
+	                    _react2.default.createElement(_table2.default, { columns: columns,
+	                        data: data })
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return Commissions;
+	}(_react2.default.Component);
+	
+	//Important!! This adds the router object to context
+	
+	
+	Commissions.contextTypes = {
+	    router: _react2.default.PropTypes.object.isRequired
+	};
+	
+	exports.default = Commissions;
+
+/***/ },
+/* 393 */
+/*!*********************************************************************!*\
+  !*** ./src/client/app/views/pages/agents-and-partnerships-page.jsx ***!
+  \*********************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _authService = __webpack_require__(/*! ../../services/auth-service */ 229);
+	
+	var _authService2 = _interopRequireDefault(_authService);
+	
+	var _tabs = __webpack_require__(/*! ../../../../../~/muicss/lib/react/tabs */ 371);
+	
+	var _tabs2 = _interopRequireDefault(_tabs);
+	
+	var _tab = __webpack_require__(/*! ../../../../../~/muicss/lib/react/tab */ 372);
+	
+	var _tab2 = _interopRequireDefault(_tab);
+	
+	var _strings = __webpack_require__(/*! ../../constants/strings */ 238);
+	
+	var _button = __webpack_require__(/*! ../../../../../~/muicss/lib/react/button */ 241);
+	
+	var _button2 = _interopRequireDefault(_button);
+	
+	var _table = __webpack_require__(/*! ./../common/table.jsx */ 385);
+	
+	var _table2 = _interopRequireDefault(_table);
+	
+	var _dataStore = __webpack_require__(/*! ../../stores/data-store */ 373);
 	
 	var _dataStore2 = _interopRequireDefault(_dataStore);
 	
-	var _appActions3 = __webpack_require__(/*! ../actions/app-actions.js */ 232);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var _input = __webpack_require__(/*! muicss/lib/react/input */ 377);
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var AgentsAndPartnerships = function (_React$Component) {
+	    _inherits(AgentsAndPartnerships, _React$Component);
+	
+	    function AgentsAndPartnerships(props) {
+	        _classCallCheck(this, AgentsAndPartnerships);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AgentsAndPartnerships).call(this, props));
+	
+	        _this.state = {
+	            loginData: _authService2.default.getLoginData(),
+	            selectedTab: 0,
+	            agentsData: _dataStore2.default.getAgents(),
+	            partnershipsData: _dataStore2.default.getPartnerships()
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(AgentsAndPartnerships, [{
+	        key: 'onNewAgent',
+	        value: function onNewAgent() {
+	            this.context.router.push('/app/agents-and-partnerships/agent-page/new');
+	        }
+	    }, {
+	        key: 'onNewPartnership',
+	        value: function onNewPartnership() {
+	            this.context.router.push('/app/agents-and-partnerships/partnership-page/new');
+	        }
+	    }, {
+	        key: 'onChangeTab',
+	        value: function onChangeTab(i, value, tab, ev) {
+	            this.state.selectedTab = i;
+	            this.setState(this.state);
+	            console.log(arguments);
+	        }
+	    }, {
+	        key: 'onAgentClicked',
+	        value: function onAgentClicked(rowIndex) {
+	            var agentId = this.state.agentsData[rowIndex].idNumber;
+	            this.context.router.push('/app/agents-and-partnerships/agent-salary-page/' + agentId);
+	        }
+	    }, {
+	        key: 'onPartnershipClicked',
+	        value: function onPartnershipClicked(rowIndex) {
+	            //var agentId = this.state.agentsData[rowIndex].idNumber
+	            this.context.router.push('/app/agents-and-partnerships/partnership-page/new');
+	        }
+	    }, {
+	        key: 'onDeleteAgentClicked',
+	        value: function onDeleteAgentClicked(rowIndex) {
+	            console.log("onDeleteAgentClicked " + rowIndex);
+	        }
+	    }, {
+	        key: 'onEditAgentClicked',
+	        value: function onEditAgentClicked(rowIndex) {
+	            console.log("onEditAgentClicked " + rowIndex);
+	        }
+	    }, {
+	        key: 'onDeletePartnershipsClicked',
+	        value: function onDeletePartnershipsClicked(rowIndex) {
+	            console.log("onDeletePartnershipsClicked " + rowIndex);
+	        }
+	    }, {
+	        key: 'onEditPartnershipsClicked',
+	        value: function onEditPartnershipsClicked(rowIndex) {
+	            console.log("onEditPartnershipsClicked " + rowIndex);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	
+	            var agentsColumns = [{
+	                title: "שם",
+	                key: "name",
+	                width: "col-33-33",
+	                type: 'read-only-button',
+	                color: 'blue',
+	                action: this.onAgentClicked.bind(this)
+	            }, {
+	                title: "מזהה",
+	                key: "idNumber",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "סטטוס",
+	                key: "status",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }];
+	
+	            var agentsData = [];
+	            for (var agentIndex = 0; agentIndex < this.state.agentsData.length; agentIndex++) {
+	                var agentData = {};
+	
+	                agentData["name"] = this.state.agentsData[agentIndex].name + " " + this.state.agentsData[agentIndex].familyName;
+	                agentData["idNumber"] = this.state.agentsData[agentIndex].idNumber;
+	                agentData["status"] = this.state.agentsData[agentIndex].active ? "פעיל" : "לא פעיל";
+	                agentsData.push(agentData);
+	            }
+	
+	            var partnershipColumns = [{
+	                title: "שותפים",
+	                key: "names",
+	                width: "col-33-33",
+	                type: 'read-only-button',
+	                color: 'blue',
+	                action: this.onPartnershipClicked.bind(this)
+	            }, {
+	                title: "מזהה",
+	                key: "idNumbers",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "סטטוס",
+	                key: "status",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }];
+	
+	            var partnershipsData = [];
+	            for (var partnershipIndex = 0; partnershipIndex < this.state.partnershipsData.length; partnershipIndex++) {
+	                var partnershipData = {};
+	                partnershipData["names"] = "";
+	                partnershipData["idNumbers"] = "";
+	                for (var idIndex = 0; idIndex < this.state.partnershipsData[partnershipIndex].partnersId.length; idIndex++) {
+	                    agentData = _dataStore2.default.getAgent(this.state.partnershipsData[partnershipIndex].partnersId[idIndex]);
+	                    if (agentData != null) {
+	                        partnershipData["names"] += agentData.name + " " + agentData.familyName;
+	                        partnershipData["idNumbers"] += agentData.idNumber;
+	                        if (idIndex < this.state.partnershipsData[partnershipIndex].partnersId.length - 1) {
+	                            partnershipData["names"] += ", ";
+	                            partnershipData["idNumbers"] += ", ";
+	                        }
+	                    }
+	                }
+	                partnershipData["status"] = this.state.partnershipsData[partnershipIndex].active ? "פעיל" : "לא פעיל";
+	                partnershipsData.push(partnershipData);
+	            }
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'agents-page animated fadeIn' },
+	                _react2.default.createElement(
+	                    _tabs2.default,
+	                    { onChange: this.onChangeTab.bind(this), justified: true, initialSelectedIndex: this.state.selectedTab },
+	                    _react2.default.createElement(
+	                        _tab2.default,
+	                        { value: 'pane-1', label: _strings.strings.agents },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'agents-page-tab-container' },
+	                            _react2.default.createElement('div', { className: 'agents-page-vertical-spacer' }),
+	                            _react2.default.createElement(
+	                                _button2.default,
+	                                { className: 'shadow', onClick: this.onNewAgent.bind(this), color: 'primary' },
+	                                _strings.strings.newAgent
+	                            ),
+	                            _react2.default.createElement('div', { className: 'agents-page-vertical-spacer' }),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'agents-page-table' },
+	                                _react2.default.createElement(_table2.default, { onRemoveRow: this.onDeleteAgentClicked.bind(this), columns: agentsColumns, data: agentsData })
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        _tab2.default,
+	                        { value: 'pane-2', label: _strings.strings.partnerships },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'agents-page-tab-container' },
+	                            _react2.default.createElement('div', { className: 'agents-page-vertical-spacer' }),
+	                            _react2.default.createElement(
+	                                _button2.default,
+	                                { className: 'shadow', onClick: this.onNewPartnership.bind(this), color: 'primary' },
+	                                _strings.strings.newPartnership
+	                            ),
+	                            _react2.default.createElement('div', { className: 'agents-page-vertical-spacer' }),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'agents-page-table' },
+	                                _react2.default.createElement(_table2.default, { onRemoveRow: this.onDeletePartnershipsClicked.bind(this), columns: partnershipColumns, data: partnershipsData })
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return AgentsAndPartnerships;
+	}(_react2.default.Component);
+	
+	//Important!! This adds the router object to context
+	
+	
+	AgentsAndPartnerships.contextTypes = {
+	    router: _react2.default.PropTypes.object.isRequired
+	};
+	
+	exports.default = AgentsAndPartnerships;
+
+/***/ },
+/* 394 */
+/*!**************************************************************!*\
+  !*** ./src/client/app/views/pages/commission-files-page.jsx ***!
+  \**************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _authService = __webpack_require__(/*! ../../services/auth-service */ 229);
+	
+	var _authService2 = _interopRequireDefault(_authService);
+	
+	var _table = __webpack_require__(/*! ./../common/table.jsx */ 385);
+	
+	var _table2 = _interopRequireDefault(_table);
+	
+	var _appActions = __webpack_require__(/*! ../../actions/app-actions */ 232);
+	
+	var _appActions2 = _interopRequireDefault(_appActions);
+	
+	var _dataStore = __webpack_require__(/*! ../../stores/data-store */ 373);
+	
+	var _dataStore2 = _interopRequireDefault(_dataStore);
+	
+	var _appActions3 = __webpack_require__(/*! ../../actions/app-actions.js */ 232);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var EditFilesPage = function (_React$Component) {
+	    _inherits(EditFilesPage, _React$Component);
+	
+	    function EditFilesPage(props) {
+	        _classCallCheck(this, EditFilesPage);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(EditFilesPage).call(this, props));
+	
+	        _this.state = {
+	            loginData: _authService2.default.getLoginData(),
+	            filesData: _dataStore2.default.getCommissionFiles()
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(EditFilesPage, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            _dataStore2.default.addEventListener(_appActions3.ActionType.DELETE_COMMISSION_DOC, this.onDeleteFile.bind(this));
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            _dataStore2.default.removeEventListener(_appActions3.ActionType.DELETE_COMMISSION_DOC, this.onDeleteFile);
+	        }
+	    }, {
+	        key: 'onDeleteFile',
+	        value: function onDeleteFile() {
+	            this.state.filesData = _dataStore2.default.getCommissionFiles();
+	            this.setState(this.state);
+	        }
+	    }, {
+	        key: 'onDeleteFileClicked',
+	        value: function onDeleteFileClicked(rowIndex) {
+	            console.log("delete file at row " + rowIndex);
+	
+	            var deleteInProgress = false;
+	            if (deleteInProgress) return;
+	
+	            var fileName = this.state.filesData[rowIndex].fileName;
+	
+	            swal({
+	                title: "אישור מחיקת מסמך",
+	                text: "למחוק מסמך זה לצמיתות מהמערכת?",
+	                type: "warning",
+	                showCancelButton: true,
+	                confirmButtonColor: "#DD6B55",
+	                confirmButtonText: "כן, מחק את המסמך מהמערכת",
+	                cancelButtonText: "בטל",
+	                closeOnConfirm: false,
+	                showLoaderOnConfirm: false
+	            }, function (isConfirm) {
+	                if (isConfirm) {
+	                    _appActions2.default.deleteCommissionFile(fileName, function (status) {
+	                        if (status == 'success') {
+	                            swal({
+	                                title: "",
+	                                text: "המסמך נמחק לצמיתות מהמערכת!",
+	                                type: "success",
+	                                timer: 1500,
+	                                showConfirmButton: false
+	                            });
+	                            console.log('Data was deleted successfully from server!');
+	                        } else console.error('Error while deleting data from server!');
+	                        deleteInProgress = true;
+	                    });
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'onFileNameClicked',
+	        value: function onFileNameClicked(rowIndex) {
+	            console.log("download file at row " + rowIndex);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	
+	            var columns = [{
+	                title: "שם קובץ",
+	                key: "fileName",
+	                width: "col-33-33",
+	                type: 'read-only-button',
+	                color: 'blue',
+	                action: this.onFileNameClicked.bind(this)
+	            }, {
+	                title: "חברה",
+	                key: "companyName",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "חודש תשלום",
+	                key: "paymentMonth",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "תאריך העלאה",
+	                key: "uploadDate",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "הערות",
+	                key: "notes",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }];
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'edit-files-page animated fadeIn' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'edit-files-table shadow' },
+	                    _react2.default.createElement(_table2.default, { onRemoveRow: this.onDeleteFileClicked.bind(this), columns: columns, data: this.state.filesData })
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return EditFilesPage;
+	}(_react2.default.Component);
+	
+	//Important!! This adds the router object to context
+	
+	
+	EditFilesPage.contextTypes = {
+	    router: _react2.default.PropTypes.object.isRequired
+	};
+	
+	exports.default = EditFilesPage;
+
+/***/ },
+/* 395 */
+/*!***************************************************!*\
+  !*** ./src/client/app/views/pages/agent-page.jsx ***!
+  \***************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _table = __webpack_require__(/*! ./../common/table.jsx */ 385);
+	
+	var _table2 = _interopRequireDefault(_table);
+	
+	var _appActions = __webpack_require__(/*! ../../actions/app-actions */ 232);
+	
+	var _appActions2 = _interopRequireDefault(_appActions);
+	
+	var _dataStore = __webpack_require__(/*! ../../stores/data-store */ 373);
+	
+	var _dataStore2 = _interopRequireDefault(_dataStore);
+	
+	var _appActions3 = __webpack_require__(/*! ../../actions/app-actions.js */ 232);
+	
+	var _input = __webpack_require__(/*! ../../../../../~/muicss/lib/react/input */ 377);
 	
 	var _input2 = _interopRequireDefault(_input);
 	
-	var _strings = __webpack_require__(/*! ../constants/strings */ 238);
+	var _strings = __webpack_require__(/*! ../../constants/strings */ 238);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var AgentPage = function (_React$Component) {
+	    _inherits(AgentPage, _React$Component);
+	
+	    function AgentPage(props) {
+	        _classCallCheck(this, AgentPage);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AgentPage).call(this, props));
+	
+	        var newAgent = _this.props.params.agentId == "new";
+	        _this.state = {
+	            newAgent: newAgent,
+	            agentData: null
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(AgentPage, [{
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            this.state.newAgent = nextProps.params.agentId == "new";
+	            this.setState(this.state);
+	        }
+	    }, {
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            if (this.state.newAgent == false) {
+	                this.state.agentData = _dataStore2.default.getAgent(this.props.params.agentId);
+	            }
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {}
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	
+	            var columns = [{
+	                title: "חברה",
+	                key: "companyName",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "מספר סוכן",
+	                key: "agentNumber",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "סוג תשלום",
+	                key: "paymentType",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "חלק סוכן %",
+	                key: "agentPart",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "חלק סוכנות %",
+	                key: "agencyPart",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }];
+	
+	            var name = "",
+	                familyName = "",
+	                idNumber = "",
+	                phoneNumber = "",
+	                faxNumber = "",
+	                email = "",
+	                active = "",
+	                companies = null;
+	            if (this.state.newAgent == false) {
+	                name = this.state.agentData.name;
+	                familyName = this.state.agentData.familyName;
+	                idNumber = this.state.agentData.idNumber;
+	                phoneNumber = this.state.agentData.phoneNumber;
+	                faxNumber = this.state.agentData.faxNumber;
+	                email = this.state.agentData.email;
+	                active = this.state.agentData.active;
+	                companies = this.state.agentData.companies;
+	            }
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'new-agent-page animated fadeIn' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'new-agent-page-title' },
+	                    _strings.strings.agentPageDetails
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'new-agent-form hcontainer-no-wrap' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'new-agent-form-item-box' },
+	                        _react2.default.createElement(_input2.default, { label: _strings.strings.agentPageName, defaultValue: name, floatingLabel: true })
+	                    ),
+	                    _react2.default.createElement('div', { className: 'new-agent-form-horizontal-spacer' }),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'new-agent-form-item-box' },
+	                        _react2.default.createElement(_input2.default, { label: _strings.strings.agentPageFamilyName, defaultValue: familyName, floatingLabel: true })
+	                    ),
+	                    _react2.default.createElement('div', { className: 'new-agent-form-horizontal-spacer' }),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'new-agent-form-item-box' },
+	                        _react2.default.createElement(_input2.default, { label: _strings.strings.agentPageId, defaultValue: idNumber, floatingLabel: true })
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'new-agent-form hcontainer-no-wrap' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'new-agent-form-item-box' },
+	                        _react2.default.createElement(_input2.default, { label: _strings.strings.agentPagePhone, defaultValue: phoneNumber, floatingLabel: true })
+	                    ),
+	                    _react2.default.createElement('div', { className: 'new-agent-form-horizontal-spacer' }),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'new-agent-form-item-box' },
+	                        _react2.default.createElement(_input2.default, { label: _strings.strings.agentPageFax, defaultValue: faxNumber, floatingLabel: true })
+	                    ),
+	                    _react2.default.createElement('div', { className: 'new-agent-form-horizontal-spacer' }),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'new-agent-form-item-box' },
+	                        _react2.default.createElement(_input2.default, { label: _strings.strings.agentPageEmail, defaultValue: email, floatingLabel: true })
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'new-agent-form-table' },
+	                    _react2.default.createElement(_table2.default, { columns: columns, data: companies })
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return AgentPage;
+	}(_react2.default.Component);
+	
+	//Important!! This adds the router object to context
+	
+	
+	AgentPage.contextTypes = {
+	    router: _react2.default.PropTypes.object.isRequired
+	};
+	
+	exports.default = AgentPage;
+
+/***/ },
+/* 396 */
+/*!*********************************************************!*\
+  !*** ./src/client/app/views/pages/partnership-page.jsx ***!
+  \*********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _table = __webpack_require__(/*! ./../common/table.jsx */ 385);
+	
+	var _table2 = _interopRequireDefault(_table);
+	
+	var _appActions = __webpack_require__(/*! ../../actions/app-actions */ 232);
+	
+	var _appActions2 = _interopRequireDefault(_appActions);
+	
+	var _dataStore = __webpack_require__(/*! ../../stores/data-store */ 373);
+	
+	var _dataStore2 = _interopRequireDefault(_dataStore);
+	
+	var _appActions3 = __webpack_require__(/*! ../../actions/app-actions.js */ 232);
+	
+	var _input = __webpack_require__(/*! ../../../../../~/muicss/lib/react/input */ 377);
+	
+	var _input2 = _interopRequireDefault(_input);
+	
+	var _strings = __webpack_require__(/*! ../../constants/strings */ 238);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -52505,6 +52520,211 @@
 	};
 	
 	exports.default = PartnershipPage;
+
+/***/ },
+/* 397 */
+/*!**********************************************************!*\
+  !*** ./src/client/app/views/pages/agent-salary-page.jsx ***!
+  \**********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _table = __webpack_require__(/*! ./../common/table.jsx */ 385);
+	
+	var _table2 = _interopRequireDefault(_table);
+	
+	var _appActions = __webpack_require__(/*! ../../actions/app-actions */ 232);
+	
+	var _appActions2 = _interopRequireDefault(_appActions);
+	
+	var _dataStore = __webpack_require__(/*! ../../stores/data-store */ 373);
+	
+	var _dataStore2 = _interopRequireDefault(_dataStore);
+	
+	var _appActions3 = __webpack_require__(/*! ../../actions/app-actions.js */ 232);
+	
+	var _input = __webpack_require__(/*! ../../../../../~/muicss/lib/react/input */ 377);
+	
+	var _input2 = _interopRequireDefault(_input);
+	
+	var _strings = __webpack_require__(/*! ../../constants/strings */ 238);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var AgentSalaryPage = function (_React$Component) {
+	    _inherits(AgentSalaryPage, _React$Component);
+	
+	    function AgentSalaryPage(props) {
+	        _classCallCheck(this, AgentSalaryPage);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AgentSalaryPage).call(this, props));
+	
+	        var newAgent = _this.props.params.agentId == "new";
+	        _this.state = {
+	            newAgent: newAgent,
+	            agentData: null
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(AgentSalaryPage, [{
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            this.state.newAgent = nextProps.params.agentId == "new";
+	            this.setState(this.state);
+	        }
+	    }, {
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            if (this.state.newAgent == false) {
+	                this.state.agentData = _dataStore2.default.getAgent(this.props.params.agentId);
+	            }
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {}
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	
+	            var columns = [{
+	                title: "חברה",
+	                key: "companyName",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "מספר סוכן",
+	                key: "agentNumber",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "סוג תשלום",
+	                key: "paymentType",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "חלק סוכן %",
+	                key: "agentPart",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "חלק סוכנות %",
+	                key: "agencyPart",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }];
+	
+	            var name = "",
+	                familyName = "",
+	                idNumber = "",
+	                phoneNumber = "",
+	                faxNumber = "",
+	                email = "",
+	                active = "",
+	                companies = null;
+	            if (this.state.newAgent == false) {
+	                name = this.state.agentData.name;
+	                familyName = this.state.agentData.familyName;
+	                idNumber = this.state.agentData.idNumber;
+	                phoneNumber = this.state.agentData.phoneNumber;
+	                faxNumber = this.state.agentData.faxNumber;
+	                email = this.state.agentData.email;
+	                active = this.state.agentData.active;
+	                companies = this.state.agentData.companies;
+	            }
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'new-agent-page animated fadeIn' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'new-agent-page-title' },
+	                    _strings.strings.agentSalaryPage
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'new-agent-form hcontainer-no-wrap' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'new-agent-form-item-box' },
+	                        _react2.default.createElement(_input2.default, { label: _strings.strings.agentPageName, defaultValue: name, floatingLabel: true })
+	                    ),
+	                    _react2.default.createElement('div', { className: 'new-agent-form-horizontal-spacer' }),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'new-agent-form-item-box' },
+	                        _react2.default.createElement(_input2.default, { label: _strings.strings.agentPageFamilyName, defaultValue: familyName, floatingLabel: true })
+	                    ),
+	                    _react2.default.createElement('div', { className: 'new-agent-form-horizontal-spacer' }),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'new-agent-form-item-box' },
+	                        _react2.default.createElement(_input2.default, { label: _strings.strings.agentPageId, defaultValue: idNumber, floatingLabel: true })
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'new-agent-form hcontainer-no-wrap' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'new-agent-form-item-box' },
+	                        _react2.default.createElement(_input2.default, { label: _strings.strings.agentPagePhone, defaultValue: phoneNumber, floatingLabel: true })
+	                    ),
+	                    _react2.default.createElement('div', { className: 'new-agent-form-horizontal-spacer' }),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'new-agent-form-item-box' },
+	                        _react2.default.createElement(_input2.default, { label: _strings.strings.agentPageFax, defaultValue: faxNumber, floatingLabel: true })
+	                    ),
+	                    _react2.default.createElement('div', { className: 'new-agent-form-horizontal-spacer' }),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'new-agent-form-item-box' },
+	                        _react2.default.createElement(_input2.default, { label: _strings.strings.agentPageEmail, defaultValue: email, floatingLabel: true })
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'new-agent-form-table' },
+	                    _react2.default.createElement(_table2.default, { columns: columns, data: companies })
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return AgentSalaryPage;
+	}(_react2.default.Component);
+	
+	//Important!! This adds the router object to context
+	
+	
+	AgentSalaryPage.contextTypes = {
+	    router: _react2.default.PropTypes.object.isRequired
+	};
+	
+	exports.default = AgentSalaryPage;
 
 /***/ }
 /******/ ]);

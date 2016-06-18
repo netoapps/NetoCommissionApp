@@ -20,6 +20,10 @@ class DataStore extends Store {
         ]
         this.initialize('files',files);
 
+        //defaults
+        //nifraim - 70(agent) 30(company)
+        //heikef - 55(agent) 45(company)
+        //bonus - 50(agent) 50(company)
 
         var agents = [
             {
@@ -31,9 +35,9 @@ class DataStore extends Store {
                 email: "karin@neto-finance.co.il",
                 active: true,
                 companies: [
-                    {companyName: "מגדל", agentNumber: "2342234523",paymentType: "נפרעים",  agentPart: "55%", agencyPart: "45%"},
-                    {companyName: "אלטשולר שחם", agentNumber: "234234",paymentType: "היקף",  agentPart: "55%", agencyPart: "45%"},
-                    {companyName: "מנורה", agentNumber: "789565",paymentType: "בונוס",  agentPart: "55%", agencyPart: "45%"}
+                    {companyName: "מגדל", agentNumber: "2342234523",paymentType: "נפרעים",  agentPart: "55", agencyPart: "45"},
+                    {companyName: "אלטשולר שחם", agentNumber: "234234",paymentType: "היקף",  agentPart: "55", agencyPart: "45"},
+                    {companyName: "מנורה", agentNumber: "789565",paymentType: "בונוס",  agentPart: "55", agencyPart: "45"}
                 ]
             },
             {
@@ -45,25 +49,36 @@ class DataStore extends Store {
                 email: "idan@neto-finance.co.il",
                 active: true,
                 companies: [
-                    {companyName: "מגדל", agentNumber: "57546",paymentType: "נפרעים",  agentPart: "55%", agencyPart: "45%"},
-                    {companyName: "אלטשולר שחם", agentNumber: "231",paymentType: "היקף",  agentPart: "55%", agencyPart: "45%"},
-                    {companyName: "כלל", agentNumber: "6865",paymentType: "היקף",  agentPart: "55%", agencyPart: "45%"},
-                    {companyName: "מנורה", agentNumber: "9789",paymentType: "בונוס",  agentPart: "55%", agencyPart: "45%"}
+                    {companyName: "מגדל", agentNumber: "57546",paymentType: "נפרעים",  agentPart: "55", agencyPart: "45"},
+                    {companyName: "אלטשולר שחם", agentNumber: "231",paymentType: "היקף",  agentPart: "55", agencyPart: "45"},
+                    {companyName: "כלל", agentNumber: "6865",paymentType: "היקף",  agentPart: "55", agencyPart: "45"},
+                    {companyName: "מנורה", agentNumber: "9789",paymentType: "בונוס",  agentPart: "55", agencyPart: "45"}
                 ]
             },
             {
                 name: "תומר",
-                familyName: "משהו",
+                familyName: "כהן",
                 idNumber: "22343452",
                 phoneNumber: "0546747636",
                 faxNumber: "049324232",
                 email: "tomer@neto-finance.co.il",
                 active: false,
                 companies: [
-                    {companyName: "מגדל", agentNumber: "54633",paymentType: "נפרעים",  agentPart: "55%", agencyPart: "45%"},
-                    {companyName: "אלטשולר שחם", agentNumber: "2342",paymentType: "היקף",  agentPart: "55%", agencyPart: "45%"},
-                    {companyName: "מנורה", agentNumber: "678678",paymentType: "בונוס",  agentPart: "55%", agencyPart: "45%"}
+                    {companyName: "מגדל", agentNumber: "54633",paymentType: "נפרעים",  agentPart: "55", agencyPart: "45"},
+                    {companyName: "אלטשולר שחם", agentNumber: "2342",paymentType: "היקף",  agentPart: "55", agencyPart: "45"},
+                    {companyName: "מנורה", agentNumber: "678678",paymentType: "בונוס",  agentPart: "55", agencyPart: "45"}
                 ]
+            },
+            {
+                name: "חומוס",
+                familyName: "משאושה",
+                idNumber: "67865443",
+                phoneNumber: "",
+                faxNumber: "049324232",
+                email: "tomer@neto-finance.co.il",
+                active: false,
+                companies: null
+
             }
         ]
         this.initialize('agents',agents);

@@ -2,10 +2,10 @@
 
 import React from 'react';
 
-import Button from 'muicss/lib/react/button';
-import Caret from 'muicss/lib/react/caret';
-import * as jqLite from 'muicss/lib/js/lib/jqLite';
-import * as util from 'muicss/lib/js/lib/util';
+import Button from '../../../../../node_modules/muicss/lib/react/button';
+import Caret from '../../../../../node_modules/muicss/lib/react/caret';
+import * as jqLite from '../../../../../node_modules/muicss/lib/js/lib/jqLite';
+import * as util from '../../../../../node_modules/muicss/lib/js/lib/util';
 
 
 const PropTypes = React.PropTypes,

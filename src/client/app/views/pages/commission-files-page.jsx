@@ -1,9 +1,9 @@
 import React from 'react';
-import AuthService from '../services/auth-service'
-import Table from './table.jsx';
-import AppActions from '../actions/app-actions'
-import AppStore from '../stores/data-store'
-import {ActionType} from '../actions/app-actions.js'
+import AuthService from '../../services/auth-service'
+import Table from './../common/table.jsx';
+import AppActions from '../../actions/app-actions'
+import AppStore from '../../stores/data-store'
+import {ActionType} from '../../actions/app-actions.js'
 
 class EditFilesPage extends React.Component {
 
@@ -77,7 +77,7 @@ class EditFilesPage extends React.Component {
                 }
             });
     }
-    onDownloadFileClicked(rowIndex)
+    onFileNameClicked(rowIndex)
     {
         console.log("download file at row " + rowIndex)
     }
@@ -90,8 +90,9 @@ class EditFilesPage extends React.Component {
                 title: "שם קובץ",
                 key: "fileName",
                 width: "col-33-33",
-                type: 'read-only',
-                color: 'normal'
+                type: 'read-only-button',
+                color: 'blue',
+                action: this.onFileNameClicked.bind(this)
             },
             {
                 title: "חברה",
@@ -120,32 +121,13 @@ class EditFilesPage extends React.Component {
                 width: "col-33-33",
                 type: 'read-only',
                 color: 'normal'
-            },
-            {
-                title: "פעולות",
-                key: "actions",
-                width: "col-33-33",
-                type: 'action',
-                color: 'normal'
             }
-
         ]
-
-        var deleteAction = {name: "מחיקה", action: this.onDeleteFileClicked.bind(this),color: "red"}
-        var downloadAction = {name: "הורדה", action: this.onDownloadFileClicked.bind(this),color: "blue"}
-
-        var filesData = []
-        for(var file = 0; file < this.state.filesData.length; file++)
-        {
-            var fileData = this.state.filesData[file]
-            fileData["actions"] = [downloadAction,deleteAction]
-            filesData.push(fileData)
-        }
 
         return (
             <div className="edit-files-page animated fadeIn">
                 <div className="edit-files-table shadow">
-                    <Table columns={columns} data={filesData}/>
+                    <Table onRemoveRow={this.onDeleteFileClicked.bind(this)} columns={columns} data={this.state.filesData}/>
                 </div>
             </div>
         );

@@ -1,11 +1,11 @@
 import React from 'react';
-import AuthService from '../services/auth-service'
-import Tabs from 'muicss/lib/react/tabs'
-import Tab from 'muicss/lib/react/tab'
-import { strings } from '../constants/strings'
-import Button from 'muicss/lib/react/button'
-import Table from './table.jsx'
-import AppStore from '../stores/data-store'
+import AuthService from '../../services/auth-service'
+import Tabs from '../../../../../node_modules/muicss/lib/react/tabs'
+import Tab from '../../../../../node_modules/muicss/lib/react/tab'
+import { strings } from '../../constants/strings'
+import Button from '../../../../../node_modules/muicss/lib/react/button'
+import Table from './../common/table.jsx'
+import AppStore from '../../stores/data-store'
 
 class AgentsAndPartnerships extends React.Component {
 
@@ -37,7 +37,7 @@ class AgentsAndPartnerships extends React.Component {
     onAgentClicked(rowIndex)
     {
         var agentId = this.state.agentsData[rowIndex].idNumber
-        this.context.router.push('/app/agents-and-partnerships/agent-page/'+agentId)
+        this.context.router.push('/app/agents-and-partnerships/agent-salary-page/'+agentId)
     }
     onPartnershipClicked(rowIndex)
     {
@@ -89,20 +89,11 @@ class AgentsAndPartnerships extends React.Component {
                 width: "col-33-33",
                 type: 'read-only',
                 color: 'normal'
-            },
-            {
-                title: "פעולות",
-                key: "actions",
-                width: "col-33-33",
-                type: 'action',
-                color: 'normal'
             }
         ]
 
 
 
-        var deleteAgentAction = {name: "מחיקה", action: this.onDeleteAgentClicked.bind(this),color: "red"}
-        var editAgentAction = {name: "עריכה", action: this.onEditAgentClicked.bind(this),color: "blue"}
         var agentsData = []
         for(var agentIndex = 0; agentIndex < this.state.agentsData.length; agentIndex++)
         {
@@ -111,7 +102,6 @@ class AgentsAndPartnerships extends React.Component {
             agentData["name"] = this.state.agentsData[agentIndex].name + " " + this.state.agentsData[agentIndex].familyName
             agentData["idNumber"] = this.state.agentsData[agentIndex].idNumber
             agentData["status"] = this.state.agentsData[agentIndex].active ? "פעיל":"לא פעיל"
-            agentData["actions"] = [editAgentAction,deleteAgentAction]
             agentsData.push(agentData)
         }
 
@@ -138,18 +128,10 @@ class AgentsAndPartnerships extends React.Component {
                 width: "col-33-33",
                 type: 'read-only',
                 color: 'normal'
-            },
-            {
-                title: "פעולות",
-                key: "actions",
-                width: "col-33-33",
-                type: 'action',
-                color: 'normal'
             }
         ]
 
-        var deletePartnershipsDataAction = {name: "מחיקה", action: this.onDeletePartnershipsClicked.bind(this),color: "red"}
-        var editPartnershipsAction = {name: "עריכה", action: this.onEditPartnershipsClicked.bind(this),color: "blue"}
+
         var partnershipsData = []
         for(var partnershipIndex = 0; partnershipIndex < this.state.partnershipsData.length; partnershipIndex++)
         {
@@ -171,7 +153,6 @@ class AgentsAndPartnerships extends React.Component {
                 }
             }
             partnershipData["status"] = this.state.partnershipsData[partnershipIndex].active ? "פעיל":"לא פעיל"
-            partnershipData["actions"] = [editPartnershipsAction,deletePartnershipsDataAction]
             partnershipsData.push(partnershipData)
         }
 
@@ -186,7 +167,7 @@ class AgentsAndPartnerships extends React.Component {
                             <Button className="shadow" onClick={this.onNewAgent.bind(this)} color="primary">{strings.newAgent}</Button>
                             <div className="agents-page-vertical-spacer"/>
                             <div className="agents-page-table">
-                                <Table columns={agentsColumns} data={agentsData}/>
+                                <Table onRemoveRow={this.onDeleteAgentClicked.bind(this)} columns={agentsColumns} data={agentsData}/>
                             </div>
                         </div>
 
@@ -198,7 +179,7 @@ class AgentsAndPartnerships extends React.Component {
                             <Button className="shadow" onClick={this.onNewPartnership.bind(this)} color="primary">{strings.newPartnership}</Button>
                             <div className="agents-page-vertical-spacer"/>
                             <div className="agents-page-table">
-                                <Table columns={partnershipColumns} data={partnershipsData}/>
+                                <Table onRemoveRow={this.onDeletePartnershipsClicked.bind(this)} columns={partnershipColumns} data={partnershipsData}/>
                             </div>
                         </div>
 

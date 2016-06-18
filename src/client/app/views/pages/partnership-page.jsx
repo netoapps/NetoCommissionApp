@@ -1,12 +1,12 @@
 import React from 'react';
-import Table from './table.jsx';
-import AppActions from '../actions/app-actions'
-import AppStore from '../stores/data-store'
-import {ActionType} from '../actions/app-actions.js'
-import Input from 'muicss/lib/react/input';
-import { strings } from '../constants/strings'
+import Table from './../common/table.jsx';
+import AppActions from '../../actions/app-actions'
+import AppStore from '../../stores/data-store'
+import {ActionType} from '../../actions/app-actions.js'
+import Input from '../../../../../node_modules/muicss/lib/react/input';
+import { strings } from '../../constants/strings'
 
-class AgentPage extends React.Component {
+class PartnershipPage extends React.Component {
 
     constructor(props) {
         super(props);
@@ -24,9 +24,9 @@ class AgentPage extends React.Component {
     }
     componentWillMount()
     {
-        if(this.state.newAgent == false)
+        if(this.state.newAgent == true)
         {
-            this.state.agentData = AppStore.getAgent(this.props.params.agentId)
+            this.state.agentData = AppStore.getAgent()
         }
     }
 
@@ -36,7 +36,6 @@ class AgentPage extends React.Component {
     }
 
     render () {
-
 
         var columns = [
 
@@ -77,51 +76,44 @@ class AgentPage extends React.Component {
             }
         ]
 
+        var data = [
+            {companyName: "מגדל", agentNumber: "2342234523",paymentType: "נפרעים",  agentPart: "55%", agencyPart: "45%"},
+            {companyName: "אלטשולר שחם", agentNumber: "234234",paymentType: "היקף",  agentPart: "55%", agencyPart: "45%"},
+            {companyName: "מנורה", agentNumber: "789565",paymentType: "בונוס",  agentPart: "55%", agencyPart: "45%"}
+        ]
 
-        var name = "",familyName = "",idNumber = "",phoneNumber = "",faxNumber = "",email = "",active = "",companies = null
-        if(this.state.newAgent == false)
-        {
-            name = this.state.agentData.name
-            familyName = this.state.agentData.familyName
-            idNumber = this.state.agentData.idNumber
-            phoneNumber = this.state.agentData.phoneNumber
-            faxNumber = this.state.agentData.faxNumber
-            email = this.state.agentData.email
-            active = this.state.agentData.active
-            companies = this.state.agentData.companies
-        }
 
         return (
             <div className="new-agent-page animated fadeIn">
-                <div className="new-agent-page-title">{strings.agentPageDetails}</div>
+                <div className="new-agent-page-title">{strings.partnershipPageDetails}</div>
                 <div className="new-agent-form hcontainer-no-wrap">
                     <div className="new-agent-form-item-box">
-                        <Input label={strings.agentPageName} defaultValue={name} floatingLabel={true} />
+                        <Input label={strings.partnershipPageName} floatingLabel={true} />
                     </div>
                     <div className="new-agent-form-horizontal-spacer"/>
                     <div className="new-agent-form-item-box">
-                        <Input label={strings.agentPageFamilyName} defaultValue={familyName} floatingLabel={true} />
+                        <Input label={strings.partnershipPageFamilyName} floatingLabel={true} />
                     </div>
                     <div className="new-agent-form-horizontal-spacer"/>
                     <div className="new-agent-form-item-box">
-                        <Input label={strings.agentPageId} defaultValue={idNumber} floatingLabel={true} />
+                        <Input label={strings.partnershipPageId} floatingLabel={true} />
                     </div>
                 </div>
                 <div className="new-agent-form hcontainer-no-wrap">
                     <div className="new-agent-form-item-box">
-                        <Input label={strings.agentPagePhone} defaultValue={phoneNumber} floatingLabel={true} />
+                        <Input label={strings.partnershipPagePhone} floatingLabel={true} />
                     </div>
                     <div className="new-agent-form-horizontal-spacer"/>
                     <div className="new-agent-form-item-box">
-                        <Input label={strings.agentPageFax} defaultValue={faxNumber} floatingLabel={true} />
+                        <Input label={strings.partnershipPageFax} floatingLabel={true} />
                     </div>
                     <div className="new-agent-form-horizontal-spacer"/>
                     <div className="new-agent-form-item-box">
-                        <Input label={strings.agentPageEmail} defaultValue={email} floatingLabel={true} />
+                        <Input label={strings.partnershipPageEmail} floatingLabel={true} />
                     </div>
                 </div>
                 <div className="new-agent-form-table">
-                    <Table columns={columns} data={companies}/>
+                    <Table columns={columns} data={data}/>
                 </div>
             </div>
         );
@@ -129,8 +121,8 @@ class AgentPage extends React.Component {
 }
 
 //Important!! This adds the router object to context
-AgentPage.contextTypes = {
+PartnershipPage.contextTypes = {
     router: React.PropTypes.object.isRequired
 }
 
-export default AgentPage;
+export default PartnershipPage;
