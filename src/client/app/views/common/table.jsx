@@ -1,5 +1,8 @@
 import React from 'react';
-import FlatRippleButton from './FlatRippleButton.jsx'
+import FlatRippleButton from './flat-ripple-button.jsx'
+import TableDropdown from './table-dropdown.jsx'
+import DropdownItem from '../../../../../node_modules/muicss/lib/react/dropdown-item';
+import FixedWidthDropdown from './fixed-width-dropdown.jsx';
 
 class TableCell extends React.Component {
 
@@ -57,7 +60,7 @@ class TableCell extends React.Component {
             value = value + " %"
             node = <div className={"table-cell-read-only " + color}>{value}</div>;
         }
-        if (this.state.column.type === "read-only-button")
+        if (this.state.column.type === "button")
         {
             action = this.state.column.action
             className = "table-button " + this.state.column.color
@@ -65,9 +68,23 @@ class TableCell extends React.Component {
                 <button className={className} onClick={ function(action) { action(this.props.rowIndex) }.bind(this,action)}>{this.props.value}</button>
             </div>;
         }
+        if (this.state.column.type === "select")
+        {
+            const options = [];
+            for (let type = 0; type <= this.state.column.options.length; type++ ) {
+                options.push(<DropdownItem  value={this.state.column.options[type]} key={type}>{this.state.column.options[type]}</DropdownItem>);
+            }
+
+            node = <div className="h-center"><TableDropdown  className="table-dropdown" label={this.state.column.options[0]} alignMenu="right" >
+                        {options}
+                   </TableDropdown></div>;
+
+            //node = <div className="absolute-center">asaf</div>
+        }
+
         return ( <div className={className + " " + this.state.column.width}>
-            {node}
-        </div>);
+                    {node}
+                 </div>);
     }
 }
 

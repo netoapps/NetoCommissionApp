@@ -72,7 +72,7 @@ class AgentsAndPartnerships extends React.Component {
                 title: "שם",
                 key: "name",
                 width: "col-33-33",
-                type: 'read-only-button',
+                type: 'button',
                 color: 'blue',
                 action: this.onAgentClicked.bind(this)
             },
@@ -111,7 +111,7 @@ class AgentsAndPartnerships extends React.Component {
                 title: "שותפים",
                 key: "names",
                 width: "col-33-33",
-                type: 'read-only-button',
+                type: 'button',
                 color: 'blue',
                 action: this.onPartnershipClicked.bind(this)
             },

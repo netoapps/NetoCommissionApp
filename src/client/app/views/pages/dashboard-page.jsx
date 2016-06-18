@@ -3,7 +3,7 @@ import AuthService from '../../services/auth-service'
 import Button from '../../../../../node_modules/muicss/lib/react/button'
 import Dropdown from '../../../../../node_modules/muicss/lib/react/dropdown';
 import DropdownItem from '../../../../../node_modules/muicss/lib/react/dropdown-item';
-import FixedWidthDropdown from './../common/FixedWidthDropdown.jsx';
+import FixedWidthDropdown from './../common/fixed-width-dropdown.jsx';
 import { strings } from '../../constants/strings'
 import Chart from "react-chartjs";
 import {Bar} from "react-chartjs";
@@ -75,11 +75,11 @@ class DashboardToolbar extends React.Component {
 
         return (
             <div className="hcontainer-no-wrap">
-                <FixedWidthDropdown label={this.state.selectedMonth} alignMenu="right" >
+                <FixedWidthDropdown shadow label={this.state.selectedMonth} alignMenu="right" >
                         {months}
                 </FixedWidthDropdown>
                 <div className="dashboard-buttons-horizontal-spacer"/>
-                <FixedWidthDropdown className="fixed-size-button" label={this.state.selectedYear} alignMenu="right" >
+                <FixedWidthDropdown shadow className="fixed-size-button" label={this.state.selectedYear} alignMenu="right" >
                     {years}
                 </FixedWidthDropdown>
                 <div className="dashboard-buttons-horizontal-spacer"/>

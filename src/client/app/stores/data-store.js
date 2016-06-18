@@ -100,9 +100,16 @@ class DataStore extends Store {
 
         this.initialize('partnerships',partnershipsData);
 
+        var companies = ["כלל ביטוח","כלל גמל","מגדל","מנורה","אלטשולר שחם","ילין לפידות","מיטב דש","הראל","הפניקס","אנאליסט","איי בי איי","אקסלנס","הכשרה"]
+        this.initialize('companies',companies);
 
+        var commissionType = ["עמלה","נפרעים","בונוס"]
+        this.initialize('commissionType',commissionType);
     }
-
+    getCommissionTypes()
+    {
+        return this.get('commissionType');
+    }
     getCommissionFiles()
     {
         return this.get('files');
@@ -110,6 +117,10 @@ class DataStore extends Store {
     getAgents()
     {
         return this.get('agents');
+    }
+    getCompanies()
+    {
+        return this.get('companies');
     }
     getAgent(idNumber)
     {

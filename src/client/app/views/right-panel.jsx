@@ -1,6 +1,6 @@
 import React from 'react';
 import { strings } from '../constants/strings'
-import FlatRippleButton from './common/FlatRippleButton.jsx'
+import FlatRippleButton from './common/flat-ripple-button.jsx'
 import Button from 'muicss/lib/react/button'
 
 class RightPanelItem extends React.Component {

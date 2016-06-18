@@ -90,7 +90,7 @@ class EditFilesPage extends React.Component {
                 title: "שם קובץ",
                 key: "fileName",
                 width: "col-33-33",
-                type: 'read-only-button',
+                type: 'button',
                 color: 'blue',
                 action: this.onFileNameClicked.bind(this)
             },

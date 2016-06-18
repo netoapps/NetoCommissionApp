@@ -7,19 +7,18 @@ import Caret from '../../../../../node_modules/muicss/lib/react/caret';
 import * as jqLite from '../../../../../node_modules/muicss/lib/js/lib/jqLite';
 import * as util from '../../../../../node_modules/muicss/lib/js/lib/util';
 
-
 const PropTypes = React.PropTypes,
     dropdownClass = 'mui-dropdown',
     menuClass = 'mui-dropdown__menu',
     openClass = 'mui--is-open',
-    rightClass = 'mui-dropdown__menu--right';
+    rightClass = 'mui-dropdown__menu--right ';
 
 
 /**
  * Dropdown constructor
  * @class
  */
-class FixedWidthDropdown extends React.Component {
+class TableDropdown extends React.Component {
     constructor(props) {
         super(props);
 
@@ -115,14 +114,14 @@ class FixedWidthDropdown extends React.Component {
         }
 
         buttonEl = (
-            <Button className="fixed-size-button shadow"
-                ref="button"
-                type="button"
-                onClick={this.onClickCB}
-                color={this.props.color}
-                variant={this.props.variant}
-                size={this.props.size}
-                disabled={this.props.disabled}
+            <Button className="table-dropdown-button"
+                    ref="button"
+                    type="button"
+                    onClick={this.onClickCB}
+                    color={this.props.color}
+                    variant={this.props.variant}
+                    size={this.props.size}
+                    disabled={this.props.disabled}
             >
                 {labelEl}
             </Button>
@@ -137,14 +136,14 @@ class FixedWidthDropdown extends React.Component {
             cs = util.classNames(cs);
 
             menuEl = (
-                <ul
+                <div className="h-center"><ul
                     ref="menuEl"
                     className={cs}
                     style={{top: this.state.menuTop} }
                     onClick={this.selectCB}
                 >
                     {this.props.children}
-                </ul>
+                </ul></div>
             );
         }
 
@@ -163,7 +162,7 @@ class FixedWidthDropdown extends React.Component {
     }
 }
 
-FixedWidthDropdown.propTypes = {
+TableDropdown.propTypes = {
     color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark',
         'accent']),
     variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
@@ -178,10 +177,10 @@ FixedWidthDropdown.propTypes = {
     disabled: PropTypes.bool
 };
 
-FixedWidthDropdown.defaultProps = {
+TableDropdown.defaultProps = {
     className: '',
     color: 'default',
-    variant: 'default',
+    variant: 'flat',
     size: 'default',
     label: '',
     alignMenu: 'left',
@@ -191,4 +190,4 @@ FixedWidthDropdown.defaultProps = {
 };
 
 /** Define module API */
-export default FixedWidthDropdown;
+export default TableDropdown;

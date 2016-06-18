@@ -63,47 +63,47 @@
 	
 	var _authService2 = _interopRequireDefault(_authService);
 	
-	var _loginPage = __webpack_require__(/*! ./views/pages/login-page.jsx */ 389);
+	var _loginPage = __webpack_require__(/*! ./views/pages/login-page.jsx */ 237);
 	
 	var _loginPage2 = _interopRequireDefault(_loginPage);
 	
-	var _signupPage = __webpack_require__(/*! ./views/pages/signup-page.jsx */ 390);
+	var _signupPage = __webpack_require__(/*! ./views/pages/signup-page.jsx */ 239);
 	
 	var _signupPage2 = _interopRequireDefault(_signupPage);
 	
-	var _dashboardPage = __webpack_require__(/*! ./views/pages/dashboard-page.jsx */ 391);
+	var _dashboardPage = __webpack_require__(/*! ./views/pages/dashboard-page.jsx */ 240);
 	
 	var _dashboardPage2 = _interopRequireDefault(_dashboardPage);
 	
-	var _commissionsPage = __webpack_require__(/*! ./views/pages/commissions-page.jsx */ 392);
+	var _commissionsPage = __webpack_require__(/*! ./views/pages/commissions-page.jsx */ 263);
 	
 	var _commissionsPage2 = _interopRequireDefault(_commissionsPage);
 	
-	var _agentsAndPartnershipsPage = __webpack_require__(/*! ./views/pages/agents-and-partnerships-page.jsx */ 393);
+	var _agentsAndPartnershipsPage = __webpack_require__(/*! ./views/pages/agents-and-partnerships-page.jsx */ 371);
 	
 	var _agentsAndPartnershipsPage2 = _interopRequireDefault(_agentsAndPartnershipsPage);
 	
-	var _commissionFilesPage = __webpack_require__(/*! ./views/pages/commission-files-page.jsx */ 394);
+	var _commissionFilesPage = __webpack_require__(/*! ./views/pages/commission-files-page.jsx */ 376);
 	
 	var _commissionFilesPage2 = _interopRequireDefault(_commissionFilesPage);
 	
-	var _agentPage = __webpack_require__(/*! ./views/pages/agent-page.jsx */ 395);
+	var _agentPage = __webpack_require__(/*! ./views/pages/agent-page.jsx */ 377);
 	
 	var _agentPage2 = _interopRequireDefault(_agentPage);
 	
-	var _agentSalaryPage = __webpack_require__(/*! ./views/pages/agent-salary-page.jsx */ 397);
+	var _agentSalaryPage = __webpack_require__(/*! ./views/pages/agent-salary-page.jsx */ 381);
 	
 	var _agentSalaryPage2 = _interopRequireDefault(_agentSalaryPage);
 	
-	var _partnershipPage = __webpack_require__(/*! ./views/pages/partnership-page.jsx */ 396);
+	var _partnershipPage = __webpack_require__(/*! ./views/pages/partnership-page.jsx */ 382);
 	
 	var _partnershipPage2 = _interopRequireDefault(_partnershipPage);
 	
-	var _topBar = __webpack_require__(/*! ./views/top-bar.jsx */ 380);
+	var _topBar = __webpack_require__(/*! ./views/top-bar.jsx */ 383);
 	
 	var _topBar2 = _interopRequireDefault(_topBar);
 	
-	var _rightPanel = __webpack_require__(/*! ./views/right-panel.jsx */ 382);
+	var _rightPanel = __webpack_require__(/*! ./views/right-panel.jsx */ 385);
 	
 	var _rightPanel2 = _interopRequireDefault(_rightPanel);
 	
@@ -28206,7 +28206,149 @@
 	exports.default = Logger;
 
 /***/ },
-/* 237 */,
+/* 237 */
+/*!***************************************************!*\
+  !*** ./src/client/app/views/pages/login-page.jsx ***!
+  \***************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _authService = __webpack_require__(/*! ../../services/auth-service */ 229);
+	
+	var _authService2 = _interopRequireDefault(_authService);
+	
+	var _strings = __webpack_require__(/*! ../../constants/strings */ 238);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Login = function (_React$Component) {
+	    _inherits(Login, _React$Component);
+	
+	    function Login() {
+	        _classCallCheck(this, Login);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Login).call(this));
+	
+	        _this.state = {
+	            username: '',
+	            password: ''
+	        };
+	        _this.errorMessage = "";
+	        return _this;
+	    }
+	
+	    _createClass(Login, [{
+	        key: 'login',
+	        value: function login(e) {
+	            var _this2 = this;
+	
+	            e.preventDefault();
+	
+	            this.state.email = this.refs.email.value;
+	            this.state.password = this.refs.password.value;
+	            this.errorMessage = "";
+	            this.errorMessageClassName = "";
+	            _authService2.default.login(this.state.email, this.state.password, function (loggedIn) {
+	                if (loggedIn) {
+	                    _this2.context.router.push('/app/dashboard');
+	                } else {
+	                    _this2.errorMessage = _strings.strings.loginErrorMessage;
+	                    _this2.errorMessageClassName = "login-page-alert";
+	                }
+	            }.bind(this));
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'login-page animated fadeIn' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'login-page-container login-page-center' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'login-page-neto-logo-container' },
+	                        _react2.default.createElement('img', { className: 'login-page-neto-logo', src: './public/images/neto-logo.png' })
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'login-page-neto-doc-name' },
+	                        _strings.strings.appName
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: this.errorMessageClassName },
+	                        this.errorMessage
+	                    ),
+	                    _react2.default.createElement(
+	                        'form',
+	                        { className: 'left-align' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            null,
+	                            _react2.default.createElement('input', { type: 'text', className: 'login-page-input', id: 'email', ref: 'email', placeholder: _strings.strings.email })
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            null,
+	                            _react2.default.createElement('input', { type: 'password', className: 'login-page-input', id: 'password', ref: 'password', placeholder: _strings.strings.password })
+	                        ),
+	                        _react2.default.createElement(
+	                            'button',
+	                            { type: 'submit', className: 'login-page-button', onClick: this.login.bind(this) },
+	                            _strings.strings.connect
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'login-page-need-account-text' },
+	                        _react2.default.createElement(
+	                            'p',
+	                            null,
+	                            _strings.strings.needAccount,
+	                            _react2.default.createElement(
+	                                'a',
+	                                { href: '/user-signup-request' },
+	                                ' ',
+	                                _strings.strings.sendRegisterRequest
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return Login;
+	}(_react2.default.Component);
+	
+	//Important!! This adds the router object to context
+	
+	
+	exports.default = Login;
+	Login.contextTypes = {
+	    router: _react2.default.PropTypes.object.isRequired
+	};
+
+/***/ },
 /* 238 */
 /*!*********************************************!*\
   !*** ./src/client/app/constants/strings.js ***!
@@ -28271,8 +28413,670 @@
 	exports.strings = strings;
 
 /***/ },
-/* 239 */,
-/* 240 */,
+/* 239 */
+/*!****************************************************!*\
+  !*** ./src/client/app/views/pages/signup-page.jsx ***!
+  \****************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _authService = __webpack_require__(/*! ../../services/auth-service */ 229);
+	
+	var _authService2 = _interopRequireDefault(_authService);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Signup = function (_React$Component) {
+	    _inherits(Signup, _React$Component);
+	
+	    function Signup() {
+	        _classCallCheck(this, Signup);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Signup).call(this));
+	
+	        _this.state = {
+	            username: '',
+	            password: '',
+	            extra: ''
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(Signup, [{
+	        key: 'signup',
+	        value: function signup(e) {
+	            e.preventDefault();
+	
+	            var usernameInput = this.refs.username;
+	            var passwordInput = this.refs.password;
+	            this.state.username = usernameInput.value;
+	            this.state.password = passwordInput.value;
+	
+	            _authService2.default.signup(this.state.user, this.state.password, this.state.extra).catch(function (err) {
+	                alert("There's an error logging in");
+	                console.log("Error logging in", err);
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'login jumbotron center-block' },
+	                _react2.default.createElement(
+	                    'h1',
+	                    null,
+	                    'Signup'
+	                ),
+	                _react2.default.createElement(
+	                    'form',
+	                    { role: 'form' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'form-group' },
+	                        _react2.default.createElement(
+	                            'label',
+	                            { htmlFor: 'username' },
+	                            'Username'
+	                        ),
+	                        _react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'username', ref: 'username', placeholder: 'Username' })
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'form-group' },
+	                        _react2.default.createElement(
+	                            'label',
+	                            { htmlFor: 'password' },
+	                            'Password'
+	                        ),
+	                        _react2.default.createElement('input', { type: 'password', className: 'form-control', id: 'password', ref: 'password', placeholder: 'Password' })
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'form-group' },
+	                        _react2.default.createElement(
+	                            'label',
+	                            { htmlFor: 'extra' },
+	                            'Extra'
+	                        ),
+	                        _react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'extra', ref: 'extra', placeholder: 'Some extra information' })
+	                    ),
+	                    _react2.default.createElement(
+	                        'button',
+	                        { type: 'submit', className: 'btn btn-default', onClick: this.signup.bind(this) },
+	                        'Submit'
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return Signup;
+	}(_react2.default.Component);
+	
+	exports.default = Signup;
+
+/***/ },
+/* 240 */
+/*!*******************************************************!*\
+  !*** ./src/client/app/views/pages/dashboard-page.jsx ***!
+  \*******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _authService = __webpack_require__(/*! ../../services/auth-service */ 229);
+	
+	var _authService2 = _interopRequireDefault(_authService);
+	
+	var _button = __webpack_require__(/*! ../../../../../~/muicss/lib/react/button */ 241);
+	
+	var _button2 = _interopRequireDefault(_button);
+	
+	var _dropdown = __webpack_require__(/*! ../../../../../~/muicss/lib/react/dropdown */ 246);
+	
+	var _dropdown2 = _interopRequireDefault(_dropdown);
+	
+	var _dropdownItem = __webpack_require__(/*! ../../../../../~/muicss/lib/react/dropdown-item */ 248);
+	
+	var _dropdownItem2 = _interopRequireDefault(_dropdownItem);
+	
+	var _fixedWidthDropdown = __webpack_require__(/*! ./../common/fixed-width-dropdown.jsx */ 249);
+	
+	var _fixedWidthDropdown2 = _interopRequireDefault(_fixedWidthDropdown);
+	
+	var _strings = __webpack_require__(/*! ../../constants/strings */ 238);
+	
+	var _reactChartjs = __webpack_require__(/*! react-chartjs */ 250);
+	
+	var _reactChartjs2 = _interopRequireDefault(_reactChartjs);
+	
+	var _table = __webpack_require__(/*! ./../common/table.jsx */ 260);
+	
+	var _table2 = _interopRequireDefault(_table);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var monthOptions = ["ינואר", "פברואר", "מרץ", "אפריל", "מאי", "יוני", "יולי", "אוגוסט", "ספטמבר", "אוקטובר", "נובמבר", "דצמבר"];
+	
+	function getMonthName(monthNum) {
+	
+	    if (monthNum > 12 || monthNum < 1) {
+	        return monthOptions[0];
+	    }
+	    return monthOptions[monthNum - 1];
+	}
+	
+	var DashboardToolbar = function (_React$Component) {
+	    _inherits(DashboardToolbar, _React$Component);
+	
+	    function DashboardToolbar(props) {
+	        _classCallCheck(this, DashboardToolbar);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardToolbar).call(this, props));
+	
+	        var date = new Date();
+	        var currentMonth = date.getMonth();
+	        var currentYear = date.getFullYear();
+	
+	        _this.state = {
+	            selectedMonth: getMonthName(currentMonth),
+	            selectedYear: currentYear.toString()
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(DashboardToolbar, [{
+	        key: 'onMonthChange',
+	        value: function onMonthChange(item) {
+	            if (item.props.value != this.state.selectedMonth) {
+	                this.setState({ selectedMonth: item.props.value });
+	            }
+	        }
+	    }, {
+	        key: 'onYearChange',
+	        value: function onYearChange(item) {
+	            if (item.props.value != this.state.selectedYear) {
+	                this.setState({ selectedYear: item.props.value });
+	            }
+	        }
+	    }, {
+	        key: 'onLoadClick',
+	        value: function onLoadClick() {}
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	
+	            var months = [];
+	            for (var i = 1; i <= 12; i++) {
+	                var monthName = getMonthName(i);
+	                months.push(_react2.default.createElement(
+	                    _dropdownItem2.default,
+	                    { onClick: this.onMonthChange.bind(this), value: monthName, key: i },
+	                    monthName
+	                ));
+	            }
+	
+	            var years = [];
+	            var date = new Date();
+	            var currentYear = date.getFullYear();
+	            for (var _i = 2012; _i <= currentYear; _i++) {
+	                var yearName = _i.toString();
+	                years.push(_react2.default.createElement(
+	                    _dropdownItem2.default,
+	                    { onClick: this.onYearChange.bind(this), value: yearName, key: _i },
+	                    yearName
+	                ));
+	            }
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'hcontainer-no-wrap' },
+	                _react2.default.createElement(
+	                    _fixedWidthDropdown2.default,
+	                    { shadow: true, label: this.state.selectedMonth, alignMenu: 'right' },
+	                    months
+	                ),
+	                _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                _react2.default.createElement(
+	                    _fixedWidthDropdown2.default,
+	                    { shadow: true, className: 'fixed-size-button', label: this.state.selectedYear, alignMenu: 'right' },
+	                    years
+	                ),
+	                _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                _react2.default.createElement(
+	                    _button2.default,
+	                    { className: 'shadow', onClick: this.onLoadClick.bind(this), color: 'primary' },
+	                    _strings.strings.load
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return DashboardToolbar;
+	}(_react2.default.Component);
+	
+	var DashboardRankTable = function (_React$Component2) {
+	    _inherits(DashboardRankTable, _React$Component2);
+	
+	    function DashboardRankTable(props) {
+	        _classCallCheck(this, DashboardRankTable);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardRankTable).call(this, props));
+	    }
+	
+	    _createClass(DashboardRankTable, [{
+	        key: 'render',
+	        value: function render() {
+	
+	            var columns = [{
+	                title: "שם סוכן",
+	                key: "agentName",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "עמלות",
+	                key: "commission",
+	                width: "col-33-33",
+	                type: 'read-only-currency',
+	                color: 'normal'
+	            }, {
+	                title: "שינוי (עמלות)",
+	                key: "commissionChange",
+	                width: "col-33-33",
+	                type: 'read-only-percent',
+	                color: 'red-green'
+	            }, {
+	                title: "גודל תיק",
+	                key: "totalInvestments",
+	                width: "col-33-33",
+	                type: 'read-only-currency',
+	                color: 'normal'
+	            }, {
+	                title: "שינוי (גודל תיק)",
+	                key: "totalInvestmentsChange",
+	                width: "col-33-33",
+	                type: 'read-only-percent',
+	                color: 'red-green'
+	            }];
+	
+	            var data = [{ agentName: "קרין בוזלי", commission: "23234233", commissionChange: "2.3", totalInvestments: "23234233", totalInvestmentsChange: "2.3" }, { agentName: "עידן כץ", commission: "43234233", commissionChange: "2.3", totalInvestments: "23234233", totalInvestmentsChange: "2.3" }, { agentName: "מסי", commission: "33224233", commissionChange: "-2.3", totalInvestments: "23234233", totalInvestmentsChange: "6.3" }, { agentName: "מסי", commission: "33224233", commissionChange: "-2.3", totalInvestments: "23234233", totalInvestmentsChange: "6.3" }, { agentName: "מסי", commission: "33224233", commissionChange: "-2.3", totalInvestments: "23234233", totalInvestmentsChange: "6.3" }, { agentName: "מסי", commission: "33224233", commissionChange: "-2.3", totalInvestments: "23234233", totalInvestmentsChange: "6.3" }, { agentName: "קריזבז", commission: "13234233", commissionChange: "1.3", totalInvestments: "23234233", totalInvestmentsChange: "2.3" }, { agentName: "קרין בוזלי", commission: "23234233", commissionChange: "2.3", totalInvestments: "23234233", totalInvestmentsChange: "-2.3" }, { agentName: "קרין בוזלי", commission: "23234233", commissionChange: "2.3", totalInvestments: "23234233", totalInvestmentsChange: "2.3" }];
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'dashboard-rank-table shadow' },
+	                _react2.default.createElement(_table2.default, { columns: columns,
+	                    data: data })
+	            );
+	        }
+	    }]);
+	
+	    return DashboardRankTable;
+	}(_react2.default.Component);
+	
+	var DashboardCommissionChangeChart = function (_React$Component3) {
+	    _inherits(DashboardCommissionChangeChart, _React$Component3);
+	
+	    function DashboardCommissionChangeChart(props) {
+	        _classCallCheck(this, DashboardCommissionChangeChart);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardCommissionChangeChart).call(this, props));
+	    }
+	
+	    _createClass(DashboardCommissionChangeChart, [{
+	        key: 'render',
+	        value: function render() {
+	
+	            var data = {
+	                labels: monthOptions,
+	                datasets: [{
+	                    label: "My First dataset",
+	                    backgroundColor: "rgba(215,49,132,0.2)",
+	                    borderColor: "rgba(225,99,132,1)",
+	                    borderWidth: 1,
+	                    hoverBackgroundColor: "rgba(255,99,132,0.4)",
+	                    hoverBorderColor: "rgba(255,99,132,1)",
+	                    data: [165, 59, 80, 81, 256, 55, 40],
+	                    fillColor: "#4286b4"
+	                }]
+	            };
+	
+	            var chartOptions = {
+	                scaleFontFamily: "Tahoma",
+	                tooltipFontFamily: "Tahoma",
+	                scaleFontSize: 16,
+	                responsive: true,
+	                maintainAspectRatio: false
+	            };
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'dashboard-commission-change-chart shadow' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'dashboard-box-title' },
+	                    _strings.strings.totalInvestmentsChange
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'dashboard-commission-change-chart-box' },
+	                    _react2.default.createElement(_reactChartjs.Bar, { data: data, options: chartOptions, width: '600', height: '400' })
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return DashboardCommissionChangeChart;
+	}(_react2.default.Component);
+	
+	var DashboardMonthTotalCommissions = function (_React$Component4) {
+	    _inherits(DashboardMonthTotalCommissions, _React$Component4);
+	
+	    function DashboardMonthTotalCommissions(props) {
+	        _classCallCheck(this, DashboardMonthTotalCommissions);
+	
+	        var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardMonthTotalCommissions).call(this, props));
+	
+	        _this4.state = {
+	            value: 233423432,
+	            change: 3.2
+	        };
+	
+	        return _this4;
+	    }
+	
+	    _createClass(DashboardMonthTotalCommissions, [{
+	        key: 'render',
+	        value: function render() {
+	
+	            var value = this.state.value.toString();
+	            value = parseFloat(value.replace(/,/g, "")).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	
+	            var change = this.state.change;
+	            var changeIcon = "../public/images/change-up.png";
+	            var changeColor = "green";
+	            if (change < 0) {
+	                changeIcon = "../public/images/change-down.png";
+	                changeColor = "red";
+	            }
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'dashboard-month-total-commissions shadow' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'dashboard-box-title' },
+	                    _strings.strings.totalCommissions
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'dashboard-box-value blue' },
+	                    _react2.default.createElement(
+	                        'small',
+	                        null,
+	                        "₪",
+	                        ' '
+	                    ),
+	                    _react2.default.createElement(
+	                        'b',
+	                        null,
+	                        value
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: "dashboard-box-change " + changeColor },
+	                    change,
+	                    _react2.default.createElement(
+	                        'small',
+	                        null,
+	                        ' ',
+	                        "%"
+	                    ),
+	                    ' ',
+	                    _react2.default.createElement('img', { src: changeIcon })
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return DashboardMonthTotalCommissions;
+	}(_react2.default.Component);
+	
+	var DashboardMonthTotalAgents = function (_React$Component5) {
+	    _inherits(DashboardMonthTotalAgents, _React$Component5);
+	
+	    function DashboardMonthTotalAgents(props) {
+	        _classCallCheck(this, DashboardMonthTotalAgents);
+	
+	        var _this5 = _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardMonthTotalAgents).call(this, props));
+	
+	        _this5.state = {
+	            value: 999,
+	            change: 3.4
+	        };
+	        return _this5;
+	    }
+	
+	    _createClass(DashboardMonthTotalAgents, [{
+	        key: 'render',
+	        value: function render() {
+	
+	            var value = this.state.value.toString();
+	
+	            var change = this.state.change;
+	            var changeIcon = "../public/images/change-up.png";
+	            var changeColor = "green";
+	            if (change < 0) {
+	                changeIcon = "../public/images/change-down.png";
+	                changeColor = "red";
+	            }
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'dashboard-month-total-agents shadow' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'dashboard-box-title' },
+	                    _strings.strings.totalAgents
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'dashboard-box-value blue' },
+	                    _react2.default.createElement(
+	                        'b',
+	                        null,
+	                        value
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: "dashboard-box-change " + changeColor },
+	                    change,
+	                    _react2.default.createElement(
+	                        'small',
+	                        null,
+	                        ' ',
+	                        "%"
+	                    ),
+	                    ' ',
+	                    _react2.default.createElement('img', { src: changeIcon })
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return DashboardMonthTotalAgents;
+	}(_react2.default.Component);
+	
+	var DashboardTotalInvestments = function (_React$Component6) {
+	    _inherits(DashboardTotalInvestments, _React$Component6);
+	
+	    function DashboardTotalInvestments(props) {
+	        _classCallCheck(this, DashboardTotalInvestments);
+	
+	        var _this6 = _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardTotalInvestments).call(this, props));
+	
+	        _this6.state = {
+	            value: 433423432,
+	            change: -1.2
+	        };
+	        return _this6;
+	    }
+	
+	    _createClass(DashboardTotalInvestments, [{
+	        key: 'render',
+	        value: function render() {
+	
+	            var value = this.state.value.toString();
+	            value = parseFloat(value.replace(/,/g, "")).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	
+	            var change = this.state.change;
+	            var changeIcon = "../public/images/change-up.png";
+	            var changeColor = "green";
+	            if (change < 0) {
+	                changeIcon = "../public/images/change-down.png";
+	                changeColor = "red";
+	            }
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'dashboard-total-investments shadow' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'dashboard-box-title' },
+	                    _strings.strings.totalInvestments
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'dashboard-box-value blue' },
+	                    _react2.default.createElement(
+	                        'small',
+	                        null,
+	                        "₪",
+	                        ' '
+	                    ),
+	                    _react2.default.createElement(
+	                        'b',
+	                        null,
+	                        value
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: "dashboard-box-change " + changeColor },
+	                    change,
+	                    _react2.default.createElement(
+	                        'small',
+	                        null,
+	                        ' ',
+	                        "%"
+	                    ),
+	                    ' ',
+	                    _react2.default.createElement('img', { src: changeIcon })
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return DashboardTotalInvestments;
+	}(_react2.default.Component);
+	
+	var Dashboard = function (_React$Component7) {
+	    _inherits(Dashboard, _React$Component7);
+	
+	    function Dashboard(props) {
+	        _classCallCheck(this, Dashboard);
+	
+	        var _this7 = _possibleConstructorReturn(this, Object.getPrototypeOf(Dashboard).call(this, props));
+	
+	        _this7.state = {
+	            loginData: _authService2.default.getLoginData()
+	        };
+	        return _this7;
+	    }
+	
+	    _createClass(Dashboard, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'dashboard-page animated fadeIn' },
+	                _react2.default.createElement(DashboardToolbar, null),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'hcontainer-no-wrap' },
+	                    _react2.default.createElement(DashboardRankTable, null),
+	                    _react2.default.createElement('div', { className: 'dashboard-horizontal-spacer' }),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'dashboard-stats-container' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'hcontainer-no-wrap dashboard-stats-container-top' },
+	                            _react2.default.createElement(DashboardMonthTotalCommissions, null),
+	                            _react2.default.createElement('div', { className: 'dashboard-horizontal-spacer' }),
+	                            _react2.default.createElement(DashboardMonthTotalAgents, null)
+	                        ),
+	                        _react2.default.createElement('div', { className: 'dashboard-vertical-spacer' }),
+	                        _react2.default.createElement(DashboardTotalInvestments, null)
+	                    )
+	                ),
+	                _react2.default.createElement('div', { className: 'dashboard-vertical-spacer' }),
+	                _react2.default.createElement(DashboardCommissionChangeChart, null)
+	            );
+	        }
+	    }]);
+	
+	    return Dashboard;
+	}(_react2.default.Component);
+	
+	//Important!! This adds the router object to context
+	
+	
+	Dashboard.contextTypes = {
+	    router: _react2.default.PropTypes.object.isRequired
+	};
+	
+	exports.default = Dashboard;
+
+/***/ },
 /* 241 */
 /*!**************************************!*\
   !*** ./~/muicss/lib/react/button.js ***!
@@ -29716,7 +30520,262 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 249 */,
+/* 249 */
+/*!**************************************************************!*\
+  !*** ./src/client/app/views/common/fixed-width-dropdown.jsx ***!
+  \**************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _button = __webpack_require__(/*! ../../../../../~/muicss/lib/react/button */ 241);
+	
+	var _button2 = _interopRequireDefault(_button);
+	
+	var _caret = __webpack_require__(/*! ../../../../../~/muicss/lib/react/caret */ 247);
+	
+	var _caret2 = _interopRequireDefault(_caret);
+	
+	var _jqLite = __webpack_require__(/*! ../../../../../~/muicss/lib/js/lib/jqLite */ 243);
+	
+	var jqLite = _interopRequireWildcard(_jqLite);
+	
+	var _util = __webpack_require__(/*! ../../../../../~/muicss/lib/js/lib/util */ 244);
+	
+	var util = _interopRequireWildcard(_util);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var PropTypes = _react2.default.PropTypes,
+	    dropdownClass = 'mui-dropdown',
+	    menuClass = 'mui-dropdown__menu',
+	    openClass = 'mui--is-open',
+	    rightClass = 'mui-dropdown__menu--right';
+	
+	/**
+	 * Dropdown constructor
+	 * @class
+	 */
+	
+	var FixedWidthDropdown = function (_React$Component) {
+	    _inherits(FixedWidthDropdown, _React$Component);
+	
+	    function FixedWidthDropdown(props) {
+	        _classCallCheck(this, FixedWidthDropdown);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FixedWidthDropdown).call(this, props));
+	
+	        _this.state = {
+	            opened: false,
+	            menuTop: 0
+	        };
+	
+	        var cb = util.callback;
+	        _this.selectCB = cb(_this, 'select');
+	        _this.onClickCB = cb(_this, 'onClick');
+	        _this.onOutsideClickCB = cb(_this, 'onOutsideClick');
+	        return _this;
+	    }
+	
+	    _createClass(FixedWidthDropdown, [{
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            document.addEventListener('click', this.onOutsideClickCB);
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            document.removeEventListener('click', this.onOutsideClickCB);
+	        }
+	    }, {
+	        key: 'onClick',
+	        value: function onClick(ev) {
+	            // only left clicks
+	            if (ev.button !== 0) return;
+	
+	            // exit if toggle button is disabled
+	            if (this.props.disabled) return;
+	
+	            if (!ev.defaultPrevented) {
+	                this.toggle();
+	
+	                // execute <Dropdown> onClick method
+	                var onClickFn = this.props.onClick;
+	                onClickFn && onClickFn(ev);
+	            }
+	        }
+	    }, {
+	        key: 'toggle',
+	        value: function toggle() {
+	            // exit if no menu element
+	            if (!this.props.children) {
+	                return util.raiseError('Dropdown menu element not found');
+	            }
+	
+	            if (this.state.opened) this.close();else this.open();
+	        }
+	    }, {
+	        key: 'open',
+	        value: function open() {
+	            // position menu element below toggle button
+	            var wrapperRect = this.refs.wrapperEl.getBoundingClientRect(),
+	                toggleRect = void 0;
+	
+	            toggleRect = this.refs.button.refs.buttonEl.getBoundingClientRect();
+	
+	            this.setState({
+	                opened: true,
+	                menuTop: toggleRect.top - wrapperRect.top + toggleRect.height
+	            });
+	        }
+	    }, {
+	        key: 'close',
+	        value: function close() {
+	            this.setState({ opened: false });
+	        }
+	    }, {
+	        key: 'select',
+	        value: function select(ev) {
+	            // onSelect callback
+	            if (this.props.onSelect && ev.target.tagName === 'A') {
+	                this.props.onSelect(ev.target.getAttribute('data-mui-value'));
+	            }
+	
+	            // close menu
+	            if (!ev.defaultPrevented) this.close();
+	        }
+	    }, {
+	        key: 'onOutsideClick',
+	        value: function onOutsideClick(ev) {
+	            var isClickInside = this.refs.wrapperEl.contains(ev.target);
+	            if (!isClickInside) this.close();
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var buttonEl = void 0,
+	                menuEl = void 0,
+	                labelEl = void 0;
+	
+	            // build label
+	            if (jqLite.type(this.props.label) === 'string') {
+	                labelEl = _react2.default.createElement(
+	                    'span',
+	                    null,
+	                    this.props.label,
+	                    ' ',
+	                    _react2.default.createElement(_caret2.default, null)
+	                );
+	            } else {
+	                labelEl = this.props.label;
+	            }
+	
+	            var shadow = "no-shadow";
+	            if (this.props.shadow == true) {
+	                shadow = "shadow";
+	            }
+	
+	            buttonEl = _react2.default.createElement(
+	                _button2.default,
+	                { className: "fixed-size-button " + shadow,
+	                    ref: 'button',
+	                    type: 'button',
+	                    onClick: this.onClickCB,
+	                    color: this.props.color,
+	                    variant: this.props.variant,
+	                    size: this.props.size,
+	                    disabled: this.props.disabled
+	                },
+	                labelEl
+	            );
+	
+	            if (this.state.opened) {
+	                var cs = {};
+	
+	                cs[menuClass] = true;
+	                cs[openClass] = this.state.opened;
+	                cs[rightClass] = this.props.alignMenu === 'right';
+	                cs = util.classNames(cs);
+	
+	                menuEl = _react2.default.createElement(
+	                    'ul',
+	                    {
+	                        ref: 'menuEl',
+	                        className: cs,
+	                        style: { top: this.state.menuTop },
+	                        onClick: this.selectCB
+	                    },
+	                    this.props.children
+	                );
+	            }
+	
+	            //let { className, children, onClick, ...other } = this.props;
+	            var _props = this.props;
+	            var className = _props.className;
+	            var children = _props.children;
+	            var onClick = _props.onClick;
+	
+	
+	            return _react2.default.createElement(
+	                'div',
+	                {
+	                    ref: 'wrapperEl',
+	                    className: dropdownClass + ' ' + className
+	                },
+	                buttonEl,
+	                menuEl
+	            );
+	        }
+	    }]);
+	
+	    return FixedWidthDropdown;
+	}(_react2.default.Component);
+	
+	FixedWidthDropdown.propTypes = {
+	    color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),
+	    variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
+	    size: PropTypes.oneOf(['default', 'small', 'large']),
+	    label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+	    alignMenu: PropTypes.oneOf(['left', 'right']),
+	    onClick: PropTypes.func,
+	    onSelect: PropTypes.func,
+	    disabled: PropTypes.bool
+	};
+	
+	FixedWidthDropdown.defaultProps = {
+	    className: '',
+	    color: 'default',
+	    variant: 'default',
+	    size: 'default',
+	    label: '',
+	    alignMenu: 'left',
+	    onClick: null,
+	    onSelect: null,
+	    disabled: false
+	};
+	
+	/** Define module API */
+	exports.default = FixedWidthDropdown;
+
+/***/ },
 /* 250 */
 /*!**********************************!*\
   !*** ./~/react-chartjs/index.js ***!
@@ -33701,16 +34760,1199 @@
 
 
 /***/ },
-/* 260 */,
-/* 261 */,
-/* 262 */,
+/* 260 */
+/*!***********************************************!*\
+  !*** ./src/client/app/views/common/table.jsx ***!
+  \***********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _flatRippleButton = __webpack_require__(/*! ./flat-ripple-button.jsx */ 261);
+	
+	var _flatRippleButton2 = _interopRequireDefault(_flatRippleButton);
+	
+	var _tableDropdown = __webpack_require__(/*! ./table-dropdown.jsx */ 262);
+	
+	var _tableDropdown2 = _interopRequireDefault(_tableDropdown);
+	
+	var _dropdownItem = __webpack_require__(/*! ../../../../../~/muicss/lib/react/dropdown-item */ 248);
+	
+	var _dropdownItem2 = _interopRequireDefault(_dropdownItem);
+	
+	var _fixedWidthDropdown = __webpack_require__(/*! ./fixed-width-dropdown.jsx */ 249);
+	
+	var _fixedWidthDropdown2 = _interopRequireDefault(_fixedWidthDropdown);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var TableCell = function (_React$Component) {
+	    _inherits(TableCell, _React$Component);
+	
+	    function TableCell(props) {
+	        _classCallCheck(this, TableCell);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TableCell).call(this, props));
+	
+	        _this.state = {
+	            value: _this.props.value,
+	            column: _this.props.column
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(TableCell, [{
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            this.setState({
+	                value: nextProps.value,
+	                column: nextProps.column
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var className = "table-cell";
+	            var color = "table-cell-text-color";
+	            //var value = this.props.value;
+	            var node = null;
+	            var action = null;
+	
+	            if (this.state.column.color === "red-green") {
+	                if (parseFloat(this.props.value) >= 0) {
+	                    color = "green";
+	                } else {
+	                    color = "red";
+	                }
+	            }
+	            if (this.state.column.type === "read-only") {
+	                node = _react2.default.createElement(
+	                    'div',
+	                    { className: "table-cell-read-only " + color },
+	                    this.props.value
+	                );
+	            }
+	            if (this.state.column.type === "read-only-currency") {
+	                var value = this.props.value;
+	                value = parseFloat(value.replace(/,/g, "")).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	                value = "₪ " + value;
+	                node = _react2.default.createElement(
+	                    'div',
+	                    { className: "table-cell-read-only " + color },
+	                    value
+	                );
+	            }
+	            if (this.state.column.type === "read-only-percent") {
+	                var value = this.props.value;
+	                value = value + " %";
+	                node = _react2.default.createElement(
+	                    'div',
+	                    { className: "table-cell-read-only " + color },
+	                    value
+	                );
+	            }
+	            if (this.state.column.type === "button") {
+	                action = this.state.column.action;
+	                className = "table-button " + this.state.column.color;
+	                node = _react2.default.createElement(
+	                    'div',
+	                    { className: "table-cell-read-only " + color },
+	                    _react2.default.createElement(
+	                        'button',
+	                        { className: className, onClick: function (action) {
+	                                action(this.props.rowIndex);
+	                            }.bind(this, action) },
+	                        this.props.value
+	                    )
+	                );
+	            }
+	            if (this.state.column.type === "select") {
+	                var options = [];
+	                for (var type = 0; type <= this.state.column.options.length; type++) {
+	                    options.push(_react2.default.createElement(
+	                        _dropdownItem2.default,
+	                        { value: this.state.column.options[type], key: type },
+	                        this.state.column.options[type]
+	                    ));
+	                }
+	
+	                node = _react2.default.createElement(
+	                    'div',
+	                    { className: 'h-center' },
+	                    _react2.default.createElement(
+	                        _tableDropdown2.default,
+	                        { className: 'table-dropdown', label: this.state.column.options[0], alignMenu: 'right' },
+	                        options
+	                    )
+	                );
+	
+	                //node = <div className="absolute-center">asaf</div>
+	            }
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: className + " " + this.state.column.width },
+	                node
+	            );
+	        }
+	    }]);
+	
+	    return TableCell;
+	}(_react2.default.Component);
+	
+	var TableRow = function (_React$Component2) {
+	    _inherits(TableRow, _React$Component2);
+	
+	    function TableRow(props) {
+	        _classCallCheck(this, TableRow);
+	
+	        var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(TableRow).call(this, props));
+	
+	        _this2.state = {
+	            data: props.data,
+	            columns: props.columns,
+	            index: props.index,
+	            removableRow: !(props.onRemoveRow == null)
+	        };
+	        return _this2;
+	    }
+	
+	    _createClass(TableRow, [{
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            this.setState({
+	                data: nextProps.data,
+	                columns: nextProps.columns,
+	                index: nextProps.index
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var tableCells = [];
+	            for (var cell = 0; cell < this.state.columns.length; cell++) {
+	                tableCells[cell] = _react2.default.createElement(TableCell, { key: cell,
+	                    field: this.state.columns[cell].key,
+	                    rowIndex: this.state.index,
+	                    column: this.state.columns[cell],
+	                    value: this.state.data[this.state.columns[cell].key] });
+	            }var removeRow = null;
+	            if (this.state.removableRow) {
+	                removeRow = _react2.default.createElement('button', { onClick: function (index) {
+	                        this.props.onRemoveRow(index);
+	                    }.bind(this, this.state.index), className: 'table-row-remove-button' });
+	            }
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'table-row' },
+	                removeRow,
+	                tableCells
+	            );
+	        }
+	    }]);
+	
+	    return TableRow;
+	}(_react2.default.Component);
+	
+	var TableColumn = function (_React$Component3) {
+	    _inherits(TableColumn, _React$Component3);
+	
+	    function TableColumn(props) {
+	        _classCallCheck(this, TableColumn);
+	
+	        var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(TableColumn).call(this, props));
+	
+	        _this3.state = {
+	            column: _this3.props.column
+	        };
+	        return _this3;
+	    }
+	
+	    _createClass(TableColumn, [{
+	        key: 'render',
+	        value: function render() {
+	            var className = "table-column " + this.state.column.width;
+	            return _react2.default.createElement(
+	                'div',
+	                { className: className },
+	                this.state.column.title
+	            );
+	        }
+	    }]);
+	
+	    return TableColumn;
+	}(_react2.default.Component);
+	
+	var TableTrashColumn = function (_React$Component4) {
+	    _inherits(TableTrashColumn, _React$Component4);
+	
+	    function TableTrashColumn(props) {
+	        _classCallCheck(this, TableTrashColumn);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(TableTrashColumn).call(this, props));
+	    }
+	
+	    _createClass(TableTrashColumn, [{
+	        key: 'render',
+	        value: function render() {
+	            var className = "table-column-trash";
+	            return _react2.default.createElement('div', { className: className });
+	        }
+	    }]);
+	
+	    return TableTrashColumn;
+	}(_react2.default.Component);
+	
+	var Table = function (_React$Component5) {
+	    _inherits(Table, _React$Component5);
+	
+	    function Table(props) {
+	        _classCallCheck(this, Table);
+	
+	        var _this5 = _possibleConstructorReturn(this, Object.getPrototypeOf(Table).call(this, props));
+	
+	        _this5.state = {
+	            columns: props.columns,
+	            data: props.data,
+	            removableRow: !(props.onRemoveRow == null)
+	        };
+	        return _this5;
+	    }
+	
+	    _createClass(Table, [{
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            this.setState({
+	                columns: nextProps.columns,
+	                data: nextProps.data
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var tableColumns = [];
+	            for (var col = 0; col < this.state.columns.length; col++) {
+	                tableColumns[col] = _react2.default.createElement(TableColumn, { key: col,
+	                    column: this.state.columns[col] });
+	            }
+	
+	            if (this.state.data == null) {
+	                return _react2.default.createElement(
+	                    'div',
+	                    { className: 'table' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'table-header' },
+	                        tableColumns
+	                    )
+	                );
+	            }
+	
+	            var tableRows = [];
+	            for (var row = 0; row < this.state.data.length; row++) {
+	                tableRows[row] = _react2.default.createElement(TableRow, { onRemoveRow: this.props.onRemoveRow,
+	                    key: row, index: row,
+	                    data: this.state.data[row],
+	                    columns: this.state.columns });
+	            }var tableTrashColumn = null;
+	            if (this.state.removableRow) {
+	                tableTrashColumn = _react2.default.createElement(TableTrashColumn, null);
+	            }
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'table' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'table-header' },
+	                    tableTrashColumn,
+	                    tableColumns
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'table-data-container' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'table-data' },
+	                        tableRows
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return Table;
+	}(_react2.default.Component);
+	
+	exports.default = Table;
+
+/***/ },
+/* 261 */
+/*!************************************************************!*\
+  !*** ./src/client/app/views/common/flat-ripple-button.jsx ***!
+  \************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _jqLite = __webpack_require__(/*! ../../../../../~/muicss/lib/js/lib/jqLite */ 243);
+	
+	var jqLite = _interopRequireWildcard(_jqLite);
+	
+	var _util = __webpack_require__(/*! ../../../../../~/muicss/lib/js/lib/util */ 244);
+	
+	var util = _interopRequireWildcard(_util);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var rippleIter = 0;
+	
+	var PropTypes = _react2.default.PropTypes,
+	    btnClass = 'mui-btn-ripple',
+	    rippleClassDark = 'mui-ripple-effect-dark',
+	    rippleClassLight = 'mui-ripple-effect-light',
+	    btnAttrs = { color: 1, variant: 1, size: 1 };
+	
+	/**
+	 * Button element
+	 * @class
+	 */
+	
+	var FlatRippleButton = function (_React$Component) {
+	    _inherits(FlatRippleButton, _React$Component);
+	
+	    function FlatRippleButton(props) {
+	        _classCallCheck(this, FlatRippleButton);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FlatRippleButton).call(this, props));
+	
+	        _this.state = {
+	            ripples: {}
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(FlatRippleButton, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            // disable MUI js
+	            var el = this.refs.buttonEl;
+	            el._muiDropdown = true;
+	            el._muiRipple = true;
+	        }
+	    }, {
+	        key: 'onClick',
+	        value: function onClick(ev) {
+	            var onClickFn = this.props.onClick;
+	            onClickFn && onClickFn(ev);
+	        }
+	    }, {
+	        key: 'onMouseDown',
+	        value: function onMouseDown(ev) {
+	            // get (x, y) position of click
+	            var offset = jqLite.offset(this.refs.buttonEl);
+	
+	            // choose diameter
+	            var diameter = offset.height;
+	            if (this.props.variant === 'fab') diameter = diameter / 2;
+	
+	            // add ripple to state
+	            var ripples = this.state.ripples;
+	            var key = Date.now();
+	
+	            ripples[key] = {
+	                xPos: ev.pageX - offset.left,
+	                yPos: ev.pageY - offset.top,
+	                diameter: diameter,
+	                teardownFn: this.teardownRipple.bind(this, key)
+	            };
+	
+	            this.setState({ ripples: ripples });
+	        }
+	    }, {
+	        key: 'onTouchStart',
+	        value: function onTouchStart(ev) {}
+	    }, {
+	        key: 'teardownRipple',
+	        value: function teardownRipple(key) {
+	            // delete ripple
+	            var ripples = this.state.ripples;
+	            delete ripples[key];
+	            this.setState({ ripples: ripples });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var cls = btnClass,
+	                k = void 0,
+	                v = void 0;
+	
+	            var ripples = this.state.ripples;
+	
+	            // button attributes
+	            for (k in btnAttrs) {
+	                v = this.props[k];
+	                if (v !== 'default') cls += ' ' + btnClass + '--' + v;
+	            }
+	
+	            var rippleColor = rippleClassDark;
+	            if (this.props.rippleColor != null) {
+	                rippleColor = this.props.rippleColor === "dark" ? rippleClassDark : rippleClassLight;
+	            }
+	
+	            return _react2.default.createElement(
+	                'button',
+	                _extends({}, this.props, {
+	                    ref: 'buttonEl',
+	                    className: cls + ' ' + this.props.className,
+	                    onClick: this.onClick.bind(this),
+	                    onMouseDown: this.onMouseDown.bind(this)
+	                }),
+	                this.props.children,
+	                Object.keys(ripples).map(function (k, i) {
+	                    var v = ripples[k];
+	                    return _react2.default.createElement(Ripple, {
+	                        colorClass: rippleColor,
+	                        key: k,
+	                        xPos: v.xPos,
+	                        yPos: v.yPos,
+	                        diameter: v.diameter,
+	                        onTeardown: v.teardownFn
+	                    });
+	                })
+	            );
+	        }
+	    }]);
+	
+	    return FlatRippleButton;
+	}(_react2.default.Component);
+	
+	FlatRippleButton.propTypes = {
+	    color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),
+	    disabled: PropTypes.bool,
+	    size: PropTypes.oneOf(['default', 'small', 'large']),
+	    type: PropTypes.oneOf(['submit', 'button']),
+	    variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
+	    onClick: PropTypes.func
+	};
+	
+	FlatRippleButton.defaultProps = {
+	    className: '',
+	    color: 'dark',
+	    disabled: false,
+	    size: 'default',
+	    type: null,
+	    variant: 'flat',
+	    onClick: null
+	};
+	
+	/**
+	 * Ripple component
+	 * @class
+	 */
+	
+	var Ripple = function (_React$Component2) {
+	    _inherits(Ripple, _React$Component2);
+	
+	    function Ripple() {
+	        _classCallCheck(this, Ripple);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Ripple).apply(this, arguments));
+	    }
+	
+	    _createClass(Ripple, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this3 = this;
+	
+	            // trigger teardown in 2 sec
+	            this.teardownTimer = setTimeout(function () {
+	                var fn = _this3.props.onTeardown;
+	                fn && fn();
+	            }, 2000);
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            // clear timeout
+	            clearTimeout(this.teardownTimer);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var diameter = this.props.diameter,
+	                radius = diameter / 2;
+	
+	            var style = {
+	                height: diameter,
+	                width: diameter,
+	                top: this.props.yPos - radius || 0,
+	                left: this.props.xPos - radius || 0
+	            };
+	
+	            return _react2.default.createElement('div', { className: this.props.colorClass, style: style });
+	        }
+	    }]);
+	
+	    return Ripple;
+	}(_react2.default.Component);
+	
+	Ripple.propTypes = {
+	    xPos: PropTypes.number,
+	    yPos: PropTypes.number,
+	    diameter: PropTypes.number,
+	    onTeardown: PropTypes.func
+	};
+	
+	Ripple.defaultProps = {
+	    xPos: 0,
+	    yPos: 0,
+	    diameter: 0,
+	    onTeardown: null
+	};
+	
+	/** Define module API */
+	exports.default = FlatRippleButton;
+
+/***/ },
+/* 262 */
+/*!********************************************************!*\
+  !*** ./src/client/app/views/common/table-dropdown.jsx ***!
+  \********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _button = __webpack_require__(/*! ../../../../../~/muicss/lib/react/button */ 241);
+	
+	var _button2 = _interopRequireDefault(_button);
+	
+	var _caret = __webpack_require__(/*! ../../../../../~/muicss/lib/react/caret */ 247);
+	
+	var _caret2 = _interopRequireDefault(_caret);
+	
+	var _jqLite = __webpack_require__(/*! ../../../../../~/muicss/lib/js/lib/jqLite */ 243);
+	
+	var jqLite = _interopRequireWildcard(_jqLite);
+	
+	var _util = __webpack_require__(/*! ../../../../../~/muicss/lib/js/lib/util */ 244);
+	
+	var util = _interopRequireWildcard(_util);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var PropTypes = _react2.default.PropTypes,
+	    dropdownClass = 'mui-dropdown',
+	    menuClass = 'mui-dropdown__menu',
+	    openClass = 'mui--is-open',
+	    rightClass = 'mui-dropdown__menu--right ';
+	
+	/**
+	 * Dropdown constructor
+	 * @class
+	 */
+	
+	var TableDropdown = function (_React$Component) {
+	    _inherits(TableDropdown, _React$Component);
+	
+	    function TableDropdown(props) {
+	        _classCallCheck(this, TableDropdown);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TableDropdown).call(this, props));
+	
+	        _this.state = {
+	            opened: false,
+	            menuTop: 0
+	        };
+	
+	        var cb = util.callback;
+	        _this.selectCB = cb(_this, 'select');
+	        _this.onClickCB = cb(_this, 'onClick');
+	        _this.onOutsideClickCB = cb(_this, 'onOutsideClick');
+	        return _this;
+	    }
+	
+	    _createClass(TableDropdown, [{
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            document.addEventListener('click', this.onOutsideClickCB);
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            document.removeEventListener('click', this.onOutsideClickCB);
+	        }
+	    }, {
+	        key: 'onClick',
+	        value: function onClick(ev) {
+	            // only left clicks
+	            if (ev.button !== 0) return;
+	
+	            // exit if toggle button is disabled
+	            if (this.props.disabled) return;
+	
+	            if (!ev.defaultPrevented) {
+	                this.toggle();
+	
+	                // execute <Dropdown> onClick method
+	                var onClickFn = this.props.onClick;
+	                onClickFn && onClickFn(ev);
+	            }
+	        }
+	    }, {
+	        key: 'toggle',
+	        value: function toggle() {
+	            // exit if no menu element
+	            if (!this.props.children) {
+	                return util.raiseError('Dropdown menu element not found');
+	            }
+	
+	            if (this.state.opened) this.close();else this.open();
+	        }
+	    }, {
+	        key: 'open',
+	        value: function open() {
+	            // position menu element below toggle button
+	            var wrapperRect = this.refs.wrapperEl.getBoundingClientRect(),
+	                toggleRect = void 0;
+	
+	            toggleRect = this.refs.button.refs.buttonEl.getBoundingClientRect();
+	
+	            this.setState({
+	                opened: true,
+	                menuTop: toggleRect.top - wrapperRect.top + toggleRect.height
+	            });
+	        }
+	    }, {
+	        key: 'close',
+	        value: function close() {
+	            this.setState({ opened: false });
+	        }
+	    }, {
+	        key: 'select',
+	        value: function select(ev) {
+	            // onSelect callback
+	            if (this.props.onSelect && ev.target.tagName === 'A') {
+	                this.props.onSelect(ev.target.getAttribute('data-mui-value'));
+	            }
+	
+	            // close menu
+	            if (!ev.defaultPrevented) this.close();
+	        }
+	    }, {
+	        key: 'onOutsideClick',
+	        value: function onOutsideClick(ev) {
+	            var isClickInside = this.refs.wrapperEl.contains(ev.target);
+	            if (!isClickInside) this.close();
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var buttonEl = void 0,
+	                menuEl = void 0,
+	                labelEl = void 0;
+	
+	            // build label
+	            if (jqLite.type(this.props.label) === 'string') {
+	                labelEl = _react2.default.createElement(
+	                    'span',
+	                    null,
+	                    this.props.label,
+	                    ' ',
+	                    _react2.default.createElement(_caret2.default, null)
+	                );
+	            } else {
+	                labelEl = this.props.label;
+	            }
+	
+	            buttonEl = _react2.default.createElement(
+	                _button2.default,
+	                { className: 'table-dropdown-button',
+	                    ref: 'button',
+	                    type: 'button',
+	                    onClick: this.onClickCB,
+	                    color: this.props.color,
+	                    variant: this.props.variant,
+	                    size: this.props.size,
+	                    disabled: this.props.disabled
+	                },
+	                labelEl
+	            );
+	
+	            if (this.state.opened) {
+	                var cs = {};
+	
+	                cs[menuClass] = true;
+	                cs[openClass] = this.state.opened;
+	                cs[rightClass] = this.props.alignMenu === 'right';
+	                cs = util.classNames(cs);
+	
+	                menuEl = _react2.default.createElement(
+	                    'div',
+	                    { className: 'h-center' },
+	                    _react2.default.createElement(
+	                        'ul',
+	                        {
+	                            ref: 'menuEl',
+	                            className: cs,
+	                            style: { top: this.state.menuTop },
+	                            onClick: this.selectCB
+	                        },
+	                        this.props.children
+	                    )
+	                );
+	            }
+	
+	            //let { className, children, onClick, ...other } = this.props;
+	            var _props = this.props;
+	            var className = _props.className;
+	            var children = _props.children;
+	            var onClick = _props.onClick;
+	
+	
+	            return _react2.default.createElement(
+	                'div',
+	                {
+	                    ref: 'wrapperEl',
+	                    className: dropdownClass + ' ' + className
+	                },
+	                buttonEl,
+	                menuEl
+	            );
+	        }
+	    }]);
+	
+	    return TableDropdown;
+	}(_react2.default.Component);
+	
+	TableDropdown.propTypes = {
+	    color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),
+	    variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
+	    size: PropTypes.oneOf(['default', 'small', 'large']),
+	    label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+	    alignMenu: PropTypes.oneOf(['left', 'right']),
+	    onClick: PropTypes.func,
+	    onSelect: PropTypes.func,
+	    disabled: PropTypes.bool
+	};
+	
+	TableDropdown.defaultProps = {
+	    className: '',
+	    color: 'default',
+	    variant: 'flat',
+	    size: 'default',
+	    label: '',
+	    alignMenu: 'left',
+	    onClick: null,
+	    onSelect: null,
+	    disabled: false
+	};
+	
+	/** Define module API */
+	exports.default = TableDropdown;
+
+/***/ },
 /* 263 */
+/*!*********************************************************!*\
+  !*** ./src/client/app/views/pages/commissions-page.jsx ***!
+  \*********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _authService = __webpack_require__(/*! ../../services/auth-service */ 229);
+	
+	var _authService2 = _interopRequireDefault(_authService);
+	
+	var _strings = __webpack_require__(/*! ../../constants/strings */ 238);
+	
+	var _table = __webpack_require__(/*! ./../common/table.jsx */ 260);
+	
+	var _table2 = _interopRequireDefault(_table);
+	
+	var _dropdown = __webpack_require__(/*! ../../../../../~/muicss/lib/react/dropdown */ 246);
+	
+	var _dropdown2 = _interopRequireDefault(_dropdown);
+	
+	var _dropdownItem = __webpack_require__(/*! ../../../../../~/muicss/lib/react/dropdown-item */ 248);
+	
+	var _dropdownItem2 = _interopRequireDefault(_dropdownItem);
+	
+	var _button = __webpack_require__(/*! ../../../../../~/muicss/lib/react/button */ 241);
+	
+	var _button2 = _interopRequireDefault(_button);
+	
+	var _reactDatepicker = __webpack_require__(/*! react-datepicker */ 264);
+	
+	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
+	
+	var _reactDropzone = __webpack_require__(/*! react-dropzone */ 369);
+	
+	var _reactDropzone2 = _interopRequireDefault(_reactDropzone);
+	
+	var _textBox = __webpack_require__(/*! ./../common/text-box.jsx */ 370);
+	
+	var _textBox2 = _interopRequireDefault(_textBox);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var moment = __webpack_require__(/*! react-datepicker/~/moment */ 265);
+	
+	var companyNames = ["כלל", "מנורה", "הראל", "אלטשולר שחם", "ילין לפידות", "מיטב דש"];
+	
+	var FileBin = function (_React$Component) {
+	    _inherits(FileBin, _React$Component);
+	
+	    function FileBin(props) {
+	        _classCallCheck(this, FileBin);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FileBin).call(this, props));
+	
+	        _this.state = {
+	            selectedCompany: "כלל",
+	            date: moment(),
+	            files: null,
+	            note: "בדיקה"
+	        };
+	
+	        return _this;
+	    }
+	
+	    _createClass(FileBin, [{
+	        key: 'onCompanyNameChange',
+	        value: function onCompanyNameChange(item) {
+	            if (item.props.value != this.state.selectedCompany) {
+	                this.state.selectedCompany = item.props.value;
+	                this.setState(this.state);
+	            }
+	        }
+	    }, {
+	        key: 'handleChange',
+	        value: function handleChange(date) {
+	            this.state.date = date;
+	            this.setState(this.state);
+	        }
+	    }, {
+	        key: 'onDrop',
+	        value: function onDrop(files) {
+	            console.log('Received files: ', files);
+	            this.state.files = files;
+	            this.setState(this.state);
+	        }
+	    }, {
+	        key: 'onUploadFile',
+	        value: function onUploadFile() {
+	            var formData = new FormData();
+	            for (var i = 0; i < this.state.files.length; i++) {
+	                formData.append('file', this.state.files[i]);
+	            }
+	            // now post a new XHR request
+	            var xhr = new XMLHttpRequest();
+	            xhr.open('POST', '/commissions/upload');
+	            xhr.onload = function () {
+	                if (xhr.status === 200) {
+	                    console.log('all done: ' + xhr.status);
+	                } else {
+	                    console.log('Something went terribly wrong...');
+	                }
+	            };
+	            xhr.send(formData);
+	        }
+	    }, {
+	        key: 'onEditFiles',
+	        value: function onEditFiles() {
+	            this.context.router.push('/app/commissions/edit-files');
+	        }
+	    }, {
+	        key: 'onFileNoteBlur',
+	        value: function onFileNoteBlur(e) {
+	            console.log(e.target.value);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	
+	            var companies = [];
+	            for (var i = 0; i < companyNames.length; i++) {
+	                companies.push(_react2.default.createElement(
+	                    _dropdownItem2.default,
+	                    { onClick: this.onCompanyNameChange.bind(this), value: companyNames[i], key: i },
+	                    companyNames[i]
+	                ));
+	            }
+	
+	            var style = {
+	                backgroundColor: 'transparent',
+	                color: '#505050'
+	            };
+	
+	            var activeStyle = {
+	                backgroundColor: 'rgba(66, 134, 180, 0.15)'
+	            };
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'commissions-page-file-bin shadow' },
+	                _react2.default.createElement(
+	                    _reactDropzone2.default,
+	                    { onDrop: this.onDrop.bind(this), className: 'commissions-page-file-bin-drag-area', style: style, activeStyle: activeStyle },
+	                    _react2.default.createElement(
+	                        'strong',
+	                        null,
+	                        _strings.strings.dragFileHere
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'hcontainer-no-wrap' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'commissions-page-file-bin-settings hcontainer-no-wrap' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'commissions-page-file-bin-settings-text' },
+	                            _strings.strings.companyAssignment
+	                        ),
+	                        _react2.default.createElement(
+	                            _dropdown2.default,
+	                            { label: this.state.selectedCompany, alignMenu: 'right', variant: 'raised' },
+	                            companies
+	                        ),
+	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'commissions-page-file-bin-settings-text' },
+	                            _strings.strings.paymentMonth
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'commissions-page-file-bin-settings-date' },
+	                            _react2.default.createElement(_reactDatepicker2.default, { selected: this.state.date, locale: 'he-IL', onChange: this.handleChange.bind(this) })
+	                        ),
+	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'commissions-page-file-bin-settings-text' },
+	                            _strings.strings.notes
+	                        ),
+	                        _react2.default.createElement('textarea', { className: 'commissions-page-file-note',
+	                            value: this.state.notes,
+	                            onBlur: this.onFileNoteBlur.bind(this) }),
+	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
+	                        _react2.default.createElement(
+	                            _button2.default,
+	                            { className: 'shadow', onClick: this.onUploadFile.bind(this), color: 'primary' },
+	                            _strings.strings.uploadFile
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'commissions-page-file-bin-settings-edit-files-container' },
+	                        _react2.default.createElement(
+	                            _button2.default,
+	                            { className: 'shadow', onClick: this.onEditFiles.bind(this) },
+	                            _strings.strings.editFiles
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return FileBin;
+	}(_react2.default.Component);
+	
+	//Important!! This adds the router object to context
+	
+	
+	FileBin.contextTypes = {
+	    router: _react2.default.PropTypes.object.isRequired
+	};
+	
+	var Commissions = function (_React$Component2) {
+	    _inherits(Commissions, _React$Component2);
+	
+	    function Commissions(props) {
+	        _classCallCheck(this, Commissions);
+	
+	        var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(Commissions).call(this, props));
+	
+	        _this2.state = {
+	            loginData: _authService2.default.getLoginData()
+	        };
+	
+	        return _this2;
+	    }
+	
+	    _createClass(Commissions, [{
+	        key: 'render',
+	        value: function render() {
+	
+	            var columns = [{
+	                title: "חברה",
+	                key: "companyName",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "סוג תשלום",
+	                key: "paymentType",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "מספר סוכן",
+	                key: "agentNumber",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "שם סוכן",
+	                key: "agentName",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "סה״כ תשלום",
+	                key: "totalPayment",
+	                width: "col-33-33",
+	                type: 'read-only-currency',
+	                color: 'normal'
+	            }, {
+	                title: "סה״כ גודל תיק",
+	                key: "totalInvestments",
+	                width: "col-33-33",
+	                type: 'read-only-currency',
+	                color: 'normal'
+	            }, {
+	                title: "חודש שכר",
+	                key: "paymentMonth",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "תאריך העלאת קובץ",
+	                key: "date",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }];
+	
+	            var data = [{ companyName: "מגדל", paymentType: "היקף", agentNumber: "2342234523", agentName: "קרין בוזלי לוי", totalPayment: "23423", totalInvestments: "12342232", paymentMonth: "04/16", date: "05/11/2016" }, { companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "אלטשולר שחם", paymentType: "בונוס", agentNumber: "67868", agentName: "לנצמן", totalPayment: "5675", totalInvestments: "34234535", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "מנורה", paymentType: "גמ״ח", agentNumber: "789565", agentName: "לירון בן ציון", totalPayment: "4562", totalInvestments: "78768657", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "ילין לפידות", paymentType: "היקף", agentNumber: "345654", agentName: "ויטלי", totalPayment: "6786", totalInvestments: "3453453", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "ילין לפידות", paymentType: "היקף", agentNumber: "345654", agentName: "ויטלי", totalPayment: "6786", totalInvestments: "3453453", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "מנורה", paymentType: "גמ״ח", agentNumber: "789565", agentName: "לירון בן ציון", totalPayment: "4562", totalInvestments: "78768657", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "ילין לפידות", paymentType: "היקף", agentNumber: "345654", agentName: "ויטלי", totalPayment: "6786", totalInvestments: "3453453", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "אלטשולר שחם", paymentType: "בונוס", agentNumber: "67868", agentName: "לנצמן", totalPayment: "5675", totalInvestments: "34234535", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "מנורה", paymentType: "גמ״ח", agentNumber: "789565", agentName: "לירון בן ציון", totalPayment: "4562", totalInvestments: "78768657", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "מגדל", paymentType: "היקף", agentNumber: "2342234523", agentName: "קרין בוזלי לוי", totalPayment: "23423", totalInvestments: "12342232", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "אלטשולר שחם", paymentType: "בונוס", agentNumber: "67868", agentName: "לנצמן", totalPayment: "5675", totalInvestments: "34234535", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "מנורה", paymentType: "גמ״ח", agentNumber: "789565", agentName: "לירון בן ציון", totalPayment: "4562", totalInvestments: "78768657", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "ילין לפידות", paymentType: "היקף", agentNumber: "345654", agentName: "ויטלי", totalPayment: "6786", totalInvestments: "3453453", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016" }];
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'commissions-page animated fadeIn' },
+	                _react2.default.createElement(FileBin, null),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'commissions-page-table shadow' },
+	                    _react2.default.createElement(_table2.default, { columns: columns,
+	                        data: data })
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return Commissions;
+	}(_react2.default.Component);
+	
+	//Important!! This adds the router object to context
+	
+	
+	Commissions.contextTypes = {
+	    router: _react2.default.PropTypes.object.isRequired
+	};
+	
+	exports.default = Commissions;
+
+/***/ },
+/* 264 */
 /*!*********************************************************!*\
   !*** ./~/react-datepicker/dist/react-datepicker.min.js ***!
   \*********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	!function(t,e){ true?module.exports=e(__webpack_require__(/*! moment */ 264),__webpack_require__(/*! react */ 1),__webpack_require__(/*! react-onclickoutside */ 367),__webpack_require__(/*! react-dom */ 38)):"function"==typeof define&&define.amd?define(["moment","react","react-onclickoutside","react-dom"],e):"object"==typeof exports?exports.DatePicker=e(require("moment"),require("react"),require("react-onclickoutside"),require("react-dom")):t.DatePicker=e(t.moment,t.React,t.OnClickOutside,t.ReactDOM)}(this,function(t,e,n,r){return function(t){function e(r){if(n[r])return n[r].exports;var o=n[r]={exports:{},id:r,loaded:!1};return t[r].call(o.exports,o,o.exports,e),o.loaded=!0,o.exports}var n={};return e.m=t,e.c=n,e.p="",e(0)}([function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}function o(t,e,n){return e in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}var a=n(1),i=r(a),s=n(5),l=r(s),d=n(3),p=r(d),u=n(13),f=r(u),c=n(12),h=r(c),m=n(4),y="react-datepicker-ignore-onclickoutside",g=p["default"].createClass({displayName:"DatePicker",propTypes:{className:p["default"].PropTypes.string,dateFormat:p["default"].PropTypes.string,dateFormatCalendar:p["default"].PropTypes.string,disabled:p["default"].PropTypes.bool,endDate:p["default"].PropTypes.object,excludeDates:p["default"].PropTypes.array,filterDate:p["default"].PropTypes.func,id:p["default"].PropTypes.string,includeDates:p["default"].PropTypes.array,isClearable:p["default"].PropTypes.bool,locale:p["default"].PropTypes.string,maxDate:p["default"].PropTypes.object,minDate:p["default"].PropTypes.object,name:p["default"].PropTypes.string,onBlur:p["default"].PropTypes.func,onChange:p["default"].PropTypes.func.isRequired,onFocus:p["default"].PropTypes.func,placeholderText:p["default"].PropTypes.string,popoverAttachment:p["default"].PropTypes.string,popoverTargetAttachment:p["default"].PropTypes.string,popoverTargetOffset:p["default"].PropTypes.string,readOnly:p["default"].PropTypes.bool,renderCalendarTo:p["default"].PropTypes.any,required:p["default"].PropTypes.bool,selected:p["default"].PropTypes.object,showYearDropdown:p["default"].PropTypes.bool,startDate:p["default"].PropTypes.object,tabIndex:p["default"].PropTypes.number,tetherConstraints:p["default"].PropTypes.array,title:p["default"].PropTypes.string,todayButton:p["default"].PropTypes.string},getDefaultProps:function(){return{dateFormatCalendar:"MMMM YYYY",onChange:function(){},disabled:!1,onFocus:function(){},onBlur:function(){},popoverAttachment:"top left",popoverTargetAttachment:"bottom left",popoverTargetOffset:"10px 0",tetherConstraints:[{to:"window",attachment:"together"}]}},getInitialState:function(){return{open:!1}},setOpen:function(t){this.setState({open:t})},handleFocus:function(t){this.props.onFocus(t),this.setOpen(!0)},handleBlur:function(t){this.state.open?this.refs.input.focus():this.props.onBlur(t)},handleCalendarClickOutside:function(t){this.setOpen(!1)},handleSelect:function(t){this.setSelected(t),this.setOpen(!1)},setSelected:function(t){(0,m.isSameDay)(this.props.selected,t)||this.props.onChange(t)},onInputClick:function(){this.props.disabled||this.setOpen(!0)},onInputKeyDown:function(t){"Enter"===t.key||"Escape"===t.key?(t.preventDefault(),this.setOpen(!1)):"Tab"===t.key&&this.setOpen(!1)},onClearClick:function(t){t.preventDefault(),this.props.onChange(null)},renderCalendar:function(){return!this.state.open||this.props.disabled?null:p["default"].createElement(l["default"],{ref:"calendar",locale:this.props.locale,dateFormat:this.props.dateFormatCalendar,selected:this.props.selected,onSelect:this.handleSelect,minDate:this.props.minDate,maxDate:this.props.maxDate,startDate:this.props.startDate,endDate:this.props.endDate,excludeDates:this.props.excludeDates,filterDate:this.props.filterDate,onClickOutside:this.handleCalendarClickOutside,includeDates:this.props.includeDates,showYearDropdown:this.props.showYearDropdown,todayButton:this.props.todayButton,outsideClickIgnoreClass:y})},renderDateInput:function(){var t=(0,h["default"])(this.props.className,o({},y,this.state.open));return p["default"].createElement(i["default"],{ref:"input",id:this.props.id,name:this.props.name,date:this.props.selected,locale:this.props.locale,minDate:this.props.minDate,maxDate:this.props.maxDate,excludeDates:this.props.excludeDates,includeDates:this.props.includeDates,filterDate:this.props.filterDate,dateFormat:this.props.dateFormat,onFocus:this.handleFocus,onBlur:this.handleBlur,onClick:this.onInputClick,onKeyDown:this.onInputKeyDown,onChangeDate:this.setSelected,placeholder:this.props.placeholderText,disabled:this.props.disabled,className:t,title:this.props.title,readOnly:this.props.readOnly,required:this.props.required,tabIndex:this.props.tabIndex})},renderClearButton:function(){return this.props.isClearable&&null!=this.props.selected?p["default"].createElement("a",{className:"react-datepicker__close-icon",href:"#",onClick:this.onClearClick}):null},render:function(){return p["default"].createElement(f["default"],{classPrefix:"react-datepicker__tether",attachment:this.props.popoverAttachment,targetAttachment:this.props.popoverTargetAttachment,targetOffset:this.props.popoverTargetOffset,renderElementTo:this.props.renderCalendarTo,constraints:this.props.tetherConstraints},p["default"].createElement("div",{className:"react-datepicker__input-container"},this.renderDateInput(),this.renderClearButton()),this.renderCalendar())}});t.exports=g},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}var o=Object.assign||function(t){for(var e=1;e<arguments.length;e++){var n=arguments[e];for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(t[r]=n[r])}return t},a=n(2),i=r(a),s=n(3),l=r(s),d=n(4),p=l["default"].createClass({displayName:"DateInput",propTypes:{date:l["default"].PropTypes.object,dateFormat:l["default"].PropTypes.string,disabled:l["default"].PropTypes.bool,excludeDates:l["default"].PropTypes.array,filterDate:l["default"].PropTypes.func,includeDates:l["default"].PropTypes.array,locale:l["default"].PropTypes.string,maxDate:l["default"].PropTypes.object,minDate:l["default"].PropTypes.object,onBlur:l["default"].PropTypes.func,onChange:l["default"].PropTypes.func,onChangeDate:l["default"].PropTypes.func},getDefaultProps:function(){return{dateFormat:"L"}},getInitialState:function(){return{value:this.safeDateFormat(this.props)}},componentWillReceiveProps:function(t){(0,d.isSameDay)(t.date,this.props.date)&&t.locale===this.props.locale&&t.dateFormat===this.props.dateFormat||this.setState({value:this.safeDateFormat(t)})},handleChange:function(t){this.props.onChange&&this.props.onChange(t),t.isDefaultPrevented()||this.handleChangeDate(t.target.value)},handleChangeDate:function(t){if(this.props.onChangeDate){var e=(0,i["default"])(t,this.props.dateFormat,this.props.locale||i["default"].locale(),!0);e.isValid()&&!(0,d.isDayDisabled)(e,this.props)?this.props.onChangeDate(e):""===t&&this.props.onChangeDate(null)}this.setState({value:t})},safeDateFormat:function(t){return t.date&&t.date.clone().locale(t.locale||i["default"].locale()).format(t.dateFormat)||""},handleBlur:function(t){this.setState({value:this.safeDateFormat(this.props)}),this.props.onBlur&&this.props.onBlur(t)},focus:function(){this.refs.input.focus()},render:function(){return l["default"].createElement("input",o({ref:"input",type:"text"},this.props,{value:this.state.value,onBlur:this.handleBlur,onChange:this.handleChange}))}});t.exports=p},function(e,n){e.exports=t},function(t,n){t.exports=e},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}function o(t,e){return t&&e?t.isSame(e,"day"):!t&&!e}function a(t){var e=arguments.length<=1||void 0===arguments[1]?{}:arguments[1],n=e.minDate,r=e.maxDate,a=e.excludeDates,i=e.includeDates,s=e.filterDate;return n&&t.isBefore(n,"day")||r&&t.isAfter(r,"day")||a&&a.some(function(e){return o(t,e)})||i&&!i.some(function(e){return o(t,e)})||s&&!s(t.clone())||!1}function i(t,e){var n=arguments.length<=2||void 0===arguments[2]?{}:arguments[2],r=n.minDate,o=n.includeDates,a=t.clone().subtract(1,e);return r&&a.isBefore(r,e)||o&&o.every(function(t){return a.isBefore(t,e)})||!1}function s(t,e){var n=arguments.length<=2||void 0===arguments[2]?{}:arguments[2],r=n.maxDate,o=n.includeDates,a=t.clone().add(1,e);return r&&a.isAfter(r,e)||o&&o.every(function(t){return a.isAfter(t,e)})||!1}function l(t){var e=t.minDate,n=t.includeDates;return n&&e?u["default"].min(n.filter(function(t){return e.isSameOrBefore(t,"day")})):n?u["default"].min(n):e}function d(t){var e=t.maxDate,n=t.includeDates;return n&&e?u["default"].max(n.filter(function(t){return e.isSameOrAfter(t,"day")})):n?u["default"].max(n):e}Object.defineProperty(e,"__esModule",{value:!0}),e.isSameDay=o,e.isDayDisabled=a,e.allDaysDisabledBefore=i,e.allDaysDisabledAfter=s,e.getEffectiveMinDate=l,e.getEffectiveMaxDate=d;var p=n(2),u=r(p)},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}var o=n(2),a=r(o),i=n(6),s=r(i),l=n(9),d=r(l),p=n(3),u=r(p),f=n(4),c=u["default"].createClass({displayName:"Calendar",propTypes:{dateFormat:u["default"].PropTypes.string.isRequired,endDate:u["default"].PropTypes.object,excludeDates:u["default"].PropTypes.array,filterDate:u["default"].PropTypes.func,includeDates:u["default"].PropTypes.array,locale:u["default"].PropTypes.string,maxDate:u["default"].PropTypes.object,minDate:u["default"].PropTypes.object,onClickOutside:u["default"].PropTypes.func.isRequired,onSelect:u["default"].PropTypes.func.isRequired,selected:u["default"].PropTypes.object,showYearDropdown:u["default"].PropTypes.bool,startDate:u["default"].PropTypes.object,todayButton:u["default"].PropTypes.string},mixins:[n(8)],getInitialState:function(){return{date:this.localizeMoment(this.getDateInView())}},componentWillReceiveProps:function(t){t.selected&&!(0,f.isSameDay)(t.selected,this.props.selected)&&this.setState({date:this.localizeMoment(t.selected)})},handleClickOutside:function(t){this.props.onClickOutside(t)},getDateInView:function(){var t=this.props.selected,e=(0,f.getEffectiveMinDate)(this.props),n=(0,f.getEffectiveMaxDate)(this.props),r=(0,a["default"])();return t?t:e&&e.isAfter(r)?e:n&&n.isBefore(r)?n:r},localizeMoment:function(t){return t.clone().locale(this.props.locale||a["default"].locale())},increaseMonth:function(){this.setState({date:this.state.date.clone().add(1,"month")})},decreaseMonth:function(){this.setState({date:this.state.date.clone().subtract(1,"month")})},handleDayClick:function(t){this.props.onSelect(t)},changeYear:function(t){this.setState({date:this.state.date.clone().set("year",t)})},header:function(){var t=this.state.date.clone().startOf("week");return[0,1,2,3,4,5,6].map(function(e){var n=t.clone().add(e,"days");return u["default"].createElement("div",{key:e,className:"react-datepicker__day-name"},n.localeData().weekdaysMin(n))})},renderPreviousMonthButton:function(){return(0,f.allDaysDisabledBefore)(this.state.date,"month",this.props)?void 0:u["default"].createElement("a",{className:"react-datepicker__navigation react-datepicker__navigation--previous",onClick:this.decreaseMonth})},renderNextMonthButton:function(){return(0,f.allDaysDisabledAfter)(this.state.date,"month",this.props)?void 0:u["default"].createElement("a",{className:"react-datepicker__navigation react-datepicker__navigation--next",onClick:this.increaseMonth})},renderCurrentMonth:function(){var t=["react-datepicker__current-month"];return this.props.showYearDropdown&&t.push("react-datepicker__current-month--hasYearDropdown"),u["default"].createElement("div",{className:t.join(" ")},this.state.date.format(this.props.dateFormat))},renderYearDropdown:function(){return this.props.showYearDropdown?u["default"].createElement(s["default"],{onChange:this.changeYear,year:this.state.date.year()}):void 0},renderTodayButton:function(){var t=this;if(this.props.todayButton)return u["default"].createElement("div",{className:"react-datepicker__today-button",onClick:function(){return t.props.onSelect((0,a["default"])())}},this.props.todayButton)},render:function(){return u["default"].createElement("div",{className:"react-datepicker"},u["default"].createElement("div",{className:"react-datepicker__triangle"}),u["default"].createElement("div",{className:"react-datepicker__header"},this.renderPreviousMonthButton(),this.renderCurrentMonth(),this.renderYearDropdown(),this.renderNextMonthButton(),u["default"].createElement("div",null,this.header())),u["default"].createElement(d["default"],{day:this.state.date,onDayClick:this.handleDayClick,minDate:this.props.minDate,maxDate:this.props.maxDate,excludeDates:this.props.excludeDates,includeDates:this.props.includeDates,filterDate:this.props.filterDate,selected:this.props.selected,startDate:this.props.startDate,endDate:this.props.endDate}),this.renderTodayButton())}});t.exports=c},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}var o=n(3),a=r(o),i=n(7),s=r(i),l=a["default"].createClass({displayName:"YearDropdown",propTypes:{onChange:a["default"].PropTypes.func.isRequired,year:a["default"].PropTypes.number.isRequired},getInitialState:function(){return{dropdownVisible:!1}},renderReadView:function(){return a["default"].createElement("div",{className:"react-datepicker__year-read-view",onClick:this.toggleDropdown},a["default"].createElement("span",{className:"react-datepicker__year-read-view--selected-year"},this.props.year),a["default"].createElement("span",{className:"react-datepicker__year-read-view--down-arrow"}))},renderDropdown:function(){return a["default"].createElement(s["default"],{ref:"options",year:this.props.year,onChange:this.onChange,onCancel:this.toggleDropdown})},onChange:function(t){this.toggleDropdown(),t!==this.props.year&&this.props.onChange(t)},toggleDropdown:function(){this.setState({dropdownVisible:!this.state.dropdownVisible})},render:function(){return a["default"].createElement("div",null,this.state.dropdownVisible?this.renderDropdown():this.renderReadView())}});t.exports=l},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}function o(t){for(var e=[],n=0;5>n;n++)e.push(t-n);return e}var a=n(3),i=r(a),s=i["default"].createClass({displayName:"YearDropdownOptions",propTypes:{onCancel:i["default"].PropTypes.func.isRequired,onChange:i["default"].PropTypes.func.isRequired,year:i["default"].PropTypes.number.isRequired},mixins:[n(8)],getInitialState:function(){return{yearsList:o(this.props.year)}},renderOptions:function(){var t=this,e=this.props.year,n=this.state.yearsList.map(function(n){return i["default"].createElement("div",{className:"react-datepicker__year-option",key:n,onClick:t.onChange.bind(t,n)},e===n?i["default"].createElement("span",{className:"react-datepicker__year-option--selected"},"✓"):"",n)});return n.unshift(i["default"].createElement("div",{className:"react-datepicker__year-option",ref:"upcoming",key:"upcoming",onClick:this.incrementYears},i["default"].createElement("a",{className:"react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-upcoming"}))),n.push(i["default"].createElement("div",{className:"react-datepicker__year-option",ref:"previous",key:"previous",onClick:this.decrementYears},i["default"].createElement("a",{className:"react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-previous"}))),n},onChange:function(t){this.props.onChange(t)},handleClickOutside:function(){this.props.onCancel()},shiftYears:function(t){var e=this.state.yearsList.map(function(e){return e+t});this.setState({yearsList:e})},incrementYears:function(){return this.shiftYears(1)},decrementYears:function(){return this.shiftYears(-1)},render:function(){return i["default"].createElement("div",{className:"react-datepicker__year-dropdown"},this.renderOptions())}});t.exports=s},function(t,e){t.exports=n},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}var o=n(3),a=r(o),i=n(10),s=r(i),l=a["default"].createClass({displayName:"Month",propTypes:{day:a["default"].PropTypes.object.isRequired,endDate:a["default"].PropTypes.object,excludeDates:a["default"].PropTypes.array,filterDate:a["default"].PropTypes.func,includeDates:a["default"].PropTypes.array,maxDate:a["default"].PropTypes.object,minDate:a["default"].PropTypes.object,onDayClick:a["default"].PropTypes.func,selected:a["default"].PropTypes.object,startDate:a["default"].PropTypes.object},handleDayClick:function(t){this.props.onDayClick&&this.props.onDayClick(t)},isWeekInMonth:function(t){var e=this.props.day,n=t.clone().add(6,"days");return t.isSame(e,"month")||n.isSame(e,"month")},renderWeeks:function(){var t=this,e=this.props.day.clone().startOf("month").startOf("week");return[0,1,2,3,4,5].map(function(t){return e.clone().add(t,"weeks")}).filter(function(e){return t.isWeekInMonth(e)}).map(function(e,n){return a["default"].createElement(s["default"],{key:n,day:e,month:t.props.day.month(),onDayClick:t.handleDayClick,minDate:t.props.minDate,maxDate:t.props.maxDate,excludeDates:t.props.excludeDates,includeDates:t.props.includeDates,filterDate:t.props.filterDate,selected:t.props.selected,startDate:t.props.startDate,endDate:t.props.endDate})})},render:function(){return a["default"].createElement("div",{className:"react-datepicker__month"},this.renderWeeks())}});t.exports=l},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}var o=n(3),a=r(o),i=n(11),s=r(i),l=a["default"].createClass({displayName:"Week",propTypes:{day:a["default"].PropTypes.object.isRequired,endDate:a["default"].PropTypes.object,excludeDates:a["default"].PropTypes.array,filterDate:a["default"].PropTypes.func,includeDates:a["default"].PropTypes.array,maxDate:a["default"].PropTypes.object,minDate:a["default"].PropTypes.object,month:a["default"].PropTypes.number,onDayClick:a["default"].PropTypes.func,selected:a["default"].PropTypes.object,startDate:a["default"].PropTypes.object},handleDayClick:function(t){this.props.onDayClick&&this.props.onDayClick(t)},renderDays:function(){var t=this,e=this.props.day.clone().startOf("week");return[0,1,2,3,4,5,6].map(function(n){var r=e.clone().add(n,"days");return a["default"].createElement(s["default"],{key:n,day:r,month:t.props.month,onClick:t.handleDayClick.bind(t,r),minDate:t.props.minDate,maxDate:t.props.maxDate,excludeDates:t.props.excludeDates,includeDates:t.props.includeDates,filterDate:t.props.filterDate,selected:t.props.selected,startDate:t.props.startDate,endDate:t.props.endDate})})},render:function(){return a["default"].createElement("div",{className:"react-datepicker__week"},this.renderDays())}});t.exports=l},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}var o=n(2),a=r(o),i=n(3),s=r(i),l=n(12),d=r(l),p=n(4),u=s["default"].createClass({displayName:"Day",propTypes:{day:s["default"].PropTypes.object.isRequired,endDate:s["default"].PropTypes.object,excludeDates:s["default"].PropTypes.array,filterDate:s["default"].PropTypes.func,includeDates:s["default"].PropTypes.array,maxDate:s["default"].PropTypes.object,minDate:s["default"].PropTypes.object,month:s["default"].PropTypes.number,onClick:s["default"].PropTypes.func,selected:s["default"].PropTypes.object,startDate:s["default"].PropTypes.object},handleClick:function(t){!this.isDisabled()&&this.props.onClick&&this.props.onClick(t)},isSameDay:function(t){return(0,p.isSameDay)(this.props.day,t)},isDisabled:function(){return(0,p.isDayDisabled)(this.props.day,this.props)},isInRange:function(){var t=this.props,e=t.day,n=t.startDate,r=t.endDate;if(!n||!r)return!1;var o=n.clone().startOf("day").subtract(1,"seconds"),a=r.clone().startOf("day").add(1,"seconds");return e.clone().startOf("day").isBetween(o,a)},isWeekend:function(){var t=this.props.day.day();return 0===t||6===t},isOutsideMonth:function(){return void 0!==this.props.month&&this.props.month!==this.props.day.month()},getClassNames:function(){return(0,d["default"])("react-datepicker__day",{"react-datepicker__day--disabled":this.isDisabled(),"react-datepicker__day--selected":this.isSameDay(this.props.selected),"react-datepicker__day--in-range":this.isInRange(),"react-datepicker__day--today":this.isSameDay((0,a["default"])()),"react-datepicker__day--weekend":this.isWeekend(),"react-datepicker__day--outside-month":this.isOutsideMonth()})},render:function(){return s["default"].createElement("div",{className:this.getClassNames(),onClick:this.handleClick},this.props.day.date())}});t.exports=u},function(t,e,n){var r,o;/*!
+	!function(t,e){ true?module.exports=e(__webpack_require__(/*! moment */ 265),__webpack_require__(/*! react */ 1),__webpack_require__(/*! react-onclickoutside */ 368),__webpack_require__(/*! react-dom */ 38)):"function"==typeof define&&define.amd?define(["moment","react","react-onclickoutside","react-dom"],e):"object"==typeof exports?exports.DatePicker=e(require("moment"),require("react"),require("react-onclickoutside"),require("react-dom")):t.DatePicker=e(t.moment,t.React,t.OnClickOutside,t.ReactDOM)}(this,function(t,e,n,r){return function(t){function e(r){if(n[r])return n[r].exports;var o=n[r]={exports:{},id:r,loaded:!1};return t[r].call(o.exports,o,o.exports,e),o.loaded=!0,o.exports}var n={};return e.m=t,e.c=n,e.p="",e(0)}([function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}function o(t,e,n){return e in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}var a=n(1),i=r(a),s=n(5),l=r(s),d=n(3),p=r(d),u=n(13),f=r(u),c=n(12),h=r(c),m=n(4),y="react-datepicker-ignore-onclickoutside",g=p["default"].createClass({displayName:"DatePicker",propTypes:{className:p["default"].PropTypes.string,dateFormat:p["default"].PropTypes.string,dateFormatCalendar:p["default"].PropTypes.string,disabled:p["default"].PropTypes.bool,endDate:p["default"].PropTypes.object,excludeDates:p["default"].PropTypes.array,filterDate:p["default"].PropTypes.func,id:p["default"].PropTypes.string,includeDates:p["default"].PropTypes.array,isClearable:p["default"].PropTypes.bool,locale:p["default"].PropTypes.string,maxDate:p["default"].PropTypes.object,minDate:p["default"].PropTypes.object,name:p["default"].PropTypes.string,onBlur:p["default"].PropTypes.func,onChange:p["default"].PropTypes.func.isRequired,onFocus:p["default"].PropTypes.func,placeholderText:p["default"].PropTypes.string,popoverAttachment:p["default"].PropTypes.string,popoverTargetAttachment:p["default"].PropTypes.string,popoverTargetOffset:p["default"].PropTypes.string,readOnly:p["default"].PropTypes.bool,renderCalendarTo:p["default"].PropTypes.any,required:p["default"].PropTypes.bool,selected:p["default"].PropTypes.object,showYearDropdown:p["default"].PropTypes.bool,startDate:p["default"].PropTypes.object,tabIndex:p["default"].PropTypes.number,tetherConstraints:p["default"].PropTypes.array,title:p["default"].PropTypes.string,todayButton:p["default"].PropTypes.string},getDefaultProps:function(){return{dateFormatCalendar:"MMMM YYYY",onChange:function(){},disabled:!1,onFocus:function(){},onBlur:function(){},popoverAttachment:"top left",popoverTargetAttachment:"bottom left",popoverTargetOffset:"10px 0",tetherConstraints:[{to:"window",attachment:"together"}]}},getInitialState:function(){return{open:!1}},setOpen:function(t){this.setState({open:t})},handleFocus:function(t){this.props.onFocus(t),this.setOpen(!0)},handleBlur:function(t){this.state.open?this.refs.input.focus():this.props.onBlur(t)},handleCalendarClickOutside:function(t){this.setOpen(!1)},handleSelect:function(t){this.setSelected(t),this.setOpen(!1)},setSelected:function(t){(0,m.isSameDay)(this.props.selected,t)||this.props.onChange(t)},onInputClick:function(){this.props.disabled||this.setOpen(!0)},onInputKeyDown:function(t){"Enter"===t.key||"Escape"===t.key?(t.preventDefault(),this.setOpen(!1)):"Tab"===t.key&&this.setOpen(!1)},onClearClick:function(t){t.preventDefault(),this.props.onChange(null)},renderCalendar:function(){return!this.state.open||this.props.disabled?null:p["default"].createElement(l["default"],{ref:"calendar",locale:this.props.locale,dateFormat:this.props.dateFormatCalendar,selected:this.props.selected,onSelect:this.handleSelect,minDate:this.props.minDate,maxDate:this.props.maxDate,startDate:this.props.startDate,endDate:this.props.endDate,excludeDates:this.props.excludeDates,filterDate:this.props.filterDate,onClickOutside:this.handleCalendarClickOutside,includeDates:this.props.includeDates,showYearDropdown:this.props.showYearDropdown,todayButton:this.props.todayButton,outsideClickIgnoreClass:y})},renderDateInput:function(){var t=(0,h["default"])(this.props.className,o({},y,this.state.open));return p["default"].createElement(i["default"],{ref:"input",id:this.props.id,name:this.props.name,date:this.props.selected,locale:this.props.locale,minDate:this.props.minDate,maxDate:this.props.maxDate,excludeDates:this.props.excludeDates,includeDates:this.props.includeDates,filterDate:this.props.filterDate,dateFormat:this.props.dateFormat,onFocus:this.handleFocus,onBlur:this.handleBlur,onClick:this.onInputClick,onKeyDown:this.onInputKeyDown,onChangeDate:this.setSelected,placeholder:this.props.placeholderText,disabled:this.props.disabled,className:t,title:this.props.title,readOnly:this.props.readOnly,required:this.props.required,tabIndex:this.props.tabIndex})},renderClearButton:function(){return this.props.isClearable&&null!=this.props.selected?p["default"].createElement("a",{className:"react-datepicker__close-icon",href:"#",onClick:this.onClearClick}):null},render:function(){return p["default"].createElement(f["default"],{classPrefix:"react-datepicker__tether",attachment:this.props.popoverAttachment,targetAttachment:this.props.popoverTargetAttachment,targetOffset:this.props.popoverTargetOffset,renderElementTo:this.props.renderCalendarTo,constraints:this.props.tetherConstraints},p["default"].createElement("div",{className:"react-datepicker__input-container"},this.renderDateInput(),this.renderClearButton()),this.renderCalendar())}});t.exports=g},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}var o=Object.assign||function(t){for(var e=1;e<arguments.length;e++){var n=arguments[e];for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(t[r]=n[r])}return t},a=n(2),i=r(a),s=n(3),l=r(s),d=n(4),p=l["default"].createClass({displayName:"DateInput",propTypes:{date:l["default"].PropTypes.object,dateFormat:l["default"].PropTypes.string,disabled:l["default"].PropTypes.bool,excludeDates:l["default"].PropTypes.array,filterDate:l["default"].PropTypes.func,includeDates:l["default"].PropTypes.array,locale:l["default"].PropTypes.string,maxDate:l["default"].PropTypes.object,minDate:l["default"].PropTypes.object,onBlur:l["default"].PropTypes.func,onChange:l["default"].PropTypes.func,onChangeDate:l["default"].PropTypes.func},getDefaultProps:function(){return{dateFormat:"L"}},getInitialState:function(){return{value:this.safeDateFormat(this.props)}},componentWillReceiveProps:function(t){(0,d.isSameDay)(t.date,this.props.date)&&t.locale===this.props.locale&&t.dateFormat===this.props.dateFormat||this.setState({value:this.safeDateFormat(t)})},handleChange:function(t){this.props.onChange&&this.props.onChange(t),t.isDefaultPrevented()||this.handleChangeDate(t.target.value)},handleChangeDate:function(t){if(this.props.onChangeDate){var e=(0,i["default"])(t,this.props.dateFormat,this.props.locale||i["default"].locale(),!0);e.isValid()&&!(0,d.isDayDisabled)(e,this.props)?this.props.onChangeDate(e):""===t&&this.props.onChangeDate(null)}this.setState({value:t})},safeDateFormat:function(t){return t.date&&t.date.clone().locale(t.locale||i["default"].locale()).format(t.dateFormat)||""},handleBlur:function(t){this.setState({value:this.safeDateFormat(this.props)}),this.props.onBlur&&this.props.onBlur(t)},focus:function(){this.refs.input.focus()},render:function(){return l["default"].createElement("input",o({ref:"input",type:"text"},this.props,{value:this.state.value,onBlur:this.handleBlur,onChange:this.handleChange}))}});t.exports=p},function(e,n){e.exports=t},function(t,n){t.exports=e},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}function o(t,e){return t&&e?t.isSame(e,"day"):!t&&!e}function a(t){var e=arguments.length<=1||void 0===arguments[1]?{}:arguments[1],n=e.minDate,r=e.maxDate,a=e.excludeDates,i=e.includeDates,s=e.filterDate;return n&&t.isBefore(n,"day")||r&&t.isAfter(r,"day")||a&&a.some(function(e){return o(t,e)})||i&&!i.some(function(e){return o(t,e)})||s&&!s(t.clone())||!1}function i(t,e){var n=arguments.length<=2||void 0===arguments[2]?{}:arguments[2],r=n.minDate,o=n.includeDates,a=t.clone().subtract(1,e);return r&&a.isBefore(r,e)||o&&o.every(function(t){return a.isBefore(t,e)})||!1}function s(t,e){var n=arguments.length<=2||void 0===arguments[2]?{}:arguments[2],r=n.maxDate,o=n.includeDates,a=t.clone().add(1,e);return r&&a.isAfter(r,e)||o&&o.every(function(t){return a.isAfter(t,e)})||!1}function l(t){var e=t.minDate,n=t.includeDates;return n&&e?u["default"].min(n.filter(function(t){return e.isSameOrBefore(t,"day")})):n?u["default"].min(n):e}function d(t){var e=t.maxDate,n=t.includeDates;return n&&e?u["default"].max(n.filter(function(t){return e.isSameOrAfter(t,"day")})):n?u["default"].max(n):e}Object.defineProperty(e,"__esModule",{value:!0}),e.isSameDay=o,e.isDayDisabled=a,e.allDaysDisabledBefore=i,e.allDaysDisabledAfter=s,e.getEffectiveMinDate=l,e.getEffectiveMaxDate=d;var p=n(2),u=r(p)},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}var o=n(2),a=r(o),i=n(6),s=r(i),l=n(9),d=r(l),p=n(3),u=r(p),f=n(4),c=u["default"].createClass({displayName:"Calendar",propTypes:{dateFormat:u["default"].PropTypes.string.isRequired,endDate:u["default"].PropTypes.object,excludeDates:u["default"].PropTypes.array,filterDate:u["default"].PropTypes.func,includeDates:u["default"].PropTypes.array,locale:u["default"].PropTypes.string,maxDate:u["default"].PropTypes.object,minDate:u["default"].PropTypes.object,onClickOutside:u["default"].PropTypes.func.isRequired,onSelect:u["default"].PropTypes.func.isRequired,selected:u["default"].PropTypes.object,showYearDropdown:u["default"].PropTypes.bool,startDate:u["default"].PropTypes.object,todayButton:u["default"].PropTypes.string},mixins:[n(8)],getInitialState:function(){return{date:this.localizeMoment(this.getDateInView())}},componentWillReceiveProps:function(t){t.selected&&!(0,f.isSameDay)(t.selected,this.props.selected)&&this.setState({date:this.localizeMoment(t.selected)})},handleClickOutside:function(t){this.props.onClickOutside(t)},getDateInView:function(){var t=this.props.selected,e=(0,f.getEffectiveMinDate)(this.props),n=(0,f.getEffectiveMaxDate)(this.props),r=(0,a["default"])();return t?t:e&&e.isAfter(r)?e:n&&n.isBefore(r)?n:r},localizeMoment:function(t){return t.clone().locale(this.props.locale||a["default"].locale())},increaseMonth:function(){this.setState({date:this.state.date.clone().add(1,"month")})},decreaseMonth:function(){this.setState({date:this.state.date.clone().subtract(1,"month")})},handleDayClick:function(t){this.props.onSelect(t)},changeYear:function(t){this.setState({date:this.state.date.clone().set("year",t)})},header:function(){var t=this.state.date.clone().startOf("week");return[0,1,2,3,4,5,6].map(function(e){var n=t.clone().add(e,"days");return u["default"].createElement("div",{key:e,className:"react-datepicker__day-name"},n.localeData().weekdaysMin(n))})},renderPreviousMonthButton:function(){return(0,f.allDaysDisabledBefore)(this.state.date,"month",this.props)?void 0:u["default"].createElement("a",{className:"react-datepicker__navigation react-datepicker__navigation--previous",onClick:this.decreaseMonth})},renderNextMonthButton:function(){return(0,f.allDaysDisabledAfter)(this.state.date,"month",this.props)?void 0:u["default"].createElement("a",{className:"react-datepicker__navigation react-datepicker__navigation--next",onClick:this.increaseMonth})},renderCurrentMonth:function(){var t=["react-datepicker__current-month"];return this.props.showYearDropdown&&t.push("react-datepicker__current-month--hasYearDropdown"),u["default"].createElement("div",{className:t.join(" ")},this.state.date.format(this.props.dateFormat))},renderYearDropdown:function(){return this.props.showYearDropdown?u["default"].createElement(s["default"],{onChange:this.changeYear,year:this.state.date.year()}):void 0},renderTodayButton:function(){var t=this;if(this.props.todayButton)return u["default"].createElement("div",{className:"react-datepicker__today-button",onClick:function(){return t.props.onSelect((0,a["default"])())}},this.props.todayButton)},render:function(){return u["default"].createElement("div",{className:"react-datepicker"},u["default"].createElement("div",{className:"react-datepicker__triangle"}),u["default"].createElement("div",{className:"react-datepicker__header"},this.renderPreviousMonthButton(),this.renderCurrentMonth(),this.renderYearDropdown(),this.renderNextMonthButton(),u["default"].createElement("div",null,this.header())),u["default"].createElement(d["default"],{day:this.state.date,onDayClick:this.handleDayClick,minDate:this.props.minDate,maxDate:this.props.maxDate,excludeDates:this.props.excludeDates,includeDates:this.props.includeDates,filterDate:this.props.filterDate,selected:this.props.selected,startDate:this.props.startDate,endDate:this.props.endDate}),this.renderTodayButton())}});t.exports=c},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}var o=n(3),a=r(o),i=n(7),s=r(i),l=a["default"].createClass({displayName:"YearDropdown",propTypes:{onChange:a["default"].PropTypes.func.isRequired,year:a["default"].PropTypes.number.isRequired},getInitialState:function(){return{dropdownVisible:!1}},renderReadView:function(){return a["default"].createElement("div",{className:"react-datepicker__year-read-view",onClick:this.toggleDropdown},a["default"].createElement("span",{className:"react-datepicker__year-read-view--selected-year"},this.props.year),a["default"].createElement("span",{className:"react-datepicker__year-read-view--down-arrow"}))},renderDropdown:function(){return a["default"].createElement(s["default"],{ref:"options",year:this.props.year,onChange:this.onChange,onCancel:this.toggleDropdown})},onChange:function(t){this.toggleDropdown(),t!==this.props.year&&this.props.onChange(t)},toggleDropdown:function(){this.setState({dropdownVisible:!this.state.dropdownVisible})},render:function(){return a["default"].createElement("div",null,this.state.dropdownVisible?this.renderDropdown():this.renderReadView())}});t.exports=l},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}function o(t){for(var e=[],n=0;5>n;n++)e.push(t-n);return e}var a=n(3),i=r(a),s=i["default"].createClass({displayName:"YearDropdownOptions",propTypes:{onCancel:i["default"].PropTypes.func.isRequired,onChange:i["default"].PropTypes.func.isRequired,year:i["default"].PropTypes.number.isRequired},mixins:[n(8)],getInitialState:function(){return{yearsList:o(this.props.year)}},renderOptions:function(){var t=this,e=this.props.year,n=this.state.yearsList.map(function(n){return i["default"].createElement("div",{className:"react-datepicker__year-option",key:n,onClick:t.onChange.bind(t,n)},e===n?i["default"].createElement("span",{className:"react-datepicker__year-option--selected"},"✓"):"",n)});return n.unshift(i["default"].createElement("div",{className:"react-datepicker__year-option",ref:"upcoming",key:"upcoming",onClick:this.incrementYears},i["default"].createElement("a",{className:"react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-upcoming"}))),n.push(i["default"].createElement("div",{className:"react-datepicker__year-option",ref:"previous",key:"previous",onClick:this.decrementYears},i["default"].createElement("a",{className:"react-datepicker__navigation react-datepicker__navigation--years react-datepicker__navigation--years-previous"}))),n},onChange:function(t){this.props.onChange(t)},handleClickOutside:function(){this.props.onCancel()},shiftYears:function(t){var e=this.state.yearsList.map(function(e){return e+t});this.setState({yearsList:e})},incrementYears:function(){return this.shiftYears(1)},decrementYears:function(){return this.shiftYears(-1)},render:function(){return i["default"].createElement("div",{className:"react-datepicker__year-dropdown"},this.renderOptions())}});t.exports=s},function(t,e){t.exports=n},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}var o=n(3),a=r(o),i=n(10),s=r(i),l=a["default"].createClass({displayName:"Month",propTypes:{day:a["default"].PropTypes.object.isRequired,endDate:a["default"].PropTypes.object,excludeDates:a["default"].PropTypes.array,filterDate:a["default"].PropTypes.func,includeDates:a["default"].PropTypes.array,maxDate:a["default"].PropTypes.object,minDate:a["default"].PropTypes.object,onDayClick:a["default"].PropTypes.func,selected:a["default"].PropTypes.object,startDate:a["default"].PropTypes.object},handleDayClick:function(t){this.props.onDayClick&&this.props.onDayClick(t)},isWeekInMonth:function(t){var e=this.props.day,n=t.clone().add(6,"days");return t.isSame(e,"month")||n.isSame(e,"month")},renderWeeks:function(){var t=this,e=this.props.day.clone().startOf("month").startOf("week");return[0,1,2,3,4,5].map(function(t){return e.clone().add(t,"weeks")}).filter(function(e){return t.isWeekInMonth(e)}).map(function(e,n){return a["default"].createElement(s["default"],{key:n,day:e,month:t.props.day.month(),onDayClick:t.handleDayClick,minDate:t.props.minDate,maxDate:t.props.maxDate,excludeDates:t.props.excludeDates,includeDates:t.props.includeDates,filterDate:t.props.filterDate,selected:t.props.selected,startDate:t.props.startDate,endDate:t.props.endDate})})},render:function(){return a["default"].createElement("div",{className:"react-datepicker__month"},this.renderWeeks())}});t.exports=l},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}var o=n(3),a=r(o),i=n(11),s=r(i),l=a["default"].createClass({displayName:"Week",propTypes:{day:a["default"].PropTypes.object.isRequired,endDate:a["default"].PropTypes.object,excludeDates:a["default"].PropTypes.array,filterDate:a["default"].PropTypes.func,includeDates:a["default"].PropTypes.array,maxDate:a["default"].PropTypes.object,minDate:a["default"].PropTypes.object,month:a["default"].PropTypes.number,onDayClick:a["default"].PropTypes.func,selected:a["default"].PropTypes.object,startDate:a["default"].PropTypes.object},handleDayClick:function(t){this.props.onDayClick&&this.props.onDayClick(t)},renderDays:function(){var t=this,e=this.props.day.clone().startOf("week");return[0,1,2,3,4,5,6].map(function(n){var r=e.clone().add(n,"days");return a["default"].createElement(s["default"],{key:n,day:r,month:t.props.month,onClick:t.handleDayClick.bind(t,r),minDate:t.props.minDate,maxDate:t.props.maxDate,excludeDates:t.props.excludeDates,includeDates:t.props.includeDates,filterDate:t.props.filterDate,selected:t.props.selected,startDate:t.props.startDate,endDate:t.props.endDate})})},render:function(){return a["default"].createElement("div",{className:"react-datepicker__week"},this.renderDays())}});t.exports=l},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{"default":t}}var o=n(2),a=r(o),i=n(3),s=r(i),l=n(12),d=r(l),p=n(4),u=s["default"].createClass({displayName:"Day",propTypes:{day:s["default"].PropTypes.object.isRequired,endDate:s["default"].PropTypes.object,excludeDates:s["default"].PropTypes.array,filterDate:s["default"].PropTypes.func,includeDates:s["default"].PropTypes.array,maxDate:s["default"].PropTypes.object,minDate:s["default"].PropTypes.object,month:s["default"].PropTypes.number,onClick:s["default"].PropTypes.func,selected:s["default"].PropTypes.object,startDate:s["default"].PropTypes.object},handleClick:function(t){!this.isDisabled()&&this.props.onClick&&this.props.onClick(t)},isSameDay:function(t){return(0,p.isSameDay)(this.props.day,t)},isDisabled:function(){return(0,p.isDayDisabled)(this.props.day,this.props)},isInRange:function(){var t=this.props,e=t.day,n=t.startDate,r=t.endDate;if(!n||!r)return!1;var o=n.clone().startOf("day").subtract(1,"seconds"),a=r.clone().startOf("day").add(1,"seconds");return e.clone().startOf("day").isBetween(o,a)},isWeekend:function(){var t=this.props.day.day();return 0===t||6===t},isOutsideMonth:function(){return void 0!==this.props.month&&this.props.month!==this.props.day.month()},getClassNames:function(){return(0,d["default"])("react-datepicker__day",{"react-datepicker__day--disabled":this.isDisabled(),"react-datepicker__day--selected":this.isSameDay(this.props.selected),"react-datepicker__day--in-range":this.isInRange(),"react-datepicker__day--today":this.isSameDay((0,a["default"])()),"react-datepicker__day--weekend":this.isWeekend(),"react-datepicker__day--outside-month":this.isOutsideMonth()})},render:function(){return s["default"].createElement("div",{className:this.getClassNames(),onClick:this.handleClick},this.props.day.date())}});t.exports=u},function(t,e,n){var r,o;/*!
 		  Copyright (c) 2016 Jed Watson.
 		  Licensed under the MIT License (MIT), see
 		  http://jedwatson.github.io/classnames
@@ -33719,7 +35961,7 @@
 	!function(a,i){r=i,o="function"==typeof r?r.call(e,n,e,t):r,!(void 0!==o&&(t.exports=o))}(this,function(t,e,n){"use strict";function r(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function o(t){var e=getComputedStyle(t)||{},n=e.position,r=[];if("fixed"===n)return[t];for(var o=t;(o=o.parentNode)&&o&&1===o.nodeType;){var a=void 0;try{a=getComputedStyle(o)}catch(i){}if("undefined"==typeof a||null===a)return r.push(o),r;var s=a,l=s.overflow,d=s.overflowX,p=s.overflowY;/(auto|scroll)/.test(l+p+d)&&("absolute"!==n||["relative","absolute","fixed"].indexOf(a.position)>=0)&&r.push(o)}return r.push(document.body),r}function a(){w&&document.body.removeChild(w),w=null}function i(t){var e=void 0;t===document?(e=document,t=document.documentElement):e=t.ownerDocument;var n=e.documentElement,r={},o=t.getBoundingClientRect();for(var a in o)r[a]=o[a];var i=x();return r.top-=i.top,r.left-=i.left,"undefined"==typeof r.width&&(r.width=document.body.scrollWidth-r.left-r.right),"undefined"==typeof r.height&&(r.height=document.body.scrollHeight-r.top-r.bottom),r.top=r.top-n.clientTop,r.left=r.left-n.clientLeft,r.right=e.body.clientWidth-r.width-r.left,r.bottom=e.body.clientHeight-r.height-r.top,r}function s(t){return t.offsetParent||document.documentElement}function l(){var t=document.createElement("div");t.style.width="100%",t.style.height="200px";var e=document.createElement("div");d(e.style,{position:"absolute",top:0,left:0,pointerEvents:"none",visibility:"hidden",width:"200px",height:"150px",overflow:"hidden"}),e.appendChild(t),document.body.appendChild(e);var n=t.offsetWidth;e.style.overflow="scroll";var r=t.offsetWidth;n===r&&(r=e.clientWidth),document.body.removeChild(e);var o=n-r;return{width:o,height:o}}function d(){var t=arguments.length<=0||void 0===arguments[0]?{}:arguments[0],e=[];return Array.prototype.push.apply(e,arguments),e.slice(1).forEach(function(e){if(e)for(var n in e)({}).hasOwnProperty.call(e,n)&&(t[n]=e[n])}),t}function p(t,e){if("undefined"!=typeof t.classList)e.split(" ").forEach(function(e){e.trim()&&t.classList.remove(e)});else{var n=new RegExp("(^| )"+e.split(" ").join("|")+"( |$)","gi"),r=c(t).replace(n," ");h(t,r)}}function u(t,e){if("undefined"!=typeof t.classList)e.split(" ").forEach(function(e){e.trim()&&t.classList.add(e)});else{p(t,e);var n=c(t)+(" "+e);h(t,n)}}function f(t,e){if("undefined"!=typeof t.classList)return t.classList.contains(e);var n=c(t);return new RegExp("(^| )"+e+"( |$)","gi").test(n)}function c(t){return t.className instanceof SVGAnimatedString?t.className.baseVal:t.className}function h(t,e){t.setAttribute("class",e)}function m(t,e,n){n.forEach(function(n){-1===e.indexOf(n)&&f(t,n)&&p(t,n)}),e.forEach(function(e){f(t,e)||u(t,e)})}function r(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function y(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}function g(t,e){var n=arguments.length<=2||void 0===arguments[2]?1:arguments[2];return t+n>=e&&e>=t-n}function v(){return"undefined"!=typeof performance&&"undefined"!=typeof performance.now?performance.now():+new Date}function b(){for(var t={top:0,left:0},e=arguments.length,n=Array(e),r=0;e>r;r++)n[r]=arguments[r];return n.forEach(function(e){var n=e.top,r=e.left;"string"==typeof n&&(n=parseFloat(n,10)),"string"==typeof r&&(r=parseFloat(r,10)),t.top+=n,t.left+=r}),t}function D(t,e){return"string"==typeof t.left&&-1!==t.left.indexOf("%")&&(t.left=parseFloat(t.left,10)/100*e.width),"string"==typeof t.top&&-1!==t.top.indexOf("%")&&(t.top=parseFloat(t.top,10)/100*e.height),t}function C(t,e){return"scrollParent"===e?e=t.scrollParents[0]:"window"===e&&(e=[pageXOffset,pageYOffset,innerWidth+pageXOffset,innerHeight+pageYOffset]),e===document&&(e=e.documentElement),"undefined"!=typeof e.nodeType&&!function(){var t=i(e),n=t,r=getComputedStyle(e);e=[n.left,n.top,t.width+n.left,t.height+n.top],U.forEach(function(t,n){t=t[0].toUpperCase()+t.substr(1),"Top"===t||"Left"===t?e[n]+=parseFloat(r["border"+t+"Width"]):e[n]-=parseFloat(r["border"+t+"Width"])})}(),e}var T=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}(),P=void 0;"undefined"==typeof P&&(P={modules:[]});var w=null,_=function(){var t=0;return function(){return++t}}(),k={},x=function(){var t=w;t||(t=document.createElement("div"),t.setAttribute("data-tether-id",_()),d(t.style,{top:0,left:0,position:"absolute"}),document.body.appendChild(t),w=t);var e=t.getAttribute("data-tether-id");if("undefined"==typeof k[e]){k[e]={};var n=t.getBoundingClientRect();for(var r in n)k[e][r]=n[r];E(function(){delete k[e]})}return k[e]},O=[],E=function(t){O.push(t)},S=function(){for(var t=void 0;t=O.pop();)t()},N=function(){function t(){r(this,t)}return T(t,[{key:"on",value:function(t,e,n){var r=arguments.length<=3||void 0===arguments[3]?!1:arguments[3];"undefined"==typeof this.bindings&&(this.bindings={}),"undefined"==typeof this.bindings[t]&&(this.bindings[t]=[]),this.bindings[t].push({handler:e,ctx:n,once:r})}},{key:"once",value:function(t,e,n){this.on(t,e,n,!0)}},{key:"off",value:function(t,e){if("undefined"==typeof this.bindings||"undefined"==typeof this.bindings[t])if("undefined"==typeof e)delete this.bindings[t];else for(var n=0;n<this.bindings[t].length;)this.bindings[t][n].handler===e?this.bindings[t].splice(n,1):++n}},{key:"trigger",value:function(t){if("undefined"!=typeof this.bindings&&this.bindings[t]){for(var e=0,n=arguments.length,r=Array(n>1?n-1:0),o=1;n>o;o++)r[o-1]=arguments[o];for(;e<this.bindings[t].length;){var a=this.bindings[t][e],i=a.handler,s=a.ctx,l=a.once,d=s;"undefined"==typeof d&&(d=this),i.apply(d,r),l?this.bindings[t].splice(e,1):++e}}}}]),t}();P.Utils={getScrollParents:o,getBounds:i,getOffsetParent:s,extend:d,addClass:u,removeClass:p,hasClass:f,updateClasses:m,defer:E,flush:S,uniqueId:_,Evented:N,getScrollBarSize:l,removeUtilElements:a};var M=function(){function t(t,e){var n=[],r=!0,o=!1,a=void 0;try{for(var i,s=t[Symbol.iterator]();!(r=(i=s.next()).done)&&(n.push(i.value),!e||n.length!==e);r=!0);}catch(l){o=!0,a=l}finally{try{!r&&s["return"]&&s["return"]()}finally{if(o)throw a}}return n}return function(e,n){if(Array.isArray(e))return e;if(Symbol.iterator in Object(e))return t(e,n);throw new TypeError("Invalid attempt to destructure non-iterable instance")}}(),T=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}(),j=function(t,e,n){for(var r=!0;r;){var o=t,a=e,i=n;r=!1,null===o&&(o=Function.prototype);var s=Object.getOwnPropertyDescriptor(o,a);if(void 0!==s){if("value"in s)return s.value;var l=s.get;if(void 0===l)return;return l.call(i)}var d=Object.getPrototypeOf(o);if(null===d)return;t=d,e=a,n=i,r=!0,s=d=void 0}};if("undefined"==typeof P)throw new Error("You must include the utils.js file before tether.js");var A=P.Utils,o=A.getScrollParents,i=A.getBounds,s=A.getOffsetParent,d=A.extend,u=A.addClass,p=A.removeClass,m=A.updateClasses,E=A.defer,S=A.flush,l=A.getScrollBarSize,a=A.removeUtilElements,B=function(){if("undefined"==typeof document)return"";for(var t=document.createElement("div"),e=["transform","webkitTransform","OTransform","MozTransform","msTransform"],n=0;n<e.length;++n){var r=e[n];if(void 0!==t.style[r])return r}}(),F=[],Y=function(){F.forEach(function(t){t.position(!1)}),S()};!function(){var t=null,e=null,n=null,r=function o(){return"undefined"!=typeof e&&e>16?(e=Math.min(e-16,250),void(n=setTimeout(o,250))):void("undefined"!=typeof t&&v()-t<10||(null!=n&&(clearTimeout(n),n=null),t=v(),Y(),e=v()-t))};"undefined"!=typeof window&&"undefined"!=typeof window.addEventListener&&["resize","scroll","touchmove"].forEach(function(t){window.addEventListener(t,r)})}();var W={center:"center",left:"right",right:"left"},q={middle:"middle",top:"bottom",bottom:"top"},I={top:0,left:0,middle:"50%",center:"50%",bottom:"100%",right:"100%"},R=function(t,e){var n=t.left,r=t.top;return"auto"===n&&(n=W[e.left]),"auto"===r&&(r=q[e.top]),{left:n,top:r}},z=function(t){var e=t.left,n=t.top;return"undefined"!=typeof I[t.left]&&(e=I[t.left]),"undefined"!=typeof I[t.top]&&(n=I[t.top]),{left:e,top:n}},L=function(t){var e=t.split(" "),n=M(e,2),r=n[0],o=n[1];return{top:r,left:o}},H=L,X=function(t){function e(t){var n=this;r(this,e),j(Object.getPrototypeOf(e.prototype),"constructor",this).call(this),this.position=this.position.bind(this),F.push(this),this.history=[],this.setOptions(t,!1),P.modules.forEach(function(t){"undefined"!=typeof t.initialize&&t.initialize.call(n)}),this.position()}return y(e,t),T(e,[{key:"getClass",value:function(){var t=arguments.length<=0||void 0===arguments[0]?"":arguments[0],e=this.options.classes;return"undefined"!=typeof e&&e[t]?this.options.classes[t]:this.options.classPrefix?this.options.classPrefix+"-"+t:t}},{key:"setOptions",value:function(t){var e=this,n=arguments.length<=1||void 0===arguments[1]?!0:arguments[1],r={offset:"0 0",targetOffset:"0 0",targetAttachment:"auto auto",classPrefix:"tether"};this.options=d(r,t);var a=this.options,i=a.element,s=a.target,l=a.targetModifier;if(this.element=i,this.target=s,this.targetModifier=l,"viewport"===this.target?(this.target=document.body,this.targetModifier="visible"):"scroll-handle"===this.target&&(this.target=document.body,this.targetModifier="scroll-handle"),["element","target"].forEach(function(t){if("undefined"==typeof e[t])throw new Error("Tether Error: Both element and target must be defined");"undefined"!=typeof e[t].jquery?e[t]=e[t][0]:"string"==typeof e[t]&&(e[t]=document.querySelector(e[t]))}),u(this.element,this.getClass("element")),this.options.addTargetClasses!==!1&&u(this.target,this.getClass("target")),!this.options.attachment)throw new Error("Tether Error: You must provide an attachment");this.targetAttachment=H(this.options.targetAttachment),this.attachment=H(this.options.attachment),this.offset=L(this.options.offset),this.targetOffset=L(this.options.targetOffset),"undefined"!=typeof this.scrollParents&&this.disable(),"scroll-handle"===this.targetModifier?this.scrollParents=[this.target]:this.scrollParents=o(this.target),this.options.enabled!==!1&&this.enable(n)}},{key:"getTargetBounds",value:function(){if("undefined"==typeof this.targetModifier)return i(this.target);if("visible"===this.targetModifier){if(this.target===document.body)return{top:pageYOffset,left:pageXOffset,height:innerHeight,width:innerWidth};var t=i(this.target),e={height:t.height,width:t.width,top:t.top,left:t.left};return e.height=Math.min(e.height,t.height-(pageYOffset-t.top)),e.height=Math.min(e.height,t.height-(t.top+t.height-(pageYOffset+innerHeight))),e.height=Math.min(innerHeight,e.height),e.height-=2,e.width=Math.min(e.width,t.width-(pageXOffset-t.left)),e.width=Math.min(e.width,t.width-(t.left+t.width-(pageXOffset+innerWidth))),e.width=Math.min(innerWidth,e.width),e.width-=2,e.top<pageYOffset&&(e.top=pageYOffset),e.left<pageXOffset&&(e.left=pageXOffset),e}if("scroll-handle"===this.targetModifier){var t=void 0,n=this.target;n===document.body?(n=document.documentElement,t={left:pageXOffset,top:pageYOffset,height:innerHeight,width:innerWidth}):t=i(n);var r=getComputedStyle(n),o=n.scrollWidth>n.clientWidth||[r.overflow,r.overflowX].indexOf("scroll")>=0||this.target!==document.body,a=0;o&&(a=15);var s=t.height-parseFloat(r.borderTopWidth)-parseFloat(r.borderBottomWidth)-a,e={width:15,height:.975*s*(s/n.scrollHeight),left:t.left+t.width-parseFloat(r.borderLeftWidth)-15},l=0;408>s&&this.target===document.body&&(l=-11e-5*Math.pow(s,2)-.00727*s+22.58),this.target!==document.body&&(e.height=Math.max(e.height,24));var d=this.target.scrollTop/(n.scrollHeight-s);return e.top=d*(s-e.height-l)+t.top+parseFloat(r.borderTopWidth),this.target===document.body&&(e.height=Math.max(e.height,24)),e}}},{key:"clearCache",value:function(){this._cache={}}},{key:"cache",value:function(t,e){return"undefined"==typeof this._cache&&(this._cache={}),"undefined"==typeof this._cache[t]&&(this._cache[t]=e.call(this)),this._cache[t]}},{key:"enable",value:function(){var t=this,e=arguments.length<=0||void 0===arguments[0]?!0:arguments[0];this.options.addTargetClasses!==!1&&u(this.target,this.getClass("enabled")),u(this.element,this.getClass("enabled")),this.enabled=!0,this.scrollParents.forEach(function(e){e!==document&&e.addEventListener("scroll",t.position)}),e&&this.position()}},{key:"disable",value:function(){var t=this;p(this.target,this.getClass("enabled")),p(this.element,this.getClass("enabled")),this.enabled=!1,"undefined"!=typeof this.scrollParents&&this.scrollParents.forEach(function(e){e.removeEventListener("scroll",t.position)})}},{key:"destroy",value:function(){var t=this;this.disable(),F.forEach(function(e,n){e===t&&F.splice(n,1)}),0===F.length&&a()}},{key:"updateAttachClasses",value:function(t,e){var n=this;t=t||this.attachment,e=e||this.targetAttachment;var r=["left","top","bottom","right","middle","center"];"undefined"!=typeof this._addAttachClasses&&this._addAttachClasses.length&&this._addAttachClasses.splice(0,this._addAttachClasses.length),"undefined"==typeof this._addAttachClasses&&(this._addAttachClasses=[]);var o=this._addAttachClasses;t.top&&o.push(this.getClass("element-attached")+"-"+t.top),t.left&&o.push(this.getClass("element-attached")+"-"+t.left),e.top&&o.push(this.getClass("target-attached")+"-"+e.top),e.left&&o.push(this.getClass("target-attached")+"-"+e.left);var a=[];r.forEach(function(t){a.push(n.getClass("element-attached")+"-"+t),a.push(n.getClass("target-attached")+"-"+t)}),E(function(){"undefined"!=typeof n._addAttachClasses&&(m(n.element,n._addAttachClasses,a),n.options.addTargetClasses!==!1&&m(n.target,n._addAttachClasses,a),delete n._addAttachClasses)})}},{key:"position",value:function(){var t=this,e=arguments.length<=0||void 0===arguments[0]?!0:arguments[0];if(this.enabled){this.clearCache();var n=R(this.targetAttachment,this.attachment);this.updateAttachClasses(this.attachment,n);var r=this.cache("element-bounds",function(){return i(t.element)}),o=r.width,a=r.height;if(0===o&&0===a&&"undefined"!=typeof this.lastSize){var d=this.lastSize;o=d.width,a=d.height}else this.lastSize={width:o,height:a};var p=this.cache("target-bounds",function(){return t.getTargetBounds()}),u=p,f=D(z(this.attachment),{width:o,height:a}),c=D(z(n),u),h=D(this.offset,{width:o,height:a}),m=D(this.targetOffset,u);f=b(f,h),c=b(c,m);for(var y=p.left+c.left-f.left,g=p.top+c.top-f.top,v=0;v<P.modules.length;++v){var C=P.modules[v],T=C.position.call(this,{left:y,top:g,targetAttachment:n,targetPos:p,elementPos:r,offset:f,targetOffset:c,manualOffset:h,manualTargetOffset:m,scrollbarSize:_,attachment:this.attachment});if(T===!1)return!1;"undefined"!=typeof T&&"object"==typeof T&&(g=T.top,y=T.left)}var w={page:{top:g,left:y},viewport:{top:g-pageYOffset,bottom:pageYOffset-g-a+innerHeight,left:y-pageXOffset,right:pageXOffset-y-o+innerWidth}},_=void 0;return document.body.scrollWidth>window.innerWidth&&(_=this.cache("scrollbar-size",l),w.viewport.bottom-=_.height),document.body.scrollHeight>window.innerHeight&&(_=this.cache("scrollbar-size",l),w.viewport.right-=_.width),-1!==["","static"].indexOf(document.body.style.position)&&-1!==["","static"].indexOf(document.body.parentElement.style.position)||(w.page.bottom=document.body.scrollHeight-g-a,w.page.right=document.body.scrollWidth-y-o),"undefined"!=typeof this.options.optimizations&&this.options.optimizations.moveElement!==!1&&"undefined"==typeof this.targetModifier&&!function(){var e=t.cache("target-offsetparent",function(){return s(t.target)}),n=t.cache("target-offsetparent-bounds",function(){return i(e)}),r=getComputedStyle(e),o=n,a={};if(["Top","Left","Bottom","Right"].forEach(function(t){a[t.toLowerCase()]=parseFloat(r["border"+t+"Width"])}),n.right=document.body.scrollWidth-n.left-o.width+a.right,n.bottom=document.body.scrollHeight-n.top-o.height+a.bottom,w.page.top>=n.top+a.top&&w.page.bottom>=n.bottom&&w.page.left>=n.left+a.left&&w.page.right>=n.right){var l=e.scrollTop,d=e.scrollLeft;w.offset={top:w.page.top-n.top+l-a.top,left:w.page.left-n.left+d-a.left}}}(),this.move(w),this.history.unshift(w),this.history.length>3&&this.history.pop(),e&&S(),!0}}},{key:"move",value:function(t){var e=this;if("undefined"!=typeof this.element.parentNode){var n={};for(var r in t){n[r]={};for(var o in t[r]){for(var a=!1,i=0;i<this.history.length;++i){var l=this.history[i];if("undefined"!=typeof l[r]&&!g(l[r][o],t[r][o])){a=!0;break}}a||(n[r][o]=!0)}}var p={top:"",left:"",right:"",bottom:""},u=function(t,n){var r="undefined"!=typeof e.options.optimizations,o=r?e.options.optimizations.gpu:null;if(o!==!1){var a=void 0,i=void 0;t.top?(p.top=0,a=n.top):(p.bottom=0,a=-n.bottom),t.left?(p.left=0,i=n.left):(p.right=0,i=-n.right),p[B]="translateX("+Math.round(i)+"px) translateY("+Math.round(a)+"px)","msTransform"!==B&&(p[B]+=" translateZ(0)")}else t.top?p.top=n.top+"px":p.bottom=n.bottom+"px",t.left?p.left=n.left+"px":p.right=n.right+"px"},f=!1;if((n.page.top||n.page.bottom)&&(n.page.left||n.page.right)?(p.position="absolute",u(n.page,t.page)):(n.viewport.top||n.viewport.bottom)&&(n.viewport.left||n.viewport.right)?(p.position="fixed",u(n.viewport,t.viewport)):"undefined"!=typeof n.offset&&n.offset.top&&n.offset.left?!function(){p.position="absolute";var r=e.cache("target-offsetparent",function(){return s(e.target)});s(e.element)!==r&&E(function(){e.element.parentNode.removeChild(e.element),r.appendChild(e.element)}),u(n.offset,t.offset),f=!0}():(p.position="absolute",u({top:!0,left:!0},t.page)),!f){for(var c=!0,h=this.element.parentNode;h&&1===h.nodeType&&"BODY"!==h.tagName;){if("static"!==getComputedStyle(h).position){c=!1;break}h=h.parentNode}c||(this.element.parentNode.removeChild(this.element),document.body.appendChild(this.element))}var m={},y=!1;for(var o in p){var v=p[o],b=this.element.style[o];b!==v&&(y=!0,m[o]=v)}y&&E(function(){d(e.element.style,m)})}}}]),e}(N);X.modules=[],P.position=Y;var V=d(X,P),M=function(){function t(t,e){var n=[],r=!0,o=!1,a=void 0;try{for(var i,s=t[Symbol.iterator]();!(r=(i=s.next()).done)&&(n.push(i.value),!e||n.length!==e);r=!0);}catch(l){o=!0,a=l}finally{try{!r&&s["return"]&&s["return"]()}finally{if(o)throw a}}return n}return function(e,n){if(Array.isArray(e))return e;if(Symbol.iterator in Object(e))return t(e,n);throw new TypeError("Invalid attempt to destructure non-iterable instance")}}(),A=P.Utils,i=A.getBounds,d=A.extend,m=A.updateClasses,E=A.defer,U=["left","top","right","bottom"];P.modules.push({position:function(t){var e=this,n=t.top,r=t.left,o=t.targetAttachment;if(!this.options.constraints)return!0;var a=this.cache("element-bounds",function(){return i(e.element)}),s=a.height,l=a.width;if(0===l&&0===s&&"undefined"!=typeof this.lastSize){var p=this.lastSize;l=p.width,s=p.height}var u=this.cache("target-bounds",function(){return e.getTargetBounds()}),f=u.height,c=u.width,h=[this.getClass("pinned"),this.getClass("out-of-bounds")];this.options.constraints.forEach(function(t){var e=t.outOfBoundsClass,n=t.pinnedClass;e&&h.push(e),n&&h.push(n)}),h.forEach(function(t){["left","top","right","bottom"].forEach(function(e){h.push(t+"-"+e)})});var y=[],g=d({},o),v=d({},this.attachment);return this.options.constraints.forEach(function(t){var a=t.to,i=t.attachment,d=t.pin;"undefined"==typeof i&&(i="");var p=void 0,u=void 0;if(i.indexOf(" ")>=0){var h=i.split(" "),m=M(h,2);u=m[0],p=m[1]}else p=u=i;var b=C(e,a);"target"!==u&&"both"!==u||(n<b[1]&&"top"===g.top&&(n+=f,g.top="bottom"),n+s>b[3]&&"bottom"===g.top&&(n-=f,g.top="top")),"together"===u&&("top"===g.top&&("bottom"===v.top&&n<b[1]?(n+=f,g.top="bottom",n+=s,v.top="top"):"top"===v.top&&n+s>b[3]&&n-(s-f)>=b[1]&&(n-=s-f,g.top="bottom",v.top="bottom")),"bottom"===g.top&&("top"===v.top&&n+s>b[3]?(n-=f,g.top="top",n-=s,v.top="bottom"):"bottom"===v.top&&n<b[1]&&n+(2*s-f)<=b[3]&&(n+=s-f,g.top="top",v.top="top")),"middle"===g.top&&(n+s>b[3]&&"top"===v.top?(n-=s,v.top="bottom"):n<b[1]&&"bottom"===v.top&&(n+=s,v.top="top"))),"target"!==p&&"both"!==p||(r<b[0]&&"left"===g.left&&(r+=c,g.left="right"),r+l>b[2]&&"right"===g.left&&(r-=c,g.left="left")),"together"===p&&(r<b[0]&&"left"===g.left?"right"===v.left?(r+=c,g.left="right",r+=l,v.left="left"):"left"===v.left&&(r+=c,g.left="right",r-=l,v.left="right"):r+l>b[2]&&"right"===g.left?"left"===v.left?(r-=c,g.left="left",r-=l,v.left="right"):"right"===v.left&&(r-=c,g.left="left",r+=l,v.left="left"):"center"===g.left&&(r+l>b[2]&&"left"===v.left?(r-=l,v.left="right"):r<b[0]&&"right"===v.left&&(r+=l,v.left="left"))),"element"!==u&&"both"!==u||(n<b[1]&&"bottom"===v.top&&(n+=s,v.top="top"),n+s>b[3]&&"top"===v.top&&(n-=s,v.top="bottom")),"element"!==p&&"both"!==p||(r<b[0]&&("right"===v.left?(r+=l,v.left="left"):"center"===v.left&&(r+=l/2,v.left="left")),r+l>b[2]&&("left"===v.left?(r-=l,v.left="right"):"center"===v.left&&(r-=l/2,v.left="right"))),"string"==typeof d?d=d.split(",").map(function(t){return t.trim()}):d===!0&&(d=["top","left","right","bottom"]),d=d||[];var D=[],T=[];n<b[1]&&(d.indexOf("top")>=0?(n=b[1],D.push("top")):T.push("top")),n+s>b[3]&&(d.indexOf("bottom")>=0?(n=b[3]-s,D.push("bottom")):T.push("bottom")),r<b[0]&&(d.indexOf("left")>=0?(r=b[0],D.push("left")):T.push("left")),r+l>b[2]&&(d.indexOf("right")>=0?(r=b[2]-l,D.push("right")):T.push("right")),D.length&&!function(){var t=void 0;t="undefined"!=typeof e.options.pinnedClass?e.options.pinnedClass:e.getClass("pinned"),y.push(t),D.forEach(function(e){y.push(t+"-"+e)})}(),T.length&&!function(){var t=void 0;t="undefined"!=typeof e.options.outOfBoundsClass?e.options.outOfBoundsClass:e.getClass("out-of-bounds"),y.push(t),T.forEach(function(e){y.push(t+"-"+e)})}(),(D.indexOf("left")>=0||D.indexOf("right")>=0)&&(v.left=g.left=!1),(D.indexOf("top")>=0||D.indexOf("bottom")>=0)&&(v.top=g.top=!1),g.top===o.top&&g.left===o.left&&v.top===e.attachment.top&&v.left===e.attachment.left||(e.updateAttachClasses(v,g),e.trigger("update",{attachment:v,targetAttachment:g}))}),E(function(){e.options.addTargetClasses!==!1&&m(e.target,y,h),m(e.element,y,h)}),{top:n,left:r}}});var A=P.Utils,i=A.getBounds,m=A.updateClasses,E=A.defer;P.modules.push({position:function(t){var e=this,n=t.top,r=t.left,o=this.cache("element-bounds",function(){return i(e.element)}),a=o.height,s=o.width,l=this.getTargetBounds(),d=n+a,p=r+s,u=[];n<=l.bottom&&d>=l.top&&["left","right"].forEach(function(t){var e=l[t];e!==r&&e!==p||u.push(t)}),r<=l.right&&p>=l.left&&["top","bottom"].forEach(function(t){var e=l[t];e!==n&&e!==d||u.push(t)});var f=[],c=[],h=["left","top","right","bottom"];return f.push(this.getClass("abutted")),h.forEach(function(t){f.push(e.getClass("abutted")+"-"+t)}),u.length&&c.push(this.getClass("abutted")),u.forEach(function(t){c.push(e.getClass("abutted")+"-"+t)}),E(function(){e.options.addTargetClasses!==!1&&m(e.target,c,f),m(e.element,c,f)}),!0}});var M=function(){function t(t,e){var n=[],r=!0,o=!1,a=void 0;try{for(var i,s=t[Symbol.iterator]();!(r=(i=s.next()).done)&&(n.push(i.value),!e||n.length!==e);r=!0);}catch(l){o=!0,a=l}finally{try{!r&&s["return"]&&s["return"]()}finally{if(o)throw a}}return n}return function(e,n){if(Array.isArray(e))return e;if(Symbol.iterator in Object(e))return t(e,n);throw new TypeError("Invalid attempt to destructure non-iterable instance")}}();return P.modules.push({position:function(t){var e=t.top,n=t.left;if(this.options.shift){var r=this.options.shift;"function"==typeof this.options.shift&&(r=this.options.shift.call(this,{top:e,left:n}));var o=void 0,a=void 0;if("string"==typeof r){r=r.split(" "),r[1]=r[1]||r[0];var i=r,s=M(i,2);o=s[0],a=s[1],o=parseFloat(o,10),a=parseFloat(a,10)}else o=r.top,a=r.left;return e+=o,n+=a,{top:e,left:n}}}}),V})}])});
 
 /***/ },
-/* 264 */
+/* 265 */
 /*!***********************************************!*\
   !*** ./~/react-datepicker/~/moment/moment.js ***!
   \***********************************************/
@@ -34123,7 +36365,7 @@
 	                module && module.exports) {
 	            try {
 	                oldLocale = globalLocale._abbr;
-	                __webpack_require__(/*! ./locale */ 266)("./" + name);
+	                __webpack_require__(/*! ./locale */ 267)("./" + name);
 	                // because defineLocale currently also sets the global locale, we
 	                // want to undo that for lazy loaded locales
 	                locale_locales__getSetGlobalLocale(oldLocale);
@@ -37765,10 +40007,10 @@
 	    return _moment;
 	
 	}));
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../webpack/buildin/module.js */ 265)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../webpack/buildin/module.js */ 266)(module)))
 
 /***/ },
-/* 265 */
+/* 266 */
 /*!***********************************!*\
   !*** (webpack)/buildin/module.js ***!
   \***********************************/
@@ -37787,213 +40029,213 @@
 
 
 /***/ },
-/* 266 */
+/* 267 */
 /*!*****************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale ^\.\/.*$ ***!
   \*****************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./af": 267,
-		"./af.js": 267,
-		"./ar": 268,
-		"./ar-ma": 269,
-		"./ar-ma.js": 269,
-		"./ar-sa": 270,
-		"./ar-sa.js": 270,
-		"./ar-tn": 271,
-		"./ar-tn.js": 271,
-		"./ar.js": 268,
-		"./az": 272,
-		"./az.js": 272,
-		"./be": 273,
-		"./be.js": 273,
-		"./bg": 274,
-		"./bg.js": 274,
-		"./bn": 275,
-		"./bn.js": 275,
-		"./bo": 276,
-		"./bo.js": 276,
-		"./br": 277,
-		"./br.js": 277,
-		"./bs": 278,
-		"./bs.js": 278,
-		"./ca": 279,
-		"./ca.js": 279,
-		"./cs": 280,
-		"./cs.js": 280,
-		"./cv": 281,
-		"./cv.js": 281,
-		"./cy": 282,
-		"./cy.js": 282,
-		"./da": 283,
-		"./da.js": 283,
-		"./de": 284,
-		"./de-at": 285,
-		"./de-at.js": 285,
-		"./de.js": 284,
-		"./dv": 286,
-		"./dv.js": 286,
-		"./el": 287,
-		"./el.js": 287,
-		"./en-au": 288,
-		"./en-au.js": 288,
-		"./en-ca": 289,
-		"./en-ca.js": 289,
-		"./en-gb": 290,
-		"./en-gb.js": 290,
-		"./en-ie": 291,
-		"./en-ie.js": 291,
-		"./en-nz": 292,
-		"./en-nz.js": 292,
-		"./eo": 293,
-		"./eo.js": 293,
-		"./es": 294,
-		"./es.js": 294,
-		"./et": 295,
-		"./et.js": 295,
-		"./eu": 296,
-		"./eu.js": 296,
-		"./fa": 297,
-		"./fa.js": 297,
-		"./fi": 298,
-		"./fi.js": 298,
-		"./fo": 299,
-		"./fo.js": 299,
-		"./fr": 300,
-		"./fr-ca": 301,
-		"./fr-ca.js": 301,
-		"./fr-ch": 302,
-		"./fr-ch.js": 302,
-		"./fr.js": 300,
-		"./fy": 303,
-		"./fy.js": 303,
-		"./gd": 304,
-		"./gd.js": 304,
-		"./gl": 305,
-		"./gl.js": 305,
-		"./he": 306,
-		"./he.js": 306,
-		"./hi": 307,
-		"./hi.js": 307,
-		"./hr": 308,
-		"./hr.js": 308,
-		"./hu": 309,
-		"./hu.js": 309,
-		"./hy-am": 310,
-		"./hy-am.js": 310,
-		"./id": 311,
-		"./id.js": 311,
-		"./is": 312,
-		"./is.js": 312,
-		"./it": 313,
-		"./it.js": 313,
-		"./ja": 314,
-		"./ja.js": 314,
-		"./jv": 315,
-		"./jv.js": 315,
-		"./ka": 316,
-		"./ka.js": 316,
-		"./kk": 317,
-		"./kk.js": 317,
-		"./km": 318,
-		"./km.js": 318,
-		"./ko": 319,
-		"./ko.js": 319,
-		"./ky": 320,
-		"./ky.js": 320,
-		"./lb": 321,
-		"./lb.js": 321,
-		"./lo": 322,
-		"./lo.js": 322,
-		"./lt": 323,
-		"./lt.js": 323,
-		"./lv": 324,
-		"./lv.js": 324,
-		"./me": 325,
-		"./me.js": 325,
-		"./mk": 326,
-		"./mk.js": 326,
-		"./ml": 327,
-		"./ml.js": 327,
-		"./mr": 328,
-		"./mr.js": 328,
-		"./ms": 329,
-		"./ms-my": 330,
-		"./ms-my.js": 330,
-		"./ms.js": 329,
-		"./my": 331,
-		"./my.js": 331,
-		"./nb": 332,
-		"./nb.js": 332,
-		"./ne": 333,
-		"./ne.js": 333,
-		"./nl": 334,
-		"./nl.js": 334,
-		"./nn": 335,
-		"./nn.js": 335,
-		"./pa-in": 336,
-		"./pa-in.js": 336,
-		"./pl": 337,
-		"./pl.js": 337,
-		"./pt": 338,
-		"./pt-br": 339,
-		"./pt-br.js": 339,
-		"./pt.js": 338,
-		"./ro": 340,
-		"./ro.js": 340,
-		"./ru": 341,
-		"./ru.js": 341,
-		"./se": 342,
-		"./se.js": 342,
-		"./si": 343,
-		"./si.js": 343,
-		"./sk": 344,
-		"./sk.js": 344,
-		"./sl": 345,
-		"./sl.js": 345,
-		"./sq": 346,
-		"./sq.js": 346,
-		"./sr": 347,
-		"./sr-cyrl": 348,
-		"./sr-cyrl.js": 348,
-		"./sr.js": 347,
-		"./ss": 349,
-		"./ss.js": 349,
-		"./sv": 350,
-		"./sv.js": 350,
-		"./sw": 351,
-		"./sw.js": 351,
-		"./ta": 352,
-		"./ta.js": 352,
-		"./te": 353,
-		"./te.js": 353,
-		"./th": 354,
-		"./th.js": 354,
-		"./tl-ph": 355,
-		"./tl-ph.js": 355,
-		"./tlh": 356,
-		"./tlh.js": 356,
-		"./tr": 357,
-		"./tr.js": 357,
-		"./tzl": 358,
-		"./tzl.js": 358,
-		"./tzm": 359,
-		"./tzm-latn": 360,
-		"./tzm-latn.js": 360,
-		"./tzm.js": 359,
-		"./uk": 361,
-		"./uk.js": 361,
-		"./uz": 362,
-		"./uz.js": 362,
-		"./vi": 363,
-		"./vi.js": 363,
-		"./x-pseudo": 364,
-		"./x-pseudo.js": 364,
-		"./zh-cn": 365,
-		"./zh-cn.js": 365,
-		"./zh-tw": 366,
-		"./zh-tw.js": 366
+		"./af": 268,
+		"./af.js": 268,
+		"./ar": 269,
+		"./ar-ma": 270,
+		"./ar-ma.js": 270,
+		"./ar-sa": 271,
+		"./ar-sa.js": 271,
+		"./ar-tn": 272,
+		"./ar-tn.js": 272,
+		"./ar.js": 269,
+		"./az": 273,
+		"./az.js": 273,
+		"./be": 274,
+		"./be.js": 274,
+		"./bg": 275,
+		"./bg.js": 275,
+		"./bn": 276,
+		"./bn.js": 276,
+		"./bo": 277,
+		"./bo.js": 277,
+		"./br": 278,
+		"./br.js": 278,
+		"./bs": 279,
+		"./bs.js": 279,
+		"./ca": 280,
+		"./ca.js": 280,
+		"./cs": 281,
+		"./cs.js": 281,
+		"./cv": 282,
+		"./cv.js": 282,
+		"./cy": 283,
+		"./cy.js": 283,
+		"./da": 284,
+		"./da.js": 284,
+		"./de": 285,
+		"./de-at": 286,
+		"./de-at.js": 286,
+		"./de.js": 285,
+		"./dv": 287,
+		"./dv.js": 287,
+		"./el": 288,
+		"./el.js": 288,
+		"./en-au": 289,
+		"./en-au.js": 289,
+		"./en-ca": 290,
+		"./en-ca.js": 290,
+		"./en-gb": 291,
+		"./en-gb.js": 291,
+		"./en-ie": 292,
+		"./en-ie.js": 292,
+		"./en-nz": 293,
+		"./en-nz.js": 293,
+		"./eo": 294,
+		"./eo.js": 294,
+		"./es": 295,
+		"./es.js": 295,
+		"./et": 296,
+		"./et.js": 296,
+		"./eu": 297,
+		"./eu.js": 297,
+		"./fa": 298,
+		"./fa.js": 298,
+		"./fi": 299,
+		"./fi.js": 299,
+		"./fo": 300,
+		"./fo.js": 300,
+		"./fr": 301,
+		"./fr-ca": 302,
+		"./fr-ca.js": 302,
+		"./fr-ch": 303,
+		"./fr-ch.js": 303,
+		"./fr.js": 301,
+		"./fy": 304,
+		"./fy.js": 304,
+		"./gd": 305,
+		"./gd.js": 305,
+		"./gl": 306,
+		"./gl.js": 306,
+		"./he": 307,
+		"./he.js": 307,
+		"./hi": 308,
+		"./hi.js": 308,
+		"./hr": 309,
+		"./hr.js": 309,
+		"./hu": 310,
+		"./hu.js": 310,
+		"./hy-am": 311,
+		"./hy-am.js": 311,
+		"./id": 312,
+		"./id.js": 312,
+		"./is": 313,
+		"./is.js": 313,
+		"./it": 314,
+		"./it.js": 314,
+		"./ja": 315,
+		"./ja.js": 315,
+		"./jv": 316,
+		"./jv.js": 316,
+		"./ka": 317,
+		"./ka.js": 317,
+		"./kk": 318,
+		"./kk.js": 318,
+		"./km": 319,
+		"./km.js": 319,
+		"./ko": 320,
+		"./ko.js": 320,
+		"./ky": 321,
+		"./ky.js": 321,
+		"./lb": 322,
+		"./lb.js": 322,
+		"./lo": 323,
+		"./lo.js": 323,
+		"./lt": 324,
+		"./lt.js": 324,
+		"./lv": 325,
+		"./lv.js": 325,
+		"./me": 326,
+		"./me.js": 326,
+		"./mk": 327,
+		"./mk.js": 327,
+		"./ml": 328,
+		"./ml.js": 328,
+		"./mr": 329,
+		"./mr.js": 329,
+		"./ms": 330,
+		"./ms-my": 331,
+		"./ms-my.js": 331,
+		"./ms.js": 330,
+		"./my": 332,
+		"./my.js": 332,
+		"./nb": 333,
+		"./nb.js": 333,
+		"./ne": 334,
+		"./ne.js": 334,
+		"./nl": 335,
+		"./nl.js": 335,
+		"./nn": 336,
+		"./nn.js": 336,
+		"./pa-in": 337,
+		"./pa-in.js": 337,
+		"./pl": 338,
+		"./pl.js": 338,
+		"./pt": 339,
+		"./pt-br": 340,
+		"./pt-br.js": 340,
+		"./pt.js": 339,
+		"./ro": 341,
+		"./ro.js": 341,
+		"./ru": 342,
+		"./ru.js": 342,
+		"./se": 343,
+		"./se.js": 343,
+		"./si": 344,
+		"./si.js": 344,
+		"./sk": 345,
+		"./sk.js": 345,
+		"./sl": 346,
+		"./sl.js": 346,
+		"./sq": 347,
+		"./sq.js": 347,
+		"./sr": 348,
+		"./sr-cyrl": 349,
+		"./sr-cyrl.js": 349,
+		"./sr.js": 348,
+		"./ss": 350,
+		"./ss.js": 350,
+		"./sv": 351,
+		"./sv.js": 351,
+		"./sw": 352,
+		"./sw.js": 352,
+		"./ta": 353,
+		"./ta.js": 353,
+		"./te": 354,
+		"./te.js": 354,
+		"./th": 355,
+		"./th.js": 355,
+		"./tl-ph": 356,
+		"./tl-ph.js": 356,
+		"./tlh": 357,
+		"./tlh.js": 357,
+		"./tr": 358,
+		"./tr.js": 358,
+		"./tzl": 359,
+		"./tzl.js": 359,
+		"./tzm": 360,
+		"./tzm-latn": 361,
+		"./tzm-latn.js": 361,
+		"./tzm.js": 360,
+		"./uk": 362,
+		"./uk.js": 362,
+		"./uz": 363,
+		"./uz.js": 363,
+		"./vi": 364,
+		"./vi.js": 364,
+		"./x-pseudo": 365,
+		"./x-pseudo.js": 365,
+		"./zh-cn": 366,
+		"./zh-cn.js": 366,
+		"./zh-tw": 367,
+		"./zh-tw.js": 367
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -38006,11 +40248,11 @@
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 266;
+	webpackContext.id = 267;
 
 
 /***/ },
-/* 267 */
+/* 268 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/af.js ***!
   \**************************************************/
@@ -38021,7 +40263,7 @@
 	//! author : Werner Mollentze : https://github.com/wernerm
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -38090,7 +40332,7 @@
 	}));
 
 /***/ },
-/* 268 */
+/* 269 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/ar.js ***!
   \**************************************************/
@@ -38103,7 +40345,7 @@
 	//! Native plural forms: forabi https://github.com/forabi
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -38234,7 +40476,7 @@
 	}));
 
 /***/ },
-/* 269 */
+/* 270 */
 /*!*****************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/ar-ma.js ***!
   \*****************************************************/
@@ -38246,7 +40488,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -38301,7 +40543,7 @@
 	}));
 
 /***/ },
-/* 270 */
+/* 271 */
 /*!*****************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/ar-sa.js ***!
   \*****************************************************/
@@ -38312,7 +40554,7 @@
 	//! author : Suhail Alkowaileet : https://github.com/xsoh
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -38412,7 +40654,7 @@
 	}));
 
 /***/ },
-/* 271 */
+/* 272 */
 /*!*****************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/ar-tn.js ***!
   \*****************************************************/
@@ -38422,7 +40664,7 @@
 	//! locale  : Tunisian Arabic (ar-tn)
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -38477,7 +40719,7 @@
 	}));
 
 /***/ },
-/* 272 */
+/* 273 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/az.js ***!
   \**************************************************/
@@ -38488,7 +40730,7 @@
 	//! author : topchiyev : https://github.com/topchiyev
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -38589,7 +40831,7 @@
 	}));
 
 /***/ },
-/* 273 */
+/* 274 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/be.js ***!
   \**************************************************/
@@ -38602,7 +40844,7 @@
 	//! Author : Menelion Elensúle : https://github.com/Oire
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -38730,7 +40972,7 @@
 	}));
 
 /***/ },
-/* 274 */
+/* 275 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/bg.js ***!
   \**************************************************/
@@ -38741,7 +40983,7 @@
 	//! author : Krasen Borisov : https://github.com/kraz
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -38827,7 +41069,7 @@
 	}));
 
 /***/ },
-/* 275 */
+/* 276 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/bn.js ***!
   \**************************************************/
@@ -38838,7 +41080,7 @@
 	//! author : Kaushik Gandhi : https://github.com/kaushikgandhi
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -38953,7 +41195,7 @@
 	}));
 
 /***/ },
-/* 276 */
+/* 277 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/bo.js ***!
   \**************************************************/
@@ -38964,7 +41206,7 @@
 	//! author : Thupten N. Chakrishar : https://github.com/vajradog
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -39079,7 +41321,7 @@
 	}));
 
 /***/ },
-/* 277 */
+/* 278 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/br.js ***!
   \**************************************************/
@@ -39090,7 +41332,7 @@
 	//! author : Jean-Baptiste Le Duigou : https://github.com/jbleduigou
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -39194,7 +41436,7 @@
 	}));
 
 /***/ },
-/* 278 */
+/* 279 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/bs.js ***!
   \**************************************************/
@@ -39206,7 +41448,7 @@
 	//! based on (hr) translation by Bojan Marković
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -39344,7 +41586,7 @@
 	}));
 
 /***/ },
-/* 279 */
+/* 280 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/ca.js ***!
   \**************************************************/
@@ -39355,7 +41597,7 @@
 	//! author : Juan G. Hurtado : https://github.com/juanghurtado
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -39432,7 +41674,7 @@
 	}));
 
 /***/ },
-/* 280 */
+/* 281 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/cs.js ***!
   \**************************************************/
@@ -39443,7 +41685,7 @@
 	//! author : petrbela : https://github.com/petrbela
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -39610,7 +41852,7 @@
 	}));
 
 /***/ },
-/* 281 */
+/* 282 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/cv.js ***!
   \**************************************************/
@@ -39621,7 +41863,7 @@
 	//! author : Anatoly Mironov : https://github.com/mirontoli
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -39680,7 +41922,7 @@
 	}));
 
 /***/ },
-/* 282 */
+/* 283 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/cy.js ***!
   \**************************************************/
@@ -39691,7 +41933,7 @@
 	//! author : Robert Allen
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -39767,7 +42009,7 @@
 	}));
 
 /***/ },
-/* 283 */
+/* 284 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/da.js ***!
   \**************************************************/
@@ -39778,7 +42020,7 @@
 	//! author : Ulrik Nielsen : https://github.com/mrbase
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -39834,7 +42076,7 @@
 	}));
 
 /***/ },
-/* 284 */
+/* 285 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/de.js ***!
   \**************************************************/
@@ -39847,7 +42089,7 @@
 	//! author : Mikolaj Dadela : https://github.com/mik01aj
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -39919,7 +42161,7 @@
 	}));
 
 /***/ },
-/* 285 */
+/* 286 */
 /*!*****************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/de-at.js ***!
   \*****************************************************/
@@ -39933,7 +42175,7 @@
 	//! author : Mikolaj Dadela : https://github.com/mik01aj
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -40005,7 +42247,7 @@
 	}));
 
 /***/ },
-/* 286 */
+/* 287 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/dv.js ***!
   \**************************************************/
@@ -40016,7 +42258,7 @@
 	//! author : Jawish Hameed : https://github.com/jawish
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -40111,7 +42353,7 @@
 	}));
 
 /***/ },
-/* 287 */
+/* 288 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/el.js ***!
   \**************************************************/
@@ -40122,7 +42364,7 @@
 	//! author : Aggelos Karalias : https://github.com/mehiel
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -40216,7 +42458,7 @@
 	}));
 
 /***/ },
-/* 288 */
+/* 289 */
 /*!*****************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/en-au.js ***!
   \*****************************************************/
@@ -40226,7 +42468,7 @@
 	//! locale : australian english (en-au)
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -40289,7 +42531,7 @@
 	}));
 
 /***/ },
-/* 289 */
+/* 290 */
 /*!*****************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/en-ca.js ***!
   \*****************************************************/
@@ -40300,7 +42542,7 @@
 	//! author : Jonathan Abourbih : https://github.com/jonbca
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -40359,7 +42601,7 @@
 	}));
 
 /***/ },
-/* 290 */
+/* 291 */
 /*!*****************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/en-gb.js ***!
   \*****************************************************/
@@ -40370,7 +42612,7 @@
 	//! author : Chris Gedrim : https://github.com/chrisgedrim
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -40433,7 +42675,7 @@
 	}));
 
 /***/ },
-/* 291 */
+/* 292 */
 /*!*****************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/en-ie.js ***!
   \*****************************************************/
@@ -40444,7 +42686,7 @@
 	//! author : Chris Cartlidge : https://github.com/chriscartlidge
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -40507,7 +42749,7 @@
 	}));
 
 /***/ },
-/* 292 */
+/* 293 */
 /*!*****************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/en-nz.js ***!
   \*****************************************************/
@@ -40517,7 +42759,7 @@
 	//! locale : New Zealand english (en-nz)
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -40580,7 +42822,7 @@
 	}));
 
 /***/ },
-/* 293 */
+/* 294 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/eo.js ***!
   \**************************************************/
@@ -40593,7 +42835,7 @@
 	//!          Se ne, bonvolu korekti kaj avizi min por ke mi povas lerni!
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -40660,7 +42902,7 @@
 	}));
 
 /***/ },
-/* 294 */
+/* 295 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/es.js ***!
   \**************************************************/
@@ -40671,7 +42913,7 @@
 	//! author : Julio Napurí : https://github.com/julionc
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -40748,7 +42990,7 @@
 	}));
 
 /***/ },
-/* 295 */
+/* 296 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/et.js ***!
   \**************************************************/
@@ -40760,7 +43002,7 @@
 	//! improvements : Illimar Tambek : https://github.com/ragulka
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -40835,7 +43077,7 @@
 	}));
 
 /***/ },
-/* 296 */
+/* 297 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/eu.js ***!
   \**************************************************/
@@ -40846,7 +43088,7 @@
 	//! author : Eneko Illarramendi : https://github.com/eillarra
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -40908,7 +43150,7 @@
 	}));
 
 /***/ },
-/* 297 */
+/* 298 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/fa.js ***!
   \**************************************************/
@@ -40919,7 +43161,7 @@
 	//! author : Ebrahim Byagowi : https://github.com/ebraminio
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -41021,7 +43263,7 @@
 	}));
 
 /***/ },
-/* 298 */
+/* 299 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/fi.js ***!
   \**************************************************/
@@ -41032,7 +43274,7 @@
 	//! author : Tarmo Aidantausta : https://github.com/bleadof
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -41135,7 +43377,7 @@
 	}));
 
 /***/ },
-/* 299 */
+/* 300 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/fo.js ***!
   \**************************************************/
@@ -41146,7 +43388,7 @@
 	//! author : Ragnar Johannesen : https://github.com/ragnar123
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -41202,7 +43444,7 @@
 	}));
 
 /***/ },
-/* 300 */
+/* 301 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/fr.js ***!
   \**************************************************/
@@ -41213,7 +43455,7 @@
 	//! author : John Fischer : https://github.com/jfroffice
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -41273,7 +43515,7 @@
 	}));
 
 /***/ },
-/* 301 */
+/* 302 */
 /*!*****************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/fr-ca.js ***!
   \*****************************************************/
@@ -41284,7 +43526,7 @@
 	//! author : Jonathan Abourbih : https://github.com/jonbca
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -41340,7 +43582,7 @@
 	}));
 
 /***/ },
-/* 302 */
+/* 303 */
 /*!*****************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/fr-ch.js ***!
   \*****************************************************/
@@ -41351,7 +43593,7 @@
 	//! author : Gaspard Bucher : https://github.com/gaspard
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -41411,7 +43653,7 @@
 	}));
 
 /***/ },
-/* 303 */
+/* 304 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/fy.js ***!
   \**************************************************/
@@ -41422,7 +43664,7 @@
 	//! author : Robin van der Vliet : https://github.com/robin0van0der0v
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -41491,7 +43733,7 @@
 	}));
 
 /***/ },
-/* 304 */
+/* 305 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/gd.js ***!
   \**************************************************/
@@ -41502,7 +43744,7 @@
 	//! author : Jon Ashdown : https://github.com/jonashdown
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -41574,7 +43816,7 @@
 	}));
 
 /***/ },
-/* 305 */
+/* 306 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/gl.js ***!
   \**************************************************/
@@ -41585,7 +43827,7 @@
 	//! author : Juan G. Hurtado : https://github.com/juanghurtado
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -41658,7 +43900,7 @@
 	}));
 
 /***/ },
-/* 306 */
+/* 307 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/he.js ***!
   \**************************************************/
@@ -41671,7 +43913,7 @@
 	//! author : Tal Ater : https://github.com/TalAter
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -41764,7 +44006,7 @@
 	}));
 
 /***/ },
-/* 307 */
+/* 308 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/hi.js ***!
   \**************************************************/
@@ -41775,7 +44017,7 @@
 	//! author : Mayank Singhal : https://github.com/mayanksinghal
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -41895,7 +44137,7 @@
 	}));
 
 /***/ },
-/* 308 */
+/* 309 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/hr.js ***!
   \**************************************************/
@@ -41906,7 +44148,7 @@
 	//! author : Bojan Marković : https://github.com/bmarkovic
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -42047,7 +44289,7 @@
 	}));
 
 /***/ },
-/* 309 */
+/* 310 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/hu.js ***!
   \**************************************************/
@@ -42058,7 +44300,7 @@
 	//! author : Adam Brunner : https://github.com/adambrunner
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -42163,7 +44405,7 @@
 	}));
 
 /***/ },
-/* 310 */
+/* 311 */
 /*!*****************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/hy-am.js ***!
   \*****************************************************/
@@ -42174,7 +44416,7 @@
 	//! author : Armendarabyan : https://github.com/armendarabyan
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -42265,7 +44507,7 @@
 	}));
 
 /***/ },
-/* 311 */
+/* 312 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/id.js ***!
   \**************************************************/
@@ -42277,7 +44519,7 @@
 	//! reference: http://id.wikisource.org/wiki/Pedoman_Umum_Ejaan_Bahasa_Indonesia_yang_Disempurnakan
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -42355,7 +44597,7 @@
 	}));
 
 /***/ },
-/* 312 */
+/* 313 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/is.js ***!
   \**************************************************/
@@ -42366,7 +44608,7 @@
 	//! author : Hinrik Örn Sigurðsson : https://github.com/hinrik
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -42489,7 +44731,7 @@
 	}));
 
 /***/ },
-/* 313 */
+/* 314 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/it.js ***!
   \**************************************************/
@@ -42501,7 +44743,7 @@
 	//! author: Mattia Larentis: https://github.com/nostalgiaz
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -42566,7 +44808,7 @@
 	}));
 
 /***/ },
-/* 314 */
+/* 315 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/ja.js ***!
   \**************************************************/
@@ -42577,7 +44819,7 @@
 	//! author : LI Long : https://github.com/baryon
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -42649,7 +44891,7 @@
 	}));
 
 /***/ },
-/* 315 */
+/* 316 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/jv.js ***!
   \**************************************************/
@@ -42661,7 +44903,7 @@
 	//! reference: http://jv.wikipedia.org/wiki/Basa_Jawa
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -42739,7 +44981,7 @@
 	}));
 
 /***/ },
-/* 316 */
+/* 317 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/ka.js ***!
   \**************************************************/
@@ -42750,7 +44992,7 @@
 	//! author : Irakli Janiashvili : https://github.com/irakli-janiashvili
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -42835,7 +45077,7 @@
 	}));
 
 /***/ },
-/* 317 */
+/* 318 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/kk.js ***!
   \**************************************************/
@@ -42846,7 +45088,7 @@
 	//! authors : Nurlan Rakhimzhanov : https://github.com/nurlan
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -42929,7 +45171,7 @@
 	}));
 
 /***/ },
-/* 318 */
+/* 319 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/km.js ***!
   \**************************************************/
@@ -42940,7 +45182,7 @@
 	//! author : Kruy Vanna : https://github.com/kruyvanna
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -42994,7 +45236,7 @@
 	}));
 
 /***/ },
-/* 319 */
+/* 320 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/ko.js ***!
   \**************************************************/
@@ -43009,7 +45251,7 @@
 	//! - Jeeeyul Lee <jeeeyul@gmail.com>
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -43069,7 +45311,7 @@
 	}));
 
 /***/ },
-/* 320 */
+/* 321 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/ky.js ***!
   \**************************************************/
@@ -43080,7 +45322,7 @@
 	//! author : Chyngyz Arystan uulu : https://github.com/chyngyz
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -43164,7 +45406,7 @@
 	}));
 
 /***/ },
-/* 321 */
+/* 322 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/lb.js ***!
   \**************************************************/
@@ -43175,7 +45417,7 @@
 	//! author : mweimerskirch : https://github.com/mweimerskirch, David Raison : https://github.com/kwisatz
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -43307,7 +45549,7 @@
 	}));
 
 /***/ },
-/* 322 */
+/* 323 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/lo.js ***!
   \**************************************************/
@@ -43318,7 +45560,7 @@
 	//! author : Ryan Hart : https://github.com/ryanhart2
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -43384,7 +45626,7 @@
 	}));
 
 /***/ },
-/* 323 */
+/* 324 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/lt.js ***!
   \**************************************************/
@@ -43395,7 +45637,7 @@
 	//! author : Mindaugas Mozūras : https://github.com/mmozuras
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -43507,7 +45749,7 @@
 	}));
 
 /***/ },
-/* 324 */
+/* 325 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/lv.js ***!
   \**************************************************/
@@ -43519,7 +45761,7 @@
 	//! author : Jānis Elmeris : https://github.com/JanisE
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -43611,7 +45853,7 @@
 	}));
 
 /***/ },
-/* 325 */
+/* 326 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/me.js ***!
   \**************************************************/
@@ -43622,7 +45864,7 @@
 	//! author : Miodrag Nikač <miodrag@restartit.me> : https://github.com/miodragnikac
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -43729,7 +45971,7 @@
 	}));
 
 /***/ },
-/* 326 */
+/* 327 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/mk.js ***!
   \**************************************************/
@@ -43740,7 +45982,7 @@
 	//! author : Borislav Mickov : https://github.com/B0k0
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -43826,7 +46068,7 @@
 	}));
 
 /***/ },
-/* 327 */
+/* 328 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/ml.js ***!
   \**************************************************/
@@ -43837,7 +46079,7 @@
 	//! author : Floyd Pink : https://github.com/floydpink
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -43914,7 +46156,7 @@
 	}));
 
 /***/ },
-/* 328 */
+/* 329 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/mr.js ***!
   \**************************************************/
@@ -43926,7 +46168,7 @@
 	//! author : Vivek Athalye : https://github.com/vnathalye
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -44080,7 +46322,7 @@
 	}));
 
 /***/ },
-/* 329 */
+/* 330 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/ms.js ***!
   \**************************************************/
@@ -44091,7 +46333,7 @@
 	//! author : Weldan Jamili : https://github.com/weldan
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -44169,7 +46411,7 @@
 	}));
 
 /***/ },
-/* 330 */
+/* 331 */
 /*!*****************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/ms-my.js ***!
   \*****************************************************/
@@ -44180,7 +46422,7 @@
 	//! author : Weldan Jamili : https://github.com/weldan
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -44258,7 +46500,7 @@
 	}));
 
 /***/ },
-/* 331 */
+/* 332 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/my.js ***!
   \**************************************************/
@@ -44269,7 +46511,7 @@
 	//! author : Squar team, mysquar.com
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -44358,7 +46600,7 @@
 	}));
 
 /***/ },
-/* 332 */
+/* 333 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/nb.js ***!
   \**************************************************/
@@ -44370,7 +46612,7 @@
 	//!           Sigurd Gartmann : https://github.com/sigurdga
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -44428,7 +46670,7 @@
 	}));
 
 /***/ },
-/* 333 */
+/* 334 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/ne.js ***!
   \**************************************************/
@@ -44439,7 +46681,7 @@
 	//! author : suvash : https://github.com/suvash
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -44558,7 +46800,7 @@
 	}));
 
 /***/ },
-/* 334 */
+/* 335 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/nl.js ***!
   \**************************************************/
@@ -44569,7 +46811,7 @@
 	//! author : Joris Röling : https://github.com/jjupiter
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -44638,7 +46880,7 @@
 	}));
 
 /***/ },
-/* 335 */
+/* 336 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/nn.js ***!
   \**************************************************/
@@ -44649,7 +46891,7 @@
 	//! author : https://github.com/mechuwind
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -44705,7 +46947,7 @@
 	}));
 
 /***/ },
-/* 336 */
+/* 337 */
 /*!*****************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/pa-in.js ***!
   \*****************************************************/
@@ -44716,7 +46958,7 @@
 	//! author : Harpreet Singh : https://github.com/harpreetkhalsagtbit
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -44836,7 +47078,7 @@
 	}));
 
 /***/ },
-/* 337 */
+/* 338 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/pl.js ***!
   \**************************************************/
@@ -44847,7 +47089,7 @@
 	//! author : Rafal Hirsz : https://github.com/evoL
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -44948,7 +47190,7 @@
 	}));
 
 /***/ },
-/* 338 */
+/* 339 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/pt.js ***!
   \**************************************************/
@@ -44959,7 +47201,7 @@
 	//! author : Jefferson : https://github.com/jalex79
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -45020,7 +47262,7 @@
 	}));
 
 /***/ },
-/* 339 */
+/* 340 */
 /*!*****************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/pt-br.js ***!
   \*****************************************************/
@@ -45031,7 +47273,7 @@
 	//! author : Caio Ribeiro Pereira : https://github.com/caio-ribeiro-pereira
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -45088,7 +47330,7 @@
 	}));
 
 /***/ },
-/* 340 */
+/* 341 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/ro.js ***!
   \**************************************************/
@@ -45100,7 +47342,7 @@
 	//! author : Valentin Agachi : https://github.com/avaly
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -45170,7 +47412,7 @@
 	}));
 
 /***/ },
-/* 341 */
+/* 342 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/ru.js ***!
   \**************************************************/
@@ -45183,7 +47425,7 @@
 	//! author : Коренберг Марк : https://github.com/socketpair
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -45352,7 +47594,7 @@
 	}));
 
 /***/ },
-/* 342 */
+/* 343 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/se.js ***!
   \**************************************************/
@@ -45363,7 +47605,7 @@
 	//! authors : Bård Rolstad Henriksen : https://github.com/karamell
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -45420,7 +47662,7 @@
 	}));
 
 /***/ },
-/* 343 */
+/* 344 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/si.js ***!
   \**************************************************/
@@ -45431,7 +47673,7 @@
 	//! author : Sampath Sitinamaluwa : https://github.com/sampathsris
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -45498,7 +47740,7 @@
 	}));
 
 /***/ },
-/* 344 */
+/* 345 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/sk.js ***!
   \**************************************************/
@@ -45510,7 +47752,7 @@
 	//! based on work of petrbela : https://github.com/petrbela
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -45655,7 +47897,7 @@
 	}));
 
 /***/ },
-/* 345 */
+/* 346 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/sl.js ***!
   \**************************************************/
@@ -45666,7 +47908,7 @@
 	//! author : Robert Sedovšek : https://github.com/sedovsek
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -45824,7 +48066,7 @@
 	}));
 
 /***/ },
-/* 346 */
+/* 347 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/sq.js ***!
   \**************************************************/
@@ -45837,7 +48079,7 @@
 	//! author : Oerd Cukalla : https://github.com/oerd (fixes)
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -45901,7 +48143,7 @@
 	}));
 
 /***/ },
-/* 347 */
+/* 348 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/sr.js ***!
   \**************************************************/
@@ -45912,7 +48154,7 @@
 	//! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46018,7 +48260,7 @@
 	}));
 
 /***/ },
-/* 348 */
+/* 349 */
 /*!*******************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/sr-cyrl.js ***!
   \*******************************************************/
@@ -46029,7 +48271,7 @@
 	//! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46135,7 +48377,7 @@
 	}));
 
 /***/ },
-/* 349 */
+/* 350 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/ss.js ***!
   \**************************************************/
@@ -46146,7 +48388,7 @@
 	//! author : Nicolai Davies<mail@nicolai.io> : https://github.com/nicolaidavies
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46231,7 +48473,7 @@
 	}));
 
 /***/ },
-/* 350 */
+/* 351 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/sv.js ***!
   \**************************************************/
@@ -46242,7 +48484,7 @@
 	//! author : Jens Alm : https://github.com/ulmus
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46307,7 +48549,7 @@
 	}));
 
 /***/ },
-/* 351 */
+/* 352 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/sw.js ***!
   \**************************************************/
@@ -46318,7 +48560,7 @@
 	//! author : Fahad Kassim : https://github.com/fadsel
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46373,7 +48615,7 @@
 	}));
 
 /***/ },
-/* 352 */
+/* 353 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/ta.js ***!
   \**************************************************/
@@ -46384,7 +48626,7 @@
 	//! author : Arjunkumar Krishnamoorthy : https://github.com/tk120404
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46509,7 +48751,7 @@
 	}));
 
 /***/ },
-/* 353 */
+/* 354 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/te.js ***!
   \**************************************************/
@@ -46520,7 +48762,7 @@
 	//! author : Krishna Chaitanya Thota : https://github.com/kcthota
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46605,7 +48847,7 @@
 	}));
 
 /***/ },
-/* 354 */
+/* 355 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/th.js ***!
   \**************************************************/
@@ -46616,7 +48858,7 @@
 	//! author : Kridsada Thanabulpong : https://github.com/sirn
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46679,7 +48921,7 @@
 	}));
 
 /***/ },
-/* 355 */
+/* 356 */
 /*!*****************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/tl-ph.js ***!
   \*****************************************************/
@@ -46690,7 +48932,7 @@
 	//! author : Dan Hagman
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46748,7 +48990,7 @@
 	}));
 
 /***/ },
-/* 356 */
+/* 357 */
 /*!***************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/tlh.js ***!
   \***************************************************/
@@ -46759,7 +49001,7 @@
 	//! author : Dominika Kruk : https://github.com/amaranthrose
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46875,7 +49117,7 @@
 	}));
 
 /***/ },
-/* 357 */
+/* 358 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/tr.js ***!
   \**************************************************/
@@ -46887,7 +49129,7 @@
 	//!           Burak Yiğit Kaya: https://github.com/BYK
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46972,7 +49214,7 @@
 	}));
 
 /***/ },
-/* 358 */
+/* 359 */
 /*!***************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/tzl.js ***!
   \***************************************************/
@@ -46983,7 +49225,7 @@
 	//! author : Robin van der Vliet : https://github.com/robin0van0der0v with the help of Iustì Canun
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47070,7 +49312,7 @@
 	}));
 
 /***/ },
-/* 359 */
+/* 360 */
 /*!***************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/tzm.js ***!
   \***************************************************/
@@ -47081,7 +49323,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47135,7 +49377,7 @@
 	}));
 
 /***/ },
-/* 360 */
+/* 361 */
 /*!********************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/tzm-latn.js ***!
   \********************************************************/
@@ -47146,7 +49388,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47200,7 +49442,7 @@
 	}));
 
 /***/ },
-/* 361 */
+/* 362 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/uk.js ***!
   \**************************************************/
@@ -47212,7 +49454,7 @@
 	//! Author : Menelion Elensúle : https://github.com/Oire
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47353,7 +49595,7 @@
 	}));
 
 /***/ },
-/* 362 */
+/* 363 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/uz.js ***!
   \**************************************************/
@@ -47364,7 +49606,7 @@
 	//! author : Sardor Muminov : https://github.com/muminoff
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47418,7 +49660,7 @@
 	}));
 
 /***/ },
-/* 363 */
+/* 364 */
 /*!**************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/vi.js ***!
   \**************************************************/
@@ -47429,7 +49671,7 @@
 	//! author : Bang Nguyen : https://github.com/bangnk
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47504,7 +49746,7 @@
 	}));
 
 /***/ },
-/* 364 */
+/* 365 */
 /*!********************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/x-pseudo.js ***!
   \********************************************************/
@@ -47515,7 +49757,7 @@
 	//! author : Andrew Hood : https://github.com/andrewhood125
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47579,7 +49821,7 @@
 	}));
 
 /***/ },
-/* 365 */
+/* 366 */
 /*!*****************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/zh-cn.js ***!
   \*****************************************************/
@@ -47591,7 +49833,7 @@
 	//! author : Zeno Zeng : https://github.com/zenozeng
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47713,7 +49955,7 @@
 	}));
 
 /***/ },
-/* 366 */
+/* 367 */
 /*!*****************************************************!*\
   !*** ./~/react-datepicker/~/moment/locale/zh-tw.js ***!
   \*****************************************************/
@@ -47724,7 +49966,7 @@
 	//! author : Ben : https://github.com/ben-lin
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 264)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 265)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47821,7 +50063,7 @@
 	}));
 
 /***/ },
-/* 367 */
+/* 368 */
 /*!************************************************************!*\
   !*** ./~/react-datepicker/~/react-onclickoutside/index.js ***!
   \************************************************************/
@@ -47962,7 +50204,7 @@
 
 
 /***/ },
-/* 368 */
+/* 369 */
 /*!****************************************!*\
   !*** ./~/react-dropzone/dist/index.js ***!
   \****************************************/
@@ -48357,9 +50599,369 @@
 	//# sourceMappingURL=index.js.map
 
 /***/ },
-/* 369 */,
-/* 370 */,
+/* 370 */
+/*!**************************************************!*\
+  !*** ./src/client/app/views/common/text-box.jsx ***!
+  \**************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var TextBox = function (_React$Component) {
+	    _inherits(TextBox, _React$Component);
+	
+	    function TextBox(props) {
+	        _classCallCheck(this, TextBox);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TextBox).call(this, props));
+	
+	        _this.state = {
+	            notes: _this.props.value
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(TextBox, [{
+	        key: "componentDidMount",
+	        value: function componentDidMount() {
+	            //var maxRowCount = this.props.maxRowCount;
+	            //var id = "#"+this.props.id;
+	            //$(function ()
+	            //{
+	            //    var lines = maxRowCount;
+	            //    $(id).keydown(function(e)
+	            //    {
+	            //        var newLines = $(this).val().split("\n").length;
+	            //        if(e.keyCode == 13 && newLines >= lines)
+	            //            return false;
+	            //    });
+	            //});
+	        }
+	    }, {
+	        key: "onBlur",
+	        value: function onBlur(event) {
+	            event.preventDefault();
+	            if (this.props.onBlur != null) /*&& (event.target.value != this.state.value)*/{
+	                    this.props.onBlur(event.target.value);
+	                }
+	        }
+	    }, {
+	        key: "onChange",
+	        value: function onChange(event) {
+	            event.preventDefault();
+	            this.setState({ notes: event.target.value });
+	        }
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            var rowHeight = 22;
+	            var textBoxStyle = { height: 2 * rowHeight + 4 };
+	
+	            return _react2.default.createElement(
+	                "div",
+	                null,
+	                _react2.default.createElement(
+	                    "form",
+	                    null,
+	                    _react2.default.createElement(
+	                        "label",
+	                        null,
+	                        this.props.title,
+	                        _react2.default.createElement("textarea", { style: textBoxStyle,
+	                            className: "text-box",
+	                            id: this.props.id,
+	                            value: this.state.notes,
+	                            onChange: this.onChange,
+	                            onBlur: this.onBlur })
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return TextBox;
+	}(_react2.default.Component);
+	
+	exports.default = TextBox;
+
+/***/ },
 /* 371 */
+/*!*********************************************************************!*\
+  !*** ./src/client/app/views/pages/agents-and-partnerships-page.jsx ***!
+  \*********************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _authService = __webpack_require__(/*! ../../services/auth-service */ 229);
+	
+	var _authService2 = _interopRequireDefault(_authService);
+	
+	var _tabs = __webpack_require__(/*! ../../../../../~/muicss/lib/react/tabs */ 372);
+	
+	var _tabs2 = _interopRequireDefault(_tabs);
+	
+	var _tab = __webpack_require__(/*! ../../../../../~/muicss/lib/react/tab */ 373);
+	
+	var _tab2 = _interopRequireDefault(_tab);
+	
+	var _strings = __webpack_require__(/*! ../../constants/strings */ 238);
+	
+	var _button = __webpack_require__(/*! ../../../../../~/muicss/lib/react/button */ 241);
+	
+	var _button2 = _interopRequireDefault(_button);
+	
+	var _table = __webpack_require__(/*! ./../common/table.jsx */ 260);
+	
+	var _table2 = _interopRequireDefault(_table);
+	
+	var _dataStore = __webpack_require__(/*! ../../stores/data-store */ 374);
+	
+	var _dataStore2 = _interopRequireDefault(_dataStore);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var AgentsAndPartnerships = function (_React$Component) {
+	    _inherits(AgentsAndPartnerships, _React$Component);
+	
+	    function AgentsAndPartnerships(props) {
+	        _classCallCheck(this, AgentsAndPartnerships);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AgentsAndPartnerships).call(this, props));
+	
+	        _this.state = {
+	            loginData: _authService2.default.getLoginData(),
+	            selectedTab: 0,
+	            agentsData: _dataStore2.default.getAgents(),
+	            partnershipsData: _dataStore2.default.getPartnerships()
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(AgentsAndPartnerships, [{
+	        key: 'onNewAgent',
+	        value: function onNewAgent() {
+	            this.context.router.push('/app/agents-and-partnerships/agent-page/new');
+	        }
+	    }, {
+	        key: 'onNewPartnership',
+	        value: function onNewPartnership() {
+	            this.context.router.push('/app/agents-and-partnerships/partnership-page/new');
+	        }
+	    }, {
+	        key: 'onChangeTab',
+	        value: function onChangeTab(i, value, tab, ev) {
+	            this.state.selectedTab = i;
+	            this.setState(this.state);
+	            console.log(arguments);
+	        }
+	    }, {
+	        key: 'onAgentClicked',
+	        value: function onAgentClicked(rowIndex) {
+	            var agentId = this.state.agentsData[rowIndex].idNumber;
+	            this.context.router.push('/app/agents-and-partnerships/agent-salary-page/' + agentId);
+	        }
+	    }, {
+	        key: 'onPartnershipClicked',
+	        value: function onPartnershipClicked(rowIndex) {
+	            //var agentId = this.state.agentsData[rowIndex].idNumber
+	            this.context.router.push('/app/agents-and-partnerships/partnership-page/new');
+	        }
+	    }, {
+	        key: 'onDeleteAgentClicked',
+	        value: function onDeleteAgentClicked(rowIndex) {
+	            console.log("onDeleteAgentClicked " + rowIndex);
+	        }
+	    }, {
+	        key: 'onEditAgentClicked',
+	        value: function onEditAgentClicked(rowIndex) {
+	            console.log("onEditAgentClicked " + rowIndex);
+	        }
+	    }, {
+	        key: 'onDeletePartnershipsClicked',
+	        value: function onDeletePartnershipsClicked(rowIndex) {
+	            console.log("onDeletePartnershipsClicked " + rowIndex);
+	        }
+	    }, {
+	        key: 'onEditPartnershipsClicked',
+	        value: function onEditPartnershipsClicked(rowIndex) {
+	            console.log("onEditPartnershipsClicked " + rowIndex);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	
+	            var agentsColumns = [{
+	                title: "שם",
+	                key: "name",
+	                width: "col-33-33",
+	                type: 'button',
+	                color: 'blue',
+	                action: this.onAgentClicked.bind(this)
+	            }, {
+	                title: "מזהה",
+	                key: "idNumber",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "סטטוס",
+	                key: "status",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }];
+	
+	            var agentsData = [];
+	            for (var agentIndex = 0; agentIndex < this.state.agentsData.length; agentIndex++) {
+	                var agentData = {};
+	
+	                agentData["name"] = this.state.agentsData[agentIndex].name + " " + this.state.agentsData[agentIndex].familyName;
+	                agentData["idNumber"] = this.state.agentsData[agentIndex].idNumber;
+	                agentData["status"] = this.state.agentsData[agentIndex].active ? "פעיל" : "לא פעיל";
+	                agentsData.push(agentData);
+	            }
+	
+	            var partnershipColumns = [{
+	                title: "שותפים",
+	                key: "names",
+	                width: "col-33-33",
+	                type: 'button',
+	                color: 'blue',
+	                action: this.onPartnershipClicked.bind(this)
+	            }, {
+	                title: "מזהה",
+	                key: "idNumbers",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "סטטוס",
+	                key: "status",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }];
+	
+	            var partnershipsData = [];
+	            for (var partnershipIndex = 0; partnershipIndex < this.state.partnershipsData.length; partnershipIndex++) {
+	                var partnershipData = {};
+	                partnershipData["names"] = "";
+	                partnershipData["idNumbers"] = "";
+	                for (var idIndex = 0; idIndex < this.state.partnershipsData[partnershipIndex].partnersId.length; idIndex++) {
+	                    agentData = _dataStore2.default.getAgent(this.state.partnershipsData[partnershipIndex].partnersId[idIndex]);
+	                    if (agentData != null) {
+	                        partnershipData["names"] += agentData.name + " " + agentData.familyName;
+	                        partnershipData["idNumbers"] += agentData.idNumber;
+	                        if (idIndex < this.state.partnershipsData[partnershipIndex].partnersId.length - 1) {
+	                            partnershipData["names"] += ", ";
+	                            partnershipData["idNumbers"] += ", ";
+	                        }
+	                    }
+	                }
+	                partnershipData["status"] = this.state.partnershipsData[partnershipIndex].active ? "פעיל" : "לא פעיל";
+	                partnershipsData.push(partnershipData);
+	            }
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'agents-page animated fadeIn' },
+	                _react2.default.createElement(
+	                    _tabs2.default,
+	                    { onChange: this.onChangeTab.bind(this), justified: true, initialSelectedIndex: this.state.selectedTab },
+	                    _react2.default.createElement(
+	                        _tab2.default,
+	                        { value: 'pane-1', label: _strings.strings.agents },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'agents-page-tab-container' },
+	                            _react2.default.createElement('div', { className: 'agents-page-vertical-spacer' }),
+	                            _react2.default.createElement(
+	                                _button2.default,
+	                                { className: 'shadow', onClick: this.onNewAgent.bind(this), color: 'primary' },
+	                                _strings.strings.newAgent
+	                            ),
+	                            _react2.default.createElement('div', { className: 'agents-page-vertical-spacer' }),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'agents-page-table' },
+	                                _react2.default.createElement(_table2.default, { onRemoveRow: this.onDeleteAgentClicked.bind(this), columns: agentsColumns, data: agentsData })
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        _tab2.default,
+	                        { value: 'pane-2', label: _strings.strings.partnerships },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'agents-page-tab-container' },
+	                            _react2.default.createElement('div', { className: 'agents-page-vertical-spacer' }),
+	                            _react2.default.createElement(
+	                                _button2.default,
+	                                { className: 'shadow', onClick: this.onNewPartnership.bind(this), color: 'primary' },
+	                                _strings.strings.newPartnership
+	                            ),
+	                            _react2.default.createElement('div', { className: 'agents-page-vertical-spacer' }),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'agents-page-table' },
+	                                _react2.default.createElement(_table2.default, { onRemoveRow: this.onDeletePartnershipsClicked.bind(this), columns: partnershipColumns, data: partnershipsData })
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return AgentsAndPartnerships;
+	}(_react2.default.Component);
+	
+	//Important!! This adds the router object to context
+	
+	
+	AgentsAndPartnerships.contextTypes = {
+	    router: _react2.default.PropTypes.object.isRequired
+	};
+	
+	exports.default = AgentsAndPartnerships;
+
+/***/ },
+/* 372 */
 /*!************************************!*\
   !*** ./~/muicss/lib/react/tabs.js ***!
   \************************************/
@@ -48383,7 +50985,7 @@
 	
 	var _react2 = babelHelpers.interopRequireDefault(_react);
 	
-	var _tab = __webpack_require__(/*! ./tab */ 372);
+	var _tab = __webpack_require__(/*! ./tab */ 373);
 	
 	var _tab2 = babelHelpers.interopRequireDefault(_tab);
 	
@@ -48513,7 +51115,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 372 */
+/* 373 */
 /*!***********************************!*\
   !*** ./~/muicss/lib/react/tab.js ***!
   \***********************************/
@@ -48578,7 +51180,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 373 */
+/* 374 */
 /*!*********************************************!*\
   !*** ./src/client/app/stores/data-store.js ***!
   \*********************************************/
@@ -48592,7 +51194,7 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _store = __webpack_require__(/*! ../lib/store.js */ 374);
+	var _store = __webpack_require__(/*! ../lib/store.js */ 375);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
@@ -48687,10 +51289,20 @@
 	
 	        _this.initialize('partnerships', partnershipsData);
 	
+	        var companies = ["כלל ביטוח", "כלל גמל", "מגדל", "מנורה", "אלטשולר שחם", "ילין לפידות", "מיטב דש", "הראל", "הפניקס", "אנאליסט", "איי בי איי", "אקסלנס", "הכשרה"];
+	        _this.initialize('companies', companies);
+	
+	        var commissionType = ["עמלה", "נפרעים", "בונוס"];
+	        _this.initialize('commissionType', commissionType);
 	        return _this;
 	    }
 	
 	    _createClass(DataStore, [{
+	        key: 'getCommissionTypes',
+	        value: function getCommissionTypes() {
+	            return this.get('commissionType');
+	        }
+	    }, {
 	        key: 'getCommissionFiles',
 	        value: function getCommissionFiles() {
 	            return this.get('files');
@@ -48699,6 +51311,11 @@
 	        key: 'getAgents',
 	        value: function getAgents() {
 	            return this.get('agents');
+	        }
+	    }, {
+	        key: 'getCompanies',
+	        value: function getCompanies() {
+	            return this.get('companies');
 	        }
 	    }, {
 	        key: 'getAgent',
@@ -48753,7 +51370,7 @@
 	exports.default = dataStore;
 
 /***/ },
-/* 374 */
+/* 375 */
 /*!*************************************!*\
   !*** ./src/client/app/lib/store.js ***!
   \*************************************/
@@ -48988,9 +51605,392 @@
 	exports.default = Store;
 
 /***/ },
-/* 375 */,
-/* 376 */,
+/* 376 */
+/*!**************************************************************!*\
+  !*** ./src/client/app/views/pages/commission-files-page.jsx ***!
+  \**************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _authService = __webpack_require__(/*! ../../services/auth-service */ 229);
+	
+	var _authService2 = _interopRequireDefault(_authService);
+	
+	var _table = __webpack_require__(/*! ./../common/table.jsx */ 260);
+	
+	var _table2 = _interopRequireDefault(_table);
+	
+	var _appActions = __webpack_require__(/*! ../../actions/app-actions */ 232);
+	
+	var _appActions2 = _interopRequireDefault(_appActions);
+	
+	var _dataStore = __webpack_require__(/*! ../../stores/data-store */ 374);
+	
+	var _dataStore2 = _interopRequireDefault(_dataStore);
+	
+	var _appActions3 = __webpack_require__(/*! ../../actions/app-actions.js */ 232);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var EditFilesPage = function (_React$Component) {
+	    _inherits(EditFilesPage, _React$Component);
+	
+	    function EditFilesPage(props) {
+	        _classCallCheck(this, EditFilesPage);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(EditFilesPage).call(this, props));
+	
+	        _this.state = {
+	            loginData: _authService2.default.getLoginData(),
+	            filesData: _dataStore2.default.getCommissionFiles()
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(EditFilesPage, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            _dataStore2.default.addEventListener(_appActions3.ActionType.DELETE_COMMISSION_DOC, this.onDeleteFile.bind(this));
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            _dataStore2.default.removeEventListener(_appActions3.ActionType.DELETE_COMMISSION_DOC, this.onDeleteFile);
+	        }
+	    }, {
+	        key: 'onDeleteFile',
+	        value: function onDeleteFile() {
+	            this.state.filesData = _dataStore2.default.getCommissionFiles();
+	            this.setState(this.state);
+	        }
+	    }, {
+	        key: 'onDeleteFileClicked',
+	        value: function onDeleteFileClicked(rowIndex) {
+	            console.log("delete file at row " + rowIndex);
+	
+	            var deleteInProgress = false;
+	            if (deleteInProgress) return;
+	
+	            var fileName = this.state.filesData[rowIndex].fileName;
+	
+	            swal({
+	                title: "אישור מחיקת מסמך",
+	                text: "למחוק מסמך זה לצמיתות מהמערכת?",
+	                type: "warning",
+	                showCancelButton: true,
+	                confirmButtonColor: "#DD6B55",
+	                confirmButtonText: "כן, מחק את המסמך מהמערכת",
+	                cancelButtonText: "בטל",
+	                closeOnConfirm: false,
+	                showLoaderOnConfirm: false
+	            }, function (isConfirm) {
+	                if (isConfirm) {
+	                    _appActions2.default.deleteCommissionFile(fileName, function (status) {
+	                        if (status == 'success') {
+	                            swal({
+	                                title: "",
+	                                text: "המסמך נמחק לצמיתות מהמערכת!",
+	                                type: "success",
+	                                timer: 1500,
+	                                showConfirmButton: false
+	                            });
+	                            console.log('Data was deleted successfully from server!');
+	                        } else console.error('Error while deleting data from server!');
+	                        deleteInProgress = true;
+	                    });
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'onFileNameClicked',
+	        value: function onFileNameClicked(rowIndex) {
+	            console.log("download file at row " + rowIndex);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	
+	            var columns = [{
+	                title: "שם קובץ",
+	                key: "fileName",
+	                width: "col-33-33",
+	                type: 'button',
+	                color: 'blue',
+	                action: this.onFileNameClicked.bind(this)
+	            }, {
+	                title: "חברה",
+	                key: "companyName",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "חודש תשלום",
+	                key: "paymentMonth",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "תאריך העלאה",
+	                key: "uploadDate",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "הערות",
+	                key: "notes",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }];
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'edit-files-page animated fadeIn' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'edit-files-table shadow' },
+	                    _react2.default.createElement(_table2.default, { onRemoveRow: this.onDeleteFileClicked.bind(this), columns: columns, data: this.state.filesData })
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return EditFilesPage;
+	}(_react2.default.Component);
+	
+	//Important!! This adds the router object to context
+	
+	
+	EditFilesPage.contextTypes = {
+	    router: _react2.default.PropTypes.object.isRequired
+	};
+	
+	exports.default = EditFilesPage;
+
+/***/ },
 /* 377 */
+/*!***************************************************!*\
+  !*** ./src/client/app/views/pages/agent-page.jsx ***!
+  \***************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _table = __webpack_require__(/*! ./../common/table.jsx */ 260);
+	
+	var _table2 = _interopRequireDefault(_table);
+	
+	var _appActions = __webpack_require__(/*! ../../actions/app-actions */ 232);
+	
+	var _appActions2 = _interopRequireDefault(_appActions);
+	
+	var _dataStore = __webpack_require__(/*! ../../stores/data-store */ 374);
+	
+	var _dataStore2 = _interopRequireDefault(_dataStore);
+	
+	var _appActions3 = __webpack_require__(/*! ../../actions/app-actions.js */ 232);
+	
+	var _input = __webpack_require__(/*! ../../../../../~/muicss/lib/react/input */ 378);
+	
+	var _input2 = _interopRequireDefault(_input);
+	
+	var _strings = __webpack_require__(/*! ../../constants/strings */ 238);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var AgentPage = function (_React$Component) {
+	    _inherits(AgentPage, _React$Component);
+	
+	    function AgentPage(props) {
+	        _classCallCheck(this, AgentPage);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AgentPage).call(this, props));
+	
+	        var newAgent = _this.props.params.agentId == "new";
+	        _this.state = {
+	            newAgent: newAgent,
+	            agentData: null
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(AgentPage, [{
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            this.state.newAgent = nextProps.params.agentId == "new";
+	            this.setState(this.state);
+	        }
+	    }, {
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            if (this.state.newAgent == false) {
+	                this.state.agentData = _dataStore2.default.getAgent(this.props.params.agentId);
+	            }
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {}
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	
+	            var columns = [{
+	                title: "חברה",
+	                key: "companyName",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "מספר סוכן",
+	                key: "agentNumber",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "סוג תשלום",
+	                key: "paymentType",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "חלק סוכן %",
+	                key: "agentPart",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }, {
+	                title: "חלק סוכנות %",
+	                key: "agencyPart",
+	                width: "col-33-33",
+	                type: 'read-only',
+	                color: 'normal'
+	            }];
+	
+	            var name = "",
+	                familyName = "",
+	                idNumber = "",
+	                phoneNumber = "",
+	                faxNumber = "",
+	                email = "",
+	                active = "",
+	                companies = null;
+	            if (this.state.newAgent == false) {
+	                name = this.state.agentData.name;
+	                familyName = this.state.agentData.familyName;
+	                idNumber = this.state.agentData.idNumber;
+	                phoneNumber = this.state.agentData.phoneNumber;
+	                faxNumber = this.state.agentData.faxNumber;
+	                email = this.state.agentData.email;
+	                active = this.state.agentData.active;
+	                companies = this.state.agentData.companies;
+	            }
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'new-agent-page animated fadeIn' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'new-agent-page-title' },
+	                    _strings.strings.agentPageDetails
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'new-agent-form hcontainer-no-wrap' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'new-agent-form-item-box' },
+	                        _react2.default.createElement(_input2.default, { label: _strings.strings.agentPageName, defaultValue: name, floatingLabel: true })
+	                    ),
+	                    _react2.default.createElement('div', { className: 'new-agent-form-horizontal-spacer' }),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'new-agent-form-item-box' },
+	                        _react2.default.createElement(_input2.default, { label: _strings.strings.agentPageFamilyName, defaultValue: familyName, floatingLabel: true })
+	                    ),
+	                    _react2.default.createElement('div', { className: 'new-agent-form-horizontal-spacer' }),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'new-agent-form-item-box' },
+	                        _react2.default.createElement(_input2.default, { label: _strings.strings.agentPageId, defaultValue: idNumber, floatingLabel: true })
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'new-agent-form hcontainer-no-wrap' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'new-agent-form-item-box' },
+	                        _react2.default.createElement(_input2.default, { label: _strings.strings.agentPagePhone, defaultValue: phoneNumber, floatingLabel: true })
+	                    ),
+	                    _react2.default.createElement('div', { className: 'new-agent-form-horizontal-spacer' }),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'new-agent-form-item-box' },
+	                        _react2.default.createElement(_input2.default, { label: _strings.strings.agentPageFax, defaultValue: faxNumber, floatingLabel: true })
+	                    ),
+	                    _react2.default.createElement('div', { className: 'new-agent-form-horizontal-spacer' }),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'new-agent-form-item-box' },
+	                        _react2.default.createElement(_input2.default, { label: _strings.strings.agentPageEmail, defaultValue: email, floatingLabel: true })
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'new-agent-form-table' },
+	                    _react2.default.createElement(_table2.default, { columns: columns, data: companies })
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return AgentPage;
+	}(_react2.default.Component);
+	
+	//Important!! This adds the router object to context
+	
+	
+	AgentPage.contextTypes = {
+	    router: _react2.default.PropTypes.object.isRequired
+	};
+	
+	exports.default = AgentPage;
+
+/***/ },
+/* 378 */
 /*!*************************************!*\
   !*** ./~/muicss/lib/react/input.js ***!
   \*************************************/
@@ -49012,7 +52012,7 @@
 	
 	var _react2 = babelHelpers.interopRequireDefault(_react);
 	
-	var _textField = __webpack_require__(/*! ./text-field */ 378);
+	var _textField = __webpack_require__(/*! ./text-field */ 379);
 	
 	var PropTypes = _react2.default.PropTypes;
 	
@@ -49048,7 +52048,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 378 */
+/* 379 */
 /*!******************************************!*\
   !*** ./~/muicss/lib/react/text-field.js ***!
   \******************************************/
@@ -49075,7 +52075,7 @@
 	
 	var util = babelHelpers.interopRequireWildcard(_util);
 	
-	var _helpers = __webpack_require__(/*! ./_helpers */ 379);
+	var _helpers = __webpack_require__(/*! ./_helpers */ 380);
 	
 	var PropTypes = _react2.default.PropTypes;
 	
@@ -49344,7 +52344,7 @@
 	exports.TextField = TextField;
 
 /***/ },
-/* 379 */
+/* 380 */
 /*!****************************************!*\
   !*** ./~/muicss/lib/react/_helpers.js ***!
   \****************************************/
@@ -49363,838 +52363,9 @@
 	module.exports = { controlledMessage: controlledMessage };
 
 /***/ },
-/* 380 */
-/*!******************************************!*\
-  !*** ./src/client/app/views/top-bar.jsx ***!
-  \******************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _userBox = __webpack_require__(/*! ./user-box.jsx */ 381);
-	
-	var _userBox2 = _interopRequireDefault(_userBox);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var TopBar = function (_React$Component) {
-	    _inherits(TopBar, _React$Component);
-	
-	    function TopBar(props) {
-	        _classCallCheck(this, TopBar);
-	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(TopBar).call(this, props));
-	    }
-	
-	    _createClass(TopBar, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'fixed top-bar animated fadeInDown' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'top-bar-container hcontainer-no-wrap' },
-	                        _react2.default.createElement(_userBox2.default, { loginData: this.props.loginData, onLogout: this.props.onLogout })
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return TopBar;
-	}(_react2.default.Component);
-	
-	exports.default = TopBar;
-
-/***/ },
 /* 381 */
-/*!*******************************************!*\
-  !*** ./src/client/app/views/user-box.jsx ***!
-  \*******************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _strings = __webpack_require__(/*! ../constants/strings */ 238);
-	
-	var _authService = __webpack_require__(/*! ../services/auth-service */ 229);
-	
-	var _authService2 = _interopRequireDefault(_authService);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var UserBox = function (_React$Component) {
-	    _inherits(UserBox, _React$Component);
-	
-	    function UserBox(props) {
-	        _classCallCheck(this, UserBox);
-	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(UserBox).call(this, props));
-	    }
-	
-	    _createClass(UserBox, [{
-	        key: 'onLogout',
-	        value: function onLogout(e) {
-	            e.preventDefault();
-	            this.props.onLogout();
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'user-box hcontainer-no-wrap' },
-	                _react2.default.createElement('img', { className: 'user-avatar', src: this.props.loginData.gender == "0" ? "../public/images/avatar-male.png" : "../public/images/avatar-female.png", alt: '' }),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'user-box-info' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'user-box-name' },
-	                        this.props.loginData.fullName
-	                    ),
-	                    _react2.default.createElement(
-	                        'button',
-	                        { className: 'user-box-logout-button', onClick: this.onLogout.bind(this) },
-	                        _strings.strings.disconnect
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return UserBox;
-	}(_react2.default.Component);
-	
-	exports.default = UserBox;
-
-/***/ },
-/* 382 */
-/*!**********************************************!*\
-  !*** ./src/client/app/views/right-panel.jsx ***!
-  \**********************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _strings = __webpack_require__(/*! ../constants/strings */ 238);
-	
-	var _FlatRippleButton = __webpack_require__(/*! ./common/FlatRippleButton.jsx */ 386);
-	
-	var _FlatRippleButton2 = _interopRequireDefault(_FlatRippleButton);
-	
-	var _button = __webpack_require__(/*! muicss/lib/react/button */ 241);
-	
-	var _button2 = _interopRequireDefault(_button);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var RightPanelItem = function (_React$Component) {
-	    _inherits(RightPanelItem, _React$Component);
-	
-	    function RightPanelItem(props) {
-	        _classCallCheck(this, RightPanelItem);
-	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(RightPanelItem).call(this, props));
-	    }
-	
-	    _createClass(RightPanelItem, [{
-	        key: 'onClick',
-	        value: function onClick() {
-	            this.props.onPanelItemClick(this.props.title);
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	
-	            var className = "";
-	            if (_strings.strings.dashboard === this.props.title) {
-	                className = "right-panel-item-button right-panel-item-button-dashboard";
-	            }
-	            if (_strings.strings.commissions === this.props.title) {
-	                className = "right-panel-item-button right-panel-item-button-commissions";
-	            }
-	            if (_strings.strings.agentsAndPartnerships === this.props.title) {
-	                className = "right-panel-item-button right-panel-item-button-agents";
-	            }
-	
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'right-panel-item' },
-	                    _react2.default.createElement(
-	                        _FlatRippleButton2.default,
-	                        { className: className, onClick: this.onClick.bind(this) },
-	                        this.props.title
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return RightPanelItem;
-	}(_react2.default.Component);
-	
-	var RightPanel = function (_React$Component2) {
-	    _inherits(RightPanel, _React$Component2);
-	
-	    function RightPanel(props) {
-	        _classCallCheck(this, RightPanel);
-	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(RightPanel).call(this, props));
-	    }
-	
-	    _createClass(RightPanel, [{
-	        key: 'onPanelItemClick',
-	        value: function onPanelItemClick(item) {
-	            this.props.onPanelItemClick(item);
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'fixed right-panel animated fadeInRight' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'top-bar-logo-container' },
-	                        _react2.default.createElement('img', { className: 'top-bar-logo', src: '../public/images/neto-logo.png' })
-	                    ),
-	                    _react2.default.createElement(RightPanelItem, { title: _strings.strings.dashboard, onPanelItemClick: this.onPanelItemClick.bind(this) }),
-	                    _react2.default.createElement(RightPanelItem, { title: _strings.strings.commissions, onPanelItemClick: this.onPanelItemClick.bind(this) }),
-	                    _react2.default.createElement(RightPanelItem, { title: _strings.strings.agentsAndPartnerships, onPanelItemClick: this.onPanelItemClick.bind(this) })
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return RightPanel;
-	}(_react2.default.Component);
-	
-	exports.default = RightPanel;
-
-/***/ },
-/* 383 */,
-/* 384 */
-/*!************************************************************!*\
-  !*** ./src/client/app/views/common/FixedWidthDropdown.jsx ***!
-  \************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _button = __webpack_require__(/*! ../../../../../~/muicss/lib/react/button */ 241);
-	
-	var _button2 = _interopRequireDefault(_button);
-	
-	var _caret = __webpack_require__(/*! ../../../../../~/muicss/lib/react/caret */ 247);
-	
-	var _caret2 = _interopRequireDefault(_caret);
-	
-	var _jqLite = __webpack_require__(/*! ../../../../../~/muicss/lib/js/lib/jqLite */ 243);
-	
-	var jqLite = _interopRequireWildcard(_jqLite);
-	
-	var _util = __webpack_require__(/*! ../../../../../~/muicss/lib/js/lib/util */ 244);
-	
-	var util = _interopRequireWildcard(_util);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var PropTypes = _react2.default.PropTypes,
-	    dropdownClass = 'mui-dropdown',
-	    menuClass = 'mui-dropdown__menu',
-	    openClass = 'mui--is-open',
-	    rightClass = 'mui-dropdown__menu--right';
-	
-	/**
-	 * Dropdown constructor
-	 * @class
-	 */
-	
-	var FixedWidthDropdown = function (_React$Component) {
-	    _inherits(FixedWidthDropdown, _React$Component);
-	
-	    function FixedWidthDropdown(props) {
-	        _classCallCheck(this, FixedWidthDropdown);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FixedWidthDropdown).call(this, props));
-	
-	        _this.state = {
-	            opened: false,
-	            menuTop: 0
-	        };
-	
-	        var cb = util.callback;
-	        _this.selectCB = cb(_this, 'select');
-	        _this.onClickCB = cb(_this, 'onClick');
-	        _this.onOutsideClickCB = cb(_this, 'onOutsideClick');
-	        return _this;
-	    }
-	
-	    _createClass(FixedWidthDropdown, [{
-	        key: 'componentWillMount',
-	        value: function componentWillMount() {
-	            document.addEventListener('click', this.onOutsideClickCB);
-	        }
-	    }, {
-	        key: 'componentWillUnmount',
-	        value: function componentWillUnmount() {
-	            document.removeEventListener('click', this.onOutsideClickCB);
-	        }
-	    }, {
-	        key: 'onClick',
-	        value: function onClick(ev) {
-	            // only left clicks
-	            if (ev.button !== 0) return;
-	
-	            // exit if toggle button is disabled
-	            if (this.props.disabled) return;
-	
-	            if (!ev.defaultPrevented) {
-	                this.toggle();
-	
-	                // execute <Dropdown> onClick method
-	                var onClickFn = this.props.onClick;
-	                onClickFn && onClickFn(ev);
-	            }
-	        }
-	    }, {
-	        key: 'toggle',
-	        value: function toggle() {
-	            // exit if no menu element
-	            if (!this.props.children) {
-	                return util.raiseError('Dropdown menu element not found');
-	            }
-	
-	            if (this.state.opened) this.close();else this.open();
-	        }
-	    }, {
-	        key: 'open',
-	        value: function open() {
-	            // position menu element below toggle button
-	            var wrapperRect = this.refs.wrapperEl.getBoundingClientRect(),
-	                toggleRect = void 0;
-	
-	            toggleRect = this.refs.button.refs.buttonEl.getBoundingClientRect();
-	
-	            this.setState({
-	                opened: true,
-	                menuTop: toggleRect.top - wrapperRect.top + toggleRect.height
-	            });
-	        }
-	    }, {
-	        key: 'close',
-	        value: function close() {
-	            this.setState({ opened: false });
-	        }
-	    }, {
-	        key: 'select',
-	        value: function select(ev) {
-	            // onSelect callback
-	            if (this.props.onSelect && ev.target.tagName === 'A') {
-	                this.props.onSelect(ev.target.getAttribute('data-mui-value'));
-	            }
-	
-	            // close menu
-	            if (!ev.defaultPrevented) this.close();
-	        }
-	    }, {
-	        key: 'onOutsideClick',
-	        value: function onOutsideClick(ev) {
-	            var isClickInside = this.refs.wrapperEl.contains(ev.target);
-	            if (!isClickInside) this.close();
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var buttonEl = void 0,
-	                menuEl = void 0,
-	                labelEl = void 0;
-	
-	            // build label
-	            if (jqLite.type(this.props.label) === 'string') {
-	                labelEl = _react2.default.createElement(
-	                    'span',
-	                    null,
-	                    this.props.label,
-	                    ' ',
-	                    _react2.default.createElement(_caret2.default, null)
-	                );
-	            } else {
-	                labelEl = this.props.label;
-	            }
-	
-	            buttonEl = _react2.default.createElement(
-	                _button2.default,
-	                { className: 'fixed-size-button shadow',
-	                    ref: 'button',
-	                    type: 'button',
-	                    onClick: this.onClickCB,
-	                    color: this.props.color,
-	                    variant: this.props.variant,
-	                    size: this.props.size,
-	                    disabled: this.props.disabled
-	                },
-	                labelEl
-	            );
-	
-	            if (this.state.opened) {
-	                var cs = {};
-	
-	                cs[menuClass] = true;
-	                cs[openClass] = this.state.opened;
-	                cs[rightClass] = this.props.alignMenu === 'right';
-	                cs = util.classNames(cs);
-	
-	                menuEl = _react2.default.createElement(
-	                    'ul',
-	                    {
-	                        ref: 'menuEl',
-	                        className: cs,
-	                        style: { top: this.state.menuTop },
-	                        onClick: this.selectCB
-	                    },
-	                    this.props.children
-	                );
-	            }
-	
-	            //let { className, children, onClick, ...other } = this.props;
-	            var _props = this.props;
-	            var className = _props.className;
-	            var children = _props.children;
-	            var onClick = _props.onClick;
-	
-	
-	            return _react2.default.createElement(
-	                'div',
-	                {
-	                    ref: 'wrapperEl',
-	                    className: dropdownClass + ' ' + className
-	                },
-	                buttonEl,
-	                menuEl
-	            );
-	        }
-	    }]);
-	
-	    return FixedWidthDropdown;
-	}(_react2.default.Component);
-	
-	FixedWidthDropdown.propTypes = {
-	    color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),
-	    variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
-	    size: PropTypes.oneOf(['default', 'small', 'large']),
-	    label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-	    alignMenu: PropTypes.oneOf(['left', 'right']),
-	    onClick: PropTypes.func,
-	    onSelect: PropTypes.func,
-	    disabled: PropTypes.bool
-	};
-	
-	FixedWidthDropdown.defaultProps = {
-	    className: '',
-	    color: 'default',
-	    variant: 'default',
-	    size: 'default',
-	    label: '',
-	    alignMenu: 'left',
-	    onClick: null,
-	    onSelect: null,
-	    disabled: false
-	};
-	
-	/** Define module API */
-	exports.default = FixedWidthDropdown;
-
-/***/ },
-/* 385 */
-/*!***********************************************!*\
-  !*** ./src/client/app/views/common/table.jsx ***!
-  \***********************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _FlatRippleButton = __webpack_require__(/*! ./FlatRippleButton.jsx */ 386);
-	
-	var _FlatRippleButton2 = _interopRequireDefault(_FlatRippleButton);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var TableCell = function (_React$Component) {
-	    _inherits(TableCell, _React$Component);
-	
-	    function TableCell(props) {
-	        _classCallCheck(this, TableCell);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TableCell).call(this, props));
-	
-	        _this.state = {
-	            value: _this.props.value,
-	            column: _this.props.column
-	        };
-	        return _this;
-	    }
-	
-	    _createClass(TableCell, [{
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            this.setState({
-	                value: nextProps.value,
-	                column: nextProps.column
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var className = "table-cell";
-	            var color = "table-cell-text-color";
-	            //var value = this.props.value;
-	            var node = null;
-	            var action = null;
-	
-	            if (this.state.column.color === "red-green") {
-	                if (parseFloat(this.props.value) >= 0) {
-	                    color = "green";
-	                } else {
-	                    color = "red";
-	                }
-	            }
-	            if (this.state.column.type === "read-only") {
-	                node = _react2.default.createElement(
-	                    'div',
-	                    { className: "table-cell-read-only " + color },
-	                    this.props.value
-	                );
-	            }
-	            if (this.state.column.type === "read-only-currency") {
-	                var value = this.props.value;
-	                value = parseFloat(value.replace(/,/g, "")).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	                value = "₪ " + value;
-	                node = _react2.default.createElement(
-	                    'div',
-	                    { className: "table-cell-read-only " + color },
-	                    value
-	                );
-	            }
-	            if (this.state.column.type === "read-only-percent") {
-	                var value = this.props.value;
-	                value = value + " %";
-	                node = _react2.default.createElement(
-	                    'div',
-	                    { className: "table-cell-read-only " + color },
-	                    value
-	                );
-	            }
-	            if (this.state.column.type === "read-only-button") {
-	                action = this.state.column.action;
-	                className = "table-button " + this.state.column.color;
-	                node = _react2.default.createElement(
-	                    'div',
-	                    { className: "table-cell-read-only " + color },
-	                    _react2.default.createElement(
-	                        'button',
-	                        { className: className, onClick: function (action) {
-	                                action(this.props.rowIndex);
-	                            }.bind(this, action) },
-	                        this.props.value
-	                    )
-	                );
-	            }
-	            return _react2.default.createElement(
-	                'div',
-	                { className: className + " " + this.state.column.width },
-	                node
-	            );
-	        }
-	    }]);
-	
-	    return TableCell;
-	}(_react2.default.Component);
-	
-	var TableRow = function (_React$Component2) {
-	    _inherits(TableRow, _React$Component2);
-	
-	    function TableRow(props) {
-	        _classCallCheck(this, TableRow);
-	
-	        var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(TableRow).call(this, props));
-	
-	        _this2.state = {
-	            data: props.data,
-	            columns: props.columns,
-	            index: props.index,
-	            removableRow: !(props.onRemoveRow == null)
-	        };
-	        return _this2;
-	    }
-	
-	    _createClass(TableRow, [{
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            this.setState({
-	                data: nextProps.data,
-	                columns: nextProps.columns,
-	                index: nextProps.index
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var tableCells = [];
-	            for (var cell = 0; cell < this.state.columns.length; cell++) {
-	                tableCells[cell] = _react2.default.createElement(TableCell, { key: cell,
-	                    field: this.state.columns[cell].key,
-	                    rowIndex: this.state.index,
-	                    column: this.state.columns[cell],
-	                    value: this.state.data[this.state.columns[cell].key] });
-	            }var removeRow = null;
-	            if (this.state.removableRow) {
-	                removeRow = _react2.default.createElement('button', { onClick: function (index) {
-	                        this.props.onRemoveRow(index);
-	                    }.bind(this, this.state.index), className: 'table-row-remove-button' });
-	            }
-	
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'table-row' },
-	                removeRow,
-	                tableCells
-	            );
-	        }
-	    }]);
-	
-	    return TableRow;
-	}(_react2.default.Component);
-	
-	var TableColumn = function (_React$Component3) {
-	    _inherits(TableColumn, _React$Component3);
-	
-	    function TableColumn(props) {
-	        _classCallCheck(this, TableColumn);
-	
-	        var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(TableColumn).call(this, props));
-	
-	        _this3.state = {
-	            column: _this3.props.column
-	        };
-	        return _this3;
-	    }
-	
-	    _createClass(TableColumn, [{
-	        key: 'render',
-	        value: function render() {
-	            var className = "table-column " + this.state.column.width;
-	            return _react2.default.createElement(
-	                'div',
-	                { className: className },
-	                this.state.column.title
-	            );
-	        }
-	    }]);
-	
-	    return TableColumn;
-	}(_react2.default.Component);
-	
-	var TableTrashColumn = function (_React$Component4) {
-	    _inherits(TableTrashColumn, _React$Component4);
-	
-	    function TableTrashColumn(props) {
-	        _classCallCheck(this, TableTrashColumn);
-	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(TableTrashColumn).call(this, props));
-	    }
-	
-	    _createClass(TableTrashColumn, [{
-	        key: 'render',
-	        value: function render() {
-	            var className = "table-column-trash";
-	            return _react2.default.createElement('div', { className: className });
-	        }
-	    }]);
-	
-	    return TableTrashColumn;
-	}(_react2.default.Component);
-	
-	var Table = function (_React$Component5) {
-	    _inherits(Table, _React$Component5);
-	
-	    function Table(props) {
-	        _classCallCheck(this, Table);
-	
-	        var _this5 = _possibleConstructorReturn(this, Object.getPrototypeOf(Table).call(this, props));
-	
-	        _this5.state = {
-	            columns: props.columns,
-	            data: props.data,
-	            removableRow: !(props.onRemoveRow == null)
-	        };
-	        return _this5;
-	    }
-	
-	    _createClass(Table, [{
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            this.setState({
-	                columns: nextProps.columns,
-	                data: nextProps.data
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var tableColumns = [];
-	            for (var col = 0; col < this.state.columns.length; col++) {
-	                tableColumns[col] = _react2.default.createElement(TableColumn, { key: col,
-	                    column: this.state.columns[col] });
-	            }
-	
-	            if (this.state.data == null) {
-	                return _react2.default.createElement(
-	                    'div',
-	                    { className: 'table' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'table-header' },
-	                        tableColumns
-	                    )
-	                );
-	            }
-	
-	            var tableRows = [];
-	            for (var row = 0; row < this.state.data.length; row++) {
-	                tableRows[row] = _react2.default.createElement(TableRow, { onRemoveRow: this.props.onRemoveRow,
-	                    key: row, index: row,
-	                    data: this.state.data[row],
-	                    columns: this.state.columns });
-	            }var tableTrashColumn = null;
-	            if (this.state.removableRow) {
-	                tableTrashColumn = _react2.default.createElement(TableTrashColumn, null);
-	            }
-	
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'table' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'table-header' },
-	                    tableTrashColumn,
-	                    tableColumns
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'table-data-container' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'table-data' },
-	                        tableRows
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return Table;
-	}(_react2.default.Component);
-	
-	exports.default = Table;
-
-/***/ },
-/* 386 */
 /*!**********************************************************!*\
-  !*** ./src/client/app/views/common/FlatRippleButton.jsx ***!
+  !*** ./src/client/app/views/pages/agent-salary-page.jsx ***!
   \**********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
@@ -50204,1774 +52375,13 @@
 	    value: true
 	});
 	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(/*! react */ 1);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _jqLite = __webpack_require__(/*! ../../../../../~/muicss/lib/js/lib/jqLite */ 243);
-	
-	var jqLite = _interopRequireWildcard(_jqLite);
-	
-	var _util = __webpack_require__(/*! ../../../../../~/muicss/lib/js/lib/util */ 244);
-	
-	var util = _interopRequireWildcard(_util);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var rippleIter = 0;
-	
-	var PropTypes = _react2.default.PropTypes,
-	    btnClass = 'mui-btn-ripple',
-	    rippleClassDark = 'mui-ripple-effect-dark',
-	    rippleClassLight = 'mui-ripple-effect-light',
-	    btnAttrs = { color: 1, variant: 1, size: 1 };
-	
-	/**
-	 * Button element
-	 * @class
-	 */
-	
-	var FlatRippleButton = function (_React$Component) {
-	    _inherits(FlatRippleButton, _React$Component);
-	
-	    function FlatRippleButton(props) {
-	        _classCallCheck(this, FlatRippleButton);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FlatRippleButton).call(this, props));
-	
-	        _this.state = {
-	            ripples: {}
-	        };
-	        return _this;
-	    }
-	
-	    _createClass(FlatRippleButton, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            // disable MUI js
-	            var el = this.refs.buttonEl;
-	            el._muiDropdown = true;
-	            el._muiRipple = true;
-	        }
-	    }, {
-	        key: 'onClick',
-	        value: function onClick(ev) {
-	            var onClickFn = this.props.onClick;
-	            onClickFn && onClickFn(ev);
-	        }
-	    }, {
-	        key: 'onMouseDown',
-	        value: function onMouseDown(ev) {
-	            // get (x, y) position of click
-	            var offset = jqLite.offset(this.refs.buttonEl);
-	
-	            // choose diameter
-	            var diameter = offset.height;
-	            if (this.props.variant === 'fab') diameter = diameter / 2;
-	
-	            // add ripple to state
-	            var ripples = this.state.ripples;
-	            var key = Date.now();
-	
-	            ripples[key] = {
-	                xPos: ev.pageX - offset.left,
-	                yPos: ev.pageY - offset.top,
-	                diameter: diameter,
-	                teardownFn: this.teardownRipple.bind(this, key)
-	            };
-	
-	            this.setState({ ripples: ripples });
-	        }
-	    }, {
-	        key: 'onTouchStart',
-	        value: function onTouchStart(ev) {}
-	    }, {
-	        key: 'teardownRipple',
-	        value: function teardownRipple(key) {
-	            // delete ripple
-	            var ripples = this.state.ripples;
-	            delete ripples[key];
-	            this.setState({ ripples: ripples });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var cls = btnClass,
-	                k = void 0,
-	                v = void 0;
-	
-	            var ripples = this.state.ripples;
-	
-	            // button attributes
-	            for (k in btnAttrs) {
-	                v = this.props[k];
-	                if (v !== 'default') cls += ' ' + btnClass + '--' + v;
-	            }
-	
-	            var rippleColor = rippleClassDark;
-	            if (this.props.rippleColor != null) {
-	                rippleColor = this.props.rippleColor === "dark" ? rippleClassDark : rippleClassLight;
-	            }
-	
-	            return _react2.default.createElement(
-	                'button',
-	                _extends({}, this.props, {
-	                    ref: 'buttonEl',
-	                    className: cls + ' ' + this.props.className,
-	                    onClick: this.onClick.bind(this),
-	                    onMouseDown: this.onMouseDown.bind(this)
-	                }),
-	                this.props.children,
-	                Object.keys(ripples).map(function (k, i) {
-	                    var v = ripples[k];
-	                    return _react2.default.createElement(Ripple, {
-	                        colorClass: rippleColor,
-	                        key: k,
-	                        xPos: v.xPos,
-	                        yPos: v.yPos,
-	                        diameter: v.diameter,
-	                        onTeardown: v.teardownFn
-	                    });
-	                })
-	            );
-	        }
-	    }]);
-	
-	    return FlatRippleButton;
-	}(_react2.default.Component);
-	
-	FlatRippleButton.propTypes = {
-	    color: PropTypes.oneOf(['default', 'primary', 'danger', 'dark', 'accent']),
-	    disabled: PropTypes.bool,
-	    size: PropTypes.oneOf(['default', 'small', 'large']),
-	    type: PropTypes.oneOf(['submit', 'button']),
-	    variant: PropTypes.oneOf(['default', 'flat', 'raised', 'fab']),
-	    onClick: PropTypes.func
-	};
-	
-	FlatRippleButton.defaultProps = {
-	    className: '',
-	    color: 'dark',
-	    disabled: false,
-	    size: 'default',
-	    type: null,
-	    variant: 'flat',
-	    onClick: null
-	};
-	
-	/**
-	 * Ripple component
-	 * @class
-	 */
-	
-	var Ripple = function (_React$Component2) {
-	    _inherits(Ripple, _React$Component2);
-	
-	    function Ripple() {
-	        _classCallCheck(this, Ripple);
-	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Ripple).apply(this, arguments));
-	    }
-	
-	    _createClass(Ripple, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var _this3 = this;
-	
-	            // trigger teardown in 2 sec
-	            this.teardownTimer = setTimeout(function () {
-	                var fn = _this3.props.onTeardown;
-	                fn && fn();
-	            }, 2000);
-	        }
-	    }, {
-	        key: 'componentWillUnmount',
-	        value: function componentWillUnmount() {
-	            // clear timeout
-	            clearTimeout(this.teardownTimer);
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var diameter = this.props.diameter,
-	                radius = diameter / 2;
-	
-	            var style = {
-	                height: diameter,
-	                width: diameter,
-	                top: this.props.yPos - radius || 0,
-	                left: this.props.xPos - radius || 0
-	            };
-	
-	            return _react2.default.createElement('div', { className: this.props.colorClass, style: style });
-	        }
-	    }]);
-	
-	    return Ripple;
-	}(_react2.default.Component);
-	
-	Ripple.propTypes = {
-	    xPos: PropTypes.number,
-	    yPos: PropTypes.number,
-	    diameter: PropTypes.number,
-	    onTeardown: PropTypes.func
-	};
-	
-	Ripple.defaultProps = {
-	    xPos: 0,
-	    yPos: 0,
-	    diameter: 0,
-	    onTeardown: null
-	};
-	
-	/** Define module API */
-	exports.default = FlatRippleButton;
-
-/***/ },
-/* 387 */
-/*!**************************************************!*\
-  !*** ./src/client/app/views/common/text-box.jsx ***!
-  \**************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var TextBox = function (_React$Component) {
-	    _inherits(TextBox, _React$Component);
-	
-	    function TextBox(props) {
-	        _classCallCheck(this, TextBox);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TextBox).call(this, props));
-	
-	        _this.state = {
-	            notes: _this.props.value
-	        };
-	        return _this;
-	    }
-	
-	    _createClass(TextBox, [{
-	        key: "componentDidMount",
-	        value: function componentDidMount() {
-	            //var maxRowCount = this.props.maxRowCount;
-	            //var id = "#"+this.props.id;
-	            //$(function ()
-	            //{
-	            //    var lines = maxRowCount;
-	            //    $(id).keydown(function(e)
-	            //    {
-	            //        var newLines = $(this).val().split("\n").length;
-	            //        if(e.keyCode == 13 && newLines >= lines)
-	            //            return false;
-	            //    });
-	            //});
-	        }
-	    }, {
-	        key: "onBlur",
-	        value: function onBlur(event) {
-	            event.preventDefault();
-	            if (this.props.onBlur != null) /*&& (event.target.value != this.state.value)*/{
-	                    this.props.onBlur(event.target.value);
-	                }
-	        }
-	    }, {
-	        key: "onChange",
-	        value: function onChange(event) {
-	            event.preventDefault();
-	            this.setState({ notes: event.target.value });
-	        }
-	    }, {
-	        key: "render",
-	        value: function render() {
-	            var rowHeight = 22;
-	            var textBoxStyle = { height: 2 * rowHeight + 4 };
-	
-	            return _react2.default.createElement(
-	                "div",
-	                null,
-	                _react2.default.createElement(
-	                    "form",
-	                    null,
-	                    _react2.default.createElement(
-	                        "label",
-	                        null,
-	                        this.props.title,
-	                        _react2.default.createElement("textarea", { style: textBoxStyle,
-	                            className: "text-box",
-	                            id: this.props.id,
-	                            value: this.state.notes,
-	                            onChange: this.onChange,
-	                            onBlur: this.onBlur })
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return TextBox;
-	}(_react2.default.Component);
-	
-	exports.default = TextBox;
-
-/***/ },
-/* 388 */,
-/* 389 */
-/*!***************************************************!*\
-  !*** ./src/client/app/views/pages/login-page.jsx ***!
-  \***************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _authService = __webpack_require__(/*! ../../services/auth-service */ 229);
-	
-	var _authService2 = _interopRequireDefault(_authService);
-	
-	var _strings = __webpack_require__(/*! ../../constants/strings */ 238);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Login = function (_React$Component) {
-	    _inherits(Login, _React$Component);
-	
-	    function Login() {
-	        _classCallCheck(this, Login);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Login).call(this));
-	
-	        _this.state = {
-	            username: '',
-	            password: ''
-	        };
-	        _this.errorMessage = "";
-	        return _this;
-	    }
-	
-	    _createClass(Login, [{
-	        key: 'login',
-	        value: function login(e) {
-	            var _this2 = this;
-	
-	            e.preventDefault();
-	
-	            this.state.email = this.refs.email.value;
-	            this.state.password = this.refs.password.value;
-	            this.errorMessage = "";
-	            this.errorMessageClassName = "";
-	            _authService2.default.login(this.state.email, this.state.password, function (loggedIn) {
-	                if (loggedIn) {
-	                    _this2.context.router.push('/app/dashboard');
-	                } else {
-	                    _this2.errorMessage = _strings.strings.loginErrorMessage;
-	                    _this2.errorMessageClassName = "login-page-alert";
-	                }
-	            }.bind(this));
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'login-page animated fadeIn' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'login-page-container login-page-center' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'login-page-neto-logo-container' },
-	                        _react2.default.createElement('img', { className: 'login-page-neto-logo', src: './public/images/neto-logo.png' })
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'login-page-neto-doc-name' },
-	                        _strings.strings.appName
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: this.errorMessageClassName },
-	                        this.errorMessage
-	                    ),
-	                    _react2.default.createElement(
-	                        'form',
-	                        { className: 'left-align' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            null,
-	                            _react2.default.createElement('input', { type: 'text', className: 'login-page-input', id: 'email', ref: 'email', placeholder: _strings.strings.email })
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            null,
-	                            _react2.default.createElement('input', { type: 'password', className: 'login-page-input', id: 'password', ref: 'password', placeholder: _strings.strings.password })
-	                        ),
-	                        _react2.default.createElement(
-	                            'button',
-	                            { type: 'submit', className: 'login-page-button', onClick: this.login.bind(this) },
-	                            _strings.strings.connect
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'login-page-need-account-text' },
-	                        _react2.default.createElement(
-	                            'p',
-	                            null,
-	                            _strings.strings.needAccount,
-	                            _react2.default.createElement(
-	                                'a',
-	                                { href: '/user-signup-request' },
-	                                ' ',
-	                                _strings.strings.sendRegisterRequest
-	                            )
-	                        )
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return Login;
-	}(_react2.default.Component);
-	
-	//Important!! This adds the router object to context
-	
-	
-	exports.default = Login;
-	Login.contextTypes = {
-	    router: _react2.default.PropTypes.object.isRequired
-	};
-
-/***/ },
-/* 390 */
-/*!****************************************************!*\
-  !*** ./src/client/app/views/pages/signup-page.jsx ***!
-  \****************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _authService = __webpack_require__(/*! ../../services/auth-service */ 229);
-	
-	var _authService2 = _interopRequireDefault(_authService);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Signup = function (_React$Component) {
-	    _inherits(Signup, _React$Component);
-	
-	    function Signup() {
-	        _classCallCheck(this, Signup);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Signup).call(this));
-	
-	        _this.state = {
-	            username: '',
-	            password: '',
-	            extra: ''
-	        };
-	        return _this;
-	    }
-	
-	    _createClass(Signup, [{
-	        key: 'signup',
-	        value: function signup(e) {
-	            e.preventDefault();
-	
-	            var usernameInput = this.refs.username;
-	            var passwordInput = this.refs.password;
-	            this.state.username = usernameInput.value;
-	            this.state.password = passwordInput.value;
-	
-	            _authService2.default.signup(this.state.user, this.state.password, this.state.extra).catch(function (err) {
-	                alert("There's an error logging in");
-	                console.log("Error logging in", err);
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'login jumbotron center-block' },
-	                _react2.default.createElement(
-	                    'h1',
-	                    null,
-	                    'Signup'
-	                ),
-	                _react2.default.createElement(
-	                    'form',
-	                    { role: 'form' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { htmlFor: 'username' },
-	                            'Username'
-	                        ),
-	                        _react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'username', ref: 'username', placeholder: 'Username' })
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { htmlFor: 'password' },
-	                            'Password'
-	                        ),
-	                        _react2.default.createElement('input', { type: 'password', className: 'form-control', id: 'password', ref: 'password', placeholder: 'Password' })
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { htmlFor: 'extra' },
-	                            'Extra'
-	                        ),
-	                        _react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'extra', ref: 'extra', placeholder: 'Some extra information' })
-	                    ),
-	                    _react2.default.createElement(
-	                        'button',
-	                        { type: 'submit', className: 'btn btn-default', onClick: this.signup.bind(this) },
-	                        'Submit'
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return Signup;
-	}(_react2.default.Component);
-	
-	exports.default = Signup;
-
-/***/ },
-/* 391 */
-/*!*******************************************************!*\
-  !*** ./src/client/app/views/pages/dashboard-page.jsx ***!
-  \*******************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _authService = __webpack_require__(/*! ../../services/auth-service */ 229);
-	
-	var _authService2 = _interopRequireDefault(_authService);
-	
-	var _button = __webpack_require__(/*! ../../../../../~/muicss/lib/react/button */ 241);
-	
-	var _button2 = _interopRequireDefault(_button);
-	
-	var _dropdown = __webpack_require__(/*! ../../../../../~/muicss/lib/react/dropdown */ 246);
-	
-	var _dropdown2 = _interopRequireDefault(_dropdown);
-	
-	var _dropdownItem = __webpack_require__(/*! ../../../../../~/muicss/lib/react/dropdown-item */ 248);
-	
-	var _dropdownItem2 = _interopRequireDefault(_dropdownItem);
-	
-	var _FixedWidthDropdown = __webpack_require__(/*! ./../common/FixedWidthDropdown.jsx */ 384);
-	
-	var _FixedWidthDropdown2 = _interopRequireDefault(_FixedWidthDropdown);
-	
-	var _strings = __webpack_require__(/*! ../../constants/strings */ 238);
-	
-	var _reactChartjs = __webpack_require__(/*! react-chartjs */ 250);
-	
-	var _reactChartjs2 = _interopRequireDefault(_reactChartjs);
-	
-	var _table = __webpack_require__(/*! ./../common/table.jsx */ 385);
-	
-	var _table2 = _interopRequireDefault(_table);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var monthOptions = ["ינואר", "פברואר", "מרץ", "אפריל", "מאי", "יוני", "יולי", "אוגוסט", "ספטמבר", "אוקטובר", "נובמבר", "דצמבר"];
-	
-	function getMonthName(monthNum) {
-	
-	    if (monthNum > 12 || monthNum < 1) {
-	        return monthOptions[0];
-	    }
-	    return monthOptions[monthNum - 1];
-	}
-	
-	var DashboardToolbar = function (_React$Component) {
-	    _inherits(DashboardToolbar, _React$Component);
-	
-	    function DashboardToolbar(props) {
-	        _classCallCheck(this, DashboardToolbar);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardToolbar).call(this, props));
-	
-	        var date = new Date();
-	        var currentMonth = date.getMonth();
-	        var currentYear = date.getFullYear();
-	
-	        _this.state = {
-	            selectedMonth: getMonthName(currentMonth),
-	            selectedYear: currentYear.toString()
-	        };
-	        return _this;
-	    }
-	
-	    _createClass(DashboardToolbar, [{
-	        key: 'onMonthChange',
-	        value: function onMonthChange(item) {
-	            if (item.props.value != this.state.selectedMonth) {
-	                this.setState({ selectedMonth: item.props.value });
-	            }
-	        }
-	    }, {
-	        key: 'onYearChange',
-	        value: function onYearChange(item) {
-	            if (item.props.value != this.state.selectedYear) {
-	                this.setState({ selectedYear: item.props.value });
-	            }
-	        }
-	    }, {
-	        key: 'onLoadClick',
-	        value: function onLoadClick() {}
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	
-	            var months = [];
-	            for (var i = 1; i <= 12; i++) {
-	                var monthName = getMonthName(i);
-	                months.push(_react2.default.createElement(
-	                    _dropdownItem2.default,
-	                    { onClick: this.onMonthChange.bind(this), value: monthName, key: i },
-	                    monthName
-	                ));
-	            }
-	
-	            var years = [];
-	            var date = new Date();
-	            var currentYear = date.getFullYear();
-	            for (var _i = 2012; _i <= currentYear; _i++) {
-	                var yearName = _i.toString();
-	                years.push(_react2.default.createElement(
-	                    _dropdownItem2.default,
-	                    { onClick: this.onYearChange.bind(this), value: yearName, key: _i },
-	                    yearName
-	                ));
-	            }
-	
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'hcontainer-no-wrap' },
-	                _react2.default.createElement(
-	                    _FixedWidthDropdown2.default,
-	                    { label: this.state.selectedMonth, alignMenu: 'right' },
-	                    months
-	                ),
-	                _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                _react2.default.createElement(
-	                    _FixedWidthDropdown2.default,
-	                    { className: 'fixed-size-button', label: this.state.selectedYear, alignMenu: 'right' },
-	                    years
-	                ),
-	                _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                _react2.default.createElement(
-	                    _button2.default,
-	                    { className: 'shadow', onClick: this.onLoadClick.bind(this), color: 'primary' },
-	                    _strings.strings.load
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return DashboardToolbar;
-	}(_react2.default.Component);
-	
-	var DashboardRankTable = function (_React$Component2) {
-	    _inherits(DashboardRankTable, _React$Component2);
-	
-	    function DashboardRankTable(props) {
-	        _classCallCheck(this, DashboardRankTable);
-	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardRankTable).call(this, props));
-	    }
-	
-	    _createClass(DashboardRankTable, [{
-	        key: 'render',
-	        value: function render() {
-	
-	            var columns = [{
-	                title: "שם סוכן",
-	                key: "agentName",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "עמלות",
-	                key: "commission",
-	                width: "col-33-33",
-	                type: 'read-only-currency',
-	                color: 'normal'
-	            }, {
-	                title: "שינוי (עמלות)",
-	                key: "commissionChange",
-	                width: "col-33-33",
-	                type: 'read-only-percent',
-	                color: 'red-green'
-	            }, {
-	                title: "גודל תיק",
-	                key: "totalInvestments",
-	                width: "col-33-33",
-	                type: 'read-only-currency',
-	                color: 'normal'
-	            }, {
-	                title: "שינוי (גודל תיק)",
-	                key: "totalInvestmentsChange",
-	                width: "col-33-33",
-	                type: 'read-only-percent',
-	                color: 'red-green'
-	            }];
-	
-	            var data = [{ agentName: "קרין בוזלי", commission: "23234233", commissionChange: "2.3", totalInvestments: "23234233", totalInvestmentsChange: "2.3" }, { agentName: "עידן כץ", commission: "43234233", commissionChange: "2.3", totalInvestments: "23234233", totalInvestmentsChange: "2.3" }, { agentName: "מסי", commission: "33224233", commissionChange: "-2.3", totalInvestments: "23234233", totalInvestmentsChange: "6.3" }, { agentName: "מסי", commission: "33224233", commissionChange: "-2.3", totalInvestments: "23234233", totalInvestmentsChange: "6.3" }, { agentName: "מסי", commission: "33224233", commissionChange: "-2.3", totalInvestments: "23234233", totalInvestmentsChange: "6.3" }, { agentName: "מסי", commission: "33224233", commissionChange: "-2.3", totalInvestments: "23234233", totalInvestmentsChange: "6.3" }, { agentName: "קריזבז", commission: "13234233", commissionChange: "1.3", totalInvestments: "23234233", totalInvestmentsChange: "2.3" }, { agentName: "קרין בוזלי", commission: "23234233", commissionChange: "2.3", totalInvestments: "23234233", totalInvestmentsChange: "-2.3" }, { agentName: "קרין בוזלי", commission: "23234233", commissionChange: "2.3", totalInvestments: "23234233", totalInvestmentsChange: "2.3" }];
-	
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'dashboard-rank-table shadow' },
-	                _react2.default.createElement(_table2.default, { columns: columns,
-	                    data: data })
-	            );
-	        }
-	    }]);
-	
-	    return DashboardRankTable;
-	}(_react2.default.Component);
-	
-	var DashboardCommissionChangeChart = function (_React$Component3) {
-	    _inherits(DashboardCommissionChangeChart, _React$Component3);
-	
-	    function DashboardCommissionChangeChart(props) {
-	        _classCallCheck(this, DashboardCommissionChangeChart);
-	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardCommissionChangeChart).call(this, props));
-	    }
-	
-	    _createClass(DashboardCommissionChangeChart, [{
-	        key: 'render',
-	        value: function render() {
-	
-	            var data = {
-	                labels: monthOptions,
-	                datasets: [{
-	                    label: "My First dataset",
-	                    backgroundColor: "rgba(215,49,132,0.2)",
-	                    borderColor: "rgba(225,99,132,1)",
-	                    borderWidth: 1,
-	                    hoverBackgroundColor: "rgba(255,99,132,0.4)",
-	                    hoverBorderColor: "rgba(255,99,132,1)",
-	                    data: [165, 59, 80, 81, 256, 55, 40],
-	                    fillColor: "#4286b4"
-	                }]
-	            };
-	
-	            var chartOptions = {
-	                scaleFontFamily: "Tahoma",
-	                tooltipFontFamily: "Tahoma",
-	                scaleFontSize: 16,
-	                responsive: true,
-	                maintainAspectRatio: false
-	            };
-	
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'dashboard-commission-change-chart shadow' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'dashboard-box-title' },
-	                    _strings.strings.totalInvestmentsChange
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'dashboard-commission-change-chart-box' },
-	                    _react2.default.createElement(_reactChartjs.Bar, { data: data, options: chartOptions, width: '600', height: '400' })
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return DashboardCommissionChangeChart;
-	}(_react2.default.Component);
-	
-	var DashboardMonthTotalCommissions = function (_React$Component4) {
-	    _inherits(DashboardMonthTotalCommissions, _React$Component4);
-	
-	    function DashboardMonthTotalCommissions(props) {
-	        _classCallCheck(this, DashboardMonthTotalCommissions);
-	
-	        var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardMonthTotalCommissions).call(this, props));
-	
-	        _this4.state = {
-	            value: 233423432,
-	            change: 3.2
-	        };
-	
-	        return _this4;
-	    }
-	
-	    _createClass(DashboardMonthTotalCommissions, [{
-	        key: 'render',
-	        value: function render() {
-	
-	            var value = this.state.value.toString();
-	            value = parseFloat(value.replace(/,/g, "")).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	
-	            var change = this.state.change;
-	            var changeIcon = "../public/images/change-up.png";
-	            var changeColor = "green";
-	            if (change < 0) {
-	                changeIcon = "../public/images/change-down.png";
-	                changeColor = "red";
-	            }
-	
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'dashboard-month-total-commissions shadow' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'dashboard-box-title' },
-	                    _strings.strings.totalCommissions
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'dashboard-box-value blue' },
-	                    _react2.default.createElement(
-	                        'small',
-	                        null,
-	                        "₪",
-	                        ' '
-	                    ),
-	                    _react2.default.createElement(
-	                        'b',
-	                        null,
-	                        value
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: "dashboard-box-change " + changeColor },
-	                    change,
-	                    _react2.default.createElement(
-	                        'small',
-	                        null,
-	                        ' ',
-	                        "%"
-	                    ),
-	                    ' ',
-	                    _react2.default.createElement('img', { src: changeIcon })
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return DashboardMonthTotalCommissions;
-	}(_react2.default.Component);
-	
-	var DashboardMonthTotalAgents = function (_React$Component5) {
-	    _inherits(DashboardMonthTotalAgents, _React$Component5);
-	
-	    function DashboardMonthTotalAgents(props) {
-	        _classCallCheck(this, DashboardMonthTotalAgents);
-	
-	        var _this5 = _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardMonthTotalAgents).call(this, props));
-	
-	        _this5.state = {
-	            value: 999,
-	            change: 3.4
-	        };
-	        return _this5;
-	    }
-	
-	    _createClass(DashboardMonthTotalAgents, [{
-	        key: 'render',
-	        value: function render() {
-	
-	            var value = this.state.value.toString();
-	
-	            var change = this.state.change;
-	            var changeIcon = "../public/images/change-up.png";
-	            var changeColor = "green";
-	            if (change < 0) {
-	                changeIcon = "../public/images/change-down.png";
-	                changeColor = "red";
-	            }
-	
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'dashboard-month-total-agents shadow' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'dashboard-box-title' },
-	                    _strings.strings.totalAgents
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'dashboard-box-value blue' },
-	                    _react2.default.createElement(
-	                        'b',
-	                        null,
-	                        value
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: "dashboard-box-change " + changeColor },
-	                    change,
-	                    _react2.default.createElement(
-	                        'small',
-	                        null,
-	                        ' ',
-	                        "%"
-	                    ),
-	                    ' ',
-	                    _react2.default.createElement('img', { src: changeIcon })
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return DashboardMonthTotalAgents;
-	}(_react2.default.Component);
-	
-	var DashboardTotalInvestments = function (_React$Component6) {
-	    _inherits(DashboardTotalInvestments, _React$Component6);
-	
-	    function DashboardTotalInvestments(props) {
-	        _classCallCheck(this, DashboardTotalInvestments);
-	
-	        var _this6 = _possibleConstructorReturn(this, Object.getPrototypeOf(DashboardTotalInvestments).call(this, props));
-	
-	        _this6.state = {
-	            value: 433423432,
-	            change: -1.2
-	        };
-	        return _this6;
-	    }
-	
-	    _createClass(DashboardTotalInvestments, [{
-	        key: 'render',
-	        value: function render() {
-	
-	            var value = this.state.value.toString();
-	            value = parseFloat(value.replace(/,/g, "")).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	
-	            var change = this.state.change;
-	            var changeIcon = "../public/images/change-up.png";
-	            var changeColor = "green";
-	            if (change < 0) {
-	                changeIcon = "../public/images/change-down.png";
-	                changeColor = "red";
-	            }
-	
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'dashboard-total-investments shadow' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'dashboard-box-title' },
-	                    _strings.strings.totalInvestments
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'dashboard-box-value blue' },
-	                    _react2.default.createElement(
-	                        'small',
-	                        null,
-	                        "₪",
-	                        ' '
-	                    ),
-	                    _react2.default.createElement(
-	                        'b',
-	                        null,
-	                        value
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: "dashboard-box-change " + changeColor },
-	                    change,
-	                    _react2.default.createElement(
-	                        'small',
-	                        null,
-	                        ' ',
-	                        "%"
-	                    ),
-	                    ' ',
-	                    _react2.default.createElement('img', { src: changeIcon })
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return DashboardTotalInvestments;
-	}(_react2.default.Component);
-	
-	var Dashboard = function (_React$Component7) {
-	    _inherits(Dashboard, _React$Component7);
-	
-	    function Dashboard(props) {
-	        _classCallCheck(this, Dashboard);
-	
-	        var _this7 = _possibleConstructorReturn(this, Object.getPrototypeOf(Dashboard).call(this, props));
-	
-	        _this7.state = {
-	            loginData: _authService2.default.getLoginData()
-	        };
-	        return _this7;
-	    }
-	
-	    _createClass(Dashboard, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'dashboard-page animated fadeIn' },
-	                _react2.default.createElement(DashboardToolbar, null),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'hcontainer-no-wrap' },
-	                    _react2.default.createElement(DashboardRankTable, null),
-	                    _react2.default.createElement('div', { className: 'dashboard-horizontal-spacer' }),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'dashboard-stats-container' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'hcontainer-no-wrap dashboard-stats-container-top' },
-	                            _react2.default.createElement(DashboardMonthTotalCommissions, null),
-	                            _react2.default.createElement('div', { className: 'dashboard-horizontal-spacer' }),
-	                            _react2.default.createElement(DashboardMonthTotalAgents, null)
-	                        ),
-	                        _react2.default.createElement('div', { className: 'dashboard-vertical-spacer' }),
-	                        _react2.default.createElement(DashboardTotalInvestments, null)
-	                    )
-	                ),
-	                _react2.default.createElement('div', { className: 'dashboard-vertical-spacer' }),
-	                _react2.default.createElement(DashboardCommissionChangeChart, null)
-	            );
-	        }
-	    }]);
-	
-	    return Dashboard;
-	}(_react2.default.Component);
-	
-	//Important!! This adds the router object to context
-	
-	
-	Dashboard.contextTypes = {
-	    router: _react2.default.PropTypes.object.isRequired
-	};
-	
-	exports.default = Dashboard;
-
-/***/ },
-/* 392 */
-/*!*********************************************************!*\
-  !*** ./src/client/app/views/pages/commissions-page.jsx ***!
-  \*********************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _authService = __webpack_require__(/*! ../../services/auth-service */ 229);
-	
-	var _authService2 = _interopRequireDefault(_authService);
-	
-	var _strings = __webpack_require__(/*! ../../constants/strings */ 238);
-	
-	var _table = __webpack_require__(/*! ./../common/table.jsx */ 385);
-	
-	var _table2 = _interopRequireDefault(_table);
-	
-	var _dropdown = __webpack_require__(/*! ../../../../../~/muicss/lib/react/dropdown */ 246);
-	
-	var _dropdown2 = _interopRequireDefault(_dropdown);
-	
-	var _dropdownItem = __webpack_require__(/*! ../../../../../~/muicss/lib/react/dropdown-item */ 248);
-	
-	var _dropdownItem2 = _interopRequireDefault(_dropdownItem);
-	
-	var _button = __webpack_require__(/*! ../../../../../~/muicss/lib/react/button */ 241);
-	
-	var _button2 = _interopRequireDefault(_button);
-	
-	var _reactDatepicker = __webpack_require__(/*! react-datepicker */ 263);
-	
-	var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
-	
-	var _reactDropzone = __webpack_require__(/*! react-dropzone */ 368);
-	
-	var _reactDropzone2 = _interopRequireDefault(_reactDropzone);
-	
-	var _textBox = __webpack_require__(/*! ./../common/text-box.jsx */ 387);
-	
-	var _textBox2 = _interopRequireDefault(_textBox);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var moment = __webpack_require__(/*! react-datepicker/~/moment */ 264);
-	
-	var companyNames = ["כלל", "מנורה", "הראל", "אלטשולר שחם", "ילין לפידות", "מיטב דש"];
-	
-	var FileBin = function (_React$Component) {
-	    _inherits(FileBin, _React$Component);
-	
-	    function FileBin(props) {
-	        _classCallCheck(this, FileBin);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FileBin).call(this, props));
-	
-	        _this.state = {
-	            selectedCompany: "כלל",
-	            date: moment(),
-	            files: null,
-	            note: "בדיקה"
-	        };
-	
-	        return _this;
-	    }
-	
-	    _createClass(FileBin, [{
-	        key: 'onCompanyNameChange',
-	        value: function onCompanyNameChange(item) {
-	            if (item.props.value != this.state.selectedCompany) {
-	                this.state.selectedCompany = item.props.value;
-	                this.setState(this.state);
-	            }
-	        }
-	    }, {
-	        key: 'handleChange',
-	        value: function handleChange(date) {
-	            this.state.date = date;
-	            this.setState(this.state);
-	        }
-	    }, {
-	        key: 'onDrop',
-	        value: function onDrop(files) {
-	            console.log('Received files: ', files);
-	            this.state.files = files;
-	            this.setState(this.state);
-	        }
-	    }, {
-	        key: 'onUploadFile',
-	        value: function onUploadFile() {
-	            var formData = new FormData();
-	            for (var i = 0; i < this.state.files.length; i++) {
-	                formData.append('file', this.state.files[i]);
-	            }
-	            // now post a new XHR request
-	            var xhr = new XMLHttpRequest();
-	            xhr.open('POST', '/commissions/upload');
-	            xhr.onload = function () {
-	                if (xhr.status === 200) {
-	                    console.log('all done: ' + xhr.status);
-	                } else {
-	                    console.log('Something went terribly wrong...');
-	                }
-	            };
-	            xhr.send(formData);
-	        }
-	    }, {
-	        key: 'onEditFiles',
-	        value: function onEditFiles() {
-	            this.context.router.push('/app/commissions/edit-files');
-	        }
-	    }, {
-	        key: 'onFileNoteBlur',
-	        value: function onFileNoteBlur(e) {
-	            console.log(e.target.value);
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	
-	            var companies = [];
-	            for (var i = 0; i < companyNames.length; i++) {
-	                companies.push(_react2.default.createElement(
-	                    _dropdownItem2.default,
-	                    { onClick: this.onCompanyNameChange.bind(this), value: companyNames[i], key: i },
-	                    companyNames[i]
-	                ));
-	            }
-	
-	            var style = {
-	                backgroundColor: 'transparent',
-	                color: '#505050'
-	            };
-	
-	            var activeStyle = {
-	                backgroundColor: 'rgba(66, 134, 180, 0.15)'
-	            };
-	
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'commissions-page-file-bin shadow' },
-	                _react2.default.createElement(
-	                    _reactDropzone2.default,
-	                    { onDrop: this.onDrop.bind(this), className: 'commissions-page-file-bin-drag-area', style: style, activeStyle: activeStyle },
-	                    _react2.default.createElement(
-	                        'strong',
-	                        null,
-	                        _strings.strings.dragFileHere
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'hcontainer-no-wrap' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'commissions-page-file-bin-settings hcontainer-no-wrap' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'commissions-page-file-bin-settings-text' },
-	                            _strings.strings.companyAssignment
-	                        ),
-	                        _react2.default.createElement(
-	                            _dropdown2.default,
-	                            { label: this.state.selectedCompany, alignMenu: 'right', variant: 'raised' },
-	                            companies
-	                        ),
-	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'commissions-page-file-bin-settings-text' },
-	                            _strings.strings.paymentMonth
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'commissions-page-file-bin-settings-date' },
-	                            _react2.default.createElement(_reactDatepicker2.default, { selected: this.state.date, locale: 'he-IL', onChange: this.handleChange.bind(this) })
-	                        ),
-	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'commissions-page-file-bin-settings-text' },
-	                            _strings.strings.notes
-	                        ),
-	                        _react2.default.createElement('textarea', { className: 'commissions-page-file-note',
-	                            value: this.state.notes,
-	                            onBlur: this.onFileNoteBlur.bind(this) }),
-	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                        _react2.default.createElement('div', { className: 'dashboard-buttons-horizontal-spacer' }),
-	                        _react2.default.createElement(
-	                            _button2.default,
-	                            { className: 'shadow', onClick: this.onUploadFile.bind(this), color: 'primary' },
-	                            _strings.strings.uploadFile
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'commissions-page-file-bin-settings-edit-files-container' },
-	                        _react2.default.createElement(
-	                            _button2.default,
-	                            { className: 'shadow', onClick: this.onEditFiles.bind(this) },
-	                            _strings.strings.editFiles
-	                        )
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return FileBin;
-	}(_react2.default.Component);
-	
-	//Important!! This adds the router object to context
-	
-	
-	FileBin.contextTypes = {
-	    router: _react2.default.PropTypes.object.isRequired
-	};
-	
-	var Commissions = function (_React$Component2) {
-	    _inherits(Commissions, _React$Component2);
-	
-	    function Commissions(props) {
-	        _classCallCheck(this, Commissions);
-	
-	        var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(Commissions).call(this, props));
-	
-	        _this2.state = {
-	            loginData: _authService2.default.getLoginData()
-	        };
-	
-	        return _this2;
-	    }
-	
-	    _createClass(Commissions, [{
-	        key: 'render',
-	        value: function render() {
-	
-	            var columns = [{
-	                title: "חברה",
-	                key: "companyName",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "סוג תשלום",
-	                key: "paymentType",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "מספר סוכן",
-	                key: "agentNumber",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "שם סוכן",
-	                key: "agentName",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "סה״כ תשלום",
-	                key: "totalPayment",
-	                width: "col-33-33",
-	                type: 'read-only-currency',
-	                color: 'normal'
-	            }, {
-	                title: "סה״כ גודל תיק",
-	                key: "totalInvestments",
-	                width: "col-33-33",
-	                type: 'read-only-currency',
-	                color: 'normal'
-	            }, {
-	                title: "חודש שכר",
-	                key: "paymentMonth",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "תאריך העלאת קובץ",
-	                key: "date",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }];
-	
-	            var data = [{ companyName: "מגדל", paymentType: "היקף", agentNumber: "2342234523", agentName: "קרין בוזלי לוי", totalPayment: "23423", totalInvestments: "12342232", paymentMonth: "04/16", date: "05/11/2016" }, { companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "אלטשולר שחם", paymentType: "בונוס", agentNumber: "67868", agentName: "לנצמן", totalPayment: "5675", totalInvestments: "34234535", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "מנורה", paymentType: "גמ״ח", agentNumber: "789565", agentName: "לירון בן ציון", totalPayment: "4562", totalInvestments: "78768657", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "ילין לפידות", paymentType: "היקף", agentNumber: "345654", agentName: "ויטלי", totalPayment: "6786", totalInvestments: "3453453", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "ילין לפידות", paymentType: "היקף", agentNumber: "345654", agentName: "ויטלי", totalPayment: "6786", totalInvestments: "3453453", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "מנורה", paymentType: "גמ״ח", agentNumber: "789565", agentName: "לירון בן ציון", totalPayment: "4562", totalInvestments: "78768657", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "ילין לפידות", paymentType: "היקף", agentNumber: "345654", agentName: "ויטלי", totalPayment: "6786", totalInvestments: "3453453", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "אלטשולר שחם", paymentType: "בונוס", agentNumber: "67868", agentName: "לנצמן", totalPayment: "5675", totalInvestments: "34234535", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "מנורה", paymentType: "גמ״ח", agentNumber: "789565", agentName: "לירון בן ציון", totalPayment: "4562", totalInvestments: "78768657", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "מגדל", paymentType: "היקף", agentNumber: "2342234523", agentName: "קרין בוזלי לוי", totalPayment: "23423", totalInvestments: "12342232", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "אלטשולר שחם", paymentType: "בונוס", agentNumber: "67868", agentName: "לנצמן", totalPayment: "5675", totalInvestments: "34234535", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "מנורה", paymentType: "גמ״ח", agentNumber: "789565", agentName: "לירון בן ציון", totalPayment: "4562", totalInvestments: "78768657", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "ילין לפידות", paymentType: "היקף", agentNumber: "345654", agentName: "ויטלי", totalPayment: "6786", totalInvestments: "3453453", paymentMonth: "אפריל", date: "05/11/2016" }, { companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016" }];
-	
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'commissions-page animated fadeIn' },
-	                _react2.default.createElement(FileBin, null),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'commissions-page-table shadow' },
-	                    _react2.default.createElement(_table2.default, { columns: columns,
-	                        data: data })
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return Commissions;
-	}(_react2.default.Component);
-	
-	//Important!! This adds the router object to context
-	
-	
-	Commissions.contextTypes = {
-	    router: _react2.default.PropTypes.object.isRequired
-	};
-	
-	exports.default = Commissions;
-
-/***/ },
-/* 393 */
-/*!*********************************************************************!*\
-  !*** ./src/client/app/views/pages/agents-and-partnerships-page.jsx ***!
-  \*********************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _authService = __webpack_require__(/*! ../../services/auth-service */ 229);
-	
-	var _authService2 = _interopRequireDefault(_authService);
-	
-	var _tabs = __webpack_require__(/*! ../../../../../~/muicss/lib/react/tabs */ 371);
-	
-	var _tabs2 = _interopRequireDefault(_tabs);
-	
-	var _tab = __webpack_require__(/*! ../../../../../~/muicss/lib/react/tab */ 372);
-	
-	var _tab2 = _interopRequireDefault(_tab);
-	
-	var _strings = __webpack_require__(/*! ../../constants/strings */ 238);
-	
-	var _button = __webpack_require__(/*! ../../../../../~/muicss/lib/react/button */ 241);
-	
-	var _button2 = _interopRequireDefault(_button);
-	
-	var _table = __webpack_require__(/*! ./../common/table.jsx */ 385);
-	
-	var _table2 = _interopRequireDefault(_table);
-	
-	var _dataStore = __webpack_require__(/*! ../../stores/data-store */ 373);
-	
-	var _dataStore2 = _interopRequireDefault(_dataStore);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var AgentsAndPartnerships = function (_React$Component) {
-	    _inherits(AgentsAndPartnerships, _React$Component);
-	
-	    function AgentsAndPartnerships(props) {
-	        _classCallCheck(this, AgentsAndPartnerships);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AgentsAndPartnerships).call(this, props));
-	
-	        _this.state = {
-	            loginData: _authService2.default.getLoginData(),
-	            selectedTab: 0,
-	            agentsData: _dataStore2.default.getAgents(),
-	            partnershipsData: _dataStore2.default.getPartnerships()
-	        };
-	        return _this;
-	    }
-	
-	    _createClass(AgentsAndPartnerships, [{
-	        key: 'onNewAgent',
-	        value: function onNewAgent() {
-	            this.context.router.push('/app/agents-and-partnerships/agent-page/new');
-	        }
-	    }, {
-	        key: 'onNewPartnership',
-	        value: function onNewPartnership() {
-	            this.context.router.push('/app/agents-and-partnerships/partnership-page/new');
-	        }
-	    }, {
-	        key: 'onChangeTab',
-	        value: function onChangeTab(i, value, tab, ev) {
-	            this.state.selectedTab = i;
-	            this.setState(this.state);
-	            console.log(arguments);
-	        }
-	    }, {
-	        key: 'onAgentClicked',
-	        value: function onAgentClicked(rowIndex) {
-	            var agentId = this.state.agentsData[rowIndex].idNumber;
-	            this.context.router.push('/app/agents-and-partnerships/agent-salary-page/' + agentId);
-	        }
-	    }, {
-	        key: 'onPartnershipClicked',
-	        value: function onPartnershipClicked(rowIndex) {
-	            //var agentId = this.state.agentsData[rowIndex].idNumber
-	            this.context.router.push('/app/agents-and-partnerships/partnership-page/new');
-	        }
-	    }, {
-	        key: 'onDeleteAgentClicked',
-	        value: function onDeleteAgentClicked(rowIndex) {
-	            console.log("onDeleteAgentClicked " + rowIndex);
-	        }
-	    }, {
-	        key: 'onEditAgentClicked',
-	        value: function onEditAgentClicked(rowIndex) {
-	            console.log("onEditAgentClicked " + rowIndex);
-	        }
-	    }, {
-	        key: 'onDeletePartnershipsClicked',
-	        value: function onDeletePartnershipsClicked(rowIndex) {
-	            console.log("onDeletePartnershipsClicked " + rowIndex);
-	        }
-	    }, {
-	        key: 'onEditPartnershipsClicked',
-	        value: function onEditPartnershipsClicked(rowIndex) {
-	            console.log("onEditPartnershipsClicked " + rowIndex);
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	
-	            var agentsColumns = [{
-	                title: "שם",
-	                key: "name",
-	                width: "col-33-33",
-	                type: 'read-only-button',
-	                color: 'blue',
-	                action: this.onAgentClicked.bind(this)
-	            }, {
-	                title: "מזהה",
-	                key: "idNumber",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "סטטוס",
-	                key: "status",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }];
-	
-	            var agentsData = [];
-	            for (var agentIndex = 0; agentIndex < this.state.agentsData.length; agentIndex++) {
-	                var agentData = {};
-	
-	                agentData["name"] = this.state.agentsData[agentIndex].name + " " + this.state.agentsData[agentIndex].familyName;
-	                agentData["idNumber"] = this.state.agentsData[agentIndex].idNumber;
-	                agentData["status"] = this.state.agentsData[agentIndex].active ? "פעיל" : "לא פעיל";
-	                agentsData.push(agentData);
-	            }
-	
-	            var partnershipColumns = [{
-	                title: "שותפים",
-	                key: "names",
-	                width: "col-33-33",
-	                type: 'read-only-button',
-	                color: 'blue',
-	                action: this.onPartnershipClicked.bind(this)
-	            }, {
-	                title: "מזהה",
-	                key: "idNumbers",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "סטטוס",
-	                key: "status",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }];
-	
-	            var partnershipsData = [];
-	            for (var partnershipIndex = 0; partnershipIndex < this.state.partnershipsData.length; partnershipIndex++) {
-	                var partnershipData = {};
-	                partnershipData["names"] = "";
-	                partnershipData["idNumbers"] = "";
-	                for (var idIndex = 0; idIndex < this.state.partnershipsData[partnershipIndex].partnersId.length; idIndex++) {
-	                    agentData = _dataStore2.default.getAgent(this.state.partnershipsData[partnershipIndex].partnersId[idIndex]);
-	                    if (agentData != null) {
-	                        partnershipData["names"] += agentData.name + " " + agentData.familyName;
-	                        partnershipData["idNumbers"] += agentData.idNumber;
-	                        if (idIndex < this.state.partnershipsData[partnershipIndex].partnersId.length - 1) {
-	                            partnershipData["names"] += ", ";
-	                            partnershipData["idNumbers"] += ", ";
-	                        }
-	                    }
-	                }
-	                partnershipData["status"] = this.state.partnershipsData[partnershipIndex].active ? "פעיל" : "לא פעיל";
-	                partnershipsData.push(partnershipData);
-	            }
-	
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'agents-page animated fadeIn' },
-	                _react2.default.createElement(
-	                    _tabs2.default,
-	                    { onChange: this.onChangeTab.bind(this), justified: true, initialSelectedIndex: this.state.selectedTab },
-	                    _react2.default.createElement(
-	                        _tab2.default,
-	                        { value: 'pane-1', label: _strings.strings.agents },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'agents-page-tab-container' },
-	                            _react2.default.createElement('div', { className: 'agents-page-vertical-spacer' }),
-	                            _react2.default.createElement(
-	                                _button2.default,
-	                                { className: 'shadow', onClick: this.onNewAgent.bind(this), color: 'primary' },
-	                                _strings.strings.newAgent
-	                            ),
-	                            _react2.default.createElement('div', { className: 'agents-page-vertical-spacer' }),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'agents-page-table' },
-	                                _react2.default.createElement(_table2.default, { onRemoveRow: this.onDeleteAgentClicked.bind(this), columns: agentsColumns, data: agentsData })
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        _tab2.default,
-	                        { value: 'pane-2', label: _strings.strings.partnerships },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'agents-page-tab-container' },
-	                            _react2.default.createElement('div', { className: 'agents-page-vertical-spacer' }),
-	                            _react2.default.createElement(
-	                                _button2.default,
-	                                { className: 'shadow', onClick: this.onNewPartnership.bind(this), color: 'primary' },
-	                                _strings.strings.newPartnership
-	                            ),
-	                            _react2.default.createElement('div', { className: 'agents-page-vertical-spacer' }),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'agents-page-table' },
-	                                _react2.default.createElement(_table2.default, { onRemoveRow: this.onDeletePartnershipsClicked.bind(this), columns: partnershipColumns, data: partnershipsData })
-	                            )
-	                        )
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return AgentsAndPartnerships;
-	}(_react2.default.Component);
-	
-	//Important!! This adds the router object to context
-	
-	
-	AgentsAndPartnerships.contextTypes = {
-	    router: _react2.default.PropTypes.object.isRequired
-	};
-	
-	exports.default = AgentsAndPartnerships;
-
-/***/ },
-/* 394 */
-/*!**************************************************************!*\
-  !*** ./src/client/app/views/pages/commission-files-page.jsx ***!
-  \**************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _authService = __webpack_require__(/*! ../../services/auth-service */ 229);
-	
-	var _authService2 = _interopRequireDefault(_authService);
-	
-	var _table = __webpack_require__(/*! ./../common/table.jsx */ 385);
+	var _table = __webpack_require__(/*! ./../common/table.jsx */ 260);
 	
 	var _table2 = _interopRequireDefault(_table);
 	
@@ -51979,189 +52389,13 @@
 	
 	var _appActions2 = _interopRequireDefault(_appActions);
 	
-	var _dataStore = __webpack_require__(/*! ../../stores/data-store */ 373);
+	var _dataStore = __webpack_require__(/*! ../../stores/data-store */ 374);
 	
 	var _dataStore2 = _interopRequireDefault(_dataStore);
 	
 	var _appActions3 = __webpack_require__(/*! ../../actions/app-actions.js */ 232);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var EditFilesPage = function (_React$Component) {
-	    _inherits(EditFilesPage, _React$Component);
-	
-	    function EditFilesPage(props) {
-	        _classCallCheck(this, EditFilesPage);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(EditFilesPage).call(this, props));
-	
-	        _this.state = {
-	            loginData: _authService2.default.getLoginData(),
-	            filesData: _dataStore2.default.getCommissionFiles()
-	        };
-	        return _this;
-	    }
-	
-	    _createClass(EditFilesPage, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            _dataStore2.default.addEventListener(_appActions3.ActionType.DELETE_COMMISSION_DOC, this.onDeleteFile.bind(this));
-	        }
-	    }, {
-	        key: 'componentWillUnmount',
-	        value: function componentWillUnmount() {
-	            _dataStore2.default.removeEventListener(_appActions3.ActionType.DELETE_COMMISSION_DOC, this.onDeleteFile);
-	        }
-	    }, {
-	        key: 'onDeleteFile',
-	        value: function onDeleteFile() {
-	            this.state.filesData = _dataStore2.default.getCommissionFiles();
-	            this.setState(this.state);
-	        }
-	    }, {
-	        key: 'onDeleteFileClicked',
-	        value: function onDeleteFileClicked(rowIndex) {
-	            console.log("delete file at row " + rowIndex);
-	
-	            var deleteInProgress = false;
-	            if (deleteInProgress) return;
-	
-	            var fileName = this.state.filesData[rowIndex].fileName;
-	
-	            swal({
-	                title: "אישור מחיקת מסמך",
-	                text: "למחוק מסמך זה לצמיתות מהמערכת?",
-	                type: "warning",
-	                showCancelButton: true,
-	                confirmButtonColor: "#DD6B55",
-	                confirmButtonText: "כן, מחק את המסמך מהמערכת",
-	                cancelButtonText: "בטל",
-	                closeOnConfirm: false,
-	                showLoaderOnConfirm: false
-	            }, function (isConfirm) {
-	                if (isConfirm) {
-	                    _appActions2.default.deleteCommissionFile(fileName, function (status) {
-	                        if (status == 'success') {
-	                            swal({
-	                                title: "",
-	                                text: "המסמך נמחק לצמיתות מהמערכת!",
-	                                type: "success",
-	                                timer: 1500,
-	                                showConfirmButton: false
-	                            });
-	                            console.log('Data was deleted successfully from server!');
-	                        } else console.error('Error while deleting data from server!');
-	                        deleteInProgress = true;
-	                    });
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'onFileNameClicked',
-	        value: function onFileNameClicked(rowIndex) {
-	            console.log("download file at row " + rowIndex);
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	
-	            var columns = [{
-	                title: "שם קובץ",
-	                key: "fileName",
-	                width: "col-33-33",
-	                type: 'read-only-button',
-	                color: 'blue',
-	                action: this.onFileNameClicked.bind(this)
-	            }, {
-	                title: "חברה",
-	                key: "companyName",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "חודש תשלום",
-	                key: "paymentMonth",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "תאריך העלאה",
-	                key: "uploadDate",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "הערות",
-	                key: "notes",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }];
-	
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'edit-files-page animated fadeIn' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'edit-files-table shadow' },
-	                    _react2.default.createElement(_table2.default, { onRemoveRow: this.onDeleteFileClicked.bind(this), columns: columns, data: this.state.filesData })
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return EditFilesPage;
-	}(_react2.default.Component);
-	
-	//Important!! This adds the router object to context
-	
-	
-	EditFilesPage.contextTypes = {
-	    router: _react2.default.PropTypes.object.isRequired
-	};
-	
-	exports.default = EditFilesPage;
-
-/***/ },
-/* 395 */
-/*!***************************************************!*\
-  !*** ./src/client/app/views/pages/agent-page.jsx ***!
-  \***************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _table = __webpack_require__(/*! ./../common/table.jsx */ 385);
-	
-	var _table2 = _interopRequireDefault(_table);
-	
-	var _appActions = __webpack_require__(/*! ../../actions/app-actions */ 232);
-	
-	var _appActions2 = _interopRequireDefault(_appActions);
-	
-	var _dataStore = __webpack_require__(/*! ../../stores/data-store */ 373);
-	
-	var _dataStore2 = _interopRequireDefault(_dataStore);
-	
-	var _appActions3 = __webpack_require__(/*! ../../actions/app-actions.js */ 232);
-	
-	var _input = __webpack_require__(/*! ../../../../../~/muicss/lib/react/input */ 377);
+	var _input = __webpack_require__(/*! ../../../../../~/muicss/lib/react/input */ 378);
 	
 	var _input2 = _interopRequireDefault(_input);
 	
@@ -52175,13 +52409,13 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var AgentPage = function (_React$Component) {
-	    _inherits(AgentPage, _React$Component);
+	var AgentSalaryPage = function (_React$Component) {
+	    _inherits(AgentSalaryPage, _React$Component);
 	
-	    function AgentPage(props) {
-	        _classCallCheck(this, AgentPage);
+	    function AgentSalaryPage(props) {
+	        _classCallCheck(this, AgentSalaryPage);
 	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AgentPage).call(this, props));
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AgentSalaryPage).call(this, props));
 	
 	        var newAgent = _this.props.params.agentId == "new";
 	        _this.state = {
@@ -52191,7 +52425,7 @@
 	        return _this;
 	    }
 	
-	    _createClass(AgentPage, [{
+	    _createClass(AgentSalaryPage, [{
 	        key: 'componentWillReceiveProps',
 	        value: function componentWillReceiveProps(nextProps) {
 	            this.state.newAgent = nextProps.params.agentId == "new";
@@ -52215,8 +52449,9 @@
 	                title: "חברה",
 	                key: "companyName",
 	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
+	                type: 'select',
+	                color: 'normal',
+	                options: _dataStore2.default.getCompanies()
 	            }, {
 	                title: "מספר סוכן",
 	                key: "agentNumber",
@@ -52227,8 +52462,9 @@
 	                title: "סוג תשלום",
 	                key: "paymentType",
 	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
+	                type: 'select',
+	                color: 'normal',
+	                options: _dataStore2.default.getCommissionTypes()
 	            }, {
 	                title: "חלק סוכן %",
 	                key: "agentPart",
@@ -52268,7 +52504,7 @@
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'new-agent-page-title' },
-	                    _strings.strings.agentPageDetails
+	                    _strings.strings.agentSalaryPage
 	                ),
 	                _react2.default.createElement(
 	                    'div',
@@ -52321,20 +52557,20 @@
 	        }
 	    }]);
 	
-	    return AgentPage;
+	    return AgentSalaryPage;
 	}(_react2.default.Component);
 	
 	//Important!! This adds the router object to context
 	
 	
-	AgentPage.contextTypes = {
+	AgentSalaryPage.contextTypes = {
 	    router: _react2.default.PropTypes.object.isRequired
 	};
 	
-	exports.default = AgentPage;
+	exports.default = AgentSalaryPage;
 
 /***/ },
-/* 396 */
+/* 382 */
 /*!*********************************************************!*\
   !*** ./src/client/app/views/pages/partnership-page.jsx ***!
   \*********************************************************/
@@ -52352,7 +52588,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _table = __webpack_require__(/*! ./../common/table.jsx */ 385);
+	var _table = __webpack_require__(/*! ./../common/table.jsx */ 260);
 	
 	var _table2 = _interopRequireDefault(_table);
 	
@@ -52360,13 +52596,13 @@
 	
 	var _appActions2 = _interopRequireDefault(_appActions);
 	
-	var _dataStore = __webpack_require__(/*! ../../stores/data-store */ 373);
+	var _dataStore = __webpack_require__(/*! ../../stores/data-store */ 374);
 	
 	var _dataStore2 = _interopRequireDefault(_dataStore);
 	
 	var _appActions3 = __webpack_require__(/*! ../../actions/app-actions.js */ 232);
 	
-	var _input = __webpack_require__(/*! ../../../../../~/muicss/lib/react/input */ 377);
+	var _input = __webpack_require__(/*! ../../../../../~/muicss/lib/react/input */ 378);
 	
 	var _input2 = _interopRequireDefault(_input);
 	
@@ -52522,10 +52758,10 @@
 	exports.default = PartnershipPage;
 
 /***/ },
-/* 397 */
-/*!**********************************************************!*\
-  !*** ./src/client/app/views/pages/agent-salary-page.jsx ***!
-  \**********************************************************/
+/* 383 */
+/*!******************************************!*\
+  !*** ./src/client/app/views/top-bar.jsx ***!
+  \******************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52540,25 +52776,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _table = __webpack_require__(/*! ./../common/table.jsx */ 385);
+	var _userBox = __webpack_require__(/*! ./user-box.jsx */ 384);
 	
-	var _table2 = _interopRequireDefault(_table);
-	
-	var _appActions = __webpack_require__(/*! ../../actions/app-actions */ 232);
-	
-	var _appActions2 = _interopRequireDefault(_appActions);
-	
-	var _dataStore = __webpack_require__(/*! ../../stores/data-store */ 373);
-	
-	var _dataStore2 = _interopRequireDefault(_dataStore);
-	
-	var _appActions3 = __webpack_require__(/*! ../../actions/app-actions.js */ 232);
-	
-	var _input = __webpack_require__(/*! ../../../../../~/muicss/lib/react/input */ 377);
-	
-	var _input2 = _interopRequireDefault(_input);
-	
-	var _strings = __webpack_require__(/*! ../../constants/strings */ 238);
+	var _userBox2 = _interopRequireDefault(_userBox);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -52568,163 +52788,242 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var AgentSalaryPage = function (_React$Component) {
-	    _inherits(AgentSalaryPage, _React$Component);
+	var TopBar = function (_React$Component) {
+	    _inherits(TopBar, _React$Component);
 	
-	    function AgentSalaryPage(props) {
-	        _classCallCheck(this, AgentSalaryPage);
+	    function TopBar(props) {
+	        _classCallCheck(this, TopBar);
 	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AgentSalaryPage).call(this, props));
-	
-	        var newAgent = _this.props.params.agentId == "new";
-	        _this.state = {
-	            newAgent: newAgent,
-	            agentData: null
-	        };
-	        return _this;
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(TopBar).call(this, props));
 	    }
 	
-	    _createClass(AgentSalaryPage, [{
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            this.state.newAgent = nextProps.params.agentId == "new";
-	            this.setState(this.state);
-	        }
-	    }, {
-	        key: 'componentWillMount',
-	        value: function componentWillMount() {
-	            if (this.state.newAgent == false) {
-	                this.state.agentData = _dataStore2.default.getAgent(this.props.params.agentId);
-	            }
-	        }
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {}
-	    }, {
+	    _createClass(TopBar, [{
 	        key: 'render',
 	        value: function render() {
-	
-	            var columns = [{
-	                title: "חברה",
-	                key: "companyName",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "מספר סוכן",
-	                key: "agentNumber",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "סוג תשלום",
-	                key: "paymentType",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "חלק סוכן %",
-	                key: "agentPart",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }, {
-	                title: "חלק סוכנות %",
-	                key: "agencyPart",
-	                width: "col-33-33",
-	                type: 'read-only',
-	                color: 'normal'
-	            }];
-	
-	            var name = "",
-	                familyName = "",
-	                idNumber = "",
-	                phoneNumber = "",
-	                faxNumber = "",
-	                email = "",
-	                active = "",
-	                companies = null;
-	            if (this.state.newAgent == false) {
-	                name = this.state.agentData.name;
-	                familyName = this.state.agentData.familyName;
-	                idNumber = this.state.agentData.idNumber;
-	                phoneNumber = this.state.agentData.phoneNumber;
-	                faxNumber = this.state.agentData.faxNumber;
-	                email = this.state.agentData.email;
-	                active = this.state.agentData.active;
-	                companies = this.state.agentData.companies;
-	            }
-	
 	            return _react2.default.createElement(
 	                'div',
-	                { className: 'new-agent-page animated fadeIn' },
+	                null,
 	                _react2.default.createElement(
 	                    'div',
-	                    { className: 'new-agent-page-title' },
-	                    _strings.strings.agentSalaryPage
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'new-agent-form hcontainer-no-wrap' },
+	                    { className: 'fixed top-bar animated fadeInDown' },
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'new-agent-form-item-box' },
-	                        _react2.default.createElement(_input2.default, { label: _strings.strings.agentPageName, defaultValue: name, floatingLabel: true })
-	                    ),
-	                    _react2.default.createElement('div', { className: 'new-agent-form-horizontal-spacer' }),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'new-agent-form-item-box' },
-	                        _react2.default.createElement(_input2.default, { label: _strings.strings.agentPageFamilyName, defaultValue: familyName, floatingLabel: true })
-	                    ),
-	                    _react2.default.createElement('div', { className: 'new-agent-form-horizontal-spacer' }),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'new-agent-form-item-box' },
-	                        _react2.default.createElement(_input2.default, { label: _strings.strings.agentPageId, defaultValue: idNumber, floatingLabel: true })
+	                        { className: 'top-bar-container hcontainer-no-wrap' },
+	                        _react2.default.createElement(_userBox2.default, { loginData: this.props.loginData, onLogout: this.props.onLogout })
 	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'new-agent-form hcontainer-no-wrap' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'new-agent-form-item-box' },
-	                        _react2.default.createElement(_input2.default, { label: _strings.strings.agentPagePhone, defaultValue: phoneNumber, floatingLabel: true })
-	                    ),
-	                    _react2.default.createElement('div', { className: 'new-agent-form-horizontal-spacer' }),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'new-agent-form-item-box' },
-	                        _react2.default.createElement(_input2.default, { label: _strings.strings.agentPageFax, defaultValue: faxNumber, floatingLabel: true })
-	                    ),
-	                    _react2.default.createElement('div', { className: 'new-agent-form-horizontal-spacer' }),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'new-agent-form-item-box' },
-	                        _react2.default.createElement(_input2.default, { label: _strings.strings.agentPageEmail, defaultValue: email, floatingLabel: true })
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'new-agent-form-table' },
-	                    _react2.default.createElement(_table2.default, { columns: columns, data: companies })
 	                )
 	            );
 	        }
 	    }]);
 	
-	    return AgentSalaryPage;
+	    return TopBar;
 	}(_react2.default.Component);
 	
-	//Important!! This adds the router object to context
+	exports.default = TopBar;
+
+/***/ },
+/* 384 */
+/*!*******************************************!*\
+  !*** ./src/client/app/views/user-box.jsx ***!
+  \*******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
 	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 	
-	AgentSalaryPage.contextTypes = {
-	    router: _react2.default.PropTypes.object.isRequired
-	};
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	exports.default = AgentSalaryPage;
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _strings = __webpack_require__(/*! ../constants/strings */ 238);
+	
+	var _authService = __webpack_require__(/*! ../services/auth-service */ 229);
+	
+	var _authService2 = _interopRequireDefault(_authService);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var UserBox = function (_React$Component) {
+	    _inherits(UserBox, _React$Component);
+	
+	    function UserBox(props) {
+	        _classCallCheck(this, UserBox);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(UserBox).call(this, props));
+	    }
+	
+	    _createClass(UserBox, [{
+	        key: 'onLogout',
+	        value: function onLogout(e) {
+	            e.preventDefault();
+	            this.props.onLogout();
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'user-box hcontainer-no-wrap' },
+	                _react2.default.createElement('img', { className: 'user-avatar', src: this.props.loginData.gender == "0" ? "../public/images/avatar-male.png" : "../public/images/avatar-female.png", alt: '' }),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'user-box-info' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'user-box-name' },
+	                        this.props.loginData.fullName
+	                    ),
+	                    _react2.default.createElement(
+	                        'button',
+	                        { className: 'user-box-logout-button', onClick: this.onLogout.bind(this) },
+	                        _strings.strings.disconnect
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return UserBox;
+	}(_react2.default.Component);
+	
+	exports.default = UserBox;
+
+/***/ },
+/* 385 */
+/*!**********************************************!*\
+  !*** ./src/client/app/views/right-panel.jsx ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _strings = __webpack_require__(/*! ../constants/strings */ 238);
+	
+	var _flatRippleButton = __webpack_require__(/*! ./common/flat-ripple-button.jsx */ 261);
+	
+	var _flatRippleButton2 = _interopRequireDefault(_flatRippleButton);
+	
+	var _button = __webpack_require__(/*! muicss/lib/react/button */ 241);
+	
+	var _button2 = _interopRequireDefault(_button);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var RightPanelItem = function (_React$Component) {
+	    _inherits(RightPanelItem, _React$Component);
+	
+	    function RightPanelItem(props) {
+	        _classCallCheck(this, RightPanelItem);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(RightPanelItem).call(this, props));
+	    }
+	
+	    _createClass(RightPanelItem, [{
+	        key: 'onClick',
+	        value: function onClick() {
+	            this.props.onPanelItemClick(this.props.title);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	
+	            var className = "";
+	            if (_strings.strings.dashboard === this.props.title) {
+	                className = "right-panel-item-button right-panel-item-button-dashboard";
+	            }
+	            if (_strings.strings.commissions === this.props.title) {
+	                className = "right-panel-item-button right-panel-item-button-commissions";
+	            }
+	            if (_strings.strings.agentsAndPartnerships === this.props.title) {
+	                className = "right-panel-item-button right-panel-item-button-agents";
+	            }
+	
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'right-panel-item' },
+	                    _react2.default.createElement(
+	                        _flatRippleButton2.default,
+	                        { className: className, onClick: this.onClick.bind(this) },
+	                        this.props.title
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return RightPanelItem;
+	}(_react2.default.Component);
+	
+	var RightPanel = function (_React$Component2) {
+	    _inherits(RightPanel, _React$Component2);
+	
+	    function RightPanel(props) {
+	        _classCallCheck(this, RightPanel);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(RightPanel).call(this, props));
+	    }
+	
+	    _createClass(RightPanel, [{
+	        key: 'onPanelItemClick',
+	        value: function onPanelItemClick(item) {
+	            this.props.onPanelItemClick(item);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'fixed right-panel animated fadeInRight' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'top-bar-logo-container' },
+	                        _react2.default.createElement('img', { className: 'top-bar-logo', src: '../public/images/neto-logo.png' })
+	                    ),
+	                    _react2.default.createElement(RightPanelItem, { title: _strings.strings.dashboard, onPanelItemClick: this.onPanelItemClick.bind(this) }),
+	                    _react2.default.createElement(RightPanelItem, { title: _strings.strings.commissions, onPanelItemClick: this.onPanelItemClick.bind(this) }),
+	                    _react2.default.createElement(RightPanelItem, { title: _strings.strings.agentsAndPartnerships, onPanelItemClick: this.onPanelItemClick.bind(this) })
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return RightPanel;
+	}(_react2.default.Component);
+	
+	exports.default = RightPanel;
 
 /***/ }
 /******/ ]);

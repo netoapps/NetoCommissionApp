@@ -801,10 +801,9 @@ body
 .table-cell
 {
     direction: ltr;
-    min-height: 33px;
-    max-height: 33px;
     align-content: center;
     line-height: 45px;
+
 }
 
 .table-cell-text-color
@@ -833,6 +832,11 @@ body
     flex-flow: row nowrap;
     border-bottom: 1px solid #e2e2e2;
     /*padding-top: 12px;*/
+}
+
+.table-dropdown
+{
+
 }
 
 .table-row-remove-button

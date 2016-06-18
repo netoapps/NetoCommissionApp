@@ -44,8 +44,9 @@ class AgentSalaryPage extends React.Component {
                 title: "חברה",
                 key: "companyName",
                 width: "col-33-33",
-                type: 'read-only',
-                color: 'normal'
+                type: 'select',
+                color: 'normal',
+                options: AppStore.getCompanies()
             },
             {
                 title: "מספר סוכן",
@@ -58,8 +59,9 @@ class AgentSalaryPage extends React.Component {
                 title: "סוג תשלום",
                 key: "paymentType",
                 width: "col-33-33",
-                type: 'read-only',
-                color: 'normal'
+                type: 'select',
+                color: 'normal',
+                options: AppStore.getCommissionTypes()
             },
             {
                 title: "חלק סוכן %",
