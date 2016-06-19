@@ -58,15 +58,19 @@ function SalaryService() {
             var mappings = {};
             async.each(salaries,
                 function (salary, cb) {
-                    Agent.findOne({companyAgentId: salary[1]}).lean().exec(function (err, agent) {
+                    Agent.find({companyAgentId: salary[1]}).lean().exec(function (err, agent) {
                         if (err) {
                             return reject(err);
                         }
-                        if (!agent) {
+                        if (!agent || agent.length===0) {
                             missingIds[salary[1]] = true;
                             return cb();
                         }
-                        mappings[salary[1]] = agent;
+                        if(agent.length===1) {
+                            mappings[salary[1]] = {firstAgent:agent[0]};
+                        }else{
+                            mappings[salary[1]] = {firstAgent:agent[0],secondAgent:agent[1]}
+                        }
                         return cb();
 
                     });
@@ -123,17 +127,29 @@ function SalaryService() {
                             }
                         });
 
-
-                        var agentPercentage = mapping[salary[0][1]].salaryPercentage;
-                        sum[2] *= agentPercentage[2];
-                        sum[2]*=maamRate;
-                        sum[3] *= agentPercentage[3];
-                        sum[3] *=maamRate;
-                        sum[4] *= agentPercentage[4];
-                        sum[4] *=maamRate;
-                        sum[5] *= agentPercentage[5];
-                        sum[5]*=maamRate;
-                        salaryTasks.push(addSalaryToAgent.bind(null, agent.agentId, salary[0][1], month, year, sum, companyName));
+                        var firstAgentPercantage = agent.firstAgent.salaryPercentage;
+                        if(agent.secondAgent){
+                            var secondAgentPercantage = agent.secondAgent.salaryPercentage;
+                            var secondSum = _.clone(sum);
+                            secondSum[2] *= secondAgentPercantage[2];
+                            secondSum[2]*=maamRate;
+                            secondSum[3] *= secondAgentPercantage[3];
+                            secondSum[3] *=maamRate;
+                            secondSum[4] *= secondAgentPercantage[4];
+                            secondSum[4] *=maamRate;
+                            secondSum[5] *= secondAgentPercantage[5];
+                            secondSum[5]*=maamRate;
+                            salaryTasks.push(addSalaryToAgent.bind(null, agent.secondAgent.agentId, salary[0][1], month, year, secondSum, companyName));
+                        }
+                            sum[2] *= firstAgentPercantage[2];
+                            sum[2]*=maamRate;
+                            sum[3] *= firstAgentPercantage[3];
+                            sum[3] *=maamRate;
+                            sum[4] *= firstAgentPercantage[4];
+                            sum[4] *=maamRate;
+                            sum[5] *= firstAgentPercantage[5];
+                            sum[5]*=maamRate;
+                            salaryTasks.push(addSalaryToAgent.bind(null, agent.firstAgent.agentId, salary[0][1], month, year, sum, companyName));
                     }
                 });
                 async.parallel(salaryTasks, function (err, result) {
