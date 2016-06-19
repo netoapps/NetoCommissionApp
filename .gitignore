@@ -37,6 +37,8 @@ src/server/agents_fixed.xlsx
 #webpack bundle
 src/client/public/js/bundle.js
 
+#uploaded files
+datafiles
 .idea/workspace.xml
 
 .idea/jsLibraryMappings.xml
