@@ -16,12 +16,12 @@ function uploadSalariesFile(req, res) {
         return res.status(400).json({err: 'invalid file'});
     }
     var data = req.body;
-    //if(!data ||!data.month || !data.year || !data.companyName){
-    //    return res.status(400).json({err: 'missing data (month/year/company name)'});
-    //}
-    data.month=7;
-    data.year=2016;
-    data.companyName='אפי קורפ';
+    if(!data ||!data.month || !data.year || !data.companyName){
+        return res.status(400).json({err: 'missing data (month/year/company name)'});
+    }
+    //data.month=7;
+    //data.year=2016;
+    //data.companyName='אפי קורפ';
     data.maamRate = data.maamRate || 1.0;
     fileService.saveFileToDb(req.file,data.month,data.year,data.companyName, function (err, newPath) {
         if (err) {
