@@ -34,6 +34,9 @@ src/server/node_modules
 src/server/TestData
 src/server/agents_fixed.xlsx
 
+#webpack bundle
+src/client/public/js/bundle.js
+
 .idea/workspace.xml
 
 .idea/jsLibraryMappings.xml
