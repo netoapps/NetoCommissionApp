@@ -78,9 +78,9 @@ function SalaryService() {
                     if (err) {
                         return reject(err);
                     }
-                    //if (Object.keys(missingIds).length > 0) {
-                    //    return reject(Object.keys(missingIds));
-                    //}
+                    if (Object.keys(missingIds).length > 0) {
+                        return reject(Object.keys(missingIds));
+                    }
                     return resolve(mappings);
                 })
         });
