@@ -28,15 +28,24 @@ let strings = {
     uploadFile: "העלה קובץ",
     editFiles: "עריכת קבצים",
     notes: "הערות",
-    createNewAgent: "צור סוכן חדש",
-    createNewPartnership: "צור שותפות חדשה",
-    newAgentDetails: "פרטי סוכן",
-    newAgentName: "שם פרטי",
-    newAgentFamilyName: "שם משפחה",
-    newAgentId: "מזהה",
-    newAgentPhone: "טלפון",
-    newAgentFax: "פקס",
-    newAgentEmail: "אימייל"
+    newAgent: "סוכן חדש",
+    newPartnership: "שותפות חדשה",
+    agentPageDetails: "הגדרות סוכן",
+    agentSalaryPage: "פרוט שכר",
+    agentPageName: "שם פרטי",
+    agentPageFamilyName: "שם משפחה",
+    agentPageId: "מזהה",
+    agentPagePhone: "טלפון",
+    agentPageFax: "פקס",
+    agentPageEmail: "אימייל",
+    partnershipPageDetails: "הגדרות שותפות",
+    partnershipPageName: "שם פרטי",
+    partnershipPageFamilyName: "שם משפחה",
+    partnershipPageId: "מזהה",
+    partnershipPagePhone: "טלפון",
+    partnershipPageFax: "פקס",
+    partnershipPageEmail: "אימייל"
+
 }
 
 export { strings }

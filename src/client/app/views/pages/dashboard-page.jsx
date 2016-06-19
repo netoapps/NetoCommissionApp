@@ -1,13 +1,13 @@
 import React from 'react';
-import AuthService from '../services/auth-service'
-import Button from 'muicss/lib/react/button'
-import Dropdown from 'muicss/lib/react/dropdown';
-import DropdownItem from 'muicss/lib/react/dropdown-item';
-import FixedWidthDropdown from './FixedWidthDropdown.jsx';
-import { strings } from '../constants/strings'
-import {Chart} from "react-chartjs";
+import AuthService from '../../services/auth-service'
+import Button from '../../../../../node_modules/muicss/lib/react/button'
+import Dropdown from '../../../../../node_modules/muicss/lib/react/dropdown';
+import DropdownItem from '../../../../../node_modules/muicss/lib/react/dropdown-item';
+import FixedWidthDropdown from './../common/fixed-width-dropdown.jsx';
+import { strings } from '../../constants/strings'
+import Chart from "react-chartjs";
 import {Bar} from "react-chartjs";
-import Table from './table.jsx';
+import Table from './../common/table.jsx';
 
 
 
@@ -75,11 +75,11 @@ class DashboardToolbar extends React.Component {
 
         return (
             <div className="hcontainer-no-wrap">
-                <FixedWidthDropdown label={this.state.selectedMonth} alignMenu="right" >
+                <FixedWidthDropdown shadow label={this.state.selectedMonth} alignMenu="right" >
                         {months}
                 </FixedWidthDropdown>
                 <div className="dashboard-buttons-horizontal-spacer"/>
-                <FixedWidthDropdown className="fixed-size-button" label={this.state.selectedYear} alignMenu="right" >
+                <FixedWidthDropdown shadow className="fixed-size-button" label={this.state.selectedYear} alignMenu="right" >
                     {years}
                 </FixedWidthDropdown>
                 <div className="dashboard-buttons-horizontal-spacer"/>
@@ -187,16 +187,15 @@ class DashboardCommissionChangeChart extends React.Component {
                 }
             ]
         };
+
         var chartOptions = {
-            scales: {
-                xAxes: [{
-                    stacked: true
-                }],
-                yAxes: [{
-                    stacked: true
-                }]
-            }
+            scaleFontFamily: "Tahoma",
+            tooltipFontFamily: "Tahoma",
+            scaleFontSize: 16,
+            responsive: true,
+            maintainAspectRatio: false
         }
+
 
         return (
             <div className="dashboard-commission-change-chart shadow">

@@ -1,5 +1,5 @@
 import React from 'react';
-import Auth from '../services/auth-service'
+import Auth from '../../services/auth-service'
 
 export default class Signup extends React.Component {
 

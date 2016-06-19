@@ -2,14 +2,15 @@
 
 import React from 'react';
 
-import * as jqLite from 'muicss/lib/js/lib/jqLite';
-import * as util from 'muicss/lib/js/lib/util';
+import * as jqLite from '../../../../../node_modules/muicss/lib/js/lib/jqLite';
+import * as util from '../../../../../node_modules/muicss/lib/js/lib/util';
 
 let rippleIter = 0;
 
 const PropTypes = React.PropTypes,
     btnClass = 'mui-btn-ripple',
-    rippleClass = 'mui-ripple-effect-dark',
+    rippleClassDark = 'mui-ripple-effect-dark',
+    rippleClassLight = 'mui-ripple-effect-light',
     btnAttrs = {color: 1, variant: 1, size: 1};
 
 
@@ -85,6 +86,12 @@ class FlatRippleButton extends React.Component {
             if (v !== 'default') cls += ' ' + btnClass + '--' + v;
         }
 
+        var rippleColor = rippleClassDark
+        if(this.props.rippleColor != null)
+        {
+            rippleColor = (this.props.rippleColor === "dark" ? rippleClassDark:rippleClassLight)
+        }
+
         return (
             <button
                 { ...this.props }
@@ -99,6 +106,7 @@ class FlatRippleButton extends React.Component {
                         let v = ripples[k];
                         return (
                         <Ripple
+                            colorClass={rippleColor}
                             key={k}
                             xPos={v.xPos}
                             yPos={v.yPos}
@@ -165,7 +173,7 @@ class Ripple extends React.Component {
         };
 
 
-        return <div className={rippleClass} style={style} />;
+        return <div className={this.props.colorClass} style={style} />;
     }
 }
 

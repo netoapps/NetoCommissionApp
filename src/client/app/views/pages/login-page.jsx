@@ -1,6 +1,6 @@
 import React from 'react';
-import AuthService from '../services/auth-service'
-import { strings } from '../constants/strings'
+import AuthService from '../../services/auth-service'
+import { strings } from '../../constants/strings'
 
 export default class Login extends React.Component {
 

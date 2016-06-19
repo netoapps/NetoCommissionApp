@@ -2,13 +2,15 @@ import React from 'react';
 import {render} from 'react-dom';
 import { browserHistory, Router, Route, Link } from 'react-router'
 import AuthService from './services/auth-service'
-import Login from './views/login-page.jsx'
-import Signup from './views/signup-page.jsx'
-import Dashboard from './views/dashboard-page.jsx'
-import Commissions from './views/commissions-page.jsx'
-import Agents from './views/agents-and-partnerships-page.jsx'
-import EditFiles from './views/edit-files-page.jsx'
-import NewAgentPage from './views/new-agent-page.jsx'
+import Login from './views/pages/login-page.jsx'
+import Signup from './views/pages/signup-page.jsx'
+import Dashboard from './views/pages/dashboard-page.jsx'
+import Commissions from './views/pages/commissions-page.jsx'
+import Agents from './views/pages/agents-and-partnerships-page.jsx'
+import EditFiles from './views/pages/commission-files-page.jsx'
+import AgentPage from './views/pages/agent-page.jsx'
+import AgentSalaryPage from './views/pages/agent-salary-page.jsx'
+import PartnershipPage from './views/pages/partnership-page.jsx'
 import TopBar from './views/top-bar.jsx';
 import RightPanel from './views/right-panel.jsx';
 import { strings } from './constants/strings'
@@ -85,7 +87,10 @@ render((
             <Route path="/app/commissions" component={Commissions} />
             <Route path="/app/commissions/edit-files" component={EditFiles} />
             <Route path="/app/agents-and-partnerships" component={Agents} />
-            <Route path="/app/agents-and-partnerships/new-agent-page" component={NewAgentPage} />
+
+            <Route path="/app/agents-and-partnerships/agent-salary-page/:agentId" component={AgentSalaryPage} />
+            <Route path="/app/agents-and-partnerships/agent-page/:agentId" component={AgentPage} />
+            <Route path="/app/agents-and-partnerships/partnership-page/:partnershipId" component={PartnershipPage} />
         </Route>
    </Router>
 ), document.getElementById('content'))
