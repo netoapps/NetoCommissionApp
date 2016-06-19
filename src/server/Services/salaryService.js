@@ -9,16 +9,39 @@ var async = require('async');
 
 function SalaryService() {
 
-    this.getAgentSalaries = function (agentId, cb) {
+    this.getAllAgentSalaries = function (agentId, cb) {
         Salary.find({agentId: agentId}, function (err, salaries) {
+            if (err) {
+                return cb(err);
+            }
             return cb(null, salaries);
         })
     };
-    this.getAgentSalariesForMonths = function (agentId, startMonth, endMonth, startYear, endYear, cb) {
-        //Salary.find({agentId:agentId, month:{'$ge':startMonth},}, function(err, salaries){
-        //    return cb(null, salaries);
-        //})
-    };
+    this.getAgentSalariesForMonthsAndYear = function (agentId, startMonth, endMonth, startYear, endYear, cb) {
+        Salary.aggregate([
+            {$match: {$and: [{month: {$gte: startMonth}}, {year: {$gte: startYear}}, {month: {$lte: endMonth}}, {year: {$lte: endYear}}, {agentId: agentId}]}}
+        ], function (err, salaries) {
+            if (err)return cb(err);
+            return cb(null, salaries);
+        });
+    }
+    this.getAgentSalariesByMonthYearAndType = function (agentId, month, year, cb) {
+        Salary.aggregate([
+            {$match: {$and: [{month: month}, {year: year}, {agentId: agentId}]}},
+            {
+                $group: {
+                    _id: '$agentId',
+                    2: {$sum: '$salary.2'},
+                    3: {$sum: '$salary.3'},
+                    4: {$sum: '$salary.4'},
+                    5: {$sum: '$salary.5'}
+                }
+            }
+        ], function (err, salaries) {
+            if (err)return cb(err);
+            return cb(null, salaries);
+        })
+    }
 
     this.deleteSalary = function (agentIds) {
 
@@ -32,18 +55,18 @@ function SalaryService() {
     function checkAgentIds(salaries) {
         return new Promise(function (resolve, reject) {
             var missingIds = {};
-            var mappings={};
+            var mappings = {};
             async.each(salaries,
                 function (salary, cb) {
-                    Agent.findOne({companyAgentId:salary[1]}).lean().exec(function(err, agent){
-                       if(err){
-                           return reject(err);
-                       }
-                        if(!agent){
-                            missingIds[salary[1]]=true;
+                    Agent.findOne({companyAgentId: salary[1]}).lean().exec(function (err, agent) {
+                        if (err) {
+                            return reject(err);
+                        }
+                        if (!agent) {
+                            missingIds[salary[1]] = true;
                             return cb();
                         }
-                        mappings[salary[1]]=agent.agentId;
+                        mappings[salary[1]] = agent;
                         return cb();
 
                     });
@@ -59,15 +82,14 @@ function SalaryService() {
         });
     }
 
-    function addSalaryToAgent(agentId, agentInCompanyId, month, year, amount, type, companyName, cb) {
+    function addSalaryToAgent(agentId, agentInCompanyId, month, year, salaries, companyName, cb) {
         var salary = new Salary();
         salary.agentId = agentId;
         salary.agentInCompanyId = agentInCompanyId;
         salary.month = month;
         salary.year = year;
-        salary.amount = amount;
-        salary.type = type;
-        salary.companyName=companyName;
+        salary.salary = salaries;
+        salary.companyName = companyName;
         salary.save(function (err) {
             if (typeof cb === 'function') {
                 return cb(null);
@@ -76,68 +98,55 @@ function SalaryService() {
 
     };
 
-    function saveSalaries(month, year, companyName, salaries, agentMapping) {
-        return new Promise(function (resolve, reject) {
-            async.each(salaries,
-                function (salary, cb) {
-                    if(agentMapping[salary[1]]) {
+    this.processSalaries = function (month, year, companyName,maamRate, salaries, cb) {
+        checkAgentIds(salaries).then(function (mapping) {
+                salaries = _.groupBy(salaries, function (sal) {
+                    return sal[1]
+                });
+                var salaryTasks = [];
+                _.each(salaries, function (salary) {
+                    var agent = mapping[salary[0][1]];
+                    if (agent) {
+                        var sum = {2: 0, 3: 0, 4: 0, 5: 0};
+                        _.each(salary, function (s) {
+                            if (s[2]) {
+                                sum[2] += s[2];
+                            }
+                            if (s[3]) {
+                                sum[3] += s[3];
+                            }
+                            if (s[4]) {
+                                sum[4] += s[4];
+                            }
+                            if (s[5]) {
+                                sum[5] += s[5];
+                            }
+                        });
 
-                        var amount, type;
-                        if (salary[3]) {
-                            amount = salary[3];
-                            type = 3;
-                        }
-                        else if (salary[4]) {
-                            amount = salary[4];
-                            type = 4;
-                        }
-                        else if (salary[5]) {
-                            amount = salary[5];
-                            type = 5;
-                        } else {
-                            return reject('invalid file, missing salary');
-                        }
-                        addSalaryToAgent(agentMapping[salary[1]], salary[1], month, year, amount, type, companyName, cb);
-                    }else{
-                        console.log('invalid mapping');
-                        return cb();
+
+                        var agentPercentage = mapping[salary[0][1]].salaryPercentage;
+                        sum[2] *= agentPercentage[2];
+                        sum[2]*=maamRate;
+                        sum[3] *= agentPercentage[3];
+                        sum[3] *=maamRate;
+                        sum[4] *= agentPercentage[4];
+                        sum[4] *=maamRate;
+                        sum[5] *= agentPercentage[5];
+                        sum[5]*=maamRate;
+                        salaryTasks.push(addSalaryToAgent.bind(null, agent.agentId, salary[0][1], month, year, sum, companyName));
                     }
-                },
-                function (err) {
+                });
+                async.parallel(salaryTasks, function (err, result) {
                     if (err) {
-                        return reject(err);
+                        return cb(err);
                     }
-                    return resolve();
+                    return cb();
                 })
-        });
-    }
+            })
+            .catch(function (err) {
+                return cb(err);
+            })
 
-    function mapSalaries(salaries){
-
-    }
-
-    this.processSalaries = function (month, year, companyName, salaries, cb) {
-        salaries = _.groupBy(salaries,function(sal){return sal[1]});
-
-        console.log(salaries);
-        return cb();
-        //checkAgentIds(salaries)
-        //    .then(saveSalaries.bind(null,month, year, companyName,salaries))
-        //    .then(function(){
-        //        return cb();
-        //    })
-        //    .catch(function (err) {
-        //        cb(err);
-        //    })
-        //checkAgentIds(salaries)
-        //    .then(mapAgentIDsToAgentId)
-        //    .then(saveSalariesToAgents.bind(null,month,year,companyName,salaries))
-        //    .then(function(){
-        //        return cb();
-        //    })
-        //    .catch(function(err){
-        //        return cb(err);
-        //    });
     }
 }
 

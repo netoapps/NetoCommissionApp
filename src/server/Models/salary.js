@@ -11,10 +11,9 @@ var mongoose = require('mongoose');
         updateTime:{type:Date, default:Date.now},
         agentId: {type:String, index:true},
         agentInCompanyId:{type:String, index:true},
-        salary:Number,
+        salary:{2:Number, 3:Number, 4:Number,5:Number},
         month:Number,
         year:Number,
-        type:{type:Number, enum:[3,4,5]},
         companyName:String
     });
     schema.index({year:1,month:1});

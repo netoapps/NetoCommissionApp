@@ -12,7 +12,7 @@ var schema = new mongoose.Schema({
     lastName: String,
     fullName:String,
     age: String,
-    salaryPercentage:{3:Number},
+    salaryPercentage:{2:{type:Number,default:1.0},3:{type:Number,default:1.0},4:{type:Number,default:1.0},5:{type:Number,default:1.0}},
     agentId:String,
     companyAgentId:String,
     companyName:String

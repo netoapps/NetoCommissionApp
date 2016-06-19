@@ -56,8 +56,15 @@ function NetoCommisionAppServer(){
     };
 }
 
+
 var server = new NetoCommisionAppServer();
 server.init();
 server.start();
 
 
+//var Ea = require('./Services/ExcelAnalyzerService');
+//ea = new Ea();
+//ea.analyzeAgentsFile('agents_fixed.xlsx', function(err){
+//        if(err)console.log(err);
+//        else console.log('done');
+//})

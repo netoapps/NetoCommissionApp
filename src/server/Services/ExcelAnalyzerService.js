@@ -45,10 +45,10 @@ function ExcelAnalyzerService() {
             _.map(keys, function (k) {
                 //k = k.trim();
                 var numVal = parseInt(k);
-                if (_.isNaN(numVal)) {
-                    //obj[k] = s[k];
-                } else {
-                    obj[numVal] = s[k];
+                if (!_.isNaN(numVal)) {
+                    var val = s[k].replace(',','').trim();
+                    val = Number(val);
+                    obj[numVal] = val;
                 }
             });
             return obj;
