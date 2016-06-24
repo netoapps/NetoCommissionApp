@@ -116,28 +116,32 @@ class DashboardRankTable extends React.Component {
                 title: "עמלות",
                 key: "commission",
                 width: "col-33-33",
-                type: 'read-only-currency',
+                type: 'read-only',
+                format: 'currency',
                 color: 'normal'
             },
             {
                 title: "שינוי (עמלות)",
                 key: "commissionChange",
                 width: "col-33-33",
-                type: 'read-only-percent',
+                type: 'read-only',
+                format: 'percent',
                 color: 'red-green'
             },
             {
                 title: "גודל תיק",
                 key: "totalInvestments",
                 width: "col-33-33",
-                type: 'read-only-currency',
+                type: 'read-only',
+                format: 'currency',
                 color: 'normal'
             },
             {
                 title: "שינוי (גודל תיק)",
                 key: "totalInvestmentsChange",
                 width: "col-33-33",
-                type: 'read-only-percent',
+                type: 'read-only',
+                format: 'percent',
                 color: 'red-green'
             }
 

@@ -25,13 +25,12 @@ class TableCell extends React.Component {
     {
         var className = "table-cell";
         var color = "table-cell-text-color";
-        //var value = this.props.value;
         var node = null;
         var action = null;
 
         if (this.state.column.color === "red-green")
         {
-            if(parseFloat(this.props.value) >= 0)
+            if(parseFloat(this.state.value) >= 0)
             {
                 color = "green"
             }
@@ -40,31 +39,50 @@ class TableCell extends React.Component {
                 color = "red"
             }
         }
-        if (this.state.column.type === "read-only") {
-            node = <div className={"table-cell-read-only " + color}>{this.props.value}</div>;
-        }
-        if (this.state.column.type === "read-only-currency")
+        if (this.state.column.format === "currency")
         {
             var value = this.props.value;
             value = parseFloat(value.replace(/,/g, ""))
                 .toFixed(0)
                 .toString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            value = "₪ " + value
-            node = <div className={"table-cell-read-only " + color}>{value}</div>;
+            this.state.value = "₪ " + value
         }
-        if (this.state.column.type === "read-only-percent")
+        if (this.state.column.format === "percent")
         {
+            className = "table-cell-read-only " + color
             var value = this.props.value;
-            value = value + " %"
-            node = <div className={"table-cell-read-only " + color}>{value}</div>;
+            this.state.value = value + " %"
         }
+
+        if (this.state.column.type === "read-only")
+        {
+            node = <div className={"table-cell-read-only " + color}>{this.state.value}</div>;
+        }
+
+        //if (this.state.column.type === "read-only-currency")
+        //{
+        //    var value = this.props.value;
+        //    value = parseFloat(value.replace(/,/g, ""))
+        //        .toFixed(0)
+        //        .toString()
+        //        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        //    value = "₪ " + value
+        //    node = <div className={"table-cell-read-only " + color}>{value}</div>;
+        //}
+
+        //if (this.state.column.type === "read-only-percent")
+        //{
+        //    var value = this.props.value;
+        //    value = value + " %"
+        //    node = <div className={"table-cell-read-only " + color}>{value}</div>;
+        //}
         if (this.state.column.type === "button")
         {
             action = this.state.column.action
             className = "table-button " + this.state.column.color
             node = <div className={"table-cell-read-only " + color}>
-                <button className={className} onClick={ function(action) { action(this.props.rowIndex) }.bind(this,action)}>{this.props.value}</button>
+                <button className={className} onClick={ function(action) { action(this.props.rowIndex) }.bind(this,action)}>{this.state.value}</button>
             </div>;
         }
         if (this.state.column.type === "select")

@@ -34,7 +34,10 @@ class AgentPage extends React.Component {
     {
 
     }
-
+    onDeletePaymentRowClicked(rowIndex)
+    {
+        console.log("onDeletePaymentRowClicked " + rowIndex)
+    }
     render () {
 
 
@@ -121,7 +124,7 @@ class AgentPage extends React.Component {
                     </div>
                 </div>
                 <div className="new-agent-form-table">
-                    <Table columns={columns} data={companies}/>
+                    <Table onRemoveRow={this.onDeletePaymentRowClicked.bind(this)} columns={columns} data={companies}/>
                 </div>
             </div>
         );

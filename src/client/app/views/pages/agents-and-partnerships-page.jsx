@@ -37,8 +37,14 @@ class AgentsAndPartnerships extends React.Component {
     onAgentClicked(rowIndex)
     {
         var agentId = this.state.agentsData[rowIndex].idNumber
+        this.context.router.push('/app/agents-and-partnerships/agent-page/'+agentId)
+    }
+    onSalaryClicked(rowIndex)
+    {
+        var agentId = this.state.agentsData[rowIndex].idNumber
         this.context.router.push('/app/agents-and-partnerships/agent-salary-page/'+agentId)
     }
+
     onPartnershipClicked(rowIndex)
     {
         //var agentId = this.state.agentsData[rowIndex].idNumber
@@ -77,6 +83,15 @@ class AgentsAndPartnerships extends React.Component {
                 action: this.onAgentClicked.bind(this)
             },
             {
+                title: "שכר",
+                key: "salary",
+                width: "col-33-33",
+                type: 'button',
+                format: 'currency',
+                color: 'blue',
+                action: this.onSalaryClicked.bind(this)
+            },
+            {
                 title: "מזהה",
                 key: "idNumber",
                 width: "col-33-33",
@@ -100,6 +115,7 @@ class AgentsAndPartnerships extends React.Component {
             var agentData = {}
 
             agentData["name"] = this.state.agentsData[agentIndex].name + " " + this.state.agentsData[agentIndex].familyName
+            agentData["salary"] = "323432"
             agentData["idNumber"] = this.state.agentsData[agentIndex].idNumber
             agentData["status"] = this.state.agentsData[agentIndex].active ? "פעיל":"לא פעיל"
             agentsData.push(agentData)

@@ -184,14 +184,16 @@ class Commissions extends React.Component {
                 title: "סה״כ תשלום",
                 key: "totalPayment",
                 width: "col-33-33",
-                type: 'read-only-currency',
+                type: 'read-only',
+                format: 'currency',
                 color: 'normal'
             },
             {
                 title: "סה״כ גודל תיק",
                 key: "totalInvestments",
                 width: "col-33-33",
-                type: 'read-only-currency',
+                type: 'read-only',
+                format: 'currency',
                 color: 'normal'
             },
             {
