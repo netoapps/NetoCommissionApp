@@ -19,6 +19,9 @@ module.exports.registerRoutes = function(app){
     //    res.send(result);
     //    res.end();
     //});
+    publicRouter.post('/salaries/:agentId/monthYearType',salaries.getAgentSalariesByMonthYearType);
+    //publicRouter.post('/salaries',salaries.getSalariesForAgenyByMonthAndYear);
+
     app.use('/',publicRouter);
 
     var apiRouter = express.Router();
