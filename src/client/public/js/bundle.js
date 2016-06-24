@@ -28657,7 +28657,8 @@
 	                var yearName = _i.toString();
 	                years.push(_react2.default.createElement(
 	                    _dropdownItem2.default,
-	                    { onClick: this.onYearChange.bind(this), value: yearName, key: _i },
+	                    {
+	                        value: yearName, key: _i },
 	                    yearName
 	                ));
 	            }
@@ -34820,10 +34821,9 @@
 	    _createClass(TableCell, [{
 	        key: 'componentWillReceiveProps',
 	        value: function componentWillReceiveProps(nextProps) {
-	            this.setState({
-	                value: nextProps.value,
-	                column: nextProps.column
-	            });
+	            this.state.value = nextProps.value;
+	            this.state.column = nextProps.column;
+	            this.setState(this.state);
 	        }
 	    }, {
 	        key: 'render',
@@ -34884,25 +34884,25 @@
 	            }
 	            if (this.state.column.type === "select") {
 	                var options = [];
+	                action = this.state.column.action;
 	                for (var type = 0; type <= this.state.column.options.length; type++) {
 	                    options.push(_react2.default.createElement(
 	                        _dropdownItem2.default,
-	                        { value: this.state.column.options[type], key: type },
+	                        { onClick: function (action, item) {
+	                                action(this.props.rowIndex, item);
+	                            }.bind(this, action), value: this.state.column.options[type], key: type },
 	                        this.state.column.options[type]
 	                    ));
 	                }
-	
 	                node = _react2.default.createElement(
 	                    'div',
 	                    { className: 'h-center' },
 	                    _react2.default.createElement(
 	                        _tableDropdown2.default,
-	                        { className: 'table-dropdown', label: this.state.column.options[0], alignMenu: 'right' },
+	                        { className: 'table-dropdown', label: this.state.value, alignMenu: 'right' },
 	                        options
 	                    )
 	                );
-	
-	                //node = <div className="absolute-center">asaf</div>
 	            }
 	
 	            return _react2.default.createElement(
@@ -35039,10 +35039,10 @@
 	    _createClass(Table, [{
 	        key: 'componentWillReceiveProps',
 	        value: function componentWillReceiveProps(nextProps) {
-	            this.setState({
-	                columns: nextProps.columns,
-	                data: nextProps.data
-	            });
+	            this.state.columns = nextProps.columns;
+	            this.state.data = nextProps.data;
+	            this.state.removableRow = !(nextProps.onRemoveRow == null);
+	            this.setState(this.state);
 	        }
 	    }, {
 	        key: 'render',
@@ -52442,6 +52442,15 @@
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {}
 	    }, {
+	        key: 'onCompanyNameSelect',
+	        value: function onCompanyNameSelect(rowIndex, companyName) {
+	            console.log(rowIndex);
+	            console.log(companyName);
+	        }
+	    }, {
+	        key: 'onCommissionTypeSelect',
+	        value: function onCommissionTypeSelect(rowIndex, commissionType) {}
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	
@@ -52451,7 +52460,8 @@
 	                width: "col-33-33",
 	                type: 'select',
 	                color: 'normal',
-	                options: _dataStore2.default.getCompanies()
+	                options: _dataStore2.default.getCompanies(),
+	                action: this.onCompanyNameSelect.bind(this)
 	            }, {
 	                title: "מספר סוכן",
 	                key: "agentNumber",
@@ -52464,7 +52474,8 @@
 	                width: "col-33-33",
 	                type: 'select',
 	                color: 'normal',
-	                options: _dataStore2.default.getCommissionTypes()
+	                options: _dataStore2.default.getCommissionTypes(),
+	                action: this.onCommissionTypeSelect.bind(this)
 	            }, {
 	                title: "חלק סוכן %",
 	                key: "agentPart",

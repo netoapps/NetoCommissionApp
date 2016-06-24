@@ -16,10 +16,9 @@ class TableCell extends React.Component {
     }
     componentWillReceiveProps(nextProps)
     {
-        this.setState({
-            value: nextProps.value,
-            column: nextProps.column,
-        })
+        this.state.value = nextProps.value
+        this.state.column = nextProps.column
+        this.setState(this.state)
     }
 
     render()
@@ -71,15 +70,13 @@ class TableCell extends React.Component {
         if (this.state.column.type === "select")
         {
             const options = [];
+            action = this.state.column.action
             for (let type = 0; type <= this.state.column.options.length; type++ ) {
-                options.push(<DropdownItem  value={this.state.column.options[type]} key={type}>{this.state.column.options[type]}</DropdownItem>);
+                options.push(<DropdownItem onClick={ function(action,item) { action(this.props.rowIndex,item) }.bind(this,action)} value={this.state.column.options[type]} key={type}>{this.state.column.options[type]}</DropdownItem>);
             }
-
-            node = <div className="h-center"><TableDropdown  className="table-dropdown" label={this.state.column.options[0]} alignMenu="right" >
+            node = <div className="h-center"><TableDropdown  className="table-dropdown" label={this.state.value} alignMenu="right" >
                         {options}
                    </TableDropdown></div>;
-
-            //node = <div className="absolute-center">asaf</div>
         }
 
         return ( <div className={className + " " + this.state.column.width}>
@@ -173,10 +170,10 @@ class Table extends React.Component {
 
     componentWillReceiveProps(nextProps)
     {
-        this.setState({
-            columns: nextProps.columns,
-            data: nextProps.data
-        })
+        this.state.columns = nextProps.columns
+        this.state.data = nextProps.data
+        this.state.removableRow = !(nextProps.onRemoveRow == null)
+        this.setState(this.state)
     }
 
     render()

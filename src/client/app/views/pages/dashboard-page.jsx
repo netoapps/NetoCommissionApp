@@ -70,7 +70,8 @@ class DashboardToolbar extends React.Component {
         var currentYear = date.getFullYear()
         for (let i = 2012; i <= currentYear; i++ ) {
             var yearName = i.toString()
-            years.push(<DropdownItem onClick={this.onYearChange.bind(this)} value={yearName} key={i}>{yearName}</DropdownItem>);
+            years.push(<DropdownItem
+                value={yearName} key={i}>{yearName}</DropdownItem>);
         }
 
         return (
