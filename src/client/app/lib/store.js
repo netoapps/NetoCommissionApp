@@ -33,14 +33,17 @@ export default class Store {
      * Store appropriately.
      */
 
-    addEventListener(event,callback)
+    addEventListener(event,callback,scope)
     {
-        this.eventbus.on(event, callback);
+        this.eventbus.on(event, callback,scope);
+        //console.log("add " + event + " count after adding = " + EventEmitter.listenerCount(this.eventbus, event));
+        //console.log(callback);
     }
 
     removeEventListener(event,callback)
     {
         this.eventbus.removeListener(event, callback);
+        //console.log("remove " + event + " count after removing = " + EventEmitter.listenerCount(this.eventbus, event));
     }
 
     /**

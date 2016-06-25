@@ -5,6 +5,7 @@ import Store from '../lib/store.js';
 import dispatcher from '../dispatcher/app-dispatcher.js';
 import Actions from '../actions/app-actions.js';
 import {ActionType} from '../actions/app-actions.js';
+import {Agent,AgentPaymentDetails} from '../model/agent.js';
 
 class DataStore extends Store {
 
@@ -24,63 +25,68 @@ class DataStore extends Store {
         //nifraim - 70(agent) 30(company)
         //heikef - 55(agent) 45(company)
         //bonus - 50(agent) 50(company)
+        var agents = []
 
-        var agents = [
-            {
-                name: "קרין",
-                familyName: "בוזלי לוי",
-                idNumber: "112233445",
-                phoneNumber: "0521510677",
-                faxNumber: "0521510677",
-                email: "karin@neto-finance.co.il",
-                active: true,
-                companies: [
-                    {companyName: "מגדל", agentNumber: "2342234523",paymentType: "נפרעים",  agentPart: "55", agencyPart: "45"},
-                    {companyName: "אלטשולר שחם", agentNumber: "234234",paymentType: "היקף",  agentPart: "55", agencyPart: "45"},
-                    {companyName: "מנורה", agentNumber: "789565",paymentType: "בונוס",  agentPart: "55", agencyPart: "45"}
-                ]
-            },
-            {
-                name: "עידן",
-                familyName: "כץ",
-                idNumber: "34421134",
-                phoneNumber: "0506774836",
-                faxNumber: "048323746",
-                email: "idan@neto-finance.co.il",
-                active: true,
-                companies: [
-                    {companyName: "מגדל", agentNumber: "57546",paymentType: "נפרעים",  agentPart: "55", agencyPart: "45"},
-                    {companyName: "אלטשולר שחם", agentNumber: "231",paymentType: "היקף",  agentPart: "55", agencyPart: "45"},
-                    {companyName: "כלל", agentNumber: "6865",paymentType: "היקף",  agentPart: "55", agencyPart: "45"},
-                    {companyName: "מנורה", agentNumber: "9789",paymentType: "בונוס",  agentPart: "55", agencyPart: "45"}
-                ]
-            },
-            {
-                name: "תומר",
-                familyName: "כהן",
-                idNumber: "22343452",
-                phoneNumber: "0546747636",
-                faxNumber: "049324232",
-                email: "tomer@neto-finance.co.il",
-                active: false,
-                companies: [
-                    {companyName: "מגדל", agentNumber: "54633",paymentType: "נפרעים",  agentPart: "55", agencyPart: "45"},
-                    {companyName: "אלטשולר שחם", agentNumber: "2342",paymentType: "היקף",  agentPart: "55", agencyPart: "45"},
-                    {companyName: "מנורה", agentNumber: "678678",paymentType: "בונוס",  agentPart: "55", agencyPart: "45"}
-                ]
-            },
-            {
-                name: "חומוס",
-                familyName: "משאושה",
-                idNumber: "67865443",
-                phoneNumber: "",
-                faxNumber: "049324232",
-                email: "tomer@neto-finance.co.il",
-                active: false,
-                companies: null
+        var karinPayments = []
+        karinPayments.push(new AgentPaymentDetails( {companyName: "מגדל", agentNumber: "2342234523",paymentType: "נפרעים",  agentPart: "55", agencyPart: "45"}  ))
+        karinPayments.push(new AgentPaymentDetails( {companyName: "אלטשולר שחם", agentNumber: "234234",paymentType: "היקף",  agentPart: "55", agencyPart: "45"}  ))
+        karinPayments.push(new AgentPaymentDetails( {companyName: "מנורה", agentNumber: "789565",paymentType: "בונוס",  agentPart: "55", agencyPart: "45"}  ))
+        agents.push(new Agent({
+            name: "קרין",
+            familyName: "בוזלי לוי",
+            idNumber: "112233445",
+            phoneNumber: "0521510677",
+            faxNumber: "0521510677",
+            email: "karin@neto-finance.co.il",
+            active: true,
+            paymentsDetails: karinPayments
+        }))
 
-            }
-        ]
+        var idanPayments = []
+        idanPayments.push(new AgentPaymentDetails( {companyName: "מגדל", agentNumber: "57546",paymentType: "נפרעים",  agentPart: "55", agencyPart: "45"}  ))
+        idanPayments.push(new AgentPaymentDetails( {companyName: "אלטשולר שחם", agentNumber: "231",paymentType: "היקף",  agentPart: "55", agencyPart: "45"}  ))
+        idanPayments.push(new AgentPaymentDetails( {companyName: "כלל", agentNumber: "6865",paymentType: "היקף",  agentPart: "55", agencyPart: "45"}  ))
+        idanPayments.push(new AgentPaymentDetails( {companyName: "מנורה", agentNumber: "9789",paymentType: "בונוס",  agentPart: "55", agencyPart: "45"}  ))
+        agents.push(new Agent({
+            name: "עידן",
+            familyName: "כץ",
+            idNumber: "34421134",
+            phoneNumber: "0506774836",
+            faxNumber: "048323746",
+            email: "idan@neto-finance.co.il",
+            active: true,
+            paymentsDetails: idanPayments
+        }))
+
+        var tomerPayments = []
+        tomerPayments.push(new AgentPaymentDetails( {companyName: "מגדל", agentNumber: "54633",paymentType: "נפרעים",  agentPart: "55", agencyPart: "45"}  ))
+        tomerPayments.push(new AgentPaymentDetails( {companyName: "אלטשולר שחם", agentNumber: "2342",paymentType: "היקף",  agentPart: "55", agencyPart: "45"}  ))
+        tomerPayments.push(new AgentPaymentDetails( {companyName: "מנורה", agentNumber: "678678",paymentType: "בונוס",  agentPart: "55", agencyPart: "45"}  ))
+        agents.push(new Agent({
+            name: "תומר",
+            familyName: "כהן",
+            idNumber: "22343452",
+            phoneNumber: "0546747636",
+            faxNumber: "049324232",
+            email: "tomer@neto-finance.co.il",
+            active: false,
+            paymentsDetails: tomerPayments
+        }))
+
+
+        agents.push(new Agent({
+            name: "חומוס",
+            familyName: "משאושה",
+            idNumber: "67865443",
+            phoneNumber: "",
+            faxNumber: "049324232",
+            email: "tomer@neto-finance.co.il",
+            active: false,
+            paymentsDetails: []
+
+        }))
+
+
         this.initialize('agents',agents);
 
         var partnershipsData = [
@@ -106,6 +112,14 @@ class DataStore extends Store {
         var commissionType = ["עמלה","נפרעים","בונוס"]
         this.initialize('commissionType',commissionType);
     }
+
+    //Companies
+    getCompanies()
+    {
+        return this.get('companies');
+    }
+
+    //Commissions
     getCommissionTypes()
     {
         return this.get('commissionType');
@@ -114,18 +128,48 @@ class DataStore extends Store {
     {
         return this.get('files');
     }
+
+    //Agents
     getAgents()
     {
         return this.get('agents');
     }
-    getCompanies()
+    deleteAgentAtIndex(index)
     {
-        return this.get('companies');
+        var agents = this.getAgents()
+        if (agents.length > index)
+        {
+            agents.splice(index, 1)
+            this.eventbus.emit(ActionType.DELETE_AGENT);
+            this.logger.debug('Delete agent at index ' + index);
+
+            //post change to server...
+        }
+    }
+    setAgentAtIndex(index, agent)
+    {
+        var agents = this.getAgents()
+        if (agents.length > index)
+        {
+            agents[index] = agent
+            this.eventbus.emit(ActionType.UPDATE_AGENT);
+            this.logger.debug('Updated agent at index ' + index);
+
+            //post change to server...
+        }
+    }
+    getAgentAtIndex(index)
+    {
+        var agents = this.getAgents();
+        if (agents.length > index)
+        {
+            return agents[index]
+        }
+        return null
     }
     getAgent(idNumber)
     {
-        var agents =  this.get('agents');
-
+        var agents = this.getAgents();
         for (var agent = 0; agent < agents.length ;agent++)
         {
             if (agents[agent].idNumber === idNumber)
@@ -133,13 +177,51 @@ class DataStore extends Store {
         }
         return null
     }
+
+    //Partnerships
     getPartnerships()
     {
         return this.get('partnerships');
     }
-    deleteFile(data)
+    getPartnershipAtIndex(index)
     {
-        var files = this.get('files')
+        var partnerships =  this.getPartnerships();
+        if (partnerships.length > index)
+        {
+            return partnerships[index]
+        }
+        return null
+    }
+    setPartnershipAtIndex(index, partnership)
+    {
+        var partnerships =  this.getPartnerships();
+        if (partnerships.length > index)
+        {
+            partnerships[index] = partnership
+            this.eventbus.emit(ActionType.UPDATE_PARTNERSHIP);
+            this.logger.debug('Updated partnership at index ' + index);
+
+            //post change to server...
+        }
+        return null
+    }
+    deletePartnershipAtIndex(index)
+    {
+        var partnerships = this.getPartnerships();
+        if (partnerships.length > index)
+        {
+            partnerships.splice(index, 1)
+            this.eventbus.emit(ActionType.DELETE_PARTNERSHIP);
+            this.logger.debug('Delete partnership at index ' + index);
+
+            //post change to server...
+        }
+    }
+
+
+    deleteCommissionFile(data)
+    {
+        var files = this.getCommissionFiles()
 
         for(var file = 0; file < files.length; file++)
         {
@@ -161,8 +243,26 @@ class DataStore extends Store {
         switch (actionType)
         {
             case ActionType.DELETE_COMMISSION_DOC:
-                this.deleteFile(data)
+                this.deleteCommissionFile(data)
                 break;
+
+            case ActionType.UPDATE_AGENT:
+                this.setAgentAtIndex(data.index,data.agent)
+                break;
+
+            case ActionType.DELETE_AGENT:
+                this.deleteAgentAtIndex(data.index)
+                break;
+
+            case ActionType.UPDATE_PARTNERSHIP:
+                this.setPartnershipAtIndex(data.index,data.agent)
+                break;
+
+            case ActionType.DELETE_PARTNERSHIP:
+                this.deletePartnershipAtIndex(data.index,data.partnership)
+                break;
+
+
         }
     }
 }

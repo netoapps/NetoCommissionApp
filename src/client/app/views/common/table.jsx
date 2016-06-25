@@ -60,23 +60,6 @@ class TableCell extends React.Component {
             node = <div className={"table-cell-read-only " + color}>{this.state.value}</div>;
         }
 
-        //if (this.state.column.type === "read-only-currency")
-        //{
-        //    var value = this.props.value;
-        //    value = parseFloat(value.replace(/,/g, ""))
-        //        .toFixed(0)
-        //        .toString()
-        //        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        //    value = "₪ " + value
-        //    node = <div className={"table-cell-read-only " + color}>{value}</div>;
-        //}
-
-        //if (this.state.column.type === "read-only-percent")
-        //{
-        //    var value = this.props.value;
-        //    value = value + " %"
-        //    node = <div className={"table-cell-read-only " + color}>{value}</div>;
-        //}
         if (this.state.column.type === "button")
         {
             action = this.state.column.action
@@ -160,16 +143,22 @@ class TableColumn extends React.Component {
     }
 }
 
-class TableTrashColumn extends React.Component {
+class TableActionsColumn extends React.Component {
 
     constructor(props) {
         super(props);
-
-
     }
     render() {
-        var className = "table-column-trash";
-        return ( <div className={className}></div>);
+        if (this.props.onAddRow != null)
+        {
+            return <div className="table-column-add">
+                        <button onClick={this.props.onAddRow.bind(this)} className="table-row-add-button">+</button>
+                   </div>
+        }
+        else
+        {
+            return <div className="table-column-remove"/>
+        }
     }
 }
 
@@ -182,7 +171,6 @@ class Table extends React.Component {
         this.state = {
             columns: props.columns,
             data: props.data,
-            removableRow: !(props.onRemoveRow == null)
         }
     }
 
@@ -190,7 +178,6 @@ class Table extends React.Component {
     {
         this.state.columns = nextProps.columns
         this.state.data = nextProps.data
-        this.state.removableRow = !(nextProps.onRemoveRow == null)
         this.setState(this.state)
     }
 
@@ -220,12 +207,14 @@ class Table extends React.Component {
                                        columns={this.state.columns}/>
 
         var tableTrashColumn = null
-        if(this.state.removableRow)
+        if (this.props.onRemoveRow != null)
         {
-            tableTrashColumn = <TableTrashColumn/>
+            tableTrashColumn = <TableActionsColumn onAddRow={this.props.onAddRow}/>
         }
 
         return <div className="table">
+                    <div className="table-title">{this.props.title}</div>
+
                     <div className="table-header">
                         {tableTrashColumn}
                         {tableColumns}

@@ -723,6 +723,10 @@ body
     margin-top: 24px;
 }
 
+.label-checkbox
+{
+    margin-left: 8px;
+}
 
 /**** table ******/
 
@@ -731,6 +735,13 @@ body
     width: 100%;
     height: 100%;
     /*border: 1px solid #d3d3d3;*/
+}
+
+.table-title
+{
+    margin-bottom: 5px;
+    color: #505050;
+    font-weight: bold;
 }
 
 .table-data-container
@@ -793,9 +804,18 @@ body
     text-align: center;
 }
 
-.table-column-trash
+.table-column-remove
 {
     min-width: 45px;
+    min-height: 40px;
+}
+
+.table-column-add
+{
+    min-width: 45px;
+    min-height: 40px;
+    margin-top: -5px;
+    margin-right: -5px;
 }
 
 .table-cell
@@ -836,6 +856,37 @@ body
 .table-dropdown
 {
 
+}
+
+.table-row-add-button
+{
+    color: #e8e8e8;
+    font-size: 27px;
+    font-weight: lighter;
+    text-decoration: none;
+    outline:none;
+    width: 100%;
+    line-height: 40px;
+    height: 40px;
+    border-top: none;
+    border-right: none;
+    border-left: 1px solid #dfdfdf;
+    border-bottom: none;
+    margin-right: 0px;
+    padding-top: 0px;
+    padding-right: 3px;
+    padding-left: 0px;
+    padding-bottom: 30px;
+    background-color: transparent;
+
+}
+.table-row-add-button:hover
+{
+    color: #ffffff;
+}
+.table-row-add-button:active
+{
+    color: #bbbbbb;
 }
 
 .table-row-remove-button
@@ -1009,6 +1060,12 @@ body
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 20px;
+    min-width: 200px;
+}
+
+.new-agent-active-box
+{
+    margin-top: -5px;
 }
 
 .new-agent-form
@@ -1021,18 +1078,30 @@ body
     width: 50%;
 }
 
-.new-agent-form-horizontal-spacer
+.new-agent-form-horizontal-spacer-50
 {
     width: 50px;
+    height: 100%;
+}
+.new-agent-form-horizontal-spacer-20
+{
+     width: 20px;
+     height: 100%;
+}
+
+.new-agent-form-horizontal-spacer-full
+{
+    width: 90%;
     height: 100%;
 }
 
 .new-agent-form-table
 {
-    margin-top: 30px;
+    margin-top: 20px;
     width: 100%;
-    height: calc(100% - 220px);
-    max-height: calc(100% - 220px);
+    height: calc(100% - 245px);
+    height: 100%;
+    max-height: calc(100% - 245px);
 }
 
 .mui-ripple-effect-dark

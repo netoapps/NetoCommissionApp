@@ -1,8 +1,8 @@
 import React from 'react';
 import AuthService from '../../services/auth-service'
-import Button from '../../../../../node_modules/muicss/lib/react/button'
-import Dropdown from '../../../../../node_modules/muicss/lib/react/dropdown';
-import DropdownItem from '../../../../../node_modules/muicss/lib/react/dropdown-item';
+import Button from 'muicss/lib/react/button'
+import Dropdown from 'muicss/lib/react/dropdown';
+import DropdownItem from 'muicss/lib/react/dropdown-item';
 import FixedWidthDropdown from './../common/fixed-width-dropdown.jsx';
 import { strings } from '../../constants/strings'
 import Chart from "react-chartjs";
