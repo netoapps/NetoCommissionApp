@@ -106,10 +106,10 @@ class DataStore extends Store {
 
         this.initialize('partnerships',partnershipsData);
 
-        var companies = ["כלל ביטוח","כלל גמל","מגדל","מנורה","אלטשולר שחם","ילין לפידות","מיטב דש","הראל","הפניקס","אנאליסט","איי בי איי","אקסלנס","הכשרה"]
+        var companies = ["כלל ביטוח","כלל גמל","מגדל","מנורה","אלטשולר שחם","ילין לפידות","מיטב דש","הראל","הפניקס","אנליסט","איי בי איי","אקסלנס","הכשרה"]
         this.initialize('companies',companies);
 
-        var commissionType = ["עמלה","נפרעים","בונוס"]
+        var commissionType = ["היקף","נפרעים","בונוס"]
         this.initialize('commissionType',commissionType);
     }
 

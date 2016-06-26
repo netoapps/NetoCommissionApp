@@ -79,6 +79,14 @@ class TableCell extends React.Component {
                         {options}
                    </TableDropdown></div>;
         }
+        if (this.state.column.type === "input")
+        {
+            action = this.state.column.action
+            node = <div className="h-center"><input className="table-input"
+                          type="text"
+                          value={this.state.value}
+                          onChange={ function(action,event) { action(this.props.rowIndex, event.target.value) }.bind(this,action) }/></div>
+        }
 
         return ( <div className={className + " " + this.state.column.width}>
                     {node}
