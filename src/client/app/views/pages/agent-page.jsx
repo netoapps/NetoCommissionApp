@@ -240,57 +240,53 @@ class AgentPage extends React.Component {
 
 
         var activeStates = []
-        var selectedActiveState = this.state.agent.active ? strings.agentPageActive:strings.agentPageNotActive
-        activeStates.push(<DropdownItem onClick={this.onActiveChange.bind(this)} value={strings.agentPageActive} key={0}>{strings.agentPageActive}</DropdownItem>)
-        activeStates.push(<DropdownItem onClick={this.onActiveChange.bind(this)} value={strings.agentPageNotActive} key={1}>{strings.agentPageNotActive}</DropdownItem>)
-        if (this.state.agent.active == false)
-        {
-            selectedActiveState = strings.agentPageNotActive
-        }
+        var selectedActiveState = this.state.agent.active ? strings.active:strings.notActive
+        activeStates.push(<DropdownItem onClick={this.onActiveChange.bind(this)} value={strings.active} key={0}>{strings.active}</DropdownItem>)
+        activeStates.push(<DropdownItem onClick={this.onActiveChange.bind(this)} value={strings.notActive} key={1}>{strings.notActive}</DropdownItem>)
 
         return (
-            <div className="new-agent-page animated fadeIn">
+            <div className="page animated fadeIn">
                 <div className="hcontainer-no-wrap">
-                    <div className="new-agent-page-title">{strings.agentPageDetails}</div>
-                    <div className="new-agent-form-horizontal-spacer-full"/>
-                    <div className="new-agent-active-box"><FixedWidthDropdown shadow label={selectedActiveState} alignMenu="right" >
+                    <div className="page-title">{strings.agentPageDetails}</div>
+                    <div className="page-form-horizontal-spacer-full"/>
+                    <div className="page-active-box"><FixedWidthDropdown shadow label={selectedActiveState} alignMenu="right" >
                         {activeStates}
                     </FixedWidthDropdown></div>
                 </div>
-                <div className="new-agent-form hcontainer-no-wrap">
-                    <div className="new-agent-form-item-box">
+                <div className="page-form hcontainer-no-wrap">
+                    <div className="page-form-item-box">
                         <Input onChange={this.onNameChange.bind(this)} label={strings.agentPageName}  defaultValue={this.state.agent.name} required={true} floatingLabel={true} />
                     </div>
-                    <div className="new-agent-form-horizontal-spacer-50"/>
-                    <div className="new-agent-form-item-box">
+                    <div className="page-form-horizontal-spacer-50"/>
+                    <div className="page-form-item-box">
                         <Input onChange={this.onFamilyNameChange.bind(this)} label={strings.agentPageFamilyName} defaultValue={this.state.agent.familyName} required={true} floatingLabel={true} />
                     </div>
-                    <div className="new-agent-form-horizontal-spacer-50"/>
-                    <div className="new-agent-form-item-box">
+                    <div className="page-form-horizontal-spacer-50"/>
+                    <div className="page-form-item-box">
                         <Input onChange={this.onIdNumberChange.bind(this)} label={strings.agentPageId} defaultValue={this.state.agent.idNumber} required={true} floatingLabel={true} />
                     </div>
                 </div>
-                <div className="new-agent-form hcontainer-no-wrap">
-                    <div className="new-agent-form-item-box">
+                <div className="page-form hcontainer-no-wrap">
+                    <div className="page-form-item-box">
                         <Input onChange={this.onPhoneNumberChange.bind(this)} label={strings.agentPagePhone} defaultValue={this.state.agent.phoneNumber} floatingLabel={true} />
                     </div>
-                    <div className="new-agent-form-horizontal-spacer-50"/>
-                    <div className="new-agent-form-item-box">
+                    <div className="page-form-horizontal-spacer-50"/>
+                    <div className="page-form-item-box">
                         <Input onChange={this.onFaxNumberChange.bind(this)} label={strings.agentPageFax} defaultValue={this.state.agent.faxNumber} floatingLabel={true} />
                     </div>
-                    <div className="new-agent-form-horizontal-spacer-50"/>
-                    <div className="new-agent-form-item-box">
+                    <div className="page-form-horizontal-spacer-50"/>
+                    <div className="page-form-item-box">
                         <Input onChange={this.onEmailChange.bind(this)} label={strings.agentPageEmail} type="email" defaultValue={this.state.agent.email} floatingLabel={true} />
                     </div>
                 </div>
                 <Button className="shadow" onClick={this.onNewPaymentRow.bind(this)} color="primary">{strings.newPayment}</Button>
-                <div className="new-agent-form-table">
+                <div className="page-form-table">
                     <Table onRemoveRow={this.onDeletePaymentRowClicked.bind(this)} columns={columns} data={this.state.agent.paymentsDetails}/>
                 </div>
                 <div className="hcontainer-no-wrap">
-                    <div className="new-agent-form-horizontal-spacer-full"/>
+                    <div className="page-form-horizontal-spacer-full"/>
                     <Button className="shadow" onClick={this.onExitClicked.bind(this)} color="default">{strings.agentPageExit}</Button>
-                    <div className="new-agent-form-horizontal-spacer-20"/>
+                    <div className="page-form-horizontal-spacer-20"/>
                     <Button className="shadow" onClick={this.onSaveClicked.bind(this)} color="primary">{strings.agentPageSave}</Button>
                 </div>
             </div>

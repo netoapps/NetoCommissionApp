@@ -90,11 +90,6 @@ class AgentsAndPartnerships extends React.Component {
         this.context.router.push('/app/agents-and-partnerships/agent-salary-page/'+rowIndex)
     }
 
-
-
-
-
-
     render () {
 
         var agentsColumns = [
@@ -179,14 +174,14 @@ class AgentsAndPartnerships extends React.Component {
             var partnershipData = {}
             partnershipData["names"] = ""
             partnershipData["idNumbers"] = ""
-            for(var idIndex = 0; idIndex < this.state.partnerships[partnershipIndex].partnersId.length ; idIndex++)
+            for(var idIndex = 0; idIndex < this.state.partnerships[partnershipIndex].agentsDetails.length ; idIndex++)
             {
-                agentData = AppStore.getAgent(this.state.partnerships[partnershipIndex].partnersId[idIndex])
+                agentData = AppStore.getAgent(this.state.partnerships[partnershipIndex].agentsDetails[idIndex].idNumber)
                 if(agentData != null)
                 {
                     partnershipData["names"] += (agentData.name + " " + agentData.familyName)
                     partnershipData["idNumbers"] += agentData.idNumber
-                    if(idIndex < (this.state.partnerships[partnershipIndex].partnersId.length-1))
+                    if(idIndex < (this.state.partnerships[partnershipIndex].agentsDetails.length-1))
                     {
                         partnershipData["names"] += ", "
                         partnershipData["idNumbers"] += ", "
