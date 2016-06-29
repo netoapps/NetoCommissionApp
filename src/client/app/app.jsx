@@ -88,9 +88,9 @@ render((
             <Route path="/app/commissions/edit-files" component={EditFiles} />
             <Route path="/app/agents-and-partnerships" component={Agents} />
 
-            <Route path="/app/agents-and-partnerships/agent-salary-page/:agentId" component={AgentSalaryPage} />
-            <Route path="/app/agents-and-partnerships/agent-page/:agentId" component={AgentPage} />
-            <Route path="/app/agents-and-partnerships/partnership-page/:partnershipId" component={PartnershipPage} />
+            <Route path="/app/agents-and-partnerships/agent-salary-page/:index" component={AgentSalaryPage} />
+            <Route path="/app/agents-and-partnerships/agent-page/:index" component={AgentPage} />
+            <Route path="/app/agents-and-partnerships/partnership-page/:index" component={PartnershipPage} />
         </Route>
    </Router>
 ), document.getElementById('content'))

@@ -16,23 +16,21 @@ class TableCell extends React.Component {
     }
     componentWillReceiveProps(nextProps)
     {
-        this.setState({
-            value: nextProps.value,
-            column: nextProps.column,
-        })
+        this.state.value = nextProps.value
+        this.state.column = nextProps.column
+        this.setState(this.state)
     }
 
     render()
     {
         var className = "table-cell";
         var color = "table-cell-text-color";
-        //var value = this.props.value;
         var node = null;
         var action = null;
 
         if (this.state.column.color === "red-green")
         {
-            if(parseFloat(this.props.value) >= 0)
+            if(parseFloat(this.state.value) >= 0)
             {
                 color = "green"
             }
@@ -41,45 +39,53 @@ class TableCell extends React.Component {
                 color = "red"
             }
         }
-        if (this.state.column.type === "read-only") {
-            node = <div className={"table-cell-read-only " + color}>{this.props.value}</div>;
-        }
-        if (this.state.column.type === "read-only-currency")
+        if (this.state.column.format === "currency")
         {
             var value = this.props.value;
             value = parseFloat(value.replace(/,/g, ""))
                 .toFixed(0)
                 .toString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            value = "₪ " + value
-            node = <div className={"table-cell-read-only " + color}>{value}</div>;
+            this.state.value = "₪ " + value
         }
-        if (this.state.column.type === "read-only-percent")
+        if (this.state.column.format === "percent")
         {
+            className = "table-cell-read-only " + color
             var value = this.props.value;
-            value = value + " %"
-            node = <div className={"table-cell-read-only " + color}>{value}</div>;
+            this.state.value = value + " %"
         }
+
+        if (this.state.column.type === "read-only")
+        {
+            node = <div className={"table-cell-read-only " + color}>{this.state.value}</div>;
+        }
+
         if (this.state.column.type === "button")
         {
             action = this.state.column.action
             className = "table-button " + this.state.column.color
             node = <div className={"table-cell-read-only " + color}>
-                <button className={className} onClick={ function(action) { action(this.props.rowIndex) }.bind(this,action)}>{this.props.value}</button>
+                <button className={className} onClick={ function(action) { action(this.props.rowIndex) }.bind(this,action)}>{this.state.value}</button>
             </div>;
         }
         if (this.state.column.type === "select")
         {
             const options = [];
+            action = this.state.column.action
             for (let type = 0; type <= this.state.column.options.length; type++ ) {
-                options.push(<DropdownItem  value={this.state.column.options[type]} key={type}>{this.state.column.options[type]}</DropdownItem>);
+                options.push(<DropdownItem onClick={ function(action,item) { action(this.props.rowIndex,item) }.bind(this,action)} value={this.state.column.options[type]} key={type}>{this.state.column.options[type]}</DropdownItem>);
             }
-
-            node = <div className="h-center"><TableDropdown  className="table-dropdown" label={this.state.column.options[0]} alignMenu="right" >
+            node = <div className="h-center"><TableDropdown  className="table-dropdown" label={this.state.value} alignMenu="right" >
                         {options}
                    </TableDropdown></div>;
-
-            //node = <div className="absolute-center">asaf</div>
+        }
+        if (this.state.column.type === "input")
+        {
+            action = this.state.column.action
+            node = <div className="h-center"><input className="table-input"
+                          type="text"
+                          value={this.state.value}
+                          onChange={ function(action,event) { action(this.props.rowIndex, event.target.value) }.bind(this,action) }/></div>
         }
 
         return ( <div className={className + " " + this.state.column.width}>
@@ -145,16 +151,22 @@ class TableColumn extends React.Component {
     }
 }
 
-class TableTrashColumn extends React.Component {
+class TableActionsColumn extends React.Component {
 
     constructor(props) {
         super(props);
-
-
     }
     render() {
-        var className = "table-column-trash";
-        return ( <div className={className}></div>);
+        if (this.props.onAddRow != null)
+        {
+            return <div className="table-column-add">
+                        <button onClick={this.props.onAddRow.bind(this)} className="table-row-add-button">+</button>
+                   </div>
+        }
+        else
+        {
+            return <div className="table-column-remove"/>
+        }
     }
 }
 
@@ -167,16 +179,14 @@ class Table extends React.Component {
         this.state = {
             columns: props.columns,
             data: props.data,
-            removableRow: !(props.onRemoveRow == null)
         }
     }
 
     componentWillReceiveProps(nextProps)
     {
-        this.setState({
-            columns: nextProps.columns,
-            data: nextProps.data
-        })
+        this.state.columns = nextProps.columns
+        this.state.data = nextProps.data
+        this.setState(this.state)
     }
 
     render()
@@ -205,12 +215,14 @@ class Table extends React.Component {
                                        columns={this.state.columns}/>
 
         var tableTrashColumn = null
-        if(this.state.removableRow)
+        if (this.props.onRemoveRow != null)
         {
-            tableTrashColumn = <TableTrashColumn/>
+            tableTrashColumn = <TableActionsColumn onAddRow={this.props.onAddRow}/>
         }
 
         return <div className="table">
+                    <div className="table-title">{this.props.title}</div>
+
                     <div className="table-header">
                         {tableTrashColumn}
                         {tableColumns}

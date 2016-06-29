@@ -1,8 +1,8 @@
 import React from 'react';
 import AuthService from '../../services/auth-service'
-import Button from '../../../../../node_modules/muicss/lib/react/button'
-import Dropdown from '../../../../../node_modules/muicss/lib/react/dropdown';
-import DropdownItem from '../../../../../node_modules/muicss/lib/react/dropdown-item';
+import Button from 'muicss/lib/react/button'
+import Dropdown from 'muicss/lib/react/dropdown';
+import DropdownItem from 'muicss/lib/react/dropdown-item';
 import FixedWidthDropdown from './../common/fixed-width-dropdown.jsx';
 import { strings } from '../../constants/strings'
 import Chart from "react-chartjs";
@@ -70,7 +70,8 @@ class DashboardToolbar extends React.Component {
         var currentYear = date.getFullYear()
         for (let i = 2012; i <= currentYear; i++ ) {
             var yearName = i.toString()
-            years.push(<DropdownItem onClick={this.onYearChange.bind(this)} value={yearName} key={i}>{yearName}</DropdownItem>);
+            years.push(<DropdownItem
+                value={yearName} key={i}>{yearName}</DropdownItem>);
         }
 
         return (
@@ -115,28 +116,32 @@ class DashboardRankTable extends React.Component {
                 title: "עמלות",
                 key: "commission",
                 width: "col-33-33",
-                type: 'read-only-currency',
+                type: 'read-only',
+                format: 'currency',
                 color: 'normal'
             },
             {
                 title: "שינוי (עמלות)",
                 key: "commissionChange",
                 width: "col-33-33",
-                type: 'read-only-percent',
+                type: 'read-only',
+                format: 'percent',
                 color: 'red-green'
             },
             {
                 title: "גודל תיק",
                 key: "totalInvestments",
                 width: "col-33-33",
-                type: 'read-only-currency',
+                type: 'read-only',
+                format: 'currency',
                 color: 'normal'
             },
             {
                 title: "שינוי (גודל תיק)",
                 key: "totalInvestmentsChange",
                 width: "col-33-33",
-                type: 'read-only-percent',
+                type: 'read-only',
+                format: 'percent',
                 color: 'red-green'
             }
 

@@ -5,115 +5,161 @@ import AppStore from '../../stores/data-store'
 import {ActionType} from '../../actions/app-actions.js'
 import Input from '../../../../../node_modules/muicss/lib/react/input';
 import { strings } from '../../constants/strings'
+import {Partnership,PartnershipPaymentDetails,PartnershipAgentDetails} from '../../model/partnership.js';
+import FixedWidthDropdown from './../common/fixed-width-dropdown.jsx';
+import Dropdown from 'muicss/lib/react/dropdown';
+import DropdownItem from 'muicss/lib/react/dropdown-item';
+import Button from 'muicss/lib/react/button'
 
 class PartnershipPage extends React.Component {
 
     constructor(props) {
         super(props);
 
-        var newAgent = this.props.params.agentId == "new"
+        var partnership = null
+        var isNewPartnership = true
+        if (this.props.params.index != "-1")
+        {
+            isNewPartnership = false
+            partnership = new Partnership(AppStore.getPartnershipAtIndex(this.props.params.index))
+        }
+        else
+        {
+            partnership = new Partnership()
+        }
+
         this.state = {
-            newAgent: newAgent,
-            agentData: null
+            isNewPartnership: isNewPartnership,
+            partnershipIndex: this.props.params.index,
+            partnership: partnership
         };
+
     }
-    componentWillReceiveProps(nextProps)
+    onAgentNameChange(index,value)
     {
-        this.state.newAgent = nextProps.params.agentId == "new"
+        this.state.partnership.paymentsDetails[index].agentPart = value
         this.setState(this.state)
     }
-    componentWillMount()
+    onAgentFamilyChange(index,value)
     {
-        if(this.state.newAgent == true)
+        this.state.partnership.paymentsDetails[index].agentPart = value
+        this.setState(this.state)
+    }
+    onAgentIdNumberChange(index,value)
+    {
+        this.state.partnership.paymentsDetails[index].agentPart = value
+        this.setState(this.state)
+    }
+    onAgentPartChange(index,value)
+    {
+        this.state.partnership.paymentsDetails[index].agentPart = value
+        this.setState(this.state)
+    }
+
+    onDeleteAgentRowClicked(rowIndex)
+    {
+        this.state.partnership.agentsDetails.splice(rowIndex, 1)
+        this.setState(this.state)
+    }
+
+    onActiveChange(item)
+    {
+        if(item.props.value == strings.active)
         {
-            this.state.agentData = AppStore.getAgent()
+            this.state.partnership.active = true
+            this.setState(this.state)
+        }
+        else
+        {
+            this.state.partnership.active = false
+            this.setState(this.state)
         }
     }
 
-    componentDidMount()
+    onNewAgentRow()
     {
-
+        this.state.partnership.agentsDetails.push(new PartnershipAgentDetails())
+        this.setState(this.state)
     }
 
     render () {
 
-        var columns = [
-
+        var agentsTableColumns = [
             {
-                title: "חברה",
-                key: "companyName",
+                title: "מזהה",
+                key: "idNumber",
+                width: "col-33-33",
+                type: 'input',
+                color: 'normal',
+                action: this.onAgentIdNumberChange.bind(this)
+            },
+            {
+                title: "שם פרטי",
+                key: "name",
                 width: "col-33-33",
                 type: 'read-only',
                 color: 'normal'
             },
             {
-                title: "מספר סוכן",
-                key: "agentNumber",
+                title: "שם משפחה",
+                key: "familyName",
                 width: "col-33-33",
                 type: 'read-only',
                 color: 'normal'
             },
             {
-                title: "סוג תשלום",
-                key: "paymentType",
+                title: "חלק סוכן %",
+                key: "part",
                 width: "col-33-33",
-                type: 'read-only',
-                color: 'normal'
-            },
-            {
-                title: "חלק סוכן",
-                key: "agentPart",
-                width: "col-33-33",
-                type: 'read-only',
-                color: 'normal'
-            },
-            {
-                title: "חלק סוכנות",
-                key: "agencyPart",
-                width: "col-33-33",
-                type: 'read-only',
-                color: 'normal'
+                type: 'input',
+                color: 'normal',
+                action: this.onAgentPartChange.bind(this)
             }
         ]
 
-        var data = [
-            {companyName: "מגדל", agentNumber: "2342234523",paymentType: "נפרעים",  agentPart: "55%", agencyPart: "45%"},
-            {companyName: "אלטשולר שחם", agentNumber: "234234",paymentType: "היקף",  agentPart: "55%", agencyPart: "45%"},
-            {companyName: "מנורה", agentNumber: "789565",paymentType: "בונוס",  agentPart: "55%", agencyPart: "45%"}
-        ]
+        var agentsData = []
 
+        for(var index = 0; index < this.state.partnership.agentsDetails.length ; index++)
+        {
+            var agentDetails = this.state.partnership.agentsDetails[index]
+            var agent = AppStore.getAgent(agentDetails.idNumber)
+            if (agent != null)
+            {
+                agentsData.push({
+                    name: agent.name,
+                    familyName: agent.familyName,
+                    idNumber: agentDetails.idNumber,
+                    part: agentDetails.part
+                })
+            }
+            else
+            {
+                agentsData.push({
+                    name: "",
+                    familyName: "",
+                    idNumber: "",
+                    part: ""
+                })
+            }
+         }
+
+        var activeStates = []
+        var selectedActiveState = this.state.partnership.active ? strings.active:strings.notActive
+        activeStates.push(<DropdownItem onClick={this.onActiveChange.bind(this)} value={strings.active} key={0}>{strings.active}</DropdownItem>)
+        activeStates.push(<DropdownItem onClick={this.onActiveChange.bind(this)} value={strings.notActive} key={1}>{strings.notActive}</DropdownItem>)
 
         return (
-            <div className="new-agent-page animated fadeIn">
-                <div className="new-agent-page-title">{strings.partnershipPageDetails}</div>
-                <div className="new-agent-form hcontainer-no-wrap">
-                    <div className="new-agent-form-item-box">
-                        <Input label={strings.partnershipPageName} floatingLabel={true} />
-                    </div>
-                    <div className="new-agent-form-horizontal-spacer"/>
-                    <div className="new-agent-form-item-box">
-                        <Input label={strings.partnershipPageFamilyName} floatingLabel={true} />
-                    </div>
-                    <div className="new-agent-form-horizontal-spacer"/>
-                    <div className="new-agent-form-item-box">
-                        <Input label={strings.partnershipPageId} floatingLabel={true} />
-                    </div>
+            <div className="page animated fadeIn">
+                <div className="hcontainer-no-wrap">
+                    <div className="page-title">{strings.partnershipPageDetails}</div>
+                    <div className="page-form-horizontal-spacer-full"/>
+                    <div className="page-active-box"><FixedWidthDropdown shadow label={selectedActiveState} alignMenu="right" >
+                        {activeStates}
+                    </FixedWidthDropdown></div>
                 </div>
-                <div className="new-agent-form hcontainer-no-wrap">
-                    <div className="new-agent-form-item-box">
-                        <Input label={strings.partnershipPagePhone} floatingLabel={true} />
-                    </div>
-                    <div className="new-agent-form-horizontal-spacer"/>
-                    <div className="new-agent-form-item-box">
-                        <Input label={strings.partnershipPageFax} floatingLabel={true} />
-                    </div>
-                    <div className="new-agent-form-horizontal-spacer"/>
-                    <div className="new-agent-form-item-box">
-                        <Input label={strings.partnershipPageEmail} floatingLabel={true} />
-                    </div>
-                </div>
-                <div className="new-agent-form-table">
-                    <Table columns={columns} data={data}/>
+                <Button className="shadow" onClick={this.onNewAgentRow.bind(this)} color="primary">{strings.newAgent}</Button>
+                <div className="page-form-table">
+                    <Table onRemoveRow={this.onDeleteAgentRowClicked.bind(this)} columns={agentsTableColumns} data={agentsData}/>
                 </div>
             </div>
         );

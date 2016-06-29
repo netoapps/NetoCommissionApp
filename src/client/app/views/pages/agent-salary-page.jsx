@@ -35,6 +35,15 @@ class AgentSalaryPage extends React.Component {
 
     }
 
+    onCompanyNameSelect(rowIndex, companyName)
+    {
+        console.log(rowIndex)
+        console.log(companyName)
+    }
+    onCommissionTypeSelect(rowIndex, commissionType)
+    {
+
+    }
     render () {
 
 
@@ -46,7 +55,8 @@ class AgentSalaryPage extends React.Component {
                 width: "col-33-33",
                 type: 'select',
                 color: 'normal',
-                options: AppStore.getCompanies()
+                options: AppStore.getCompanies(),
+                action: this.onCompanyNameSelect.bind(this)
             },
             {
                 title: "מספר סוכן",
@@ -61,7 +71,8 @@ class AgentSalaryPage extends React.Component {
                 width: "col-33-33",
                 type: 'select',
                 color: 'normal',
-                options: AppStore.getCommissionTypes()
+                options: AppStore.getCommissionTypes(),
+                action: this.onCommissionTypeSelect.bind(this)
             },
             {
                 title: "חלק סוכן %",
@@ -78,7 +89,6 @@ class AgentSalaryPage extends React.Component {
                 color: 'normal'
             }
         ]
-
 
         var name = "",familyName = "",idNumber = "",phoneNumber = "",faxNumber = "",email = "",active = "",companies = null
         if(this.state.newAgent == false)

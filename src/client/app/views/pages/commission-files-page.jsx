@@ -2,8 +2,8 @@ import React from 'react';
 import AuthService from '../../services/auth-service'
 import Table from './../common/table.jsx';
 import AppActions from '../../actions/app-actions'
-import AppStore from '../../stores/data-store'
 import {ActionType} from '../../actions/app-actions.js'
+import AppStore from '../../stores/data-store'
 
 class EditFilesPage extends React.Component {
 
@@ -14,18 +14,20 @@ class EditFilesPage extends React.Component {
             loginData: AuthService.getLoginData(),
             filesData: AppStore.getCommissionFiles()
         };
+
+        this._onDeleteCommissionFile = this.onDeleteCommissionFile.bind(this)
     }
 
     componentDidMount()
     {
-        AppStore.addEventListener(ActionType.DELETE_COMMISSION_DOC, this.onDeleteFile.bind(this));
+        AppStore.addEventListener(ActionType.DELETE_COMMISSION_DOC, this._onDeleteCommissionFile);
     }
 
     componentWillUnmount()
     {
-        AppStore.removeEventListener(ActionType.DELETE_COMMISSION_DOC,this.onDeleteFile);
+        AppStore.removeEventListener(ActionType.DELETE_COMMISSION_DOC,this._onDeleteCommissionFile);
     }
-    onDeleteFile()
+    onDeleteCommissionFile()
     {
         this.state.filesData = AppStore.getCommissionFiles()
         this.setState(this.state)
