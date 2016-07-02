@@ -20,6 +20,7 @@ module.exports.registerRoutes = function(app){
     //    res.end();
     //});
     publicRouter.post('/salaries/:agentId/monthYearType',salaries.getAgentSalariesByMonthYearType);
+    publicRouter.get('/agents/',agents.getAllAgents);
     //publicRouter.post('/salaries',salaries.getSalariesForAgenyByMonthAndYear);
 
     app.use('/',publicRouter);
