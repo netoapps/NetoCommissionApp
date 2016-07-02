@@ -11,7 +11,7 @@ class TableCell extends React.Component {
 
         this.state = {
             value: this.props.value,
-            column: this.props.column,
+            column: this.props.column
         }
     }
     componentWillReceiveProps(nextProps)

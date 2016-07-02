@@ -28,31 +28,63 @@ class PartnershipPage extends React.Component {
             partnership = new Partnership()
         }
 
+        var agentsData = []
+        for(var index = 0; index < partnership.agentsDetails.length ; index++)
+        {
+            var agentDetails = partnership.agentsDetails[index]
+            var agent = AppStore.getAgent(agentDetails.idNumber)
+            if (agent != null)
+            {
+                agentsData.push({
+                    name: agent.name + " " + agent.familyName,
+                    idNumber: agentDetails.idNumber,
+                    part: agentDetails.part
+                })
+            }
+            else
+            {
+                agentsData.push({
+                    name: "",
+                    idNumber: "",
+                    part: ""
+                })
+            }
+        }
+
         this.state = {
             isNewPartnership: isNewPartnership,
             partnershipIndex: this.props.params.index,
-            partnership: partnership
+            partnership: partnership,
+            agentsData: agentsData,
+            agentsListOpened: false,
+            agentsListDataSource: AppStore.getAgents(),
+            filteredAgents: []
+
         };
 
+        this._onOutsideClick = this.onOutsideClick.bind(this)
     }
-    onAgentNameChange(index,value)
+    componentWillMount() {
+    }
+
+    componentWillUnmount() {
+    }
+
+    onOutsideClick(ev)
     {
-        this.state.partnership.paymentsDetails[index].agentPart = value
-        this.setState(this.state)
+        let isClickInside = this.refs.agentsList.contains(ev.target);
+        if (!isClickInside && this.state.agentsListOpened)
+        {
+            this.state.agentsListOpened = !this.state.agentsListOpened
+            this.setState(this.state)
+            document.removeEventListener('click', this._onOutsideClick);
+        }
     }
-    onAgentFamilyChange(index,value)
-    {
-        this.state.partnership.paymentsDetails[index].agentPart = value
-        this.setState(this.state)
-    }
-    onAgentIdNumberChange(index,value)
-    {
-        this.state.partnership.paymentsDetails[index].agentPart = value
-        this.setState(this.state)
-    }
+
+
     onAgentPartChange(index,value)
     {
-        this.state.partnership.paymentsDetails[index].agentPart = value
+        this.state.agentsData[index].part = value
         this.setState(this.state)
     }
 
@@ -76,33 +108,80 @@ class PartnershipPage extends React.Component {
         }
     }
 
+    filterAgents(text)
+    {
+        this.state.filteredAgents = []
+        for(var index = 0; index < this.state.agentsListDataSource.length; index++)
+        {
+            var agent = this.state.agentsListDataSource[index]
+            var agentName = agent.name + " " + agent.familyName
+            if(agentName.includes(text))
+            {
+                this.state.filteredAgents.push(agent)
+            }
+        }
+    }
+    onAgentSearchChange(e)
+    {
+        this.filterAgents(e.target.value)
+        this.setState(this.state)
+    }
+
     onNewAgentRow()
     {
-        this.state.partnership.agentsDetails.push(new PartnershipAgentDetails())
+
+        this.state.agentsListOpened = !this.state.agentsListOpened
+        if(this.state.agentsListOpened)
+        {
+            this.filterAgents("")
+            document.addEventListener('click', this._onOutsideClick);
+        }
         this.setState(this.state)
+    }
+    onSelectAgent(agent)
+    {
+        for(var index = 0; index < this.state.agentsData.length; index++)
+        {
+            var agentData = this.state.agentsData[index]
+            if(agentData.idNumber === agent.idNumber)
+            {
+                break
+            }
+        }
+        if(index == this.state.agentsData.length)
+        {
+            this.state.agentsData.push({
+                name: agent.name + " " + agent.familyName,
+                idNumber: agent.idNumber,
+                part: ""
+            })
+        }
+        this.state.agentsListOpened = false
+        document.removeEventListener('click', this._onOutsideClick);
+        this.setState(this.state)
+
+        //var partnership = new PartnershipAgentDetails()
+        //partnership.name = agent.name
+        //partnership.familyName = agent.familyName
+        //partnership.idNumber = agent.idNumber
+        //partnership.part = ""
+        //this.state.partnership.agentsDetails.push(partnership)
     }
 
     render () {
 
+
         var agentsTableColumns = [
             {
-                title: "מזהה",
-                key: "idNumber",
-                width: "col-33-33",
-                type: 'input',
-                color: 'normal',
-                action: this.onAgentIdNumberChange.bind(this)
-            },
-            {
-                title: "שם פרטי",
+                title: "שם",
                 key: "name",
                 width: "col-33-33",
                 type: 'read-only',
-                color: 'normal'
+                color: 'normal',
             },
             {
-                title: "שם משפחה",
-                key: "familyName",
+                title: "מזהה",
+                key: "idNumber",
                 width: "col-33-33",
                 type: 'read-only',
                 color: 'normal'
@@ -117,36 +196,34 @@ class PartnershipPage extends React.Component {
             }
         ]
 
-        var agentsData = []
-
-        for(var index = 0; index < this.state.partnership.agentsDetails.length ; index++)
-        {
-            var agentDetails = this.state.partnership.agentsDetails[index]
-            var agent = AppStore.getAgent(agentDetails.idNumber)
-            if (agent != null)
-            {
-                agentsData.push({
-                    name: agent.name,
-                    familyName: agent.familyName,
-                    idNumber: agentDetails.idNumber,
-                    part: agentDetails.part
-                })
-            }
-            else
-            {
-                agentsData.push({
-                    name: "",
-                    familyName: "",
-                    idNumber: "",
-                    part: ""
-                })
-            }
-         }
-
         var activeStates = []
         var selectedActiveState = this.state.partnership.active ? strings.active:strings.notActive
         activeStates.push(<DropdownItem onClick={this.onActiveChange.bind(this)} value={strings.active} key={0}>{strings.active}</DropdownItem>)
         activeStates.push(<DropdownItem onClick={this.onActiveChange.bind(this)} value={strings.notActive} key={1}>{strings.notActive}</DropdownItem>)
+
+        var agentsList = null
+        if(this.state.agentsListOpened)
+        {
+            var items = []
+
+            for(var index = 0; index < this.state.filteredAgents.length; index++)
+            {
+                var agent = this.state.filteredAgents[index]
+                var agentName = agent.name + " " + agent.familyName
+                items.push(<div key={index}><button onClick={ this.onSelectAgent.bind(this,agent)} className="agents-list-item-name">{agentName}</button><div className="agents-list-item-id">{agent.idNumber}</div></div>)
+            }
+
+            agentsList = <div ref="agentsList" className="agents-list">
+                            <input className="agents-list-search-input"
+                                   type="text"
+                                   value={this.state.value}
+                                   onChange={this.onAgentSearchChange.bind(this) }/>
+                            <div className="agents-list-content">
+                                {items}
+                            </div>
+                         </div>
+        }
+
 
         return (
             <div className="page animated fadeIn">
@@ -157,9 +234,12 @@ class PartnershipPage extends React.Component {
                         {activeStates}
                     </FixedWidthDropdown></div>
                 </div>
-                <Button className="shadow" onClick={this.onNewAgentRow.bind(this)} color="primary">{strings.newAgent}</Button>
+                <div className="hcontainer-no-wrap">
+                    <Button className="shadow" onClick={this.onNewAgentRow.bind(this)} color="primary">{strings.newAgent}</Button>
+                    {agentsList}
+                </div>
                 <div className="page-form-table">
-                    <Table onRemoveRow={this.onDeleteAgentRowClicked.bind(this)} columns={agentsTableColumns} data={agentsData}/>
+                    <Table onRemoveRow={this.onDeleteAgentRowClicked.bind(this)} columns={agentsTableColumns} data={this.state.agentsData}/>
                 </div>
             </div>
         );
