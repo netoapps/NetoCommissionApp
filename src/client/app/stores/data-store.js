@@ -20,26 +20,58 @@ class DataStore extends Store {
         var companies = ["כלל ביטוח","כלל גמל","מגדל","מנורה","אלטשולר שחם","ילין לפידות","מיטב דש","הראל","הפניקס","אנליסט","איי בי איי","אקסלנס","הכשרה"]
         this.initialize('companies',companies);
 
+        //1 - agent number in company
+        //2 - godel tik
+        //3 - nifraim
+        //4 - hekef
+        //5 - bonus
         var commissionType = ["היקף","נפרעים","בונוס"]
         this.initialize('commissionType',commissionType);
 
         this.setDummyData()
     }
 
-    setDummyData()
-    {
+    setDummyData() {
+        //[{
+        //    fileName: "",
+        //    companyName: "",
+        //    creationTime: (date),
+        //    month: "" (2,3,4...),
+        //    year:"",
+        //    notes:""
+        //}]
+
         var files = [
-            {fileName: "ילין לפידות.xlsx", companyName: "ילין לפידות", paymentMonth: "04/16", uploadDate: "01/04/16", notes: "במבה קטנה" },
-            {fileName: "ילין לפידות.xlsx", companyName: "ילין לפידות", paymentMonth: "04/16", uploadDate: "01/04/16", notes: "במבה קטנה ויפה"},
-            {fileName: "ילין לפידות.xlsx", companyName: "ילין לפידות", paymentMonth: "04/16", uploadDate: "01/04/16", notes: "במבה קטנה ושמנמנה"}
+            {
+                fileName: "ילין לפידות.xlsx",
+                companyName: "ילין לפידות",
+                paymentMonth: "04/16",
+                uploadDate: "01/04/16",
+                notes: "במבה קטנה"
+            },
+            {
+                fileName: "ילין לפידות.xlsx",
+                companyName: "ילין לפידות",
+                paymentMonth: "04/16",
+                uploadDate: "01/04/16",
+                notes: "במבה קטנה ויפה"
+            },
+            {
+                fileName: "ילין לפידות.xlsx",
+                companyName: "ילין לפידות",
+                paymentMonth: "04/16",
+                uploadDate: "01/04/16",
+                notes: "במבה קטנה ושמנמנה"
+            }
         ]
-        this.initialize('files',files);
+        this.initialize('files', files);
 
         //defaults
         //nifraim - 70(agent) 30(company)
         //heikef - 55(agent) 45(company)
         //bonus - 50(agent) 50(company)
         var agents = []
+
 
         var karinPayments = []
         karinPayments.push(new AgentPaymentDetails( {companyName: "מגדל", agentNumber: "2342234523",paymentType: "נפרעים",  agentPart: "55", agencyPart: "45"}  ))
@@ -55,6 +87,7 @@ class DataStore extends Store {
             active: true,
             paymentsDetails: karinPayments
         }))
+
 
         var idanPayments = []
         idanPayments.push(new AgentPaymentDetails( {companyName: "מגדל", agentNumber: "57546",paymentType: "נפרעים",  agentPart: "55", agencyPart: "45"}  ))
@@ -102,6 +135,8 @@ class DataStore extends Store {
 
         this.initialize('agents',agents);
 
+
+
         var partnership1 = new Partnership()
         partnership1.active = true
         var partnershipAgentDetails10 = new PartnershipAgentDetails()
@@ -111,9 +146,9 @@ class DataStore extends Store {
         partnershipAgentDetails11.idNumber = "34421134"
         partnershipAgentDetails11.part = "36"
         partnership1.agentsDetails = [partnershipAgentDetails10,partnershipAgentDetails11]
-        partnership1.paymentsDetails.push({companyName: "מגדל", agentNumber: "789674",paymentType: "נפרעים",  partnershipPart: "55", agencyPart: "45"})
-        partnership1.paymentsDetails.push({companyName: "כלל", agentNumber: "34243254",paymentType: "בונוס",  partnershipPart: "58", agencyPart: "42"})
-        partnership1.paymentsDetails.push({companyName: "מנורה", agentNumber: "546786",paymentType: "היקף",  partnershipPart: "45", agencyPart: "65"})
+        partnership1.paymentsDetails.push({companyName: "מגדל", partnershipNumber: "789674",paymentType: "נפרעים",  partnershipPart: "55", agencyPart: "45"})
+        partnership1.paymentsDetails.push({companyName: "כלל", partnershipNumber: "34243254",paymentType: "בונוס",  partnershipPart: "58", agencyPart: "42"})
+        partnership1.paymentsDetails.push({companyName: "מנורה", partnershipNumber: "546786",paymentType: "היקף",  partnershipPart: "45", agencyPart: "65"})
 
         var partnership2 = new Partnership()
         partnership2.active = false

@@ -12,19 +12,17 @@ export class PartnershipPaymentDetails {
         else
         {
             this.companyName = "";
-            this.agentNumber = "";
+            this.partnershipNumber = "";
             this.paymentType = "";
             this.partnershipPart = "";
-            this.agencyPart = "";
         }
     }
     copyFrom(partnershipPaymentDetails)
     {
         this.companyName = partnershipPaymentDetails.companyName;
-        this.agentNumber = partnershipPaymentDetails.agentNumber.slice();
+        this.partnershipNumber = partnershipPaymentDetails.partnershipNumber;
         this.paymentType = partnershipPaymentDetails.paymentType;
         this.partnershipPart = partnershipPaymentDetails.partnershipPart;
-        this.agencyPart = partnershipPaymentDetails.agencyPart;
     }
 }
 
@@ -37,16 +35,12 @@ export class PartnershipAgentDetails {
         }
         else
         {
-            this.name = "";
-            this.familyName = "";
             this.idNumber = "";
             this.part = "";
         }
     }
     copyFrom(partnershipPaymentDetails)
     {
-        this.name = partnershipPaymentDetails.name;
-        this.familyName = partnershipPaymentDetails.familyName;
         this.idNumber = partnershipPaymentDetails.idNumber;
         this.part = partnershipPaymentDetails.part;
     }

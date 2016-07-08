@@ -183,6 +183,11 @@ class AgentPage extends React.Component {
     onAgentPartChange(index,value)
     {
         this.state.agent.paymentsDetails[index].agentPart = value
+        this.state.agent.paymentsDetails[index].agencyPart = "--"
+        if(!isNaN(parseInt(value)))
+        {
+            this.state.agent.paymentsDetails[index].agencyPart = 100 - parseInt(value)
+        }
         this.setState(this.state)
     }
     onAgencyPartChange(index,value)
@@ -232,9 +237,8 @@ class AgentPage extends React.Component {
                 title: "חלק סוכנות %",
                 key: "agencyPart",
                 width: "col-33-33",
-                type: 'input',
-                color: 'normal',
-                action: this.onAgencyPartChange.bind(this)
+                type: 'read-only',
+                color: 'normal'
             }
         ]
 
