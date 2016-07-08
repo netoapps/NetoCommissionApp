@@ -182,6 +182,9 @@ class AgentPage extends React.Component {
     }
     onAgentPartChange(index,value)
     {
+        if(value > 100)
+            return
+
         this.state.agent.paymentsDetails[index].agentPart = value
         this.state.agent.paymentsDetails[index].agencyPart = "--"
         if(!isNaN(parseInt(value)))
@@ -245,7 +248,7 @@ class AgentPage extends React.Component {
         activeStates.push(<DropdownItem onClick={this.onActiveChange.bind(this)} value={strings.notActive} key={1}>{strings.notActive}</DropdownItem>)
 
         return (
-            <div className="page animated fadeIn">
+            <div className="page animated fadeIn shadow">
                 <div className="hcontainer-no-wrap">
                     <div className="page-title">{strings.agentPageDetails}</div>
                     <div className="page-form-horizontal-spacer-full"/>

@@ -436,12 +436,13 @@ body
 .dashboard-page
 {
     min-width: 1200px;
-    /*max-width: 1500px;*/
     position: absolute;
-    top: 100px;
-    right: 280px;
-    left: 30px;
-    bottom: 30px;
+    top: 90px;
+    right: 270px;
+    left: 20px;
+    bottom: 20px;
+    height: calc(100% - 130px);
+    max-height: calc(100% - 130px);
 }
 
 .dashboard-date-box
@@ -458,15 +459,139 @@ body
     /*justify-content: center;*/
 /*}*/
 
+
+
+
+
+.dashboard-buttons-horizontal-spacer
+{
+    width: 10px;
+    height: 100%;
+}
+
+.dashboard-horizontal-spacer
+{
+    width: 20px;
+    height: 370px;
+}
+
+.dashboard-vertical-spacer
+{
+    height: 20px;
+    width: 100%;
+}
+
+.dashboard-stats-container
+{
+    width: calc(50% - 10px);
+    height: 370px;
+}
+
+.dashboard-stats-container-top
+{
+    width: 100%;
+    height: 175px;
+    /*background-color: white;*/
+}
+
+.dashboard-commission-change-chart
+{
+    width: 100%;
+    height: calc(100% - 415px);
+    min-height: 350px;
+    background-color: white;
+    padding-top: 20px;
+}
+
+.dashboard-commission-change-chart-box
+{
+    height: calc(100% - 40px);
+    padding: 20px 50px;
+}
+
+.dashboard-rank-table
+{
+    width: calc(50% - 10px);
+    min-width: 610px;
+    height: 370px;
+    background-color: white;
+    padding: 20px;
+}
+
+
+
+.dashboard-month-total-agents
+{
+    min-width: 150px;
+    width: calc(50% - 10px);
+    height: 175px;
+    background-color: white;
+    padding-top:20px ;
+}
+
+.dashboard-total-investments
+{
+    min-width: 380px;
+    width: 100%;
+    height: 175px;
+    background-color: white;
+    padding-top:20px ;
+}
+
+.dashboard-month-total-commissions
+{
+    min-width:150px;
+    width: calc(50% - 10px);
+    height: 175px;
+    background-color: white;
+    padding-top:20px ;
+}
+
+.dashboard-box-title
+{
+    text-align: center;
+    color: #505050;
+    width: 100%;
+    height: 45px;
+    background-color: transparent;
+    font-size: 16px;
+    font-weight: bold;
+    /*margin-top: 20px;*/
+}
+
+.dashboard-box-value
+{
+    direction: ltr;
+    text-align: center;
+    /*color: #4286b4;*/
+    width: 100%;
+    height: 45px;
+    background-color: transparent;
+    font-size: 30px;
+    /*font-weight: bold;*/
+}
+
+.dashboard-box-change
+{
+    direction: ltr;
+    text-align: center;
+    /*color: #3d8e4c;*/
+    width: 100%;
+    height: 30px;
+    background-color: transparent;
+    font-size: 17px;
+    margin-top: 24px;
+}
+
 .commissions-page
 {
     min-width: 1200px;
     /*max-width: 1500px;*/
     position: absolute;
-    top: 100px;
-    right: 280px;
-    left: 30px;
-    bottom: 30px;
+    top: 90px;
+    right: 270px;
+    left: 20px;
+    bottom: 20px;
     height: calc(100% - 130px);
     max-height: calc(100% - 130px);
     /*background-color: green;*/
@@ -602,127 +727,6 @@ body
 }
 
 
-
-
-.dashboard-buttons-horizontal-spacer
-{
-    width: 10px;
-    height: 100%;
-}
-
-.dashboard-horizontal-spacer
-{
-    width: 20px;
-    height: 370px;
-}
-
-.dashboard-vertical-spacer
-{
-    height: 20px;
-    width: 100%;
-}
-
-.dashboard-stats-container
-{
-    width: calc(50% - 10px);
-    height: 370px;
-}
-
-.dashboard-stats-container-top
-{
-    width: 100%;
-    height: 175px;
-    /*background-color: white;*/
-}
-
-.dashboard-commission-change-chart
-{
-    width: 100%;
-    height: 450px;
-    background-color: white;
-    padding-top: 20px;
-}
-
-.dashboard-commission-change-chart-box
-{
-    height: 390px;
-    padding: 20px 50px;
-}
-
-.dashboard-rank-table
-{
-    width: calc(50% - 10px);
-    min-width: 650px;
-    height: 370px;
-    background-color: white;
-    padding: 20px;
-}
-
-
-
-.dashboard-month-total-agents
-{
-    min-width: 320px;
-    width: calc(50% - 10px);
-    height: 175px;
-    background-color: white;
-    padding-top:20px ;
-}
-
-.dashboard-total-investments
-{
-    min-width: 670px;
-    width: 100%;
-    height: 175px;
-    background-color: white;
-    padding-top:20px ;
-}
-
-.dashboard-month-total-commissions
-{
-    min-width: 320px;
-    width: calc(50% - 10px);
-    height: 175px;
-    background-color: white;
-    padding-top:20px ;
-}
-
-.dashboard-box-title
-{
-    text-align: center;
-    color: #505050;
-    width: 100%;
-    height: 40px;
-    background-color: transparent;
-    font-size: 18px;
-    font-weight: bold;
-    /*margin-top: 20px;*/
-}
-
-.dashboard-box-value
-{
-    direction: ltr;
-    text-align: center;
-    /*color: #4286b4;*/
-    width: 100%;
-    height: 45px;
-    background-color: transparent;
-    font-size: 40px;
-    /*font-weight: bold;*/
-}
-
-.dashboard-box-change
-{
-    direction: ltr;
-    text-align: center;
-    /*color: #3d8e4c;*/
-    width: 100%;
-    height: 30px;
-    background-color: transparent;
-    font-size: 20px;
-    margin-top: 24px;
-}
-
 .label-checkbox
 {
     margin-left: 8px;
@@ -790,9 +794,9 @@ body
     padding-top: 5px;
     padding-right: 10px;
 
-    box-shadow: 0px 2px 8px #acacac;
-    -webkit-box-shadow: 0px 2px 8px #acacac;
-    -moz-box-shadow: 0px 2px 8px #acacac;
+    box-shadow: 0px 2px 7px #acacac;
+    -webkit-box-shadow: 0px 2px 7px #acacac;
+    -moz-box-shadow: 0px 2px 7px #acacac;
     background-color: #4286b4;
 }
 
@@ -803,7 +807,7 @@ body
 
 .table-column
 {
-    font-size: 14px;
+    font-size: 13px;
     color: white;
     padding: 5px 10px;
     text-align: center;
@@ -839,7 +843,7 @@ body
 .table-cell-read-only
 {
     direction: ltr;
-    font-size: 14px;
+    font-size: 13.5px;
     text-align: center;
     /*height: 33px;*/
     line-height: 45px;

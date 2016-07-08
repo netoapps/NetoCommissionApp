@@ -9,6 +9,9 @@ import AppStore from '../../stores/data-store'
 import AppActions from '../../actions/app-actions'
 import {ActionType} from '../../actions/app-actions.js'
 
+//Global since its not save when user comes back to page
+var selectedTab = 0
+
 class AgentsAndPartnerships extends React.Component {
 
     constructor(props) {
@@ -16,7 +19,6 @@ class AgentsAndPartnerships extends React.Component {
 
         this.state = {
             loginData: AuthService.getLoginData(),
-            selectedTab: 0,
             agents: AppStore.getAgents(),
             partnerships:AppStore.getPartnerships()
         };
@@ -79,9 +81,8 @@ class AgentsAndPartnerships extends React.Component {
     //UI
     onChangeTab(i, value, tab, ev)
     {
-        this.state.selectedTab = i
+        selectedTab = i
         this.setState(this.state)
-        console.log(arguments);
     }
 
     //Salary
@@ -194,8 +195,8 @@ class AgentsAndPartnerships extends React.Component {
 
 
         return (
-            <div className="agents-page animated fadeIn">
-                <Tabs onChange={this.onChangeTab.bind(this)} justified={true} initialSelectedIndex={this.state.selectedTab}>
+            <div className="agents-page animated fadeIn shadow">
+                <Tabs onChange={this.onChangeTab.bind(this)} justified={true} initialSelectedIndex={selectedTab}>
                     <Tab value="pane-1" label={strings.agents}>
 
                         <div className="agents-page-tab-container">

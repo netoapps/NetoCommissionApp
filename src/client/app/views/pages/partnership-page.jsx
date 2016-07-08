@@ -29,6 +29,30 @@ class PartnershipPage extends React.Component {
             partnership = new Partnership()
         }
 
+        this.state = {
+            isNewPartnership: isNewPartnership,
+            partnershipIndex: this.props.params.index,
+            partnership: partnership,
+            agentsData: this.createAgentData(partnership),
+            agentsListOpened: false,
+            agentsListDataSource: AppStore.getAgents(),
+            filteredAgents: []
+
+        };
+
+        this._onOutsideClick = this.onOutsideClick.bind(this)
+        this._onUpdatePartnershipEvent = this.onUpdatePartnershipEvent.bind(this)
+    }
+    componentDidMount()
+    {
+        AppStore.addEventListener(ActionType.UPDATE_PARTNERSHIP, this._onUpdatePartnershipEvent);
+    }
+    componentWillUnmount()
+    {
+        AppStore.removeEventListener(ActionType.UPDATE_PARTNERSHIP,this._onUpdatePartnershipEvent);
+    }
+    createAgentData(partnership)
+    {
         var agentsData = []
         for(var index = 0; index < partnership.agentsDetails.length ; index++)
         {
@@ -51,26 +75,14 @@ class PartnershipPage extends React.Component {
                 })
             }
         }
-
-        this.state = {
-            isNewPartnership: isNewPartnership,
-            partnershipIndex: this.props.params.index,
-            partnership: partnership,
-            agentsData: agentsData,
-            agentsListOpened: false,
-            agentsListDataSource: AppStore.getAgents(),
-            filteredAgents: []
-
-        };
-
-        this._onOutsideClick = this.onOutsideClick.bind(this)
+        return agentsData
     }
-    componentWillMount() {
+    onUpdatePartnershipEvent()
+    {
+        this.state.partnership = new Partnership(AppStore.getPartnershipAtIndex(this.props.params.index))
+        this.state.agentsData = this.createAgentData(this.state.partnership)
+        this.setState(this.state)
     }
-
-    componentWillUnmount() {
-    }
-
     onOutsideClick(ev)
     {
         let isClickInside = this.refs.agentsList.contains(ev.target);
@@ -186,16 +198,19 @@ class PartnershipPage extends React.Component {
     }
     onNewPaymentRow()
     {
-        this.state.partnership.paymentsDetails.push(new AgentPaymentDetails())
+        this.state.partnership.paymentsDetails.push(new PartnershipPaymentDetails())
         this.setState(this.state)
     }
     onPartnershipNumberChange(index,value)
     {
-        this.state.partnership.paymentsDetails[index].agentNumber = value
+        this.state.partnership.paymentsDetails[index].partnershipNumber = value
         this.setState(this.state)
     }
     onPartnershipPartChange(index,value)
     {
+        if(value > 100)
+            return
+
         this.state.partnership.paymentsDetails[index].partnershipPart = value
         this.state.partnership.paymentsDetails[index].agencyPart = "--"
         if(!isNaN(parseInt(value)))
@@ -212,49 +227,7 @@ class PartnershipPage extends React.Component {
     }
     onSaveClicked()
     {
-        if(this.state.agent.name.length == 0)
-        {
-            swal({
-                title: "שגיאה",
-                text: "לא הוזן שם פרטי",
-                type: "error",
-                showCancelButton: false,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "סגור",
-                closeOnConfirm: true,
-                showLoaderOnConfirm: false
-            });
-            return
-        }
-        if(this.state.agent.familyName.length == 0)
-        {
-            swal({
-                title: "שגיאה",
-                text: "לא הוזן שם משפחה",
-                type: "error",
-                showCancelButton: false,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "סגור",
-                closeOnConfirm: true,
-                showLoaderOnConfirm: false
-            });
-            return
-        }
-        if(this.state.agent.idNumber.length == 0)
-        {
-            swal({
-                title: "שגיאה",
-                text: "לא הוזן מספר מזהה",
-                type: "error",
-                showCancelButton: false,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "סגור",
-                closeOnConfirm: true,
-                showLoaderOnConfirm: false
-            });
-            return
-        }
-        AppActions.updateAgentAtIndex(this.state.agentIndex,this.state.agent)
+        AppActions.updatePartnershipAtIndex(this.state.partnershipIndex,this.state.partnership)
         this.context.router.goBack()
     }
 
@@ -360,7 +333,7 @@ class PartnershipPage extends React.Component {
 
 
         return (
-            <div className="page animated fadeIn">
+            <div className="page animated fadeIn shadow">
                 <div className="hcontainer-no-wrap">
                     <div className="page-title">{strings.partnershipPageDetails}</div>
                     <div className="page-form-horizontal-spacer-full"/>

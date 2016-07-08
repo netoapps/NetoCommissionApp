@@ -159,9 +159,9 @@ class DataStore extends Store {
         partnershipAgentDetails21.idNumber = "34421134"
         partnershipAgentDetails21.part = "50"
         partnership2.agentsDetails = [partnershipAgentDetails21,partnershipAgentDetails20]
-        partnership2.paymentsDetails.push({companyName: "מגדל", agentNumber: "234234",paymentType: "נפרעים",  partnershipPart: "55", agencyPart: "45"})
-        partnership2.paymentsDetails.push({companyName: "כלל", agentNumber: "6786",paymentType: "בונוס",  partnershipPart: "58", agencyPart: "42"})
-        partnership2.paymentsDetails.push({companyName: "מנורה", agentNumber: "78977655",paymentType: "היקף",  partnershipPart: "45", agencyPart: "65"})
+        partnership2.paymentsDetails.push({companyName: "מגדל", partnershipNumber: "234234",paymentType: "נפרעים",  partnershipPart: "55", agencyPart: "45"})
+        partnership2.paymentsDetails.push({companyName: "כלל", partnershipNumber: "6786",paymentType: "בונוס",  partnershipPart: "58", agencyPart: "42"})
+        partnership2.paymentsDetails.push({companyName: "מנורה", partnershipNumber: "78977655",paymentType: "היקף",  partnershipPart: "45", agencyPart: "65"})
         var partnershipsData = [partnership1,partnership2]
         this.initialize('partnerships',partnershipsData);
     }
@@ -308,7 +308,7 @@ class DataStore extends Store {
                 break;
 
             case ActionType.UPDATE_PARTNERSHIP:
-                this.setPartnershipAtIndex(data.index,data.agent)
+                this.setPartnershipAtIndex(data.index,data.partnership)
                 break;
 
             case ActionType.DELETE_PARTNERSHIP:
