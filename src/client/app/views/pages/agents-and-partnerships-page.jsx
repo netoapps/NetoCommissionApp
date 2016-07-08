@@ -195,7 +195,7 @@ class AgentsAndPartnerships extends React.Component {
 
 
         return (
-            <div className="agents-page animated fadeIn shadow">
+            <div className="agents-and-partnerships-page animated fadeIn shadow">
                 <Tabs onChange={this.onChangeTab.bind(this)} justified={true} initialSelectedIndex={selectedTab}>
                     <Tab value="pane-1" label={strings.agents}>
 

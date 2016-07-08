@@ -298,7 +298,7 @@ class PartnershipPage extends React.Component {
                 options: AppStore.getCompanies()
             },
             {
-                title: "מספר שותפות",
+                title: "מספר סוכן",
                 key: "partnershipNumber",
                 width: "col-33-33",
                 type: 'input',

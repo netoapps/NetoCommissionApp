@@ -96,7 +96,7 @@ body
 {
     top: 0;
     left: 0;
-    right: 250px;
+    right: 240px;
     width: 100%;
     height: 70px;
     background: white;
@@ -122,14 +122,14 @@ body
     top: 0;
     /*bottom: 5px;*/
     height: 100%;
-    width: 250px;
+    width: 240px;
     background-color: #2f3436;
     border-bottom: 5px solid #4f875a;
 }
 
 .right-panel-item
 {
-    width: 250px;
+    width: 240px;
     height: 50px;
 }
 
@@ -138,7 +138,7 @@ body
     right: 0px;
     bottom: 55px;
     height: 5px;
-    width: 250px;
+    width: 240px;
     background-color: #4f875a;
     position: fixed;
     z-index: 999999;
@@ -343,7 +343,7 @@ body
 
 .top-bar-logo-container
 {
-    width: 250px;
+    width: 240px;
     height: 70px;
     background-color: #25292a;
     border-bottom: 1px solid #35393a;
@@ -435,14 +435,14 @@ body
 
 .dashboard-page
 {
-    min-width: 1200px;
+    min-width: 1065px;
     position: absolute;
     top: 90px;
-    right: 270px;
+    right: 260px;
     left: 20px;
     bottom: 20px;
-    height: calc(100% - 130px);
-    max-height: calc(100% - 130px);
+    height: calc(100% - 132px);
+    max-height: calc(100% - 132px);
 }
 
 .dashboard-date-box
@@ -522,7 +522,7 @@ body
 
 .dashboard-month-total-agents
 {
-    min-width: 150px;
+    min-width: 130px;
     width: calc(50% - 10px);
     height: 175px;
     background-color: white;
@@ -540,7 +540,7 @@ body
 
 .dashboard-month-total-commissions
 {
-    min-width:150px;
+    min-width:130px;
     width: calc(50% - 10px);
     height: 175px;
     background-color: white;
@@ -554,7 +554,7 @@ body
     width: 100%;
     height: 45px;
     background-color: transparent;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     /*margin-top: 20px;*/
 }
@@ -567,7 +567,7 @@ body
     width: 100%;
     height: 45px;
     background-color: transparent;
-    font-size: 30px;
+    font-size: 2vw;
     /*font-weight: bold;*/
 }
 
@@ -585,15 +585,15 @@ body
 
 .commissions-page
 {
-    min-width: 1200px;
+    min-width: 1065px;
     /*max-width: 1500px;*/
     position: absolute;
     top: 90px;
-    right: 270px;
+    right: 260px;
     left: 20px;
     bottom: 20px;
-    height: calc(100% - 130px);
-    max-height: calc(100% - 130px);
+    height: calc(100% - 110px);
+    max-height: calc(100% - 110px);
     /*background-color: green;*/
 }
 
@@ -658,7 +658,7 @@ body
 {
     height: 35px;
     display: block;
-    width: 300px;
+    width: 180px;
     box-sizing: border-box;
     /*outline: none;*/
     resize: none;
@@ -687,7 +687,7 @@ body
 {
     margin-top: 5px;
     height: 36px;
-    width: 180px;
+    width: 140px;
     padding-right: 15px;
     padding-top: 8px;
     background-color: white;
@@ -768,6 +768,7 @@ body
 
 ::-webkit-scrollbar {
     width: 10px;
+    height: 10px;
 }
 
 ::-webkit-scrollbar-track {
@@ -1015,12 +1016,12 @@ body
 
 .edit-files-page
 {
-    min-width: 1200px;
+    min-width: 1065px;
     position: absolute;
-    top: 70px;
-    right: 280px;
-    left: 30px;
-    bottom: 30px;
+    top: 90px;
+    right: 260px;
+    left: 20px;
+    bottom: 20px;
     height: calc(100% - 130px);
     max-height: calc(100% - 130px);
 }
@@ -1038,16 +1039,16 @@ body
 
 /****  agents-page ******/
 
-.agents-page
+.agents-and-partnerships-page
 {
-    min-width: 1200px;
+    min-width: 1065px;
     position: absolute;
-    top: 100px;
-    right: 280px;
-    left: 30px;
-    bottom: 30px;
-    height: calc(100% - 130px);
-    max-height: calc(100% - 130px);
+    top: 90px;
+    right: 260px;
+    left: 20px;
+    bottom: 20px;
+    height: calc(100% - 110px);
+    max-height: calc(100% - 110px);
     background-color: white;
     padding-left: 40px;
 }
@@ -1085,10 +1086,10 @@ body
 
 .page
 {
-    min-width: 1200px;
+    min-width: 1065px;
     position: absolute;
     top: 100px;
-    right: 280px;
+    right: 260px;
     left: 30px;
     bottom: 30px;
     height: calc(100% - 130px);
