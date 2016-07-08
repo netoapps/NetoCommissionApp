@@ -15,6 +15,7 @@ export class PartnershipPaymentDetails {
             this.partnershipNumber = "";
             this.paymentType = "";
             this.partnershipPart = "";
+            this.agencyPart = "";
         }
     }
     copyFrom(partnershipPaymentDetails)
@@ -23,6 +24,7 @@ export class PartnershipPaymentDetails {
         this.partnershipNumber = partnershipPaymentDetails.partnershipNumber;
         this.paymentType = partnershipPaymentDetails.paymentType;
         this.partnershipPart = partnershipPaymentDetails.partnershipPart;
+        this.agencyPart = partnershipPaymentDetails.agencyPart;
     }
 }
 

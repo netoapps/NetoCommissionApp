@@ -190,11 +190,7 @@ class AgentPage extends React.Component {
         }
         this.setState(this.state)
     }
-    onAgencyPartChange(index,value)
-    {
-        this.state.agent.paymentsDetails[index].agencyPart = value
-        this.setState(this.state)
-    }
+
     render () {
 
 
@@ -284,7 +280,7 @@ class AgentPage extends React.Component {
                     </div>
                 </div>
                 <Button className="shadow" onClick={this.onNewPaymentRow.bind(this)} color="primary">{strings.newPayment}</Button>
-                <div className="page-form-table">
+                <div className="agent-page-form-payments-details-table">
                     <Table onRemoveRow={this.onDeletePaymentRowClicked.bind(this)} columns={columns} data={this.state.agent.paymentsDetails}/>
                 </div>
                 <div className="hcontainer-no-wrap">

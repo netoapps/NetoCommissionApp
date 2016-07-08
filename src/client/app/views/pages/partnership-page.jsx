@@ -21,6 +21,7 @@ class PartnershipPage extends React.Component {
         if (this.props.params.index != "-1")
         {
             isNewPartnership = false
+            //Make a copy of partnership
             partnership = new Partnership(AppStore.getPartnershipAtIndex(this.props.params.index))
         }
         else
@@ -84,6 +85,7 @@ class PartnershipPage extends React.Component {
 
     onAgentPartChange(index,value)
     {
+        this.state.partnership.agentsDetails[index].part = value
         this.state.agentsData[index].part = value
         this.setState(this.state)
     }
@@ -91,6 +93,7 @@ class PartnershipPage extends React.Component {
     onDeleteAgentRowClicked(rowIndex)
     {
         this.state.partnership.agentsDetails.splice(rowIndex, 1)
+        this.state.agentsData.splice(rowIndex, 1)
         this.setState(this.state)
     }
 
@@ -129,7 +132,6 @@ class PartnershipPage extends React.Component {
 
     onNewAgentRow()
     {
-
         this.state.agentsListOpened = !this.state.agentsListOpened
         if(this.state.agentsListOpened)
         {
@@ -140,6 +142,7 @@ class PartnershipPage extends React.Component {
     }
     onSelectAgent(agent)
     {
+        //Prevent duplicates
         for(var index = 0; index < this.state.agentsData.length; index++)
         {
             var agentData = this.state.agentsData[index]
@@ -155,17 +158,104 @@ class PartnershipPage extends React.Component {
                 idNumber: agent.idNumber,
                 part: ""
             })
+            var agentDetails = new PartnershipAgentDetails()
+            agentDetails.idNumber = agent.idNumber
+            agentDetails.part = agent.part
+            this.state.partnership.agentsDetails.push(agentDetails)
         }
         this.state.agentsListOpened = false
         document.removeEventListener('click', this._onOutsideClick);
         this.setState(this.state)
+    }
 
-        //var partnership = new PartnershipAgentDetails()
-        //partnership.name = agent.name
-        //partnership.familyName = agent.familyName
-        //partnership.idNumber = agent.idNumber
-        //partnership.part = ""
-        //this.state.partnership.agentsDetails.push(partnership)
+    //Table changes
+    onSelectCompany(index,item)
+    {
+        this.state.partnership.paymentsDetails[index].companyName = item.props.value
+        this.setState(this.state)
+    }
+    onSelectPaymentType(index,item)
+    {
+        this.state.partnership.paymentsDetails[index].paymentType = item.props.value
+        this.setState(this.state)
+    }
+    onDeletePaymentRowClicked(rowIndex)
+    {
+        this.state.partnership.paymentsDetails.splice(rowIndex, 1)
+        this.setState(this.state)
+    }
+    onNewPaymentRow()
+    {
+        this.state.partnership.paymentsDetails.push(new AgentPaymentDetails())
+        this.setState(this.state)
+    }
+    onPartnershipNumberChange(index,value)
+    {
+        this.state.partnership.paymentsDetails[index].agentNumber = value
+        this.setState(this.state)
+    }
+    onPartnershipPartChange(index,value)
+    {
+        this.state.partnership.paymentsDetails[index].partnershipPart = value
+        this.state.partnership.paymentsDetails[index].agencyPart = "--"
+        if(!isNaN(parseInt(value)))
+        {
+            this.state.partnership.paymentsDetails[index].agencyPart = 100 - parseInt(value)
+        }
+        this.setState(this.state)
+    }
+
+    //Exit, save
+    onExitClicked()
+    {
+        this.context.router.goBack()
+    }
+    onSaveClicked()
+    {
+        if(this.state.agent.name.length == 0)
+        {
+            swal({
+                title: "שגיאה",
+                text: "לא הוזן שם פרטי",
+                type: "error",
+                showCancelButton: false,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "סגור",
+                closeOnConfirm: true,
+                showLoaderOnConfirm: false
+            });
+            return
+        }
+        if(this.state.agent.familyName.length == 0)
+        {
+            swal({
+                title: "שגיאה",
+                text: "לא הוזן שם משפחה",
+                type: "error",
+                showCancelButton: false,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "סגור",
+                closeOnConfirm: true,
+                showLoaderOnConfirm: false
+            });
+            return
+        }
+        if(this.state.agent.idNumber.length == 0)
+        {
+            swal({
+                title: "שגיאה",
+                text: "לא הוזן מספר מזהה",
+                type: "error",
+                showCancelButton: false,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "סגור",
+                closeOnConfirm: true,
+                showLoaderOnConfirm: false
+            });
+            return
+        }
+        AppActions.updateAgentAtIndex(this.state.agentIndex,this.state.agent)
+        this.context.router.goBack()
     }
 
     render () {
@@ -177,7 +267,7 @@ class PartnershipPage extends React.Component {
                 key: "name",
                 width: "col-33-33",
                 type: 'read-only',
-                color: 'normal',
+                color: 'normal'
             },
             {
                 title: "מזהה",
@@ -224,6 +314,50 @@ class PartnershipPage extends React.Component {
                          </div>
         }
 
+        var columns = [
+            {
+                title: "חברה",
+                key: "companyName",
+                width: "col-33-33",
+                type: 'select',
+                color: 'normal',
+                action: this.onSelectCompany.bind(this),
+                options: AppStore.getCompanies()
+            },
+            {
+                title: "מספר שותפות",
+                key: "partnershipNumber",
+                width: "col-33-33",
+                type: 'input',
+                color: 'normal',
+                action: this.onPartnershipNumberChange.bind(this)
+            },
+            {
+                title: "סוג תשלום",
+                key: "paymentType",
+                width: "col-33-33",
+                type: 'select',
+                color: 'normal',
+                action: this.onSelectPaymentType.bind(this),
+                options: AppStore.getCommissionTypes()
+            },
+            {
+                title: "חלק שותפות %",
+                key: "partnershipPart",
+                width: "col-33-33",
+                type: 'input',
+                color: 'normal',
+                action: this.onPartnershipPartChange.bind(this)
+            },
+            {
+                title: "חלק סוכנות %",
+                key: "agencyPart",
+                width: "col-33-33",
+                type: 'read-only',
+                color: 'normal'
+            }
+        ]
+
 
         return (
             <div className="page animated fadeIn">
@@ -238,9 +372,21 @@ class PartnershipPage extends React.Component {
                     <Button className="shadow" onClick={this.onNewAgentRow.bind(this)} color="primary">{strings.newAgent}</Button>
                     {agentsList}
                 </div>
-                <div className="page-form-table">
+                <div className="partnership-page-form-agents-table">
                     <Table onRemoveRow={this.onDeleteAgentRowClicked.bind(this)} columns={agentsTableColumns} data={this.state.agentsData}/>
                 </div>
+
+                <Button className="shadow" onClick={this.onNewPaymentRow.bind(this)} color="primary">{strings.newPayment}</Button>
+                <div className="partnership-page-form-payments-details-table">
+                    <Table onRemoveRow={this.onDeletePaymentRowClicked.bind(this)} columns={columns} data={this.state.partnership.paymentsDetails}/>
+                </div>
+                <div className="hcontainer-no-wrap">
+                    <div className="page-form-horizontal-spacer-full"/>
+                    <Button className="shadow" onClick={this.onExitClicked.bind(this)} color="default">{strings.agentPageExit}</Button>
+                    <div className="page-form-horizontal-spacer-20"/>
+                    <Button className="shadow" onClick={this.onSaveClicked.bind(this)} color="primary">{strings.agentPageSave}</Button>
+                </div>
+
             </div>
         );
     }
