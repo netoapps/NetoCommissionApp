@@ -192,7 +192,6 @@ class FileBin extends React.Component {
         if(this.state.commissionFile.taxState === strings.taxNotIncluded)
         {
             fileTaxInput = <div className="commissions-page-file-bin-settings-tax-input-container">
-                                <div className="commissions-page-file-bin-settings-text">{strings.tax}</div>
                                 <textarea className="commissions-page-file-bin-settings-tax-input"
                                           value={this.state.commissionFile.taxValue}
                                           onChange={this.onFileTaxValueChange.bind(this)}

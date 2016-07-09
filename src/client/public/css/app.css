@@ -669,7 +669,7 @@ body
 {
     height: 35px;
     display: block;
-    width: 582px;
+    width: 589px;
     box-sizing: border-box;
     /*outline: none;*/
     resize: none;
@@ -680,6 +680,7 @@ body
     font-size: 14px;
     line-height: 22px;
     margin-top: 7px;
+    margin-right: 35px;
     padding-left: 10px;
     padding-right: 10px;
     padding-top: 5px;
@@ -704,7 +705,7 @@ body
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
-    width: 300px;
+    width: 260px;
     flex-flow: row nowrap;
     direction: rtl;
 }
@@ -742,7 +743,7 @@ body
 {
     margin-top: 5px;
     height: 36px;
-    width: 150px;
+    width: 165px;
     padding-right: 15px;
     padding-top: 8px;
     background-color: white;
