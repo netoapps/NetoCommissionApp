@@ -2,126 +2,63 @@ import React from 'react';
 import Table from './../common/table.jsx';
 import AppActions from '../../actions/app-actions'
 import AppStore from '../../stores/data-store'
-import {ActionType} from '../../actions/app-actions.js'
-import Input from '../../../../../node_modules/muicss/lib/react/input';
 import { strings } from '../../constants/strings'
+import MonthYearBox from './../common/month-year-box.jsx'
+import {getMonthName,getMonthNumber,getMonths} from './../common/month-year-box.jsx'
 
 class AgentSalaryPage extends React.Component {
 
     constructor(props) {
         super(props);
 
-        var newAgent = this.props.params.agentId === "-1"
+        var date = new Date()
+        var currentMonth = getMonthName(date.getMonth().toString());
+        var currentYear = date.getFullYear().toString();
+
         this.state = {
-            newAgent: newAgent,
-            agentData: null
-        };
+            agent: AppStore.getAgent(this.props.params.agentId),
+            selectedMonth: currentMonth,
+            selectedYear: currentYear
+        }
     }
 
-    componentDidMount()
+    onMonthChange(month)
     {
-
+        if(month != this.state.selectedMonth)
+        {
+            this.state.selectedMonth = month;
+            this.setState(this.state);
+           // this.props.onMonthChange(month)
+        }
     }
-
-    onCompanyNameSelect(rowIndex, companyName)
+    onYearChange(year)
     {
-        console.log(rowIndex)
-        console.log(companyName)
+        if(year != this.state.selectedYear)
+        {
+            this.state.selectedYear = year;
+            this.setState(this.state);
+           // this.props.onYearChange(year)
+        }
     }
-    onCommissionTypeSelect(rowIndex, commissionType)
-    {
 
-    }
     render () {
 
 
-        var columns = [
 
-            {
-                title: "חברה",
-                key: "companyName",
-                width: "col-33-33",
-                type: 'select',
-                color: 'normal',
-                options: AppStore.getCompanies(),
-                action: this.onCompanyNameSelect.bind(this)
-            },
-            {
-                title: "מספר סוכן",
-                key: "agentNumber",
-                width: "col-33-33",
-                type: 'read-only',
-                color: 'normal'
-            },
-            {
-                title: "סוג תשלום",
-                key: "paymentType",
-                width: "col-33-33",
-                type: 'select',
-                color: 'normal',
-                options: AppStore.getCommissionTypes(),
-                action: this.onCommissionTypeSelect.bind(this)
-            },
-            {
-                title: "חלק סוכן %",
-                key: "agentPart",
-                width: "col-33-33",
-                type: 'read-only',
-                color: 'normal'
-            },
-            {
-                title: "חלק סוכנות %",
-                key: "agencyPart",
-                width: "col-33-33",
-                type: 'read-only',
-                color: 'normal'
-            }
-        ]
-
-        var name = "",familyName = "",idNumber = "",phoneNumber = "",faxNumber = "",email = "",active = "",companies = null
-        if(this.state.newAgent == false)
-        {
-            name = this.state.agentData.name
-            familyName = this.state.agentData.familyName
-            idNumber = this.state.agentData.idNumber
-            phoneNumber = this.state.agentData.phoneNumber
-            faxNumber = this.state.agentData.faxNumber
-            email = this.state.agentData.email
-            active = this.state.agentData.active
-            companies = this.state.agentData.companies
-        }
 
         return (
-            <div className="new-agent-page animated fadeIn">
-                <div className="new-agent-page-title">{strings.agentSalaryPage}</div>
-                <div className="new-agent-form hcontainer-no-wrap">
-                    <div className="new-agent-form-item-box">
-                        <Input label={strings.agentPageName} defaultValue={name} floatingLabel={true} />
+            <div className="agent-salary-page animated fadeIn">
+                <MonthYearBox month={this.state.selectedMonth} year={this.state.selectedYear}
+                              onMonthChange={this.onMonthChange.bind(this)}
+                              onYearChange={this.onYearChange.bind(this)}/>
+                <div className="hcontainer-no-wrap">
+                    <div className="agent-salary-page-total-salary-box shadow">
+                        <div className="agent-salary-page-box-title">{strings.totalSalary}</div>
+                        <div className="agent-salary-page-box-value blue"><small>{"₪"}&nbsp;</small><b>{2342342}</b></div>
                     </div>
-                    <div className="new-agent-form-horizontal-spacer"/>
-                    <div className="new-agent-form-item-box">
-                        <Input label={strings.agentPageFamilyName} defaultValue={familyName} floatingLabel={true} />
+                    <div className="horizontal-spacer-10"/>
+                    <div className="agent-salary-page-total-investments-box shadow">
                     </div>
-                    <div className="new-agent-form-horizontal-spacer"/>
-                    <div className="new-agent-form-item-box">
-                        <Input label={strings.agentPageId} defaultValue={idNumber} floatingLabel={true} />
-                    </div>
-                </div>
-                <div className="new-agent-form hcontainer-no-wrap">
-                    <div className="new-agent-form-item-box">
-                        <Input label={strings.agentPagePhone} defaultValue={phoneNumber} floatingLabel={true} />
-                    </div>
-                    <div className="new-agent-form-horizontal-spacer"/>
-                    <div className="new-agent-form-item-box">
-                        <Input label={strings.agentPageFax} defaultValue={faxNumber} floatingLabel={true} />
-                    </div>
-                    <div className="new-agent-form-horizontal-spacer"/>
-                    <div className="new-agent-form-item-box">
-                        <Input label={strings.agentPageEmail} defaultValue={email} floatingLabel={true} />
-                    </div>
-                </div>
-                <div className="new-agent-form-table">
-                    <Table columns={columns} data={companies}/>
                 </div>
             </div>
         );

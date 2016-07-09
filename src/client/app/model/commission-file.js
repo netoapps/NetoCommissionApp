@@ -1,7 +1,7 @@
 /**
  * Created by asaf on 09/07/16.
  */
-var moment = require('react-datepicker/node_modules/moment')
+import { strings } from '../constants/strings'
 
 export class CommissionFile {
 
@@ -18,7 +18,7 @@ export class CommissionFile {
             this.paymentDate = new Date();
             this.uploadDate = new Date();
             this.note = "";
-            this.taxState = "";
+            this.taxState = strings.taxIncluded;
             this.taxValue = "";
         }
     }

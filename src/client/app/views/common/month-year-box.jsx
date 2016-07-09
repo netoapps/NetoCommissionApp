@@ -9,11 +9,11 @@ export function getMonths()
 }
 export function getMonthName(monthNum)
 {
-    if(monthNum > 12 || monthNum < 1)
+    if(monthNum > 11 || monthNum < 0)
     {
         return monthOptions[0];
     }
-    return monthOptions[monthNum - 1];
+    return monthOptions[monthNum];
 }
 
 export function getMonthNumber(monthName)

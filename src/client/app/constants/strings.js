@@ -53,7 +53,8 @@ let strings = {
     partnershipPageId: "מזהה",
     partnershipPagePhone: "טלפון",
     partnershipPageFax: "פקס",
-    partnershipPageEmail: "אימייל"
+    partnershipPageEmail: "אימייל",
+    totalSalary: "סה״כ שכר"
 
 }
 
