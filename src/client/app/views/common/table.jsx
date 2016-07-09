@@ -3,6 +3,7 @@ import FlatRippleButton from './flat-ripple-button.jsx'
 import TableDropdown from './table-dropdown.jsx'
 import DropdownItem from '../../../../../node_modules/muicss/lib/react/dropdown-item';
 import FixedWidthDropdown from './fixed-width-dropdown.jsx';
+var moment = require('react-datepicker/node_modules/moment')
 
 class TableCell extends React.Component {
 
@@ -58,6 +59,16 @@ class TableCell extends React.Component {
         if (this.state.column.type === "read-only")
         {
             node = <div className={"table-cell-read-only " + color}>{this.state.value}</div>;
+        }
+        if (this.state.column.type === "full-date")
+        {
+            var formattedDate = moment(this.state.value).format('DD/MM/YYYY').toString();
+            node = <div className={"table-cell-read-only " + color}>{formattedDate}</div>;
+        }
+        if (this.state.column.type === "month-year-date")
+        {
+            var formattedDate = moment(this.state.value).format('MM/YYYY').toString();
+            node = <div className={"table-cell-read-only " + color}>{formattedDate}</div>;
         }
 
         if (this.state.column.type === "button")

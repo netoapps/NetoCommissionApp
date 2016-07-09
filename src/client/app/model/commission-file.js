@@ -15,8 +15,8 @@ export class CommissionFile {
             this.draggedfile = null;
             this.name = "";
             this.company = "";
-            this.paymentDate = moment();
-            this.uploadDate = moment();
+            this.paymentDate = new Date();
+            this.uploadDate = new Date();
             this.note = "";
             this.taxState = "";
             this.taxValue = "";

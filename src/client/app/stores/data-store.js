@@ -7,6 +7,8 @@ import Actions from '../actions/app-actions.js';
 import {ActionType} from '../actions/app-actions.js';
 import {Agent,AgentPaymentDetails} from '../model/agent.js';
 import {Partnership,PartnershipPaymentDetails, PartnershipAgentDetails} from '../model/partnership.js';
+import {CommissionFile} from '../model/commission-file.js';
+import { strings } from '../constants/strings'
 
 class DataStore extends Store {
 
@@ -32,38 +34,35 @@ class DataStore extends Store {
     }
 
     setDummyData() {
-        //[{
-        //    fileName: "",
-        //    companyName: "",
-        //    creationTime: (date),
-        //    month: "" (2,3,4...),
-        //    year:"",
-        //    notes:""
-        //}]
 
-        var files = [
-            {
-                fileName: "ילין לפידות.xlsx",
-                companyName: "ילין לפידות",
-                paymentMonth: "04/16",
-                uploadDate: "01/04/16",
-                notes: "במבה קטנה"
-            },
-            {
-                fileName: "ילין לפידות.xlsx",
-                companyName: "ילין לפידות",
-                paymentMonth: "04/16",
-                uploadDate: "01/04/16",
-                notes: "במבה קטנה ויפה"
-            },
-            {
-                fileName: "ילין לפידות.xlsx",
-                companyName: "ילין לפידות",
-                paymentMonth: "04/16",
-                uploadDate: "01/04/16",
-                notes: "במבה קטנה ושמנמנה"
-            }
-        ]
+        var file1 = new CommissionFile()
+        file1.company = "כלל"
+        file1.name = "כלל קבצים בעמ.xls";
+        file1.paymentDate = new Date();
+        file1.uploadDate = new Date();
+        file1.note = "אחלה קובץ";
+        file1.taxState = strings.taxIncluded;
+        file1.taxValue = "";
+
+        var file2 = new CommissionFile()
+        file2.company = "מגדל"
+        file2.name = "מגדל עמלות סוכנים.xls";
+        file2.paymentDate = new Date();
+        file2.uploadDate = new Date();
+        file2.note = "קובץ עם הרבה עמלות";
+        file2.taxState = strings.taxNotIncluded;
+        file2.taxValue = "17";
+
+        var file3 = new CommissionFile()
+        file3.company = "אלטשולר שחם"
+        file3.name = "אלטשולר-שחם-עמלות-נטו.xls";
+        file3.paymentDate = new Date();
+        file3.uploadDate = new Date();
+        file3.note = "הקובץ מכיל גם מע״מ";
+        file3.taxState = strings.taxNotIncluded;
+        file3.taxValue = "17";
+
+        var files = [file1,file2,file3]
         this.initialize('files', files);
 
         //defaults
@@ -134,8 +133,6 @@ class DataStore extends Store {
 
 
         this.initialize('agents',agents);
-
-
 
         var partnership1 = new Partnership()
         partnership1.active = true

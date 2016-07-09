@@ -10,6 +10,9 @@ import Dropzone from 'react-dropzone'
 import TextBox from './../common/text-box.jsx'
 import {CommissionFile} from '../../model/commission-file.js';
 import AppStore from '../../stores/data-store'
+import MonthYearBox from './../common/month-year-box.jsx'
+import {getMonthName,getMonthNumber} from './../common/month-year-box.jsx'
+
 var moment = require('react-datepicker/node_modules/moment')
 
 
@@ -30,19 +33,24 @@ class FileBin extends React.Component {
             this.setState(this.state);
         }
     }
-    handleDateChange(date)
+
+    onMonthChange(month)
     {
-        this.state.commissionFile.paymentDate = date
+        this.state.commissionFile.paymentDate = new Date(this.state.commissionFile.paymentDate.getFullYear(), getMonthNumber(month), 1, 0, 0, 0, 0);
+        this.setState(this.state)
+
+    }
+    onYearChange(year)
+    {
+        this.state.commissionFile.paymentDate = new Date(year, this.state.commissionFile.paymentDate.getMonth(), 1, 0, 0, 0, 0);
         this.setState(this.state)
     }
-
     onDrop(files)
     {
         console.log('Received files: ', files)
-
         this.state.commissionFile.draggedFile = files[0]
         this.state.commissionFile.name = files[0].name
-        this.state.commissionFile.uploadDate = moment()
+        this.state.commissionFile.uploadDate = new Date();
         this.setState(this.state)
     }
     isValidInput()
@@ -205,6 +213,9 @@ class FileBin extends React.Component {
             dragAreaString = this.state.commissionFile.name
         }
 
+        var month = getMonthName(this.state.commissionFile.paymentDate.getMonth())
+        var year = this.state.commissionFile.paymentDate.getFullYear().toString()
+
         return  <div className="commissions-page-file-bin shadow">
             <Dropzone onDrop={this.onDrop.bind(this)} className="commissions-page-file-bin-drag-area" style={style} activeStyle={activeStyle}>
                 <strong>{dragAreaString}</strong>
@@ -220,11 +231,7 @@ class FileBin extends React.Component {
                     <div className="dashboard-buttons-horizontal-spacer"/>
                     <div className="dashboard-buttons-horizontal-spacer"/>
                     <div className="commissions-page-file-bin-settings-text">{strings.paymentMonth}</div>
-                    <div className="commissions-page-file-bin-settings-date">
-                        <DatePicker selected={this.state.commissionFile.paymentDate} locale='he-IL' onChange={this.handleDateChange.bind(this)} />
-                    </div>
-                    <div className="dashboard-buttons-horizontal-spacer"/>
-                    <div className="dashboard-buttons-horizontal-spacer"/>
+                    <MonthYearBox month={month} year={year} onMonthChange={this.onMonthChange.bind(this)} onYearChange={this.onYearChange.bind(this)}/>
                     <div className="dashboard-buttons-horizontal-spacer"/>
                     <div className="commissions-page-file-bin-settings-text">{strings.tax}</div>
                     <Dropdown label={this.state.commissionFile.taxState} alignMenu="right" variant="raised">

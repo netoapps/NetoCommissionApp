@@ -11,23 +11,11 @@ class AgentSalaryPage extends React.Component {
     constructor(props) {
         super(props);
 
-        var newAgent = this.props.params.agentId == "new"
+        var newAgent = this.props.params.agentId === "-1"
         this.state = {
             newAgent: newAgent,
             agentData: null
         };
-    }
-    componentWillReceiveProps(nextProps)
-    {
-        this.state.newAgent = nextProps.params.agentId == "new"
-        this.setState(this.state)
-    }
-    componentWillMount()
-    {
-        if(this.state.newAgent == false)
-        {
-            this.state.agentData = AppStore.getAgent(this.props.params.agentId)
-        }
     }
 
     componentDidMount()

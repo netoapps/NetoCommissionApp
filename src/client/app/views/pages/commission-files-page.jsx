@@ -11,8 +11,7 @@ class EditFilesPage extends React.Component {
         super(props);
 
         this.state = {
-            loginData: AuthService.getLoginData(),
-            filesData: AppStore.getCommissionFiles()
+            commissionFiles: AppStore.getCommissionFiles()
         };
 
         this._onDeleteCommissionFile = this.onDeleteCommissionFile.bind(this)
@@ -29,7 +28,7 @@ class EditFilesPage extends React.Component {
     }
     onDeleteCommissionFile()
     {
-        this.state.filesData = AppStore.getCommissionFiles()
+        this.state.commissionFiles = AppStore.getCommissionFiles()
         this.setState(this.state)
     }
     onDeleteFileClicked(rowIndex)
@@ -40,7 +39,7 @@ class EditFilesPage extends React.Component {
         if(deleteInProgress)
             return;
 
-        var fileName = this.state.filesData[rowIndex].fileName
+        var fileName = this.state.commissionFiles[rowIndex].fileName
 
         swal({
                 title: "אישור מחיקת מסמך",
@@ -90,7 +89,7 @@ class EditFilesPage extends React.Component {
 
             {
                 title: "שם קובץ",
-                key: "fileName",
+                key: "name",
                 width: "col-33-33",
                 type: 'button',
                 color: 'blue',
@@ -98,28 +97,35 @@ class EditFilesPage extends React.Component {
             },
             {
                 title: "חברה",
-                key: "companyName",
+                key: "company",
                 width: "col-33-33",
                 type: 'read-only',
                 color: 'normal'
             },
             {
                 title: "חודש תשלום",
-                key: "paymentMonth",
+                key: "paymentDate",
                 width: "col-33-33",
-                type: 'read-only',
+                type: 'month-year-date',
                 color: 'normal'
             },
             {
                 title: "תאריך העלאה",
                 key: "uploadDate",
                 width: "col-33-33",
+                type: 'full-date',
+                color: 'normal'
+            },
+            {
+                title: "מע״מ",
+                key: "taxState",
+                width: "col-33-33",
                 type: 'read-only',
                 color: 'normal'
             },
             {
                 title: "הערות",
-                key: "notes",
+                key: "note",
                 width: "col-33-33",
                 type: 'read-only',
                 color: 'normal'
@@ -129,7 +135,7 @@ class EditFilesPage extends React.Component {
         return (
             <div className="edit-files-page animated fadeIn">
                 <div className="edit-files-table shadow">
-                    <Table onRemoveRow={this.onDeleteFileClicked.bind(this)} columns={columns} data={this.state.filesData}/>
+                    <Table onRemoveRow={this.onDeleteFileClicked.bind(this)} columns={columns} data={this.state.commissionFiles}/>
                 </div>
             </div>
         );

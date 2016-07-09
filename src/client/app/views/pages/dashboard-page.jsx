@@ -8,48 +8,37 @@ import { strings } from '../../constants/strings'
 import Chart from "react-chartjs";
 import {Bar} from "react-chartjs";
 import Table from './../common/table.jsx';
+import MonthYearBox from './../common/month-year-box.jsx'
+import {getMonthName,getMonthNumber,getMonths} from './../common/month-year-box.jsx'
 
-
-
-var monthOptions = ["ינואר","פברואר","מרץ","אפריל","מאי","יוני","יולי","אוגוסט","ספטמבר","אוקטובר","נובמבר","דצמבר"];
-
-function getMonthName(monthNum)
-{
-
-    if(monthNum > 12 || monthNum < 1)
-    {
-        return monthOptions[0];
-    }
-    return monthOptions[monthNum - 1];
-}
 
 class DashboardToolbar extends React.Component {
 
     constructor(props) {
         super(props);
 
-        var date = new Date();
-        var currentMonth = date.getMonth();
-        var currentYear = date.getFullYear();
-
         this.state = {
-            selectedMonth: getMonthName(currentMonth),
-            selectedYear: currentYear.toString()
+            selectedMonth: props.month,
+            selectedYear: props.year
         }
     }
 
-    onMonthChange(item)
+    onMonthChange(month)
     {
-        if(item.props.value != this.state.selectedMonth)
+        if(month != this.state.selectedMonth)
         {
-            this.setState({selectedMonth: item.props.value});
+            this.state.selectedMonth = month;
+            this.setState(this.state);
+            this.props.onMonthChange(month)
         }
     }
-    onYearChange(item)
+    onYearChange(year)
     {
-        if(item.props.value != this.state.selectedYear)
+        if(year != this.state.selectedYear)
         {
-            this.setState({selectedYear: item.props.value});
+            this.state.selectedYear = year;
+            this.setState(this.state);
+            this.props.onYearChange(year)
         }
     }
     onLoadClick()
@@ -59,30 +48,11 @@ class DashboardToolbar extends React.Component {
 
     render () {
 
-        const months = [];
-        for (let i = 1; i <= 12; i++ ) {
-            var monthName = getMonthName(i)
-            months.push(<DropdownItem onClick={this.onMonthChange.bind(this)} value={monthName} key={i}>{monthName}</DropdownItem>);
-        }
-
-        const years = [];
-        var date = new Date();
-        var currentYear = date.getFullYear()
-        for (let i = 2012; i <= currentYear; i++ ) {
-            var yearName = i.toString()
-            years.push(<DropdownItem
-                value={yearName} key={i}>{yearName}</DropdownItem>);
-        }
-
         return (
             <div className="hcontainer-no-wrap">
-                <FixedWidthDropdown shadow label={this.state.selectedMonth} alignMenu="right" >
-                        {months}
-                </FixedWidthDropdown>
-                <div className="dashboard-buttons-horizontal-spacer"/>
-                <FixedWidthDropdown shadow className="fixed-size-button" label={this.state.selectedYear} alignMenu="right" >
-                    {years}
-                </FixedWidthDropdown>
+                <MonthYearBox month={this.state.selectedMonth} year={this.state.selectedYear}
+                              onMonthChange={this.onMonthChange.bind(this)}
+                              onYearChange={this.onYearChange.bind(this)}/>
                 <div className="dashboard-buttons-horizontal-spacer"/>
                 <div className="dashboard-buttons-horizontal-spacer"/>
                 <div className="dashboard-buttons-horizontal-spacer"/>
@@ -178,7 +148,7 @@ class DashboardCommissionChangeChart extends React.Component {
     render () {
 
         var data = {
-            labels: monthOptions,
+            labels: getMonths(),
             datasets: [
                 {
                     label: "My First dataset",
@@ -328,14 +298,41 @@ class Dashboard extends React.Component {
 
     constructor(props) {
         super(props);
+
+        var date = new Date()
+        var currentMonth = getMonthName(date.getMonth().toString());
+        var currentYear = date.getFullYear().toString();
+
         this.state = {
-            loginData: AuthService.getLoginData()
+            loginData: AuthService.getLoginData(),
+            date: date,
+            selectedMonth: currentMonth,
+            selectedYear:currentYear
+
         };
+    }
+    onMonthChange(month)
+    {
+        if(month != this.state.selectedMonth)
+        {
+            this.state.selectedMonth = month;
+            this.state.date = new Date(this.state.date.getFullYear(), getMonthNumber(month), 2, 0, 0, 0, 0);
+            this.setState(this.state);
+        }
+    }
+    onYearChange(year)
+    {
+        if(year != this.state.selectedYear)
+        {
+            this.state.selectedYear = year;
+            this.state.date = new Date(year, this.state.date.getMonth(), 2, 0, 0, 0, 0);
+            this.setState(this.state);
+        }
     }
     render () {
         return (
             <div className="dashboard-page animated fadeIn">
-                <DashboardToolbar />
+                <DashboardToolbar month={this.state.selectedMonth} year={this.state.selectedYear} onMonthChange={this.onMonthChange.bind(this)} onYearChange={this.onYearChange.bind(this)}/>
                 <div className="hcontainer-no-wrap">
                     <DashboardRankTable  />
                     <div className="dashboard-horizontal-spacer"/>
