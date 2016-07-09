@@ -8,10 +8,9 @@ import Button from '../../../../../node_modules/muicss/lib/react/button'
 import DatePicker from 'react-datepicker'
 import Dropzone from 'react-dropzone'
 import TextBox from './../common/text-box.jsx'
-
+import {CommissionFile} from '../../model/commission-file.js';
+import AppStore from '../../stores/data-store'
 var moment = require('react-datepicker/node_modules/moment')
-
-var companyNames = ["כלל","מנורה","הראל","אלטשולר שחם", "ילין לפידות","מיטב דש"];
 
 
 class FileBin extends React.Component {
@@ -19,39 +18,109 @@ class FileBin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedCompany: "כלל",
-            date: moment(),
-            files: null,
-            note: "בדיקה"
+            commissionFile: new CommissionFile()
         };
 
     }
     onCompanyNameChange(item)
     {
-        if(item.props.value != this.state.selectedCompany)
+        if(item.props.value != this.state.commissionFile.company)
         {
-            this.state.selectedCompany = item.props.value
+            this.state.commissionFile.company = item.props.value
             this.setState(this.state);
         }
     }
-    handleChange(date)
+    handleDateChange(date)
     {
-        this.state.date = date
+        this.state.commissionFile.paymentDate = date
         this.setState(this.state)
     }
 
     onDrop(files)
     {
         console.log('Received files: ', files)
-        this.state.files = files
+
+        this.state.commissionFile.draggedFile = files[0]
+        this.state.commissionFile.name = files[0].name
+        this.state.commissionFile.uploadDate = moment()
         this.setState(this.state)
+    }
+    isValidInput()
+    {
+        if(this.state.commissionFile.name.length == 0)
+        {
+            swal({
+                title: "שגיאה",
+                text: "לא הועלה קובץ",
+                type: "error",
+                showCancelButton: false,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "סגור",
+                closeOnConfirm: true,
+                showLoaderOnConfirm: false
+            });
+            return false
+        }
+        if(this.state.commissionFile.company.length == 0)
+        {
+            swal({
+                title: "שגיאה",
+                text: "קובץ לא משוייך לחברה",
+                type: "error",
+                showCancelButton: false,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "סגור",
+                closeOnConfirm: true,
+                showLoaderOnConfirm: false
+            });
+            return false
+        }
+        if(this.state.commissionFile.taxState === strings.taxNotIncluded)
+        {
+            if(this.state.commissionFile.taxValue.length == 0)
+            {
+                swal({
+                    title: "שגיאה",
+                    text: "לא הוזן מע״מ",
+                    type: "error",
+                    showCancelButton: false,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "סגור",
+                    closeOnConfirm: true,
+                    showLoaderOnConfirm: false
+                });
+                return false
+            }
+            else if (isNaN(parseFloat(this.state.commissionFile.taxValue)))
+            {
+                swal({
+                        title: "שגיאה",
+                        text: "מע״מ לא חוקי",
+                        type: "error",
+                        showCancelButton: false,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "סגור",
+                        closeOnConfirm: true,
+                        showLoaderOnConfirm: false
+                    });
+                return false
+            }
+        }
+        return true
     }
     onUploadFile()
     {
-        var formData = new FormData();
-        for (var i = 0; i < this.state.files.length; i++) {
-            formData.append('file', this.state.files[i]);
+        if(!this.isValidInput())
+        {
+            return
         }
+
+        var formData = new FormData();
+        //for (var i = 0; i < this.state.files.length; i++) {
+        //    formData.append('file', this.state.files[i]);
+        //}
+        formData.append('file', this.state.commissionFile);
+
         // now post a new XHR request
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '/commissions/upload');
@@ -72,16 +141,43 @@ class FileBin extends React.Component {
 
     onFileNoteBlur(e)
     {
-        console.log(e.target.value)
+        this.state.commissionFile.note = e.target.value
+        this.setState(this.state);
     }
-
+    onFileTaxBlur(e)
+    {
+        this.state.commissionFile.taxValue = e.target.value
+        this.setState(this.state);
+    }
+    onTaxOptionChange(item)
+    {
+        if(item.props.value != this.state.taxState)
+        {
+            this.state.commissionFile.taxState = item.props.value
+            this.setState(this.state);
+        }
+    }
+    onFileTaxValueChange(e)
+    {
+        this.state.commissionFile.taxValue = e.target.value
+        this.setState(this.state);
+    }
+    onFileNoteChange(e)
+    {
+        this.state.commissionFile.note = e.target.value
+        this.setState(this.state);
+    }
     render () {
 
         const companies = [];
+        const companyNames = AppStore.getCompanies()
         for (let i = 0; i < companyNames.length; i++ )
         {
             companies.push(<DropdownItem onClick={this.onCompanyNameChange.bind(this)} value={companyNames[i]} key={i}>{companyNames[i]}</DropdownItem>);
         }
+        const taxStateOptions = [];
+        taxStateOptions.push(<DropdownItem onClick={this.onTaxOptionChange.bind(this)} value={strings.taxIncluded} key={0}>{strings.taxIncluded}</DropdownItem>);
+        taxStateOptions.push(<DropdownItem onClick={this.onTaxOptionChange.bind(this)} value={strings.taxNotIncluded} key={1}>{strings.taxNotIncluded}</DropdownItem>);
 
         let style = {
             backgroundColor: 'transparent',
@@ -92,14 +188,33 @@ class FileBin extends React.Component {
             backgroundColor: 'rgba(66, 134, 180, 0.15)'
         };
 
+        var fileTaxInput = null
+        if(this.state.commissionFile.taxState === strings.taxNotIncluded)
+        {
+            fileTaxInput = <div className="commissions-page-file-bin-settings-tax-input-container">
+                                <div className="commissions-page-file-bin-settings-text">{strings.tax}</div>
+                                <textarea className="commissions-page-file-bin-settings-tax-input"
+                                          value={this.state.commissionFile.taxValue}
+                                          onChange={this.onFileTaxValueChange.bind(this)}
+                                          onBlur={this.onFileTaxBlur.bind(this)}/><div className="commissions-page-file-bin-settings-text">%</div>
+                           </div>
+        }
+
+        var dragAreaString = strings.dragFileHere
+        if(this.state.commissionFile.name.length > 0)
+        {
+            dragAreaString = this.state.commissionFile.name
+        }
+
         return  <div className="commissions-page-file-bin shadow">
             <Dropzone onDrop={this.onDrop.bind(this)} className="commissions-page-file-bin-drag-area" style={style} activeStyle={activeStyle}>
-                <strong>{strings.dragFileHere}</strong>
+                <strong>{dragAreaString}</strong>
             </Dropzone>
-            <div className="hcontainer-no-wrap">
-                <div className="commissions-page-file-bin-settings hcontainer-no-wrap">
+            <div className="commissions-page-file-bin-settings">
+
+                <div className="hcontainer-no-wrap">
                     <div className="commissions-page-file-bin-settings-text">{strings.companyAssignment}</div>
-                    <Dropdown label={this.state.selectedCompany} alignMenu="right" variant="raised">
+                    <Dropdown label={this.state.commissionFile.company} alignMenu="right" variant="raised">
                         {companies}
                     </Dropdown>
                     <div className="dashboard-buttons-horizontal-spacer"/>
@@ -107,27 +222,34 @@ class FileBin extends React.Component {
                     <div className="dashboard-buttons-horizontal-spacer"/>
                     <div className="commissions-page-file-bin-settings-text">{strings.paymentMonth}</div>
                     <div className="commissions-page-file-bin-settings-date">
-                        <DatePicker selected={this.state.date} locale='he-IL' onChange={this.handleChange.bind(this)} />
+                        <DatePicker selected={this.state.commissionFile.paymentDate} locale='he-IL' onChange={this.handleDateChange.bind(this)} />
                     </div>
                     <div className="dashboard-buttons-horizontal-spacer"/>
                     <div className="dashboard-buttons-horizontal-spacer"/>
                     <div className="dashboard-buttons-horizontal-spacer"/>
-                    <div className="commissions-page-file-bin-settings-text">{strings.notes}</div>
-                        <textarea className="commissions-page-file-note"
-                            value={this.state.notes}
-                            onBlur={this.onFileNoteBlur.bind(this)}/>
+                    <div className="commissions-page-file-bin-settings-text">{strings.tax}</div>
+                    <Dropdown label={this.state.commissionFile.taxState} alignMenu="right" variant="raised">
+                        {taxStateOptions}
+                    </Dropdown>
                     <div className="dashboard-buttons-horizontal-spacer"/>
-                    <div className="dashboard-buttons-horizontal-spacer"/>
-                    <div className="dashboard-buttons-horizontal-spacer"/>
+                    {fileTaxInput}
+                </div>
+                <div className="hcontainer-no-wrap left-align">
+                    <Button className="shadow" onClick={this.onEditFiles.bind(this)}>{strings.editFiles}</Button>
                     <div className="dashboard-buttons-horizontal-spacer"/>
                     <div className="dashboard-buttons-horizontal-spacer"/>
                     <Button className="shadow" onClick={this.onUploadFile.bind(this)} color="primary">{strings.uploadFile}</Button>
-                </div>
-                <div className="commissions-page-file-bin-settings-edit-files-container">
-                    <Button className="shadow" onClick={this.onEditFiles.bind(this)}>{strings.editFiles}</Button>
+                    <div className="commissions-page-file-note-container">
+                        <div className="commissions-page-file-bin-settings-text">{strings.notes}</div>
+                        <textarea className="commissions-page-file-note"
+                                  value={this.state.commissionFile.notes}
+                                  onChange={this.onFileNoteChange.bind(this)}
+                                  onBlur={this.onFileNoteBlur.bind(this)}/>
+                    </div>
                 </div>
             </div>
-                </div>
+
+        </div>
         ;
     }
 }
