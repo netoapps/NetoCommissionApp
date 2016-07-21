@@ -22,7 +22,7 @@ function addAgent(req, res) {
         if(err){
             return res.status(500).json({err:err});
         }
-        return res.status(200);
+        return res.status(200).json({result:'add succeed'});
     })
 }
 function editAgent(req, res) {
@@ -48,7 +48,7 @@ function editAgent(req, res) {
             if(err){
                 return res.status(500).json({err:err});
             }
-            return res.status(200);
+            return res.status(200).json({result:'update succeed'});
         })
     })
 }
@@ -69,7 +69,7 @@ function deleteAgent(req, res) {
             if(err){
                 return res.status(500).json({err:err});
             }
-            return res.status(200);
+            return res.status(200).json({result:'delete succeed'});
         })
     });
 }
@@ -84,7 +84,7 @@ function addPartnership(req, res) {
         if(err){
             return res.status(500).json({err:err});
         }
-        return res.status(200);
+        return res.status(200).json({result:'add succeed'});
     })
 }
 
@@ -105,7 +105,7 @@ function editPartnership(req, res) {
             if(err){
                 return res.status(500).json({err:err});
             }
-            return res.status(200);
+            return res.status(200).json({result:'update succeed'});
         })
     })
 }
@@ -122,7 +122,7 @@ function deletePartnership(req, res) {
             if(err){
                 return res.status(500).json({err:err});
             }
-            return res.status(200);
+            return res.status(200).json({result:'delete succeed'});
         })
     });
 }
