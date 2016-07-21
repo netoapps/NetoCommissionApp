@@ -190,7 +190,25 @@ class DataStore extends Store {
         agents.push(agent)
 
         //post to server...
-
+        $.ajax(
+            {
+                url: '/agent',
+                type: 'POST',
+                data: agent,
+                contentType: 'application/json',
+                success: function()
+                {
+                    console.log('addAgent - Server responded with success!');
+                    if(callback != null)
+                        callback('success');
+                }.bind(this),
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+                    console.error('generate-pdf/', textStatus, errorThrown.toString());
+                    if(callback != null)
+                        callback('error');
+                }.bind(this)
+            });
     }
     deleteAgentAtIndex(index)
     {
@@ -247,6 +265,8 @@ class DataStore extends Store {
         partnerships.push(partnership)
 
         //post to server...
+
+
 
     }
     getPartnershipAtIndex(index)
