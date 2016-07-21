@@ -32,7 +32,6 @@ class DataStore extends Store {
 
         //this.setDummyData()
 
-        //post to server...
         $.ajax(
             {
                 url: '/api/v1/agent',
@@ -41,20 +40,40 @@ class DataStore extends Store {
                 success: function(result)
                 {
                     console.log(result);
-                    console.log('getAgents - Server responded with success!');
+                    console.log('load agents - Server responded with success!');
                     this.initialize('agents',result.agents);
                     // if(callback != null)
                     //     callback('success');
                 }.bind(this),
                 error: function(jqXHR, textStatus, errorThrown)
                 {
-                    console.error('getAgents - ', textStatus, errorThrown.toString());
+                    console.error('load agents - ', textStatus, errorThrown.toString());
                     // if(callback != null)
                     //     callback('error');
                 }.bind(this)
             });
 
-        this.initialize('partnerships',[]);
+        $.ajax(
+            {
+                url: '/api/v1/partnership',
+                type: 'GET',
+                contentType: 'application/json',
+                success: function(result)
+                {
+                    console.log(result);
+                    console.log('load partnerships - Server responded with success!');
+                    this.initialize('partnerships',result.partnerships);
+
+                    // if(callback != null)
+                    //     callback('success');
+                }.bind(this),
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+                    console.error('load partnerships - ', textStatus, errorThrown.toString());
+                    // if(callback != null)
+                    //     callback('error');
+                }.bind(this)
+            });
 
     }
 
