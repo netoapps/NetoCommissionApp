@@ -22,7 +22,7 @@ function addAgent(req, res) {
         if(err){
             return res.status(500).json({err:err});
         }
-        return res.status(200).json({result:'add succeed'});
+        return res.status(200).json({agent:agent});
     })
 }
 function editAgent(req, res) {
@@ -30,7 +30,7 @@ function editAgent(req, res) {
     if (!agentId){
         return res.status(400).json({err:'missing agent id'});
     }
-    Agent.findOne({idNumber:agentId}, function(err, agent){
+    Agent.findOne({_id:agentId}, function(err, agent){
         if(err){
             return res.status(500).json({err:err});
         }
@@ -48,7 +48,7 @@ function editAgent(req, res) {
             if(err){
                 return res.status(500).json({err:err});
             }
-            return res.status(200).json({result:'update succeed'});
+            return res.status(200).json({agent:agent});
         })
     })
 }
@@ -58,7 +58,7 @@ function deleteAgent(req, res) {
     if (!agentId){
         return res.status(400).json({err:'missing agent id'});
     }
-    Agent.findOne({idNumber:agentId}, function(err, agent){
+    Agent.findOne({_id:agentId}, function(err, agent){
         if(err){
             return res.status(500).json({err:err});
         }
@@ -69,7 +69,7 @@ function deleteAgent(req, res) {
             if(err){
                 return res.status(500).json({err:err});
             }
-            return res.status(200).json({result:'delete succeed'});
+            return res.status(200).json({msg:'delete succeed'});
         })
     });
 }
@@ -84,12 +84,12 @@ function addPartnership(req, res) {
         if(err){
             return res.status(500).json({err:err});
         }
-        return res.status(200).json({result:'add succeed'});
+        return res.status(200).json({partnership:partnership});
     })
 }
 
 function editPartnership(req, res) {
-    const partnershipId = req.params.agentId;
+    const partnershipId = req.params.partnershipId;
     if (!partnershipId){
         return res.status(400).json({err:'missing partnership id'});
     }
@@ -105,7 +105,7 @@ function editPartnership(req, res) {
             if(err){
                 return res.status(500).json({err:err});
             }
-            return res.status(200).json({result:'update succeed'});
+            return res.status(200).json({partnership:partnership});
         })
     })
 }
@@ -122,7 +122,7 @@ function deletePartnership(req, res) {
             if(err){
                 return res.status(500).json({err:err});
             }
-            return res.status(200).json({result:'delete succeed'});
+            return res.status(200).json({msg:'delete succeed'});
         })
     });
 }
@@ -130,6 +130,9 @@ function deletePartnership(req, res) {
 
 function getAllPartnerships(req, res){
     Partnership.find({}, function(err, partnerships){
+        if(err){
+            return res.status(500).json({err:err});
+        }
         return res.status(200).json({partnerships:partnerships});
     })
 }
@@ -137,7 +140,9 @@ function getAllPartnerships(req, res){
 function getAllAgents(req,res){
 
     Agent.find({},function(err,agents){
-
+        if(err){
+            return res.status(500).json({err:err});
+        }
         return res.status(200).json({agents:agents});
     })
 }
@@ -152,4 +157,19 @@ function getAgentById(req, res){
         return res.status(200).json({agent:agent});
     })
 }
-module.exports = {addAgent, editAgent, deleteAgent, addPartnership,editPartnership,deletePartnership,getAllAgents,getAllPartnerships,getAgentById};
+
+function getPartnershipById(req, res){
+    const partnershipId = req.params.partnershipId;
+    Partnership.findOne({_id:partnershipId}, function(err, partnership){
+        if(err){
+            return res.status(500).json({err:err});
+        }
+        return res.status(200).json({partnership:partnership});
+    })
+}
+module.exports = {
+    addAgent, editAgent, deleteAgent,
+    addPartnership,editPartnership,deletePartnership,
+    getAllAgents,getAllPartnerships,
+    getAgentById,getPartnershipById
+};
