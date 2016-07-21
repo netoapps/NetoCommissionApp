@@ -1,5 +1,5 @@
 /**
- * Created by efishtain on 25/04/2016.
+ * Created by efishtain on 03/07/2016.
  */
 
 var shortid = require('shortid');
@@ -8,27 +8,18 @@ var schema = new mongoose.Schema({
     _id: {type: String, default: shortid.generate},
     creationTime: {type: Date, default: Date.now},
     updateTime: {type: Date, default: Date.now},
-    name: String,
-    familyName: String,
-    idNumber:String,
-    phoneNumber: String,
-    faxNumber:String,
-    email:String,
     active:Boolean,
+    agentsDetails:[{_id:false,idNumber:String, part:String}],
     paymentsDetails:[{
         _id:false,
         companyName:String,
-        agentNumber:String,
+        partnershipNumber:String,
         paymentType:String,
-        agentPart:String,
+        partnershipPart:String,
         agencyPart:String
     }]
 });
 
 
-schema.index({agentIds: 1});
-
-
-module.exports = mongoose.model('Agent', schema);
-
+module.exports = mongoose.model('Partnership', schema);
 

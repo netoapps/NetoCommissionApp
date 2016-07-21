@@ -33,7 +33,7 @@ function FileService() {
                 var newPath = path.join(config.datafilesDirectory, file.filename);
                 fs.rename(file.path, newPath, function (err) {
                     var newFile = new File();
-                    newFile.orignalFilename = file.originalname;
+                    newFile.fileName = file.originalname;
                     newFile.pathOnDisk = newPath;
                     newFile.processedOn = Date.now();
                     newFile.month = month;

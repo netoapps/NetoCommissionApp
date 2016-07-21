@@ -52,16 +52,16 @@ function ExcelAnalyzerService() {
                 }
             });
             return obj;
-        })
+        });
         salaries = _.filter(salaries, function (s) {
             var oneFound = '1' in s || 1 in s;
             var twoFound = '2' in s || 2 in s;
             return oneFound && twoFound;
-        })
+        });
         return cb(null, salaries);
-//        var salaries = xlsx.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]);
-        //      return cb(null, salaries);
-    }
+
+    };
+
     this.analyzeAgentsFile = function (filePath, cb) {
         try {
             var workbook = xlsx.readFile(filePath);
