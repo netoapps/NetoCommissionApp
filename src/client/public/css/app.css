@@ -129,7 +129,7 @@ body
 {
     top: 0;
     left: 0;
-    right: 240px;
+    right: 230px;
     width: 100%;
     height: 70px;
     background: white;
@@ -155,14 +155,14 @@ body
     top: 0;
     /*bottom: 5px;*/
     height: 100%;
-    width: 240px;
+    width: 230px;
     background-color: #2f3436;
     border-bottom: 5px solid #4f875a;
 }
 
 .right-panel-item
 {
-    width: 240px;
+    width: 230px;
     height: 50px;
 }
 
@@ -171,7 +171,7 @@ body
     right: 0px;
     bottom: 55px;
     height: 5px;
-    width: 240px;
+    width: 230px;
     background-color: #4f875a;
     position: fixed;
     z-index: 999999;
@@ -376,7 +376,7 @@ body
 
 .top-bar-logo-container
 {
-    width: 240px;
+    width: 230px;
     height: 70px;
     background-color: #25292a;
     border-bottom: 1px solid #35393a;
@@ -468,10 +468,10 @@ body
 
 .dashboard-page
 {
-    min-width: 1065px;
+    min-width: 1055px;
     position: absolute;
     top: 90px;
-    right: 260px;
+    right: 250px;
     left: 20px;
     bottom: 20px;
     height: calc(100% - 132px);
@@ -600,7 +600,7 @@ body
     width: 100%;
     height: 45px;
     background-color: transparent;
-    font-size: 2vw;
+    font-size: 1.8vw;
     /*font-weight: bold;*/
 }
 
@@ -618,11 +618,11 @@ body
 
 .commissions-page
 {
-    min-width: 1065px;
+    min-width: 1055px;
     /*max-width: 1500px;*/
     position: absolute;
     top: 90px;
-    right: 260px;
+    right: 250px;
     left: 20px;
     bottom: 20px;
     height: calc(100% - 110px);
@@ -697,7 +697,7 @@ body
 {
     height: 35px;
     display: block;
-    width: 653px;
+    width: 640px;
     box-sizing: border-box;
     /*outline: none;*/
     resize: none;
@@ -733,7 +733,7 @@ body
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
-    width: 260px;
+    width: 250px;
     flex-flow: row nowrap;
     direction: rtl;
 }
@@ -1095,15 +1095,16 @@ body
 
 
 .col-33-33 { width: 50% }
+.col-66-66 { width: 66% }
 
 /*****************/
 
 .edit-files-page
 {
-    min-width: 1065px;
+    min-width: 1055px;
     position: absolute;
     top: 90px;
-    right: 260px;
+    right: 250px;
     left: 20px;
     bottom: 20px;
     height: calc(100% - 110px);
@@ -1123,10 +1124,10 @@ body
 
 .agents-and-partnerships-page
 {
-    min-width: 1065px;
+    min-width: 1055px;
     position: absolute;
     top: 90px;
-    right: 260px;
+    right: 250px;
     left: 20px;
     bottom: 20px;
     height: calc(100% - 110px);
@@ -1168,10 +1169,10 @@ body
 
 .page
 {
-    min-width: 1065px;
+    min-width: 1055px;
     position: absolute;
     top: 90px;
-    right: 260px;
+    right: 250px;
     left: 20px;
     bottom: 20px;
     height: calc(100% - 110px);
@@ -1318,23 +1319,58 @@ body
 
 .agent-salary-page
 {
-    min-width: 1065px;
+    min-width: 1055px;
     position: absolute;
     top: 90px;
-    right: 260px;
+    right: 250px;
     left: 20px;
     bottom: 20px;
-    height: calc(100% - 110px);
-    max-height: calc(100% - 110px);
+    height: 100%;
+    /*max-height: calc(100% - 110px);*/
+    /*padding-left: 10px;*/
 }
 
 .agent-salary-page-total-salary-box
 {
+    /*width: calc(50% - 10px);*/
     width: 50%;
-    height: 150px;
+    height: 170px;
     background-color: white;
-
 }
+
+.agent-salary-page-total-salary-sub-value-box
+{
+    margin-bottom: 5px;
+    margin-top: 15px;
+    width: 40%;
+    height: 45px;
+    /*background-color: red;*/
+}
+
+.agent-salary-page-total-salary-sub-value-box-title
+{
+    text-align: center;
+    color: #6e6e6e;
+    width: 100%;
+    height: 20px;
+    background-color: transparent;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 0px;
+}
+
+.agent-salary-page-total-salary-sub-value-box-value
+{
+    direction: ltr;
+    text-align: center;
+    /*color: #747474;*/
+    width: 100%;
+    height: 20px;
+    background-color: transparent;
+    font-size: 1.2vw;
+    /*font-weight: bold;*/
+}
+
 .agent-salary-page-box-title
 {
     text-align: center;
@@ -1355,13 +1391,70 @@ body
     width: 100%;
     height: 45px;
     background-color: transparent;
-    font-size: 2vw;
+    font-size: 2.5vw;
     /*font-weight: bold;*/
+    /*padding-top: 5px;*/
 }
 
 .agent-salary-page-total-investments-box
 {
-    width: 50%;
-    height: 150px;
+    width: calc(50% - 10px);
+    height: 170px;
     background-color: white;
+}
+
+.agent-salary-page-table-box
+{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: white;
+    height: calc(100% - 280px);
+    max-height: calc(100% - 280px);
+}
+
+.agent-salary-page-table-box-top
+{
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+}
+
+.agent-salary-page-divider
+{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.agent-salary-page-income-table
+{
+    margin-bottom: 20px;
+    width: 100%;
+    height: calc(100% - 320px);
+    max-height: calc(100% - 320px);
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.agent-salary-page-expense-table
+{
+    margin-bottom: 20px;
+    width: 100%;
+    height: calc(100% - 220px);
+    max-height: calc(100% - 220px);
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.agent-salary-page-table-title
+{
+    color: #505050;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    min-width: 200px;
+}
+
+.agent-salary-page-total-box
+{
+
 }

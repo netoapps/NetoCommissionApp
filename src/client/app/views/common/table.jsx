@@ -202,42 +202,55 @@ class Table extends React.Component {
 
     render()
     {
-       var tableColumns = [];
-        for(var col = 0; col < this.state.columns.length; col++)
+        var data = this.state.data
+        var tableColumns = [];
+
+        if(this.props.hideHeader != true)
         {
-            tableColumns[col] =<TableColumn key={col}
-                                            column={this.state.columns[col]} />
+            for(var col = 0; col < this.state.columns.length; col++)
+            {
+                tableColumns[col] =<TableColumn key={col}
+                                                column={this.state.columns[col]} />
+            }
         }
 
-        if(this.state.data == null)
+
+        var title = null
+        if(this.props.title != null)
         {
-            return <div className="table">
-                <div className="table-header">
-                    {tableColumns}
-                </div>
-            </div>;
+            title = this.props.title
+        }
+
+        if(data == null)
+        {
+            data = []
         }
 
         var tableRows = [];
-        for(var row = 0; row < this.state.data.length; row++)
+        for(var row = 0; row < data.length; row++)
             tableRows[row] = <TableRow onRemoveRow = {this.props.onRemoveRow}
                                        key={row} index={row}
-                                       data={this.state.data[row]}
+                                       data={data[row]}
                                        columns={this.state.columns}/>
 
         var tableTrashColumn = null
-        if (this.props.onRemoveRow != null)
+        if (this.props.onRemoveRow != null && this.props.hideHeader != true)
         {
             tableTrashColumn = <TableActionsColumn onAddRow={this.props.onAddRow}/>
         }
 
-        return <div className="table">
-                    <div className="table-title">{this.props.title}</div>
+        var tableHeader = null
+        if(this.props.hideHeader != true)
+        {
+            tableHeader = <div className="table-header">
+                            {tableTrashColumn}
+                            {tableColumns}
+                          </div>
+        }
 
-                    <div className="table-header">
-                        {tableTrashColumn}
-                        {tableColumns}
-                    </div>
+        return <div className="table">
+                    <div className="table-title">{title}</div>
+                        {tableHeader}
                     <div className="table-data-container">
                         <div className="table-data">
                         {tableRows}

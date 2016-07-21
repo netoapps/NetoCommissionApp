@@ -332,7 +332,7 @@ class Commissions extends React.Component {
                 color: 'normal'
             },
             {
-                title: "תאריך העלאת קובץ",
+                title: "תאריך העלאה",
                 key: "date",
                 width: "col-33-33",
                 type: 'read-only',

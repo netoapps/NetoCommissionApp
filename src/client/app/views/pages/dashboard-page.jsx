@@ -215,7 +215,7 @@ class DashboardMonthTotalCommissions extends React.Component {
         return (
             <div className="dashboard-month-total-commissions shadow">
                 <div className="dashboard-box-title">{strings.totalCommissions}</div>
-                <div className="dashboard-box-value blue"><small>{"₪"}&nbsp;</small><b>{value}</b></div>
+                <div className="dashboard-box-value green"><small>{"₪"}&nbsp;</small><b>{value}</b></div>
                 <div className={"dashboard-box-change " + changeColor}>{change}<small>&nbsp;{"%"}</small>&nbsp;<img src={changeIcon}/></div>
             </div>
         );
@@ -249,7 +249,7 @@ class DashboardMonthTotalAgents extends React.Component {
         return (
             <div className="dashboard-month-total-agents shadow">
                 <div className="dashboard-box-title">{strings.totalAgents}</div>
-                <div className="dashboard-box-value blue"><b>{value}</b></div>
+                <div className="dashboard-box-value green"><b>{value}</b></div>
                 <div className={"dashboard-box-change " + changeColor}>{change}<small>&nbsp;{"%"}</small>&nbsp;<img src={changeIcon}/></div>
             </div>
         );
@@ -286,7 +286,7 @@ class DashboardTotalInvestments extends React.Component {
         return (
             <div className="dashboard-total-investments shadow">
                 <div className="dashboard-box-title">{strings.totalInvestments}</div>
-                <div className="dashboard-box-value blue"><small>{"₪"}&nbsp;</small><b>{value}</b></div>
+                <div className="dashboard-box-value green"><small>{"₪"}&nbsp;</small><b>{value}</b></div>
                 <div className={"dashboard-box-change " + changeColor}>{change}<small>&nbsp;{"%"}</small>&nbsp;<img src={changeIcon}/></div>
             </div>
         );

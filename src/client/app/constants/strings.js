@@ -54,7 +54,15 @@ let strings = {
     partnershipPagePhone: "טלפון",
     partnershipPageFax: "פקס",
     partnershipPageEmail: "אימייל",
-    totalSalary: "סה״כ שכר"
+    totalSalary: "סה״כ שכר (כולל מע״מ)",
+    incomes: "הכנסות",
+    manualIncomes: "הכנסה ידנית",
+    expenses: "הוצאות",
+    nifraim: "נפרעים",
+    bonus: "בונוס",
+    heikef: "היקף",
+    newIncome: "הכנסה חדשה",
+    newExpense: "הוצאה חדשה"
 
 }
 

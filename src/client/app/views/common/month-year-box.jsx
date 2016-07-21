@@ -56,7 +56,7 @@ class MonthYearBox extends React.Component {
     render () {
 
         const months = [];
-        for (let i = 1; i <= 12; i++ ) {
+        for (let i = 0; i <= 11; i++ ) {
             var monthName = getMonthName(i)
             months.push(<DropdownItem onClick={this.onMonthChange.bind(this)} value={monthName} key={i}>{monthName}</DropdownItem>);
         }
