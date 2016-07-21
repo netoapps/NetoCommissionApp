@@ -62,6 +62,9 @@ function deleteAgent(req, res) {
         if(err){
             return res.status(500).json({err:err});
         }
+        if(!agent){
+            return res.status(400).json({err:'agent not found'});
+        }
         agent.remove(function(err){
             if(err){
                 return res.status(500).json({err:err});
