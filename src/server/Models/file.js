@@ -11,7 +11,7 @@ var schema = new mongoose.Schema({
     _id:{type:String, default:shortid.generate},
     creationTime:{type:Date, default:Date.now},
     updateTime:{type:Date, default:Date.now},
-    orignalFilename:String,
+    fileName:String,
     pathOnDisk:String,
     processedOn:Date,
     month:Number,
@@ -23,3 +23,4 @@ var schema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('File', schema);
+

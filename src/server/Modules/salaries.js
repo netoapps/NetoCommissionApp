@@ -11,7 +11,7 @@ const fileService = new FileService();
 const analyzer = new ExcelService();
 
 function uploadSalariesFile(req, res) {
-    //req.file ={path: 'TestData/tdd.xlsx'};
+    req.file ={path: 'TestData/tdd.xlsx'};
     if(!req.file){
         return res.status(400).json({err: 'invalid file'});
     }
@@ -43,7 +43,7 @@ function uploadSalariesFile(req, res) {
 }
 
 function getSalariesForAgenyByMonthAndYear(req,res){
-    salaryService.getAgentSalariesForMonthsAndYear(req.body.agentId,req.body.startMonth,req.body.endMonth,req.body.startYear,req.body.endYear,function(err, salaries){
+    salaryService.getAgentSalariesForMonthsAndYear(req.params.agentId,req.params.startMonth,req.params.endMonth,req.params.startYear,req.params.endYear,function(err, salaries){
         if(err){
             return res.status(400).json({err:err});
         }

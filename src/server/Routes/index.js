@@ -13,30 +13,45 @@ var salaries = require('../Modules/salaries');
 
 module.exports.registerRoutes = function(app){
     var publicRouter = express.Router();
-    publicRouter.post('/commissions/upload',upload.single('file'),salaries.uploadSalariesFile);
+    //publicRouter.post('/commissions/upload',upload.single('file'),salaries.uploadSalariesFile);
     //publicRouter.get('/file',function(req,res){
     //    const result ="<form method=\"post\" enctype=\"multipart/form-data\" action=\"/file\"><input type=\"hidden\" name=\"msgtype\" value=\"2\"/> <input type=\"file\" name=\"file\" /> <input type=\"submit\" value=\"Upload\" /> </form>"
     //    res.send(result);
     //    res.end();
     //});
-    publicRouter.post('/salaries/:agentId/monthYearType',salaries.getAgentSalariesByMonthYearType);
-    publicRouter.get('/agents/',agents.getAllAgents);
+    //publicRouter.post('/salaries/:agentId/monthYearType',salaries.getAgentSalariesByMonthYearType);
+    //publicRouter.get('/agents/',agents.getAllAgents);
     //publicRouter.post('/salaries',salaries.getSalariesForAgenyByMonthAndYear);
 
     app.use('/',publicRouter);
 
     var apiRouter = express.Router();
     apiRouter.get('/agent');
-    //apiRouter.all('*', passport.authenticate('api', {session: false}));
-    //apiRouter.post('/analyze',upload.single('file'),excel.analyze);
-    ////apiRouter.post('/analyze',excel.analyze);
-    //
-    ////Agents
-    //apiRouter.get('/agent/:id',agents.getAgent);
-    //apiRouter.post('/agent',agents.addAgent);
-    //apiRouter.get('/agent/:id/delete', agents.deleteAgent);
-    //apiRouter.get('/salaries', salaries.uploadSalariesFile);
 
+
+    //APIs
+    //Agents
+    apiRouter.get('/agent', agents.getAllAgents);
+    apiRouter.get('/agent/:agentId', agents.getAgentById);
+    apiRouter.post('/agent', agents.addAgent);
+    apiRouter.put('/agent/:agentId/update',agents.editAgent);
+    apiRouter.delete('/agent/:agentId/delete', agents.deleteAgent);
+    apiRouter.get('/partnership', agents.getAllPartnerships);
+    apiRouter.post('/partnership', agents.addPartnership);
+    apiRouter.put('/partnership/:partnershipId/update',agents.editPartnership);
+    apiRouter.delete('/partnership/:partnershipId/delete', agents.deletePartnership);
+
+    //Salary
+    //apiRouter.get('/salary', salaries.getAllAgentSalaries);
+    //apiRouter.post('/salary', salaries.uploadSalariesFile);
+    //apiRouter.get('/agent/:agentId/salary/:startMonth/:startYear/:endMonth/:endYear', salaries.getSalariesForAgenyByMonthAndYear);
+    //apiRouter.get('/agent/:agentId/allSalaries', salaries.getAllAgentSalaries);
+
+    //Files
+    //Get all files
+    //Delete file
+
+    //Other
 
 
     app.use('/api/v1',apiRouter);
