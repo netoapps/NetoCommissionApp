@@ -10,9 +10,11 @@ let ActionType = {
 
     DELETE_COMMISSION_DOC: 'DELETE_COMMISSION_DOC',
 
+    ADD_AGENT: 'ADD_AGENT',
     UPDATE_AGENT: 'UPDATE_AGENT',
     DELETE_AGENT: 'DELETE_AGENT',
 
+    ADD_PARTNERSHIP: 'ADD_PARTNERSHIP',
     UPDATE_PARTNERSHIP: 'UPDATE_PARTNERSHIP',
     DELETE_PARTNERSHIP: 'DELETE_PARTNERSHIP'
 
@@ -44,6 +46,12 @@ export default class AppActions {
     }
 
     //Agents
+    static addAgent(agent)
+    {
+        AppDispatcher.dispatch(ActionType.ADD_AGENT,{
+            agent: agent
+        });
+    }
     static updateAgentAtIndex(index, agent)
     {
         AppDispatcher.dispatch(ActionType.UPDATE_AGENT,{
@@ -59,6 +67,13 @@ export default class AppActions {
     }
 
     //Partnerships
+
+    static addPartnership(partnership)
+    {
+        AppDispatcher.dispatch(ActionType.ADD_PARTNERSHIP,{
+            partnership: partnership
+        });
+    }
     static updatePartnershipAtIndex(index, partnership)
     {
         AppDispatcher.dispatch(ActionType.UPDATE_PARTNERSHIP,{

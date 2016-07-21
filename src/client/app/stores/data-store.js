@@ -184,6 +184,14 @@ class DataStore extends Store {
     {
         return this.get('agents');
     }
+    addAgent(agent)
+    {
+        var agents = this.getAgents()
+        agents.push(agent)
+
+        //post to server...
+
+    }
     deleteAgentAtIndex(index)
     {
         var agents = this.getAgents()
@@ -232,6 +240,14 @@ class DataStore extends Store {
     getPartnerships()
     {
         return this.get('partnerships');
+    }
+    addPartnership(partnership)
+    {
+        var partnerships = this.getPartnerships()
+        partnerships.push(partnership)
+
+        //post to server...
+
     }
     getPartnershipAtIndex(index)
     {
@@ -296,12 +312,20 @@ class DataStore extends Store {
                 this.deleteCommissionFile(data)
                 break;
 
+            case ActionType.ADD_AGENT:
+                this.addAgent(data.agent)
+                break;
+
             case ActionType.UPDATE_AGENT:
                 this.setAgentAtIndex(data.index,data.agent)
                 break;
 
             case ActionType.DELETE_AGENT:
                 this.deleteAgentAtIndex(data.index)
+                break;
+
+            case ActionType.ADD_PARTNERSHIP:
+                this.addPartnership(data.partnership)
                 break;
 
             case ActionType.UPDATE_PARTNERSHIP:

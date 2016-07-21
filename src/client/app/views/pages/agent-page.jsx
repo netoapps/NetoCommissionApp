@@ -160,7 +160,28 @@ class AgentPage extends React.Component {
             });
             return
         }
-        AppActions.updateAgentAtIndex(this.state.agentIndex,this.state.agent)
+        if(this.state.isNewAgent)
+        {
+            if(AppStore.getAgent(this.state.agent.idNumber) != null)
+            {
+                swal({
+                    title: "שגיאה",
+                    text: "מספר מזהה קיים במערכת",
+                    type: "error",
+                    showCancelButton: false,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "סגור",
+                    closeOnConfirm: true,
+                    showLoaderOnConfirm: false
+                });
+                return
+            }
+            AppActions.addAgent(this.state.agent)
+        }
+        else
+        {
+            AppActions.updateAgentAtIndex(this.state.agentIndex,this.state.agent)
+        }
         this.context.router.goBack()
     }
 

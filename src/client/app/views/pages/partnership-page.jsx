@@ -227,7 +227,14 @@ class PartnershipPage extends React.Component {
     }
     onSaveClicked()
     {
-        AppActions.updatePartnershipAtIndex(this.state.partnershipIndex,this.state.partnership)
+        if(this.state.isNewPartnership)
+        {
+            AppActions.addPartnership(this.state.partnership)
+        }
+        else
+        {
+            AppActions.updatePartnershipAtIndex(this.state.partnershipIndex,this.state.partnership)
+        }
         this.context.router.goBack()
     }
 
