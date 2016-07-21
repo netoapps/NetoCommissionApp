@@ -89,7 +89,7 @@ function addPartnership(req, res) {
 }
 
 function editPartnership(req, res) {
-    const partnershipId = req.params.agentId;
+    const partnershipId = req.params.partnershipId;
     if (!partnershipId){
         return res.status(400).json({err:'missing partnership id'});
     }
@@ -130,6 +130,9 @@ function deletePartnership(req, res) {
 
 function getAllPartnerships(req, res){
     Partnership.find({}, function(err, partnerships){
+        if(err){
+            return res.status(500).json({err:err});
+        }
         return res.status(200).json({partnerships:partnerships});
     })
 }
@@ -154,4 +157,19 @@ function getAgentById(req, res){
         return res.status(200).json({agent:agent});
     })
 }
-module.exports = {addAgent, editAgent, deleteAgent, addPartnership,editPartnership,deletePartnership,getAllAgents,getAllPartnerships,getAgentById};
+
+function getPartnershipById(req, res){
+    const partnershipId = req.params.partnershipId;
+    Partnership.findOne({_id:partnershipId}, function(err, partnership){
+        if(err){
+            return res.status(500).json({err:err});
+        }
+        return res.status(200).json({partnership:partnership});
+    })
+}
+module.exports = {
+    addAgent, editAgent, deleteAgent,
+    addPartnership,editPartnership,deletePartnership,
+    getAllAgents,getAllPartnerships,
+    getAgentById,getPartnershipById
+};

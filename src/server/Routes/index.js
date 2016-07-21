@@ -37,6 +37,7 @@ module.exports.registerRoutes = function(app){
     apiRouter.put('/agent/:agentId',agents.editAgent);
     apiRouter.delete('/agent/:agentId', agents.deleteAgent);
     apiRouter.get('/partnership', agents.getAllPartnerships);
+    apiRouter.get('/partnership/:partnershipId', agents.getPartnershipById);
     apiRouter.post('/partnership', agents.addPartnership);
     apiRouter.put('/partnership/:partnershipId',agents.editPartnership);
     apiRouter.delete('/partnership/:partnershipId', agents.deletePartnership);
