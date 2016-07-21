@@ -34,12 +34,12 @@ module.exports.registerRoutes = function(app){
     apiRouter.get('/agent', agents.getAllAgents);
     apiRouter.get('/agent/:agentId', agents.getAgentById);
     apiRouter.post('/agent', agents.addAgent);
-    apiRouter.put('/agent/:agentId/update',agents.editAgent);
-    apiRouter.delete('/agent/:agentId/delete', agents.deleteAgent);
+    apiRouter.put('/agent/:agentId',agents.editAgent);
+    apiRouter.delete('/agent/:agentId', agents.deleteAgent);
     apiRouter.get('/partnership', agents.getAllPartnerships);
     apiRouter.post('/partnership', agents.addPartnership);
-    apiRouter.put('/partnership/:partnershipId/update',agents.editPartnership);
-    apiRouter.delete('/partnership/:partnershipId/delete', agents.deletePartnership);
+    apiRouter.put('/partnership/:partnershipId',agents.editPartnership);
+    apiRouter.delete('/partnership/:partnershipId', agents.deletePartnership);
 
     //Salary
     //apiRouter.get('/salary', salaries.getAllAgentSalaries);
