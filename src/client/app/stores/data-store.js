@@ -199,6 +199,7 @@ class DataStore extends Store {
                     console.log('addAgent - Server responded with success!');
                     var agents = this.getAgents()
                     agents.push(agent)
+                    this.eventbus.emit(ActionType.ADD_AGENT);
                     // if(callback != null)
                     //     callback('success');
                 }.bind(this),

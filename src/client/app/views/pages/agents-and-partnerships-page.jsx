@@ -24,21 +24,47 @@ class AgentsAndPartnerships extends React.Component {
         };
 
         this._onDeleteAgentEvent = this.onDeleteAgentEvent.bind(this)
+        this._onUpdateAgentEvent = this.onUpdateAgentEvent.bind(this)
+        this._onAddAgentEvent = this.onAddAgentEvent.bind(this)
+
         this._onDeletePartnershipEvent = this.onDeletePartnershipEvent.bind(this)
+        this._onUpdatePartnershipEvent = this.onUpdatePartnershipEvent.bind(this)
+        this._onAddPartnershipEvent = this.onAddPartnershipEvent.bind(this)
     }
 
     componentDidMount()
     {
         AppStore.addEventListener(ActionType.DELETE_AGENT, this._onDeleteAgentEvent);
+        AppStore.addEventListener(ActionType.ADD_AGENT, this._onAddAgentEvent);
+        AppStore.addEventListener(ActionType.UPDATE_AGENT, this._onUpdateAgentEvent);
+
         AppStore.addEventListener(ActionType.DELETE_PARTNERSHIP, this._onDeletePartnershipEvent);
+        AppStore.addEventListener(ActionType.ADD_PARTNERSHIP, this._onAddPartnershipEvent);
+        AppStore.addEventListener(ActionType.UPDATE_PARTNERSHIP, this._onUpdatePartnershipEvent);
     }
     componentWillUnmount()
     {
         AppStore.removeEventListener(ActionType.DELETE_AGENT,this._onDeleteAgentEvent);
+        AppStore.removeEventListener(ActionType.ADD_AGENT,this._onAddAgentEvent);
+        AppStore.removeEventListener(ActionType.UPDATE_AGENT,this._onUpdateAgentEvent);
+
         AppStore.removeEventListener(ActionType.DELETE_PARTNERSHIP,this._onDeletePartnershipEvent);
+        AppStore.removeEventListener(ActionType.ADD_PARTNERSHIP,this._onAddPartnershipEvent);
+        AppStore.removeEventListener(ActionType.UPDATE_PARTNERSHIP,this._onUpdatePartnershipEvent);
     }
 
     //Agents
+    onAddAgentEvent()
+    {
+        console.log("onAddAgentEvent")
+        this.state.agents = AppStore.getAgents()
+        this.setState(this.state)
+    }
+    onUpdateAgentEvent() {
+        console.log("onUpdateAgentEvent")
+        this.state.agents = AppStore.getAgents()
+        this.setState(this.state)
+    }
     onDeleteAgentEvent()
     {
         console.log("onDeleteAgentEvent")
@@ -59,6 +85,18 @@ class AgentsAndPartnerships extends React.Component {
     }
 
     //Partnerships
+    onAddPartnershipEvent()
+    {
+        console.log("onAddPartnershipEvent")
+        this.state.partnerships = AppStore.getPartnerships()
+        this.setState(this.state)
+    }
+    onUpdatePartnershipEvent()
+    {
+        console.log("onUpdatePartnershipEvent")
+        this.state.partnerships = AppStore.getPartnerships()
+        this.setState(this.state)
+    }
     onDeletePartnershipEvent()
     {
         console.log("onDeletePartnershipEvent")
