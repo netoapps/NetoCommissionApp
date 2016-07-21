@@ -9,7 +9,7 @@ var _ = require('underscore');
 
 function addAgent(req, res) {
     var agent = new Agent();
-    var data = req.body.agent;
+    var data = req.body;
     agent.name = data.name;
     agent.familyName = data.familyName;
     agent.idNumber = data.idNumber;

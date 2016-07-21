@@ -186,40 +186,60 @@ class DataStore extends Store {
     }
     addAgent(agent)
     {
-        var agents = this.getAgents()
-        agents.push(agent)
-
         //post to server...
         $.ajax(
             {
-                url: '/agent',
+                url: '/api/v1/agent',
                 type: 'POST',
-                data: agent,
+                data: JSON.stringify(agent),
                 contentType: 'application/json',
-                success: function()
+                success: function(result)
                 {
+                    console.log(result);
                     console.log('addAgent - Server responded with success!');
-                    if(callback != null)
-                        callback('success');
+                    var agents = this.getAgents()
+                    agents.push(agent)
+                    // if(callback != null)
+                    //     callback('success');
                 }.bind(this),
                 error: function(jqXHR, textStatus, errorThrown)
                 {
-                    console.error('generate-pdf/', textStatus, errorThrown.toString());
-                    if(callback != null)
-                        callback('error');
+                    console.error('addAgent - ', textStatus, errorThrown.toString());
+                    // if(callback != null)
+                    //     callback('error');
                 }.bind(this)
             });
     }
     deleteAgentAtIndex(index)
     {
-        var agents = this.getAgents()
-        if (agents.length > index)
+        var agent = this.getAgentAtIndex(index)
+        if(agent != null)
         {
-            agents.splice(index, 1)
-            this.eventbus.emit(ActionType.DELETE_AGENT);
-            this.logger.debug('Delete agent at index ' + index);
-
-            //post change to server...
+            //post to server...
+            $.ajax(
+                {
+                    url: '/api/v1/agent/'+agent.idNumber,
+                    type: 'DELETE',
+                    data: JSON.stringify(agent),
+                    contentType: 'application/json',
+                    success: function(result)
+                    {
+                        console.log(result);
+                        console.log('deleteAgentAtIndex - Server responded with success!');
+                        var agents = this.getAgents()
+                        agents.splice(index, 1)
+                        this.eventbus.emit(ActionType.DELETE_AGENT);
+                        this.logger.debug('Delete agent at index ' + index);
+                        // if(callback != null)
+                        //     callback('success');
+                    }.bind(this),
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        console.error('deleteAgentAtIndex - ', textStatus, errorThrown.toString());
+                        // if(callback != null)
+                        //     callback('error');
+                    }.bind(this)
+                });
         }
     }
     setAgentAtIndex(index, agent)
