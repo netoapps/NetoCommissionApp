@@ -30,7 +30,32 @@ class DataStore extends Store {
         var commissionType = ["היקף","נפרעים","בונוס"]
         this.initialize('commissionType',commissionType);
 
-        this.setDummyData()
+        //this.setDummyData()
+
+        //post to server...
+        $.ajax(
+            {
+                url: '/api/v1/agent',
+                type: 'GET',
+                contentType: 'application/json',
+                success: function(result)
+                {
+                    console.log(result);
+                    console.log('getAgents - Server responded with success!');
+                    this.initialize('agents',result.agents);
+                    // if(callback != null)
+                    //     callback('success');
+                }.bind(this),
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+                    console.error('getAgents - ', textStatus, errorThrown.toString());
+                    // if(callback != null)
+                    //     callback('error');
+                }.bind(this)
+            });
+
+        this.initialize('partnerships',[]);
+
     }
 
     setDummyData() {
@@ -69,70 +94,70 @@ class DataStore extends Store {
         //nifraim - 70(agent) 30(company)
         //heikef - 55(agent) 45(company)
         //bonus - 50(agent) 50(company)
-        var agents = []
-
-
-        var karinPayments = []
-        karinPayments.push(new AgentPaymentDetails( {companyName: "מגדל", agentNumber: "2342234523",paymentType: "נפרעים",  agentPart: "55", agencyPart: "45"}  ))
-        karinPayments.push(new AgentPaymentDetails( {companyName: "אלטשולר שחם", agentNumber: "234234",paymentType: "היקף",  agentPart: "55", agencyPart: "45"}  ))
-        karinPayments.push(new AgentPaymentDetails( {companyName: "מנורה", agentNumber: "789565",paymentType: "בונוס",  agentPart: "55", agencyPart: "45"}  ))
-        agents.push(new Agent({
-            name: "קרין",
-            familyName: "בוזלי לוי",
-            idNumber: "112233445",
-            phoneNumber: "0521510677",
-            faxNumber: "0521510677",
-            email: "karin@neto-finance.co.il",
-            active: true,
-            paymentsDetails: karinPayments
-        }))
-
-
-        var idanPayments = []
-        idanPayments.push(new AgentPaymentDetails( {companyName: "מגדל", agentNumber: "57546",paymentType: "נפרעים",  agentPart: "55", agencyPart: "45"}  ))
-        idanPayments.push(new AgentPaymentDetails( {companyName: "אלטשולר שחם", agentNumber: "231",paymentType: "היקף",  agentPart: "55", agencyPart: "45"}  ))
-        idanPayments.push(new AgentPaymentDetails( {companyName: "כלל", agentNumber: "6865",paymentType: "היקף",  agentPart: "55", agencyPart: "45"}  ))
-        idanPayments.push(new AgentPaymentDetails( {companyName: "מנורה", agentNumber: "9789",paymentType: "בונוס",  agentPart: "55", agencyPart: "45"}  ))
-        agents.push(new Agent({
-            name: "עידן",
-            familyName: "כץ",
-            idNumber: "34421134",
-            phoneNumber: "0506774836",
-            faxNumber: "048323746",
-            email: "idan@neto-finance.co.il",
-            active: true,
-            paymentsDetails: idanPayments
-        }))
-
-        var tomerPayments = []
-        tomerPayments.push(new AgentPaymentDetails( {companyName: "מגדל", agentNumber: "54633",paymentType: "נפרעים",  agentPart: "55", agencyPart: "45"}  ))
-        tomerPayments.push(new AgentPaymentDetails( {companyName: "אלטשולר שחם", agentNumber: "2342",paymentType: "היקף",  agentPart: "55", agencyPart: "45"}  ))
-        tomerPayments.push(new AgentPaymentDetails( {companyName: "מנורה", agentNumber: "678678",paymentType: "בונוס",  agentPart: "55", agencyPart: "45"}  ))
-        agents.push(new Agent({
-            name: "תומר",
-            familyName: "כהן",
-            idNumber: "22343452",
-            phoneNumber: "0546747636",
-            faxNumber: "049324232",
-            email: "tomer@neto-finance.co.il",
-            active: false,
-            paymentsDetails: tomerPayments
-        }))
-
-        agents.push(new Agent({
-            name: "חומוס",
-            familyName: "משאושה",
-            idNumber: "67865443",
-            phoneNumber: "",
-            faxNumber: "049324232",
-            email: "tomer@neto-finance.co.il",
-            active: false,
-            paymentsDetails: []
-
-        }))
-
-
-        this.initialize('agents',agents);
+        // var agents = []
+        //
+        //
+        // var karinPayments = []
+        // karinPayments.push(new AgentPaymentDetails( {companyName: "מגדל", agentNumber: "2342234523",paymentType: "נפרעים",  agentPart: "55", agencyPart: "45"}  ))
+        // karinPayments.push(new AgentPaymentDetails( {companyName: "אלטשולר שחם", agentNumber: "234234",paymentType: "היקף",  agentPart: "55", agencyPart: "45"}  ))
+        // karinPayments.push(new AgentPaymentDetails( {companyName: "מנורה", agentNumber: "789565",paymentType: "בונוס",  agentPart: "55", agencyPart: "45"}  ))
+        // agents.push(new Agent({
+        //     name: "קרין",
+        //     familyName: "בוזלי לוי",
+        //     idNumber: "112233445",
+        //     phoneNumber: "0521510677",
+        //     faxNumber: "0521510677",
+        //     email: "karin@neto-finance.co.il",
+        //     active: true,
+        //     paymentsDetails: karinPayments
+        // }))
+        //
+        //
+        // var idanPayments = []
+        // idanPayments.push(new AgentPaymentDetails( {companyName: "מגדל", agentNumber: "57546",paymentType: "נפרעים",  agentPart: "55", agencyPart: "45"}  ))
+        // idanPayments.push(new AgentPaymentDetails( {companyName: "אלטשולר שחם", agentNumber: "231",paymentType: "היקף",  agentPart: "55", agencyPart: "45"}  ))
+        // idanPayments.push(new AgentPaymentDetails( {companyName: "כלל", agentNumber: "6865",paymentType: "היקף",  agentPart: "55", agencyPart: "45"}  ))
+        // idanPayments.push(new AgentPaymentDetails( {companyName: "מנורה", agentNumber: "9789",paymentType: "בונוס",  agentPart: "55", agencyPart: "45"}  ))
+        // agents.push(new Agent({
+        //     name: "עידן",
+        //     familyName: "כץ",
+        //     idNumber: "34421134",
+        //     phoneNumber: "0506774836",
+        //     faxNumber: "048323746",
+        //     email: "idan@neto-finance.co.il",
+        //     active: true,
+        //     paymentsDetails: idanPayments
+        // }))
+        //
+        // var tomerPayments = []
+        // tomerPayments.push(new AgentPaymentDetails( {companyName: "מגדל", agentNumber: "54633",paymentType: "נפרעים",  agentPart: "55", agencyPart: "45"}  ))
+        // tomerPayments.push(new AgentPaymentDetails( {companyName: "אלטשולר שחם", agentNumber: "2342",paymentType: "היקף",  agentPart: "55", agencyPart: "45"}  ))
+        // tomerPayments.push(new AgentPaymentDetails( {companyName: "מנורה", agentNumber: "678678",paymentType: "בונוס",  agentPart: "55", agencyPart: "45"}  ))
+        // agents.push(new Agent({
+        //     name: "תומר",
+        //     familyName: "כהן",
+        //     idNumber: "22343452",
+        //     phoneNumber: "0546747636",
+        //     faxNumber: "049324232",
+        //     email: "tomer@neto-finance.co.il",
+        //     active: false,
+        //     paymentsDetails: tomerPayments
+        // }))
+        //
+        // agents.push(new Agent({
+        //     name: "חומוס",
+        //     familyName: "משאושה",
+        //     idNumber: "67865443",
+        //     phoneNumber: "",
+        //     faxNumber: "049324232",
+        //     email: "tomer@neto-finance.co.il",
+        //     active: false,
+        //     paymentsDetails: []
+        //
+        // }))
+        //
+        //
+        // this.initialize('agents',agents);
 
         var partnership1 = new Partnership()
         partnership1.active = true
@@ -198,7 +223,7 @@ class DataStore extends Store {
                     console.log(result);
                     console.log('addAgent - Server responded with success!');
                     var agents = this.getAgents()
-                    agents.push(agent)
+                    agents.push(result.agent)
                     this.eventbus.emit(ActionType.ADD_AGENT);
                     // if(callback != null)
                     //     callback('success');
@@ -219,7 +244,7 @@ class DataStore extends Store {
             //post to server...
             $.ajax(
                 {
-                    url: '/api/v1/agent/'+agent.idNumber,
+                    url: '/api/v1/agent/'+agent._id,
                     type: 'DELETE',
                     data: JSON.stringify(agent),
                     contentType: 'application/json',
@@ -243,16 +268,32 @@ class DataStore extends Store {
                 });
         }
     }
-    setAgentAtIndex(index, agent)
+    setAgentAtIndex(index, updatedAgent)
     {
-        var agents = this.getAgents()
-        if (agents.length > index)
+        var agent = this.getAgentAtIndex(index)
+        if(agent != null)
         {
-            agents[index] = agent
-            this.eventbus.emit(ActionType.UPDATE_AGENT);
-            this.logger.debug('Updated agent at index ' + index);
-
-            //post change to server...
+            $.ajax(
+                {
+                    url: '/api/v1/agent/'+agent._id,
+                    type: 'PUT',
+                    data: JSON.stringify(updatedAgent),
+                    contentType: 'application/json',
+                    success: function (result) {
+                        console.log(result);
+                        console.log('setAgentAtIndex - Server responded with success!');
+                        var agents = this.getAgents()
+                        agents[index] = result.agent
+                        this.eventbus.emit(ActionType.UPDATE_AGENT);
+                        // if(callback != null)
+                        //     callback('success');
+                    }.bind(this),
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error('setAgentAtIndex - ', textStatus, errorThrown.toString());
+                        // if(callback != null)
+                        //     callback('error');
+                    }.bind(this)
+                });
         }
     }
     getAgentAtIndex(index)
@@ -282,13 +323,30 @@ class DataStore extends Store {
     }
     addPartnership(partnership)
     {
-        var partnerships = this.getPartnerships()
-        partnerships.push(partnership)
-
         //post to server...
-
-
-
+        $.ajax(
+            {
+                url: '/api/v1/partnership',
+                type: 'POST',
+                data: JSON.stringify(partnership),
+                contentType: 'application/json',
+                success: function(result)
+                {
+                    console.log(result);
+                    console.log('addPartnership - Server responded with success!');
+                    var partnerships = this.getPartnerships()
+                    partnerships.push(result.partnership)
+                    this.eventbus.emit(ActionType.ADD_PARTNERSHIP);
+                    // if(callback != null)
+                    //     callback('success');
+                }.bind(this),
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+                    console.error('addPartnership - ', textStatus, errorThrown.toString());
+                    // if(callback != null)
+                    //     callback('error');
+                }.bind(this)
+            });
     }
     getPartnershipAtIndex(index)
     {
@@ -299,29 +357,64 @@ class DataStore extends Store {
         }
         return null
     }
-    setPartnershipAtIndex(index, partnership)
+    setPartnershipAtIndex(index, updatedPartnership)
     {
-        var partnerships =  this.getPartnerships();
-        if (partnerships.length > index)
+        var partnership = this.getPartnershipAtIndex(index)
+        if(partnership != null)
         {
-            partnerships[index] = partnership
-            this.eventbus.emit(ActionType.UPDATE_PARTNERSHIP);
-            this.logger.debug('Updated partnership at index ' + index);
-
-            //post change to server...
+            $.ajax(
+                {
+                    url: '/api/v1/partnership/'+partnership._id,
+                    type: 'PUT',
+                    data: JSON.stringify(updatedPartnership),
+                    contentType: 'application/json',
+                    success: function (result) {
+                        console.log(result);
+                        console.log('setPartnershipAtIndex - Server responded with success!');
+                        var partnerships = this.getPartnerships()
+                        partnerships[index] = result.partnership
+                        this.eventbus.emit(ActionType.UPDATE_PARTNERSHIP);
+                        // if(callback != null)
+                        //     callback('success');
+                    }.bind(this),
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error('setPartnershipAtIndex - ', textStatus, errorThrown.toString());
+                        // if(callback != null)
+                        //     callback('error');
+                    }.bind(this)
+                });
         }
-        return null
     }
     deletePartnershipAtIndex(index)
     {
-        var partnerships = this.getPartnerships();
-        if (partnerships.length > index)
+        var partnership = this.getPartnershipAtIndex(index)
+        if(partnership != null)
         {
-            partnerships.splice(index, 1)
-            this.eventbus.emit(ActionType.DELETE_PARTNERSHIP);
-            this.logger.debug('Delete partnership at index ' + index);
-
-            //post change to server...
+            //post to server...
+            $.ajax(
+                {
+                    url: '/api/v1/partnership/'+partnership._id,
+                    type: 'DELETE',
+                    data: JSON.stringify(partnership),
+                    contentType: 'application/json',
+                    success: function(result)
+                    {
+                        console.log(result);
+                        console.log('deletePartnershipAtIndex - Server responded with success!');
+                        var partnerships = this.getPartnerships()
+                        partnerships.splice(index, 1)
+                        this.eventbus.emit(ActionType.DELETE_PARTNERSHIP);
+                        this.logger.debug('Delete partnership at index ' + index);
+                        // if(callback != null)
+                        //     callback('success');
+                    }.bind(this),
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        console.error('deletePartnershipAtIndex - ', textStatus, errorThrown.toString());
+                        // if(callback != null)
+                        //     callback('error');
+                    }.bind(this)
+                });
         }
     }
 

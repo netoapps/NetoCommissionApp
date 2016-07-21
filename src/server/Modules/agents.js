@@ -137,9 +137,6 @@ function getAllPartnerships(req, res){
 function getAllAgents(req,res){
 
     Agent.find({},function(err,agents){
-        agents = _.groupBy(agents,function(a){
-            return a.idNumber;
-        });
 
         return res.status(200).json({agents:agents});
     })
