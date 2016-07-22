@@ -4,9 +4,7 @@ import AppActions from '../../actions/app-actions'
 import AppStore from '../../stores/data-store'
 import {ActionType} from '../../actions/app-actions.js'
 import Input from 'muicss/lib/react/input';
-import Checkbox from 'muicss/lib/react/checkbox'
 import FixedWidthDropdown from './../common/fixed-width-dropdown.jsx';
-import Dropdown from 'muicss/lib/react/dropdown';
 import DropdownItem from 'muicss/lib/react/dropdown-item';
 import { strings } from '../../constants/strings'
 import Button from 'muicss/lib/react/button'
@@ -98,7 +96,7 @@ class AgentPage extends React.Component {
     }
     onActiveChange(item)
     {
-        if(item.props.value == strings.agentPageActive)
+        if(item.props.value == strings.active)
         {
             this.state.agent.active = true
             this.setState(this.state)
