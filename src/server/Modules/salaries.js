@@ -16,28 +16,26 @@ function uploadSalariesFile(req, res) {
         return res.status(400).json({err: 'invalid file'});
     }
     var data = req.body;
-    if(!data ||!data.month || !data.year || !data.companyName){
-        return res.status(400).json({err: 'missing data (month/year/company name)'});
+    if(!data ||!paymentDate || !data.company){
+        return res.status(400).json({err: 'missing data (paymentDate/company)'});
     }
-    //data.month=7;
-    //data.year=2016;
-    //data.companyName='אפי קורפ';
-    data.maamRate = data.maamRate || 1.0;
-    fileService.saveFileToDb(req.file,data.month,data.year,data.companyName, function (err, newPath) {
+    data.taxValue = data.taxValue || 1.0;
+    fileService.saveFileToDb(req.file,data, function (err, newPath) {
         if (err) {
             return res.status(400).json({err: err});
         }
-        analyzer.analyzeSalaryFile(newPath, function (err, salaries) {
-            if (err) {
-                return res.status(400).json({err: err});
-            }
-            salaryService.processSalaries(data.month, data.year, data.companyName,data.maamRate, salaries, function (err, results) {
-                if (err) {
-                    return res.status(400).json(err);
-                }
-                return res.status(200).json({msg:'all done'});
-            });
-        });
+        return res.status(200).json({msg:'all done'});
+        //analyzer.analyzeSalaryFile(newPath, function (err, salaries) {
+        //    if (err) {
+        //        return res.status(400).json({err: err});
+        //    }
+        //    salaryService.processSalaries(data.month, data.year, data.companyName,data.maamRate, salaries, function (err, results) {
+        //        if (err) {
+        //            return res.status(400).json(err);
+        //        }
+        //        return res.status(200).json({msg:'all done'});
+        //    });
+        //});
     });
 
 }
