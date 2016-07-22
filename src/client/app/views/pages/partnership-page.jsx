@@ -3,11 +3,9 @@ import Table from './../common/table.jsx';
 import AppActions from '../../actions/app-actions'
 import AppStore from '../../stores/data-store'
 import {ActionType} from '../../actions/app-actions.js'
-import Input from '../../../../../node_modules/muicss/lib/react/input';
 import { strings } from '../../constants/strings'
 import {Partnership,PartnershipPaymentDetails,PartnershipAgentDetails} from '../../model/partnership.js';
 import FixedWidthDropdown from './../common/fixed-width-dropdown.jsx';
-import Dropdown from 'muicss/lib/react/dropdown';
 import DropdownItem from 'muicss/lib/react/dropdown-item';
 import Button from 'muicss/lib/react/button'
 

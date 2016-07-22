@@ -470,6 +470,30 @@ class DataStore extends Store {
             }
         }
     }
+    uploadCommissionFile(data)
+    {
+        var formData = new FormData();
+        //for (var i = 0; i < this.state.files.length; i++) {
+        //    formData.append('file', this.state.files[i]);
+        //}
+        formData.append('file', data.commissionFile);
+
+        // now post a new XHR request
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/commissions/upload');
+        xhr.onload = function ()
+        {
+            if (xhr.status === 200)
+            {
+                console.log('all done: ' + xhr.status);
+            }
+            else
+            {
+                console.log('Something went terribly wrong...');
+            }
+        };
+        xhr.send(formData);
+    }
 
     /* Handle actions */
     onAction(actionType, data)
@@ -479,6 +503,10 @@ class DataStore extends Store {
         {
             case ActionType.DELETE_COMMISSION_FILE:
                 this.deleteCommissionFile(data)
+                break;
+
+            case ActionType.UPLOAD_COMMISSION_FILE:
+                this.uploadCommissionFile(data)
                 break;
 
             case ActionType.ADD_AGENT:

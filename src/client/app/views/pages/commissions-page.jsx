@@ -5,13 +5,12 @@ import Table from './../common/table.jsx'
 import Dropdown from '../../../../../node_modules/muicss/lib/react/dropdown'
 import DropdownItem from '../../../../../node_modules/muicss/lib/react/dropdown-item'
 import Button from '../../../../../node_modules/muicss/lib/react/button'
-import DatePicker from 'react-datepicker'
 import Dropzone from 'react-dropzone'
-import TextBox from './../common/text-box.jsx'
 import {CommissionFile} from '../../model/commission-file.js';
 import AppStore from '../../stores/data-store'
 import MonthYearBox from './../common/month-year-box.jsx'
 import {getMonthName,getMonthNumber} from './../common/month-year-box.jsx'
+import AppActions from '../../actions/app-actions'
 
 var moment = require('react-datepicker/node_modules/moment')
 
@@ -122,24 +121,8 @@ class FileBin extends React.Component {
         {
             return
         }
-
-        var formData = new FormData();
-        //for (var i = 0; i < this.state.files.length; i++) {
-        //    formData.append('file', this.state.files[i]);
-        //}
-        formData.append('file', this.state.commissionFile);
-
-        // now post a new XHR request
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/commissions/upload');
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                console.log('all done: ' + xhr.status);
-            } else {
-                console.log('Something went terribly wrong...');
-            }
-        };
-        xhr.send(formData);
+        AppActions.uploadCommissionFile(this.state.commissionFile
+        )
     }
 
     onEditFiles()

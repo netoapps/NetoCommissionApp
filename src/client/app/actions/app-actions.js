@@ -9,8 +9,7 @@ let ActionType = {
     USER_LOGGED_OUT: 'USER_LOGGED_OUT',
 
     DELETE_COMMISSION_FILE: 'DELETE_COMMISSION_FILE',
-    ADD_COMMISSION_FILE: 'ADD_COMMISSION_FILE',
-    UPDATE_COMMISSION_FILE: 'UPDATE_COMMISSION_FILE',
+    UPLOAD_COMMISSION_FILE: 'UPLOAD_COMMISSION_FILE',
     COMMISSION_FILES_LOADED: 'COMMISSION_FILES_LOADED',
 
     ADD_AGENT: 'ADD_AGENT',
@@ -48,6 +47,14 @@ export default class AppActions {
             callback: callback
         });
     }
+    static uploadCommissionFile(commissionFile, callback)
+    {
+        AppDispatcher.dispatch(ActionType.UPLOAD_COMMISSION_FILE,{
+            commissionFile: commissionFile,
+            callback: callback
+        });
+    }
+
 
     //Agents
     static addAgent(agent)
