@@ -16,7 +16,7 @@ function uploadSalariesFile(req, res) {
         return res.status(400).json({err: 'invalid file'});
     }
     var data = req.body;
-    if(!data ||!paymentDate || !data.company){
+    if(!data ||!data.paymentDate || !data.company){
         return res.status(400).json({err: 'missing data (paymentDate/company)'});
     }
     data.taxValue = data.taxValue || 1.0;
