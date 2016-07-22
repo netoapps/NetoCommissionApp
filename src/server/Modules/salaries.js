@@ -15,7 +15,7 @@ function uploadSalariesFile(req, res) {
         return res.status(400).json({err: 'invalid file'});
     }
     try {
-        var data = JSON.parse(req.body);
+        var data = JSON.parse(req.body.data);
     }catch(err){
         return res.status(400).json({err:'invalid json data'});
     }

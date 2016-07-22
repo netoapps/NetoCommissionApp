@@ -473,9 +473,6 @@ class DataStore extends Store {
     uploadCommissionFile(data)
     {
         var formData = new FormData();
-        //for (var i = 0; i < this.state.files.length; i++) {
-        //    formData.append('file', this.state.files[i]);
-        //}
         formData.append('file', data.draggedFile);
         formData.append('data', JSON.stringify(data.commissionFile));
 
@@ -487,12 +484,17 @@ class DataStore extends Store {
             if (xhr.status === 200)
             {
                 console.log('all done: ' + xhr.status);
+
+                var commissionFiles = this.getCommissionFiles()
+                //commissionFiles.push(JSON.parse(xhr.response).commissionFile)
+                commissionFiles.push(data.commissionFile)
+                this.eventbus.emit(ActionType.UPLOAD_COMMISSION_FILE);
             }
             else
             {
                 console.log('Something went terribly wrong...');
             }
-        };
+        }.bind(this);
         xhr.send(formData);
     }
 
