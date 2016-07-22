@@ -46,7 +46,7 @@ module.exports.registerRoutes = function(app){
 
     //Salary
     //apiRouter.get('/salary', salaries.getAllAgentSalaries);
-    apiRouter.post('/salary', salaries.uploadSalariesFile);
+    apiRouter.post('/commissions/upload',upload.single('file'),salaries.uploadSalariesFile);
     //apiRouter.get('/agent/:agentId/salary/:startMonth/:startYear/:endMonth/:endYear', salaries.getSalariesForAgenyByMonthAndYear);
     //apiRouter.get('/agent/:agentId/allSalaries', salaries.getAllAgentSalaries);
 
