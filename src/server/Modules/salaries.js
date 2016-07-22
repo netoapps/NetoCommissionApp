@@ -11,11 +11,14 @@ const fileService = new FileService();
 const analyzer = new ExcelService();
 
 function uploadSalariesFile(req, res) {
-    req.file ={path: 'TestData/tdd.xlsx'};
     if(!req.file){
         return res.status(400).json({err: 'invalid file'});
     }
-    var data = req.body;
+    try {
+        var data = JSON.parse(req.body);
+    }catch(err){
+        return res.status(400).json({err:'invalid json data'});
+    }
     if(!data ||!data.paymentDate || !data.company){
         return res.status(400).json({err: 'missing data (paymentDate/company)'});
     }
