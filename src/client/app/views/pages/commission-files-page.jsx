@@ -13,20 +13,22 @@ class EditFilesPage extends React.Component {
         this.state = {
             commissionFiles: AppStore.getCommissionFiles()
         };
-
-        this._onDeleteCommissionFile = this.onDeleteCommissionFile.bind(this)
+        this._reloadCommissionFiles = this.reloadCommissionFiles.bind(this)
     }
 
     componentDidMount()
     {
-        AppStore.addEventListener(ActionType.DELETE_COMMISSION_DOC, this._onDeleteCommissionFile);
+        AppStore.addEventListener(ActionType.COMMISSION_FILES_LOADED, this._reloadCommissionFiles);
+        AppStore.addEventListener(ActionType.DELETE_COMMISSION_FILE, this._reloadCommissionFiles);
     }
 
     componentWillUnmount()
     {
-        AppStore.removeEventListener(ActionType.DELETE_COMMISSION_DOC,this._onDeleteCommissionFile);
+        AppStore.removeEventListener(ActionType.COMMISSION_FILES_LOADED,this._reloadCommissionFiles);
+        AppStore.removeEventListener(ActionType.DELETE_COMMISSION_FILE,this._reloadCommissionFiles);
     }
-    onDeleteCommissionFile()
+
+    reloadCommissionFiles()
     {
         this.state.commissionFiles = AppStore.getCommissionFiles()
         this.setState(this.state)

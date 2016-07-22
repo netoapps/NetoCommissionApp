@@ -3,10 +3,7 @@
  */
 import Store from '../lib/store.js';
 import dispatcher from '../dispatcher/app-dispatcher.js';
-import Actions from '../actions/app-actions.js';
 import {ActionType} from '../actions/app-actions.js';
-import {Agent,AgentPaymentDetails} from '../model/agent.js';
-import {Partnership,PartnershipPaymentDetails, PartnershipAgentDetails} from '../model/partnership.js';
 import {CommissionFile} from '../model/commission-file.js';
 import { strings } from '../constants/strings'
 
@@ -16,8 +13,6 @@ class DataStore extends Store {
         super('DataStore');
         this.logger.debug('Initializing DataStore');
         this.initialize('user', {});
-
-
 
         var companies = ["כלל ביטוח","כלל גמל","מגדל","מנורה","אלטשולר שחם","ילין לפידות","מיטב דש","הראל","הפניקס","אנליסט","איי בי איי","אקסלנס","הכשרה"]
         this.initialize('companies',companies);
@@ -30,8 +25,6 @@ class DataStore extends Store {
         var commissionType = ["היקף","נפרעים","בונוס"]
         this.initialize('commissionType',commissionType);
 
-        //this.setDummyData()
-
         $.ajax(
             {
                 url: '/api/v1/agent',
@@ -39,9 +32,9 @@ class DataStore extends Store {
                 contentType: 'application/json',
                 success: function(result)
                 {
-                    console.log(result);
-                    console.log('load agents - Server responded with success!');
+                    console.log('load agents - server responded with success!');
                     this.initialize('agents',result.agents);
+                    this.eventbus.emit(ActionType.AGENTS_LOADED);
                     // if(callback != null)
                     //     callback('success');
                 }.bind(this),
@@ -60,16 +53,39 @@ class DataStore extends Store {
                 contentType: 'application/json',
                 success: function(result)
                 {
-                    console.log(result);
-                    console.log('load partnerships - Server responded with success!');
+                    console.log('load partnerships - server responded with success!');
                     this.initialize('partnerships',result.partnerships);
-
+                    this.eventbus.emit(ActionType.PARTNERSHIPS_LOADED);
                     // if(callback != null)
                     //     callback('success');
                 }.bind(this),
                 error: function(jqXHR, textStatus, errorThrown)
                 {
                     console.error('load partnerships - ', textStatus, errorThrown.toString());
+                    // if(callback != null)
+                    //     callback('error');
+                }.bind(this)
+            });
+
+
+        $.ajax(
+            {
+                url: '/api/v1/file',
+                type: 'GET',
+                contentType: 'application/json',
+                success: function(result)
+                {
+                    console.log(result);
+                    console.log('load commission files - server responded with success!');
+                    this.initialize('files', result.files);
+                    this.eventbus.emit(ActionType.COMMISSION_FILES_LOADED);
+
+                    // if(callback != null)
+                    //     callback('success');
+                }.bind(this),
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+                    console.error('load commission files - ', textStatus, errorThrown.toString());
                     // if(callback != null)
                     //     callback('error');
                 }.bind(this)
@@ -178,33 +194,33 @@ class DataStore extends Store {
         //
         // this.initialize('agents',agents);
 
-        var partnership1 = new Partnership()
-        partnership1.active = true
-        var partnershipAgentDetails10 = new PartnershipAgentDetails()
-        var partnershipAgentDetails11 = new PartnershipAgentDetails()
-        partnershipAgentDetails10.idNumber = "112233445"
-        partnershipAgentDetails10.part = "64"
-        partnershipAgentDetails11.idNumber = "34421134"
-        partnershipAgentDetails11.part = "36"
-        partnership1.agentsDetails = [partnershipAgentDetails10,partnershipAgentDetails11]
-        partnership1.paymentsDetails.push({companyName: "מגדל", partnershipNumber: "789674",paymentType: "נפרעים",  partnershipPart: "55", agencyPart: "45"})
-        partnership1.paymentsDetails.push({companyName: "כלל", partnershipNumber: "34243254",paymentType: "בונוס",  partnershipPart: "58", agencyPart: "42"})
-        partnership1.paymentsDetails.push({companyName: "מנורה", partnershipNumber: "546786",paymentType: "היקף",  partnershipPart: "45", agencyPart: "65"})
-
-        var partnership2 = new Partnership()
-        partnership2.active = false
-        var partnershipAgentDetails20 = new PartnershipAgentDetails()
-        var partnershipAgentDetails21 = new PartnershipAgentDetails()
-        partnershipAgentDetails20.idNumber = "67865443"
-        partnershipAgentDetails20.part = "50"
-        partnershipAgentDetails21.idNumber = "34421134"
-        partnershipAgentDetails21.part = "50"
-        partnership2.agentsDetails = [partnershipAgentDetails21,partnershipAgentDetails20]
-        partnership2.paymentsDetails.push({companyName: "מגדל", partnershipNumber: "234234",paymentType: "נפרעים",  partnershipPart: "55", agencyPart: "45"})
-        partnership2.paymentsDetails.push({companyName: "כלל", partnershipNumber: "6786",paymentType: "בונוס",  partnershipPart: "58", agencyPart: "42"})
-        partnership2.paymentsDetails.push({companyName: "מנורה", partnershipNumber: "78977655",paymentType: "היקף",  partnershipPart: "45", agencyPart: "65"})
-        var partnershipsData = [partnership1,partnership2]
-        this.initialize('partnerships',partnershipsData);
+        // var partnership1 = new Partnership()
+        // partnership1.active = true
+        // var partnershipAgentDetails10 = new PartnershipAgentDetails()
+        // var partnershipAgentDetails11 = new PartnershipAgentDetails()
+        // partnershipAgentDetails10.idNumber = "112233445"
+        // partnershipAgentDetails10.part = "64"
+        // partnershipAgentDetails11.idNumber = "34421134"
+        // partnershipAgentDetails11.part = "36"
+        // partnership1.agentsDetails = [partnershipAgentDetails10,partnershipAgentDetails11]
+        // partnership1.paymentsDetails.push({companyName: "מגדל", partnershipNumber: "789674",paymentType: "נפרעים",  partnershipPart: "55", agencyPart: "45"})
+        // partnership1.paymentsDetails.push({companyName: "כלל", partnershipNumber: "34243254",paymentType: "בונוס",  partnershipPart: "58", agencyPart: "42"})
+        // partnership1.paymentsDetails.push({companyName: "מנורה", partnershipNumber: "546786",paymentType: "היקף",  partnershipPart: "45", agencyPart: "65"})
+        //
+        // var partnership2 = new Partnership()
+        // partnership2.active = false
+        // var partnershipAgentDetails20 = new PartnershipAgentDetails()
+        // var partnershipAgentDetails21 = new PartnershipAgentDetails()
+        // partnershipAgentDetails20.idNumber = "67865443"
+        // partnershipAgentDetails20.part = "50"
+        // partnershipAgentDetails21.idNumber = "34421134"
+        // partnershipAgentDetails21.part = "50"
+        // partnership2.agentsDetails = [partnershipAgentDetails21,partnershipAgentDetails20]
+        // partnership2.paymentsDetails.push({companyName: "מגדל", partnershipNumber: "234234",paymentType: "נפרעים",  partnershipPart: "55", agencyPart: "45"})
+        // partnership2.paymentsDetails.push({companyName: "כלל", partnershipNumber: "6786",paymentType: "בונוס",  partnershipPart: "58", agencyPart: "42"})
+        // partnership2.paymentsDetails.push({companyName: "מנורה", partnershipNumber: "78977655",paymentType: "היקף",  partnershipPart: "45", agencyPart: "65"})
+        // var partnershipsData = [partnership1,partnership2]
+        // this.initialize('partnerships',partnershipsData);
     }
 
     //Companies
@@ -449,7 +465,7 @@ class DataStore extends Store {
                 files.splice(file, 1);
                 data.callback("success")
                 this.logger.debug('delete doc ' + data.fileName);
-                this.eventbus.emit(ActionType.DELETE_COMMISSION_DOC);
+                this.eventbus.emit(ActionType.DELETE_COMMISSION_FILE);
                 break;
             }
         }
@@ -461,7 +477,7 @@ class DataStore extends Store {
         this.logger.debug('Received Action ${actionType} with data', data);
         switch (actionType)
         {
-            case ActionType.DELETE_COMMISSION_DOC:
+            case ActionType.DELETE_COMMISSION_FILE:
                 this.deleteCommissionFile(data)
                 break;
 

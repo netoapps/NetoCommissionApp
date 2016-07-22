@@ -8,16 +8,20 @@ let ActionType = {
     USER_LOGGED_IN: 'USER_LOGGED_IN',
     USER_LOGGED_OUT: 'USER_LOGGED_OUT',
 
-    DELETE_COMMISSION_DOC: 'DELETE_COMMISSION_DOC',
+    DELETE_COMMISSION_FILE: 'DELETE_COMMISSION_FILE',
+    ADD_COMMISSION_FILE: 'ADD_COMMISSION_FILE',
+    UPDATE_COMMISSION_FILE: 'UPDATE_COMMISSION_FILE',
+    COMMISSION_FILES_LOADED: 'COMMISSION_FILES_LOADED',
 
     ADD_AGENT: 'ADD_AGENT',
     UPDATE_AGENT: 'UPDATE_AGENT',
     DELETE_AGENT: 'DELETE_AGENT',
+    AGENTS_LOADED: 'AGENTS_LOADED',
 
     ADD_PARTNERSHIP: 'ADD_PARTNERSHIP',
     UPDATE_PARTNERSHIP: 'UPDATE_PARTNERSHIP',
-    DELETE_PARTNERSHIP: 'DELETE_PARTNERSHIP'
-
+    DELETE_PARTNERSHIP: 'DELETE_PARTNERSHIP',
+    PARTNERSHIPS_LOADED: 'PARTNERSHIPS_LOADED'
 
 }
 export {ActionType}
@@ -39,7 +43,7 @@ export default class AppActions {
     //Commission files
     static deleteCommissionFile(fileName, callback)
     {
-        AppDispatcher.dispatch(ActionType.DELETE_COMMISSION_DOC,{
+        AppDispatcher.dispatch(ActionType.DELETE_COMMISSION_FILE,{
             fileName: fileName,
             callback: callback
         });
