@@ -19,11 +19,14 @@ class FileBin extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            commissionFile: new CommissionFile()
-        };
 
+        var commissionFile = new CommissionFile()
+        commissionFile.paymentDate = new Date(this.state.commissionFile.paymentDate.getFullYear(), getMonthNumber(month), 1, 0, 0, 0, 0);
+        this.state = {
+            commissionFile: commissionFile
+        };
     }
+
     onCompanyNameChange(item)
     {
         if(item.props.value != this.state.commissionFile.company)

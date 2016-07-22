@@ -476,11 +476,11 @@ class DataStore extends Store {
         //for (var i = 0; i < this.state.files.length; i++) {
         //    formData.append('file', this.state.files[i]);
         //}
-        formData.append('file', data.commissionFile);
+        formData.append('file', data.commissionFile.draggedFile);
 
         // now post a new XHR request
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/commissions/upload');
+        xhr.open('POST', '/api/v1/commissions/upload');
         xhr.onload = function ()
         {
             if (xhr.status === 200)
