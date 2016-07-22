@@ -11,7 +11,6 @@ const fileService = new FileService();
 const analyzer = new ExcelService();
 
 function uploadSalariesFile(req, res) {
-    req.file ={path: 'TestData/tdd.xlsx'};
     if(!req.file){
         return res.status(400).json({err: 'invalid file'});
     }

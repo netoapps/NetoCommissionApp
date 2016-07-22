@@ -476,7 +476,8 @@ class DataStore extends Store {
         //for (var i = 0; i < this.state.files.length; i++) {
         //    formData.append('file', this.state.files[i]);
         //}
-        formData.append('file', data.commissionFile.draggedFile);
+        formData.append('file', data.draggedFile);
+        formData.append('data', JSON.stringify(data.commissionFile));
 
         // now post a new XHR request
         var xhr = new XMLHttpRequest();

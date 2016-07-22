@@ -12,7 +12,6 @@ export class CommissionFile {
         }
         else
         {
-            this.draggedfile = null;
             this.name = "";
             this.company = "";
             this.paymentDate = new Date();
@@ -24,7 +23,6 @@ export class CommissionFile {
     }
     copyFrom(commissionFile)
     {
-        this.draggedfile = commissionFile.draggedfile;
         this.name = commissionFile.name;
         this.company = commissionFile.company;
         this.paymentDate = commissionFile.paymentDate;

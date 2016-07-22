@@ -21,9 +21,10 @@ class FileBin extends React.Component {
         super(props);
 
         var commissionFile = new CommissionFile()
-        commissionFile.paymentDate = new Date(this.state.commissionFile.paymentDate.getFullYear(), getMonthNumber(month), 1, 0, 0, 0, 0);
+        commissionFile.paymentDate = new Date(commissionFile.paymentDate.getFullYear(), commissionFile.paymentDate.getMonth(), 1, 0, 0, 0, 0);
         this.state = {
-            commissionFile: commissionFile
+            commissionFile: commissionFile,
+            draggedFile: null
         };
     }
 
@@ -50,7 +51,7 @@ class FileBin extends React.Component {
     onDrop(files)
     {
         console.log('Received files: ', files)
-        this.state.commissionFile.draggedFile = files[0]
+        this.state.draggedFile = files[0]
         this.state.commissionFile.name = files[0].name
         this.state.commissionFile.uploadDate = new Date();
         this.setState(this.state)
@@ -124,8 +125,7 @@ class FileBin extends React.Component {
         {
             return
         }
-        AppActions.uploadCommissionFile(this.state.commissionFile
-        )
+        AppActions.uploadCommissionFile(this.state.commissionFile,this.state.draggedFile)
     }
 
     onEditFiles()

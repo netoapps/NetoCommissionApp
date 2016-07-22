@@ -47,11 +47,11 @@ export default class AppActions {
             callback: callback
         });
     }
-    static uploadCommissionFile(commissionFile, callback)
+    static uploadCommissionFile(commissionFile, draggedFile)
     {
         AppDispatcher.dispatch(ActionType.UPLOAD_COMMISSION_FILE,{
             commissionFile: commissionFile,
-            callback: callback
+            draggedFile: draggedFile
         });
     }
 
