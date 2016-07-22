@@ -16,11 +16,11 @@ function uploadSalariesFile(req, res) {
         return res.status(400).json({err: 'invalid file'});
     }
     var data = req.body;
-    if(!data ||!data.month || !data.year || !data.companyName){
-        return res.status(400).json({err: 'missing data (month/year/company name)'});
+    if(!data ||!paymentDate || !data.company){
+        return res.status(400).json({err: 'missing data (paymentDate/company)'});
     }
-    data.maamRate = data.maamRate || 1.0;
-    fileService.saveFileToDb(req.file,data.month,data.year,data.companyName, function (err, newPath) {
+    data.taxValue = data.taxValue || 1.0;
+    fileService.saveFileToDb(req.file,data, function (err, newPath) {
         if (err) {
             return res.status(400).json({err: err});
         }

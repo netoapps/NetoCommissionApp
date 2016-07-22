@@ -53,7 +53,7 @@ function FileService() {
         });
     }
 
-    this.saveFileToDb = function (file, month, year, company, cb) {
+    this.saveFileToDb = function (file, fileData, cb) {
         checksum.file(file.path, function(err, sum){
             if(err){
                 return cb(err);
@@ -70,13 +70,15 @@ function FileService() {
                 var newPath = path.join(config.datafilesDirectory, file.filename);
                 fs.rename(file.path, newPath, function (err) {
                     var newFile = new File();
-                    newFile.fileName = file.originalname;
-                    newFile.pathOnDisk = newPath;
-                    newFile.processedOn = Date.now();
-                    newFile.month = month;
-                    newFile.year = year;
-                    newFile.companyName = company;
-                    newFile.checksum = sum;
+                    newFile.pathOnDisk =    newPath;
+                    newFile.name =          file.originalname;
+                    newFile.paymentDate =   fileData.paymentDate;
+                    newFile.uploadDate =    Date.now();
+                    newFile.company =       fileData.company;
+                    newFile.note =          fileData.note;
+                    newFile.taxState =      fileData.taxState;
+                    newFile.taxValue =      fileData.taxValue;
+                    newFile.checksum =      sum;
                     newFile.save(function(err){
                         if(err){
                             fs.unlink(newPath);
