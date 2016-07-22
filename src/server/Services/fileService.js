@@ -41,7 +41,7 @@ function FileService() {
                }
                fs.unlinkSync(file.pathOnDisk);
 
-               salaryService.
+               //Add delete old salaries
 
                file.remove(function(err){
                    if(err){
@@ -63,10 +63,10 @@ function FileService() {
                     fs.unlink(file.path);
                     return cb(err);
                 }
-                //if (count > 0) {
-                //    fs.unlink(file.path);
-                //    return cb('file already exist in db');
-                //}
+                if (count > 0) {
+                    fs.unlink(file.path);
+                    return cb('file already exist in db');
+                }
                 var newPath = path.join(config.datafilesDirectory, file.filename);
                 fs.rename(file.path, newPath, function (err) {
                     var newFile = new File();

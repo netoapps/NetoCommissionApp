@@ -10,6 +10,8 @@ var upload = multer({ dest: '../../uploads/' });
 
 var agents = require('../Modules/agents');
 var salaries = require('../Modules/salaries');
+var files = require('../Modules/files');
+var constants = require('../Modules/constants');
 
 module.exports.registerRoutes = function(app){
     var publicRouter = express.Router();
@@ -44,16 +46,18 @@ module.exports.registerRoutes = function(app){
 
     //Salary
     //apiRouter.get('/salary', salaries.getAllAgentSalaries);
-    //apiRouter.post('/salary', salaries.uploadSalariesFile);
+    apiRouter.post('/salary', salaries.uploadSalariesFile);
     //apiRouter.get('/agent/:agentId/salary/:startMonth/:startYear/:endMonth/:endYear', salaries.getSalariesForAgenyByMonthAndYear);
     //apiRouter.get('/agent/:agentId/allSalaries', salaries.getAllAgentSalaries);
 
     //Files
-    //Get all files
+    apiRouter.get('/file',files.getAllFiles);
+    apiRouter.delete('/file/:fileId',files.deleteFile);
     //Delete file
 
     //Other
-
+    apiRouter.get('/constants/companies', constants.getCompanyNames);
+    apiRouter.get('/constants/commissions', constants.getCommisionTypes);
 
     app.use('/api/v1',apiRouter);
 

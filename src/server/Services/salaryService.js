@@ -45,7 +45,7 @@ function SalaryService() {
         })
     }
     this.deleteSalariesByMonthAndYear = function(month, year){
-        
+
     }
     this.deleteSalary = function (agentIds) {
 
