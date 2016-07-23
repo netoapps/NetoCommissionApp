@@ -460,11 +460,11 @@ class DataStore extends Store {
 
         for(var file = 0; file < files.length; file++)
         {
-            if(data.fileName === files[file].fileName)
+            if(data.fileName === files[file].name)
             {
                 files.splice(file, 1);
                 data.callback("success")
-                this.logger.debug('delete doc ' + data.fileName);
+                this.logger.debug('delete doc ' + data.name);
                 this.eventbus.emit(ActionType.DELETE_COMMISSION_FILE);
                 break;
             }
@@ -486,13 +486,16 @@ class DataStore extends Store {
                 console.log('all done: ' + xhr.status);
 
                 var commissionFiles = this.getCommissionFiles()
-                //commissionFiles.push(JSON.parse(xhr.response).commissionFile)
                 commissionFiles.push(data.commissionFile)
                 this.eventbus.emit(ActionType.UPLOAD_COMMISSION_FILE);
+                if(data.callback != null)
+                    data.callback("success")
             }
             else
             {
                 console.log('Something went terribly wrong...');
+                if(data.callback != null)
+                    data.callback("error")
             }
         }.bind(this);
         xhr.send(formData);
