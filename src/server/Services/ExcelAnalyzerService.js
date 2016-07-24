@@ -48,7 +48,10 @@ function ExcelAnalyzerService() {
                 if (!_.isNaN(numVal)) {
                     var val = s[k].replace(',','').trim();
                     val = Number(val);
-                    obj[numVal] = val;
+                    if(!_.isNaN(val))
+                    {
+                        obj[numVal] = val;
+                    }
                 }
             });
             return obj;
