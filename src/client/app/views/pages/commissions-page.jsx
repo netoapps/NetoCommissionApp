@@ -125,7 +125,38 @@ class FileBin extends React.Component {
         {
             return
         }
-        AppActions.uploadCommissionFile(this.state.commissionFile,this.state.draggedFile)
+        AppActions.uploadCommissionFile(this.state.commissionFile,this.state.draggedFile, function (result) {
+            if(result == "success")
+            {
+                //if success
+                this.state.commissionFile = new CommissionFile()
+                this.setState(this.state);
+                swal(
+                    {
+                        title: "",
+                        text: "קובץ נשמר בשרת",
+                        type: "success",
+                        timer: 1500,
+                        showConfirmButton: false
+                    }
+                )
+            }
+            else
+            {
+                swal({
+                    title: "שגיאה",
+                    text: "שגיאה בעת העלאת קובץ לשרת",
+                    type: "error",
+                    showCancelButton: false,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "סגור",
+                    closeOnConfirm: true,
+                    showLoaderOnConfirm: false
+                });
+            }
+        }.bind(this))
+
+
     }
 
     onEditFiles()
@@ -202,6 +233,12 @@ class FileBin extends React.Component {
         var month = getMonthName(this.state.commissionFile.paymentDate.getMonth())
         var year = this.state.commissionFile.paymentDate.getFullYear().toString()
 
+        var uploadFileButtonDisabled = true
+        if(this.state.commissionFile.name.length > 0)
+        {
+            uploadFileButtonDisabled = false
+        }
+
         return  <div className="commissions-page-file-bin shadow">
             <Dropzone onDrop={this.onDrop.bind(this)} className="commissions-page-file-bin-drag-area" style={style} activeStyle={activeStyle}>
                 <strong>{dragAreaString}</strong>
@@ -230,7 +267,7 @@ class FileBin extends React.Component {
                     <Button className="shadow" onClick={this.onEditFiles.bind(this)}>{strings.editFiles}</Button>
                     <div className="dashboard-buttons-horizontal-spacer"/>
                     <div className="dashboard-buttons-horizontal-spacer"/>
-                    <Button className="shadow" onClick={this.onUploadFile.bind(this)} color="primary">{strings.uploadFile}</Button>
+                    <Button className="shadow" onClick={this.onUploadFile.bind(this)} color="primary" disabled={uploadFileButtonDisabled}>{strings.uploadFile}</Button>
                     <div className="commissions-page-file-note-container">
                         <div className="commissions-page-file-bin-settings-text">{strings.notes}</div>
                         <textarea className="commissions-page-file-note"

@@ -41,7 +41,7 @@ class EditFilesPage extends React.Component {
         if(deleteInProgress)
             return;
 
-        var fileName = this.state.commissionFiles[rowIndex].fileName
+        var fileName = this.state.commissionFiles[rowIndex].name
 
         swal({
                 title: "אישור מחיקת מסמך",
@@ -65,7 +65,7 @@ class EditFilesPage extends React.Component {
                             swal(
                                 {
                                     title: "",
-                                    text: "המסמך נמחק לצמיתות מהמערכת!",
+                                    text: "הקובץ נמחק לצמיתות מהמערכת!",
                                     type: "success",
                                     timer: 1500,
                                     showConfirmButton: false

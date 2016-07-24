@@ -25,7 +25,6 @@ class AgentsAndPartnerships extends React.Component {
 
         this._reloadAgentsData = this.reloadAgentsData.bind(this)
         this._reloadPartnershipsData = this.reloadPartnershipsData.bind(this)
-
     }
 
     componentDidMount()
@@ -42,13 +41,15 @@ class AgentsAndPartnerships extends React.Component {
     }
     componentWillUnmount()
     {
-        AppStore.removeEventListener(ActionType.DELETE_AGENT,this._onDeleteAgentEvent);
-        AppStore.removeEventListener(ActionType.ADD_AGENT,this._onAddAgentEvent);
-        AppStore.removeEventListener(ActionType.UPDATE_AGENT,this._onUpdateAgentEvent);
+        AppStore.removeEventListener(ActionType.AGENTS_LOADED,this._reloadAgentsData);
+        AppStore.removeEventListener(ActionType.DELETE_AGENT,this._reloadAgentsData);
+        AppStore.removeEventListener(ActionType.ADD_AGENT,this._reloadAgentsData);
+        AppStore.removeEventListener(ActionType.UPDATE_AGENT,this._reloadAgentsData);
 
-        AppStore.removeEventListener(ActionType.DELETE_PARTNERSHIP,this._onDeletePartnershipEvent);
-        AppStore.removeEventListener(ActionType.ADD_PARTNERSHIP,this._onAddPartnershipEvent);
-        AppStore.removeEventListener(ActionType.UPDATE_PARTNERSHIP,this._onUpdatePartnershipEvent);
+        AppStore.removeEventListener(ActionType.DELETE_PARTNERSHIP,this._reloadPartnershipsData);
+        AppStore.removeEventListener(ActionType.ADD_PARTNERSHIP,this._reloadPartnershipsData);
+        AppStore.removeEventListener(ActionType.UPDATE_PARTNERSHIP,this._reloadPartnershipsData);
+        AppStore.removeEventListener(ActionType.PARTNERSHIPS_LOADED,this._reloadPartnershipsData);
     }
 
     //Agents
