@@ -23,22 +23,24 @@ function uploadSalariesFile(req, res) {
         return res.status(400).json({err: 'missing data (paymentDate/company)'});
     }
     data.taxValue = data.taxValue || 1.0;
-    fileService.saveFileToDb(req.file,data, function (err, newPath) {
+    fileService.saveFileToDb(req.file,data, function (err, file) {
         if (err) {
             return res.status(400).json({err: err});
         }
-        return res.status(200).json({msg:'all done'});
-        //analyzer.analyzeSalaryFile(newPath, function (err, salaries) {
-        //    if (err) {
-        //        return res.status(400).json({err: err});
-        //    }
-        //    salaryService.processSalaries(data.month, data.year, data.companyName,data.maamRate, salaries, function (err, results) {
-        //        if (err) {
-        //            return res.status(400).json(err);
-        //        }
-        //        return res.status(200).json({msg:'all done'});
-        //    });
-        //});
+        //Unmark this if you want to test only file upload without processing/analyzing
+        //It will return you the file data structure
+        //return res.status(200).json({file:file});
+        analyzer.analyzeSalaryFile(file.pathOnDisk, function (err, salaries) {
+            if (err) {
+                return res.status(400).json({err: err});
+            }
+            salaryService.processSalaries(data.paymentDate, data.company,data.taxValue, salaries, function (err, results) {
+                if (err) {
+                    return res.status(400).json(err);
+                }
+                return res.status(200).json({file:file});
+            });
+        });
     });
 
 }
