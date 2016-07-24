@@ -84,7 +84,7 @@ function FileService() {
                             fs.unlink(newPath);
                             return cb(err);
                         }
-                        return cb(null,newPath);
+                        return cb(null,newFile);
                     })
                 })
             })
