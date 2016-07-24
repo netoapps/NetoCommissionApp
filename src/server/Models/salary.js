@@ -9,13 +9,14 @@ var mongoose = require('mongoose');
         _id:{type:String, default:shortid.generate},
         creationTime:{type:Date, default:Date.now},
         updateTime:{type:Date, default:Date.now},
-        agentId: {type:String, index:true},
-        agentInCompanyId:{type:String, index:true},
-        salary:{2:Number, 3:Number, 4:Number,5:Number},
-        month:Number,
-        year:Number,
-        companyName:String
+        agentInCompanyId: String,
+        idNumber:String,
+        amount:Number,
+        type:Number,
+        company:String,
+        paymentDate:Date
     });
-    schema.index({year:1,month:1});
+    schema.index({paymentDate:1});
+    schema.index({idNumber:1});
 
 module.exports = mongoose.model('Salary', schema);
