@@ -71,9 +71,9 @@ function SalaryService() {
                     missingIds[salary[1]]=true;
                 }
             });
-            //if (Object.keys(missingIds).length > 0) {
-            //    return reject(Object.keys(missingIds));
-            //}
+            if (Object.keys(missingIds).length > 0) {
+                return reject(Object.keys(missingIds));
+            }
             return resolve();
         });
     }
