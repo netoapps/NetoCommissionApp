@@ -29,18 +29,18 @@ function uploadSalariesFile(req, res) {
         }
         //Unmark this if you want to test only file upload without processing/analyzing
         //It will return you the file data structure
-        //return res.status(200).json({file:file});
-        analyzer.analyzeSalaryFile(file.pathOnDisk, function (err, salaries) {
-            if (err) {
-                return res.status(400).json({err: err});
-            }
-            salaryService.processSalaries(data.paymentDate, data.company,data.taxValue, salaries, function (err, results) {
-                if (err) {
-                    return res.status(400).json(err);
-                }
-                return res.status(200).json({file:file});
-            });
-        });
+        return res.status(200).json({file:file});
+        // analyzer.analyzeSalaryFile(file.pathOnDisk, function (err, salaries) {
+        //     if (err) {
+        //         return res.status(400).json({err: err});
+        //     }
+        //     salaryService.processSalaries(data.paymentDate, data.company,data.taxValue, salaries, function (err, results) {
+        //         if (err) {
+        //             return res.status(400).json(err);
+        //         }
+        //         return res.status(200).json({file:file});
+        //     });
+        // });
     });
 
 }

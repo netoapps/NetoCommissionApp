@@ -462,10 +462,31 @@ class DataStore extends Store {
         {
             if(data.fileName === files[file].name)
             {
-                files.splice(file, 1);
-                data.callback("success")
-                this.logger.debug('delete doc ' + data.name);
-                this.eventbus.emit(ActionType.DELETE_COMMISSION_FILE);
+                //post to server...
+                $.ajax(
+                    {
+                        url: '/api/v1/file/'+files[file]._id,
+                        type: 'DELETE',
+                        contentType: 'application/json',
+                        success: function(result)
+                        {
+                            console.log(result);
+                            console.log('deleteCommissionFile - Server responded with success!');
+                            files.splice(file, 1);
+                            data.callback("success")
+                            this.logger.debug('delete doc ' + data.name);
+                            this.eventbus.emit(ActionType.DELETE_COMMISSION_FILE);
+
+                            // if(callback != null)
+                            //     callback('success');
+                        }.bind(this),
+                        error: function(jqXHR, textStatus, errorThrown)
+                        {
+                            console.error('deleteCommissionFile - ', textStatus, errorThrown.toString());
+                            // if(callback != null)
+                            //     callback('error');
+                        }.bind(this)
+                    });
                 break;
             }
         }
@@ -484,9 +505,9 @@ class DataStore extends Store {
             if (xhr.status === 200)
             {
                 console.log('all done: ' + xhr.status);
-
+                var file = JSON.parse(xhr.response).file
                 var commissionFiles = this.getCommissionFiles()
-                commissionFiles.push(data.commissionFile)
+                commissionFiles.push(file)
                 this.eventbus.emit(ActionType.UPLOAD_COMMISSION_FILE);
                 if(data.callback != null)
                     data.callback("success")

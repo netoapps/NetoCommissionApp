@@ -16,7 +16,7 @@ function FileService() {
         fs.accessSync(config.datafilesDirectory, fs.F_OK);
     }catch(err){
         console.log('Creating data files dir for first time');
-        fs.mkdirSync(config.datafilesDirectory, 0o666);
+        fs.mkdirSync(config.datafilesDirectory, 0o777);
     }
 
     this.getAllFiles = function(){
