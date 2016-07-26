@@ -29,6 +29,7 @@ function uploadSalariesFile(req, res) {
         }
         //Unmark this if you want to test only file upload without processing/analyzing
         //It will return you the file data structure
+
         //return res.status(200).json({file:file});
         analyzer.analyzeSalaryFile(file.pathOnDisk, function (err, salaries) {
             if (err) {
