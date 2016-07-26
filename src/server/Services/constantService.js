@@ -2,7 +2,7 @@
  * Created by efishtain on 22/07/2016.
  */
 
-const commissionType = ["היקף","נפרעים","בונוס"];
+const commissionType = ["נפרעים","היקף","בונוס"];
 const companies = ["כלל ביטוח","כלל גמל","מגדל","מנורה","אלטשולר שחם","ילין לפידות","מיטב דש","הראל","הפניקס","אנליסט","איי בי איי","אקסלנס","הכשרה"];
 
 function ConstantsService(){

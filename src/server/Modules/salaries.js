@@ -32,14 +32,19 @@ function uploadSalariesFile(req, res) {
         //return res.status(200).json({file:file});
         analyzer.analyzeSalaryFile(file.pathOnDisk, function (err, salaries) {
             if (err) {
-                return res.status(400).json({err: err});
+                fileService.deleteFile(file._id, function(err){
+                    return res.status(400).json({err: err});
+                })
+            }else {
+                salaryService.processSalaries(data.paymentDate, data.company, data.taxValue, salaries, function (err, results) {
+                    if (err) {
+                        fileService.deleteFile(file._id, function(err){
+                            return res.status(400).json({err: err});
+                        })
+                    }
+                    return res.status(200).json({file: file});
+                });
             }
-            salaryService.processSalaries(data.paymentDate, data.company,data.taxValue, salaries, function (err, results) {
-                if (err) {
-                    return res.status(400).json(err);
-                }
-                return res.status(200).json({file:file});
-            });
         });
     });
 

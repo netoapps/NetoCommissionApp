@@ -67,7 +67,9 @@ function SalaryService() {
             var missingIds = {};
             _.each(salaries,function(salary){
                 var agentNumber = companyName+'-'+salary[1];
-                if(!agentsMaps[agentNumber] && !partnershipsMaps[agentNumber]){
+                if(!agentsMaps[agentNumber+'-'+type3] && !partnershipsMaps[agentNumber+'-'+type3] &&
+                    !agentsMaps[agentNumber+'-'+type4] && !partnershipsMaps[agentNumber+'-'+type4] &&
+                    !agentsMaps[agentNumber+'-'+type5] && !partnershipsMaps[agentNumber+'-'+type5]){
                     missingIds[salary[1]]=true;
                 }
             });
