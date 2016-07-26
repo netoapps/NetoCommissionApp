@@ -12,7 +12,7 @@ var agents = require('../Modules/agents');
 var salaries = require('../Modules/salaries');
 var files = require('../Modules/files');
 var constants = require('../Modules/constants');
-
+var expanses = require('../Modules/expanses');
 module.exports.registerRoutes = function(app){
     var publicRouter = express.Router();
     //publicRouter.post('/commissions/upload',upload.single('file'),salaries.uploadSalariesFile);
@@ -47,8 +47,24 @@ module.exports.registerRoutes = function(app){
     //Salary
     //apiRouter.get('/salary', salaries.getAllAgentSalaries);
     apiRouter.post('/commissions/upload',upload.single('file'),salaries.uploadSalariesFile);
+    //TODO:
+    //Get all salaries by payment date and idNumber
+    //Insert new salary API
+    //
+
+
+    //Add Expanses model
+    //Type, sum, notes, expansesDate
+
+
     //apiRouter.get('/agent/:agentId/salary/:startMonth/:startYear/:endMonth/:endYear', salaries.getSalariesForAgenyByMonthAndYear);
     //apiRouter.get('/agent/:agentId/allSalaries', salaries.getAllAgentSalaries);
+
+    //Expanses
+    apiRouter.get('/agent/:agentId/expanses/:startDate/:endDate',expanses.getAgentExpanseForDate);
+    apiRouter.post('/agent/:idNumber/expanse', expanses.addExpanseToAgentAtDate);
+    apiRouter.put('/agent/:idNumber/expanse/:expanseId', expanses.updateExpanse);
+    apiRouter.delete('/agent/:idNumber/expanse/:expanseId', expanses.deleteExpanse);
 
     //Files
     apiRouter.get('/file',files.getAllFiles);
