@@ -17,22 +17,106 @@ const type5 = commisionTypes[2];
 
 function SalaryService() {
 
-    this.getAllAgentSalaries = function (agentId, cb) {
-        Salary.find({agentId: agentId}, function (err, salaries) {
+
+    this.addAgentSalary = function(idNumber, agentInCompanyId, paymentDate, amount, type, company){
+        return new Promise(function(resolve, reject){
+            addSalaryToAgent(idNumber,agentInCompanyId,paymentDate,amount,type,company, function(err){
+                if(err){
+                    return reject(err);
+                }
+                return resolve();
+            })
+        })
+    }
+    this.getAgentSalariesForDate = function (idNumber, startDate, endDate, cb) {
+        Salary.aggregate([
+            {$match: {$and: [{paymentDate: {$gte: startDate}}, {paymentDate: {$lte: endDate}}, {agentId: idNumber}]}}
+        ], function (err, salaries) {
+            if (err)return cb(err);
+            return cb(null, salaries);
+        });
+    }
+    this.deleteSalary = function (id) {
+        return new Promise(function(resolve, reject){
+            Salary.findById(id, function(err, salary){
+                if(err){
+                    return reject(err);
+                }
+                if(!salary){
+                    return reject('salary not found');
+                }
+                salary.remove(function(err){
+                    if(err){
+                        return reject(err);
+                    }
+                    return resolve();
+                })
+            })
+        })
+    };
+    this.updateSalary = function(id, agentInCompanyId, paymentDate, amount, type, company){
+        return new Promise(function(resolve, reject){
+            Salary.findById(id, function(err, salary){
+                if(err){
+                    return reject(err);
+                }
+                if(!salary){
+                    return reject('salary not found');
+                }
+                salary.agentInCompanyId = agentInCompanyId;
+                salary.paymentDate = paymentDate;
+                salary.amount = amount;
+                salary.type = type;
+                salary.company = company;
+                salary.save(function(err){
+                    if(err){
+                        return reject(err);
+                    }
+                    return resolve();
+                })
+            })
+        })
+    }
+    this.processSalaries = function (paymentDate, company,taxValue, salaries, cb) {
+        var agents = {};
+        var partnerships = {};
+        agentService.getAllAgents()
+            .then(function(data){
+                _.each(data,function(agent){
+                    _.each(agent.paymentsDetails,function(pd){
+                        agents[pd.companyName+'-'+pd.agentNumber+'-'+pd.paymentType] = {idNumber:agent.idNumber, pd:pd};
+                    })
+                })
+
+            })
+            .then(agentService.getAllPartnerships)
+            .then(function(data){
+                _.each(data,function(partnership){
+                    _.each(partnership.paymentsDetails,function(pd){
+                        partnerships[pd.companyName+'-'+pd.partnershipNumber+'-'+pd.paymentType] = {agentsDetails:partnership.agentsDetails,pd:pd };
+                    })
+                })
+            })
+            .then(checkAgentIds.bind(null,agents,partnerships,company, salaries))
+            .then(assignSalariesToAgents.bind(null, agents, partnerships, salaries,paymentDate, company, taxValue))
+            .then(function(){
+                return cb();
+            })
+            .catch(function(err){
+                return cb(err);
+            });
+
+    }
+
+    //Future support if needed
+    this.getAllAgentSalaries = function (idNumber, cb) {
+        Salary.find({agentId: idNumber}, function (err, salaries) {
             if (err) {
                 return cb(err);
             }
             return cb(null, salaries);
         })
     };
-    this.getAgentSalariesForMonthsAndYear = function (agentId, startMonth, endMonth, startYear, endYear, cb) {
-        Salary.aggregate([
-            {$match: {$and: [{month: {$gte: startMonth}}, {year: {$gte: startYear}}, {month: {$lte: endMonth}}, {year: {$lte: endYear}}, {agentId: agentId}]}}
-        ], function (err, salaries) {
-            if (err)return cb(err);
-            return cb(null, salaries);
-        });
-    }
     this.getAgentSalariesByMonthYearAndType = function (agentId, month, year, cb) {
         Salary.aggregate([
             {$match: {$and: [{month: month}, {year: year}, {agentId: agentId}]}},
@@ -50,18 +134,13 @@ function SalaryService() {
             return cb(null, salaries);
         })
     }
-    this.deleteSalariesByMonthAndYear = function(month, year){
-
-    }
-    this.deleteSalary = function (agentIds) {
-
-    };
-
+    this.deleteSalariesByMonthAndYear = function(month, year){}
     this.deleteAgentSalaries = function () {
 
     };
 
 
+    //Private functions for handling salary processing from file
     function checkAgentIds(agentsMaps, partnershipsMaps, companyName, salaries) {
         return new Promise(function (resolve, reject) {
             var missingIds = {};
@@ -79,7 +158,6 @@ function SalaryService() {
             return resolve();
         });
     }
-
     function addSalaryToAgent(idNumber, agentInCompanyId, paymentDate, amount, type, company, cb) {
         var salary = new Salary();
         salary.idNumber = idNumber;
@@ -95,12 +173,6 @@ function SalaryService() {
         })
 
     };
-
-    //Multiply all salarie by tax value
-    //for id:
-    //  find the id in agents/partnerships
-    //  for each salary of current id
-    //      create a new salary in db for company, curr
     function assignSalariesToAgents(agents, partnerships, salaries, paymentDate, company, taxValue){
         return new Promise(function(resolve, reject){
             var salaryTasks = [];
@@ -189,36 +261,7 @@ function SalaryService() {
         })
     }
 
-    this.processSalaries = function (paymentDate, company,taxValue, salaries, cb) {
-        var agents = {};
-        var partnerships = {};
-        agentService.getAllAgents()
-            .then(function(data){
-                _.each(data,function(agent){
-                    _.each(agent.paymentsDetails,function(pd){
-                        agents[pd.companyName+'-'+pd.agentNumber+'-'+pd.paymentType] = {idNumber:agent.idNumber, pd:pd};
-                    })
-                })
 
-            })
-            .then(agentService.getAllPartnerships)
-            .then(function(data){
-                _.each(data,function(partnership){
-                    _.each(partnership.paymentsDetails,function(pd){
-                        partnerships[pd.companyName+'-'+pd.partnershipNumber+'-'+pd.paymentType] = {agentsDetails:partnership.agentsDetails,pd:pd };
-                    })
-                })
-            })
-            .then(checkAgentIds.bind(null,agents,partnerships,company, salaries))
-            .then(assignSalariesToAgents.bind(null, agents, partnerships, salaries,paymentDate, company, taxValue))
-            .then(function(){
-                return cb();
-            })
-            .catch(function(err){
-                return cb(err);
-            });
-
-    }
 }
 
 module.exports = SalaryService;

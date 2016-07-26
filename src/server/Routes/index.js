@@ -15,22 +15,9 @@ var constants = require('../Modules/constants');
 var expanses = require('../Modules/expanses');
 module.exports.registerRoutes = function(app){
     var publicRouter = express.Router();
-    //publicRouter.post('/commissions/upload',upload.single('file'),salaries.uploadSalariesFile);
-    //publicRouter.get('/file',function(req,res){
-    //    const result ="<form method=\"post\" enctype=\"multipart/form-data\" action=\"/file\"><input type=\"hidden\" name=\"msgtype\" value=\"2\"/> <input type=\"file\" name=\"file\" /> <input type=\"submit\" value=\"Upload\" /> </form>"
-    //    res.send(result);
-    //    res.end();
-    //});
-    //publicRouter.post('/salaries/:agentId/monthYearType',salaries.getAgentSalariesByMonthYearType);
-    //publicRouter.get('/agents/',agents.getAllAgents);
-    //publicRouter.post('/salaries',salaries.getSalariesForAgenyByMonthAndYear);
-
     app.use('/',publicRouter);
 
     var apiRouter = express.Router();
-    apiRouter.get('/agent');
-
-
     //APIs
     //Agents
     apiRouter.get('/agent', agents.getAllAgents);
@@ -45,20 +32,12 @@ module.exports.registerRoutes = function(app){
     apiRouter.delete('/partnership/:partnershipId', agents.deletePartnership);
 
     //Salary
-    //apiRouter.get('/salary', salaries.getAllAgentSalaries);
     apiRouter.post('/commissions/upload',upload.single('file'),salaries.uploadSalariesFile);
-    //TODO:
-    //Get all salaries by payment date and idNumber
-    //Insert new salary API
-    //
+    apiRouter.get('/agent/:idNumber/salary/:startDate/:endDate', salaries.getSalariesForAgentByDate);
+    apiRouter.post('/agent/:idNumber/salary', salaries.addAgentSalary);
+    apiRouter.put('/agent/:idNumber/salary/:salaryId', salaries.updateAgentSalary);
+    apiRouter.delete('/agent/:idNumber/salary/:salaryId', salaries.deleteSalary);
 
-
-    //Add Expanses model
-    //Type, sum, notes, expansesDate
-
-
-    //apiRouter.get('/agent/:agentId/salary/:startMonth/:startYear/:endMonth/:endYear', salaries.getSalariesForAgenyByMonthAndYear);
-    //apiRouter.get('/agent/:agentId/allSalaries', salaries.getAllAgentSalaries);
 
     //Expanses
     apiRouter.get('/agent/:agentId/expanses/:startDate/:endDate',expanses.getAgentExpanseForDate);

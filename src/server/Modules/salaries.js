@@ -51,8 +51,8 @@ function uploadSalariesFile(req, res) {
 
 }
 
-function getSalariesForAgenyByMonthAndYear(req,res){
-    salaryService.getAgentSalariesForMonthsAndYear(req.params.agentId,req.params.startMonth,req.params.endMonth,req.params.startYear,req.params.endYear,function(err, salaries){
+function getSalariesForAgentByDate(req,res){
+    salaryService.getAgentSalariesForDate(req.params.agentId,req.params.startDate,req.params.endDate,function(err, salaries){
         if(err){
             return res.status(400).json({err:err});
         }
@@ -60,30 +60,76 @@ function getSalariesForAgenyByMonthAndYear(req,res){
     })
 }
 
-function getAllAgentSalaries(req,res){
-    if(!req.params.agentId){
-        return res.status(200).json({err:'missing agent id'});
+function addAgentSalary(req, res){
+    if(!req.params.idNumber){
+        return res.status(400).json({err:'missing id Number'});
     }
-    salaryService.getAllAgentSalaries(req.params.agentId,function(err, salaries){
-        if(err){
+    var data = req.body;
+    if(!data || !data.agentId || !data.paymentDate ||!data.amount|| !data.type|| !data.company){
+        return res.status(400).json({err:'missing salary data'});
+    }
+    salaryService.addAgentSalary(req.params.idNumber, data.agentId, data.paymentDate, data.amount, data.type, data.company)
+        .then(function(salary){
+            return res.status(200).json({salary:salary});
+        })
+        .catch(function(err){
             return res.status(400).json({err:err});
-        }
-        return res.status(200).json({salaries:salaries});
-    })
+        })
 }
 
-function getAgentSalariesByMonthYearType(req, res){
-    if(!req.params.agentId){
-        return res.status(200).json({err:'missing agent id'});
+function updateAgentSalary(req, res){
+    if(!req.params.salaryId){
+        return res.status(400).json({err:'missing salary Id'});
     }
-    if(!req.body || !req.body.month || !req.body.year){
-        return res.status(200).json({err:'missing month/year'});
+    var data = req.body;
+    if(!data || !data.agentId || !data.paymentDate ||!data.amount|| !data.type|| !data.company){
+        return res.status(400).json({err:'missing salary data'});
     }
-    salaryService.getAgentSalariesByMonthYearAndType(req.params.agentId,req.body.month,req.body.year,function(err,salaries){
-        if(err){
+    salaryService.updateSalary(req.params.salaryId, data.agentId, data.paymentDate, data.amount, data.type, data.company)
+        .then(function(salary){
+            return res.status(200).json({salary:salary});
+        })
+        .catch(function(err){
             return res.status(400).json({err:err});
-        }
-        return res.status(200).json({salaries:salaries});
-    })
+        })
 }
-module.exports = {uploadSalariesFile,getSalariesForAgenyByMonthAndYear,getAllAgentSalaries,getAgentSalariesByMonthYearType};
+
+function deleteSalary(req, res){
+    if(!req.params.salaryId){
+        return res.status(400).json({err:'missing salary Id'});
+    }
+    salaryService.deleteSalary(req.params.salaryId)
+        .then(function(salary){
+            return res.status(200).json({});
+        })
+        .catch(function(err){
+            return res.status(400).json({err:err});
+        })
+}
+//function getAllAgentSalaries(req,res){
+//    if(!req.params.agentId){
+//        return res.status(200).json({err:'missing agent id'});
+//    }
+//    salaryService.getAllAgentSalaries(req.params.agentId,function(err, salaries){
+//        if(err){
+//            return res.status(400).json({err:err});
+//        }
+//        return res.status(200).json({salaries:salaries});
+//    })
+//}
+//
+//function getAgentSalariesByMonthYearType(req, res){
+//    if(!req.params.agentId){
+//        return res.status(200).json({err:'missing agent id'});
+//    }
+//    if(!req.body || !req.body.month || !req.body.year){
+//        return res.status(200).json({err:'missing month/year'});
+//    }
+//    salaryService.getAgentSalariesByMonthYearAndType(req.params.agentId,req.body.month,req.body.year,function(err,salaries){
+//        if(err){
+//            return res.status(400).json({err:err});
+//        }
+//        return res.status(200).json({salaries:salaries});
+//    })
+//}
+module.exports = {uploadSalariesFile,getSalariesForAgentByDate, addAgentSalary, updateAgentSalary, deleteSalary};
