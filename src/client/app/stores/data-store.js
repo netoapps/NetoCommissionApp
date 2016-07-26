@@ -514,7 +514,7 @@ class DataStore extends Store {
             }
             else
             {
-                console.log('Something went terribly wrong...');
+                console.log(xhr.response);
                 if(data.callback != null)
                     data.callback("error")
             }
