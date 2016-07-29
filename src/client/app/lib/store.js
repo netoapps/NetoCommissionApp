@@ -123,7 +123,7 @@ export default class Store {
      * @throws exception if the key does not exist
      */
     set(key, value, squashEvent = false) {
-        this.logger.debug(`Setting ${key}=${value}`);
+        // this.logger.debug(`Setting ${key}=${value}`);
         if (key in this.storeData) {
             this.storeData[key] = value;
             if (!squashEvent) {

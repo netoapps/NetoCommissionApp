@@ -54,6 +54,9 @@ class FileBin extends React.Component {
         this.state.draggedFile = files[0]
         this.state.commissionFile.name = files[0].name
         this.state.commissionFile.uploadDate = new Date();
+
+        console.log(this.state.commissionFile.paymentDate)
+
         this.setState(this.state)
     }
     isValidInput()

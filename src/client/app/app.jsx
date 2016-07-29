@@ -3,7 +3,6 @@ import {render} from 'react-dom';
 import { browserHistory, Router, Route, Link } from 'react-router'
 import AuthService from './services/auth-service'
 import Login from './views/pages/login-page.jsx'
-import Signup from './views/pages/signup-page.jsx'
 import Dashboard from './views/pages/dashboard-page.jsx'
 import Commissions from './views/pages/commissions-page.jsx'
 import Agents from './views/pages/agents-and-partnerships-page.jsx'
@@ -14,8 +13,12 @@ import PartnershipPage from './views/pages/partnership-page.jsx'
 import TopBar from './views/top-bar.jsx';
 import RightPanel from './views/right-panel.jsx';
 import { strings } from './constants/strings'
+import AppActions from './actions/app-actions'
+import AppStore from './stores/data-store'
+import dispatcher from './dispatcher/app-dispatcher.js';
 
-//AppDispatcher.dispatch('APPINIT');
+dispatcher.registerStore(AppStore);
+AppActions.appInit();
 
 function isAuthenticated(nextState, replace)
 {

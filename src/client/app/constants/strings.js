@@ -17,7 +17,7 @@ let strings = {
     agentsAndPartnerships: "סוכנים ושותפויות",
     partnerships: "שותפויות",
     totalCommissions: "סה״כ עמלות",
-    totalAgents: "סה״כ סוכנים",
+    totalAgents: "סה״כ סוכנים פעילים",
     totalInvestments: "סה״כ גודל תיק",
     totalInvestmentsChange: "עמלות (מיליונים)",
     load: "טען",

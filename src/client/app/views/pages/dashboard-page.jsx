@@ -1,15 +1,14 @@
 import React from 'react';
 import AuthService from '../../services/auth-service'
 import Button from 'muicss/lib/react/button'
-import Dropdown from 'muicss/lib/react/dropdown';
-import DropdownItem from 'muicss/lib/react/dropdown-item';
-import FixedWidthDropdown from './../common/fixed-width-dropdown.jsx';
 import { strings } from '../../constants/strings'
-import Chart from "react-chartjs";
 import {Bar} from "react-chartjs";
 import Table from './../common/table.jsx';
 import MonthYearBox from './../common/month-year-box.jsx'
 import {getMonthName,getMonthNumber,getMonths} from './../common/month-year-box.jsx'
+import AppStore from '../../stores/data-store'
+import {ActionType} from '../../actions/app-actions.js'
+import DataService from '../../services/data-service.js';
 
 
 class DashboardToolbar extends React.Component {
@@ -193,10 +192,9 @@ class DashboardMonthTotalCommissions extends React.Component {
         super(props);
 
         this.state = {
-            value: 233423432,
-            change: 3.2
+            value: 0,
+            change: 0
         }
-
     }
 
     render () {
@@ -230,31 +228,49 @@ class DashboardMonthTotalAgents extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            value: 999,
-            change: 3.4
-        }
-    }
 
+        this.state = {
+            value: "1",
+            change: 0
+        }
+        this._reloadData = this.reloadData.bind(this)
+    }
+    componentDidMount()
+    {
+        AppStore.addEventListener(ActionType.AGENTS_LOADED, this._reloadData);
+    }
+    componentWillUnmount()
+    {
+        AppStore.removeEventListener(ActionType.AGENTS_LOADED,this._reloadData);
+    }
+    reloadData()
+    {
+        DataService.getActiveAgentCountForDate(this.props.date, (response) => {
+
+            if(response.result == true)
+            {
+                this.state.value = response.data
+                this.setState(this.state)
+            }
+        })
+    }
     render () {
 
         var value = this.state.value.toString();
-
-        var change = this.state.change
-        var changeIcon = "../public/images/change-up.png"
-        var changeColor = "green"
-        if(change < 0)
-        {
-            changeIcon = "../public/images/change-down.png"
-            changeColor = "red"
-        }
-
+        //var change = this.state.change
+        // var changeIcon = "../public/images/change-up.png"
+        // var changeColor = "green"
+        // if(change < 0)
+        // {
+        //     changeIcon = "../public/images/change-down.png"
+        //     changeColor = "red"
+        // }
 
         return (
             <div className="dashboard-month-total-agents shadow">
                 <div className="dashboard-box-title">{strings.totalAgents}</div>
                 <div className="dashboard-box-value green"><b>{value}</b></div>
-                <div className={"dashboard-box-change " + changeColor}>{change}<small>&nbsp;{"%"}</small>&nbsp;<img src={changeIcon}/></div>
+                {/*<div className={"dashboard-box-change " + changeColor}>{change}<small>&nbsp;{"%"}</small>&nbsp;<img src={changeIcon}/></div>*/}
             </div>
         );
     }
@@ -265,8 +281,8 @@ class DashboardTotalInvestments extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: 433423432,
-            change: -1.2
+            value: 0,
+            change: 0
         }
     }
 
@@ -306,21 +322,41 @@ class Dashboard extends React.Component {
         var date = new Date()
         var currentMonth = getMonthName(date.getMonth().toString());
         var currentYear = date.getFullYear().toString();
+        var monthStartDate = new Date(date.getFullYear(), date.getMonth(), 1, 0, 0, 0, 0);
 
         this.state = {
             loginData: AuthService.getLoginData(),
-            date: date,
+            date: monthStartDate,
             selectedMonth: currentMonth,
             selectedYear:currentYear
 
         };
+
+        this._reloadData = this.reloadData.bind(this)
     }
+    componentDidMount()
+    {
+        AppStore.addEventListener(ActionType.AGENTS_LOADED, this._reloadData);
+    }
+    componentWillUnmount()
+    {
+        AppStore.removeEventListener(ActionType.AGENTS_LOADED,this._reloadData);
+    }
+    componentWillReceiveProps(nextProps)
+    {
+
+    }
+    reloadData()
+    {
+        this.setState(this.state)
+    }
+
     onMonthChange(month)
     {
         if(month != this.state.selectedMonth)
         {
             this.state.selectedMonth = month;
-            this.state.date = new Date(this.state.date.getFullYear(), getMonthNumber(month), 2, 0, 0, 0, 0);
+            this.state.date = new Date(this.state.date.getFullYear(), getMonthNumber(month), 1, 0, 0, 0, 0);
             this.setState(this.state);
         }
     }
@@ -329,11 +365,12 @@ class Dashboard extends React.Component {
         if(year != this.state.selectedYear)
         {
             this.state.selectedYear = year;
-            this.state.date = new Date(year, this.state.date.getMonth(), 2, 0, 0, 0, 0);
+            this.state.date = new Date(year, this.state.date.getMonth(), 1, 0, 0, 0, 0);
             this.setState(this.state);
         }
     }
     render () {
+
         return (
             <div className="dashboard-page animated fadeIn">
                 <DashboardToolbar month={this.state.selectedMonth} year={this.state.selectedYear} onMonthChange={this.onMonthChange.bind(this)} onYearChange={this.onYearChange.bind(this)}/>
@@ -344,7 +381,7 @@ class Dashboard extends React.Component {
                         <div className="hcontainer-no-wrap dashboard-stats-container-top">
                             <DashboardMonthTotalCommissions />
                             <div className="horizontal-spacer-20"/>
-                            <DashboardMonthTotalAgents />
+                            <DashboardMonthTotalAgents date={this.state.date}/>
                         </div>
                         <div className="vertical-spacer-20"/>
                         <DashboardTotalInvestments />
