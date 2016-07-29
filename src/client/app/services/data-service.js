@@ -124,6 +124,7 @@ class DataService {
             });
     }
 
+    //Commission files
     loadCommissionFiles(callback)
     {
         $.ajax(
@@ -151,6 +152,37 @@ class DataService {
                 }.bind(this)
             });
     }
+
+    //Salaries
+    loadCommissionFilesEntries(callback)
+    {
+        $.ajax(
+            {
+                url: '/api/v1/salary',
+                type: 'GET',
+                contentType: 'application/json',
+                success: function(result)
+                {
+                    console.log('load commission files entries - server responded with success!');
+                    if(callback != null)
+                        callback({
+                            result:true,
+                            data: result.salaries
+                        });
+
+                }.bind(this),
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+                    console.error('load commission files entries - ', textStatus, errorThrown.toString());
+                    callback({
+                        result:false,
+                        data: null
+                    });
+                }.bind(this)
+            });
+    }
+
+
 }
 
 export default new DataService()
