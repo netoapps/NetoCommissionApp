@@ -322,10 +322,11 @@ class Dashboard extends React.Component {
         var date = new Date()
         var currentMonth = getMonthName(date.getMonth().toString());
         var currentYear = date.getFullYear().toString();
+        var monthStartDate = new Date(date.getFullYear(), date.getMonth(), 1, 0, 0, 0, 0);
 
         this.state = {
             loginData: AuthService.getLoginData(),
-            date: date,
+            date: monthStartDate,
             selectedMonth: currentMonth,
             selectedYear:currentYear
 
@@ -355,7 +356,7 @@ class Dashboard extends React.Component {
         if(month != this.state.selectedMonth)
         {
             this.state.selectedMonth = month;
-            this.state.date = new Date(this.state.date.getFullYear(), getMonthNumber(month), 2, 0, 0, 0, 0);
+            this.state.date = new Date(this.state.date.getFullYear(), getMonthNumber(month), 1, 0, 0, 0, 0);
             this.setState(this.state);
         }
     }
@@ -364,11 +365,12 @@ class Dashboard extends React.Component {
         if(year != this.state.selectedYear)
         {
             this.state.selectedYear = year;
-            this.state.date = new Date(year, this.state.date.getMonth(), 2, 0, 0, 0, 0);
+            this.state.date = new Date(year, this.state.date.getMonth(), 1, 0, 0, 0, 0);
             this.setState(this.state);
         }
     }
     render () {
+
         return (
             <div className="dashboard-page animated fadeIn">
                 <DashboardToolbar month={this.state.selectedMonth} year={this.state.selectedYear} onMonthChange={this.onMonthChange.bind(this)} onYearChange={this.onYearChange.bind(this)}/>
