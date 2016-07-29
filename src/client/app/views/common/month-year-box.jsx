@@ -73,7 +73,7 @@ class MonthYearBox extends React.Component {
                 <FixedWidthDropdown shadow label={this.state.selectedMonth} alignMenu="right" >
                     {months}
                 </FixedWidthDropdown>
-                <div className="dashboard-buttons-horizontal-spacer"/>
+                <div className="horizontal-spacer-10"/>
                 <FixedWidthDropdown shadow className="fixed-size-button" label={this.state.selectedYear} alignMenu="right" >
                     {years}
                 </FixedWidthDropdown>

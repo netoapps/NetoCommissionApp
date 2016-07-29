@@ -179,14 +179,14 @@ class PartnershipPage extends React.Component {
     }
 
     //Table changes
-    onSelectCompany(index,item)
+    onSelectCompany(index,value)
     {
-        this.state.partnership.paymentsDetails[index].companyName = item.props.value
+        this.state.partnership.paymentsDetails[index].companyName = value
         this.setState(this.state)
     }
-    onSelectPaymentType(index,item)
+    onSelectPaymentType(index,value)
     {
-        this.state.partnership.paymentsDetails[index].paymentType = item.props.value
+        this.state.partnership.paymentsDetails[index].paymentType = value
         this.setState(this.state)
     }
     onDeletePaymentRowClicked(rowIndex)
@@ -341,7 +341,7 @@ class PartnershipPage extends React.Component {
             <div className="page animated fadeIn shadow">
                 <div className="hcontainer-no-wrap">
                     <div className="page-title">{strings.partnershipPageDetails}</div>
-                    <div className="page-form-horizontal-spacer-full"/>
+                    <div className="horizontal-spacer-90"/>
                     <div className="page-active-box"><FixedWidthDropdown shadow label={selectedActiveState} alignMenu="right" >
                         {activeStates}
                     </FixedWidthDropdown></div>
@@ -359,9 +359,9 @@ class PartnershipPage extends React.Component {
                     <Table onRemoveRow={this.onDeletePaymentRowClicked.bind(this)} columns={columns} data={this.state.partnership.paymentsDetails}/>
                 </div>
                 <div className="hcontainer-no-wrap">
-                    <div className="page-form-horizontal-spacer-full"/>
+                    <div className="horizontal-spacer-90"/>
                     <Button className="shadow" onClick={this.onExitClicked.bind(this)} color="default">{strings.agentPageExit}</Button>
-                    <div className="page-form-horizontal-spacer-20"/>
+                    <div className="horizontal-spacer-20"/>
                     <Button className="shadow" onClick={this.onSaveClicked.bind(this)} color="primary">{strings.agentPageSave}</Button>
                 </div>
 

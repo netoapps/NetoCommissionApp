@@ -184,14 +184,14 @@ class AgentPage extends React.Component {
     }
 
     //Table changes
-    onSelectCompany(index,item)
+    onSelectCompany(index,value)
     {
-        this.state.agent.paymentsDetails[index].companyName = item.props.value
+        this.state.agent.paymentsDetails[index].companyName = value
         this.setState(this.state)
     }
-    onSelectPaymentType(index,item)
+    onSelectPaymentType(index,value)
     {
-        this.state.agent.paymentsDetails[index].paymentType = item.props.value
+        this.state.agent.paymentsDetails[index].paymentType = value
         this.setState(this.state)
     }
     onAgentNumberChange(index,value)
@@ -270,7 +270,7 @@ class AgentPage extends React.Component {
             <div className="page animated fadeIn shadow">
                 <div className="hcontainer-no-wrap">
                     <div className="page-title">{strings.agentPageDetails}</div>
-                    <div className="page-form-horizontal-spacer-full"/>
+                    <div className="horizontal-spacer-90"/>
                     <div className="page-active-box"><FixedWidthDropdown shadow label={selectedActiveState} alignMenu="right" >
                         {activeStates}
                     </FixedWidthDropdown></div>
@@ -279,11 +279,11 @@ class AgentPage extends React.Component {
                     <div className="page-form-item-box">
                         <Input onChange={this.onNameChange.bind(this)} label={strings.agentPageName}  defaultValue={this.state.agent.name} required={true} floatingLabel={true} />
                     </div>
-                    <div className="page-form-horizontal-spacer-50"/>
+                    <div className="horizontal-spacer-50"/>
                     <div className="page-form-item-box">
                         <Input onChange={this.onFamilyNameChange.bind(this)} label={strings.agentPageFamilyName} defaultValue={this.state.agent.familyName} required={true} floatingLabel={true} />
                     </div>
-                    <div className="page-form-horizontal-spacer-50"/>
+                    <div className="horizontal-spacer-50"/>
                     <div className="page-form-item-box">
                         <Input onChange={this.onIdNumberChange.bind(this)} label={strings.agentPageId} defaultValue={this.state.agent.idNumber} required={true} floatingLabel={true} />
                     </div>
@@ -292,11 +292,11 @@ class AgentPage extends React.Component {
                     <div className="page-form-item-box">
                         <Input onChange={this.onPhoneNumberChange.bind(this)} label={strings.agentPagePhone} defaultValue={this.state.agent.phoneNumber} floatingLabel={true} />
                     </div>
-                    <div className="page-form-horizontal-spacer-50"/>
+                    <div className="horizontal-spacer-50"/>
                     <div className="page-form-item-box">
                         <Input onChange={this.onFaxNumberChange.bind(this)} label={strings.agentPageFax} defaultValue={this.state.agent.faxNumber} floatingLabel={true} />
                     </div>
-                    <div className="page-form-horizontal-spacer-50"/>
+                    <div className="horizontal-spacer-50"/>
                     <div className="page-form-item-box">
                         <Input onChange={this.onEmailChange.bind(this)} label={strings.agentPageEmail} type="email" defaultValue={this.state.agent.email} floatingLabel={true} />
                     </div>
@@ -306,9 +306,9 @@ class AgentPage extends React.Component {
                     <Table onRemoveRow={this.onDeletePaymentRowClicked.bind(this)} columns={columns} data={this.state.agent.paymentsDetails}/>
                 </div>
                 <div className="hcontainer-no-wrap">
-                    <div className="page-form-horizontal-spacer-full"/>
+                    <div className="horizontal-spacer-90"/>
                     <Button className="shadow" onClick={this.onExitClicked.bind(this)} color="default">{strings.agentPageExit}</Button>
-                    <div className="page-form-horizontal-spacer-20"/>
+                    <div className="horizontal-spacer-20"/>
                     <Button className="shadow" onClick={this.onSaveClicked.bind(this)} color="primary">{strings.agentPageSave}</Button>
                 </div>
             </div>

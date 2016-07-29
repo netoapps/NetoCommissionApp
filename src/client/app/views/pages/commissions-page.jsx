@@ -250,23 +250,23 @@ class FileBin extends React.Component {
                     <Dropdown label={this.state.commissionFile.company} alignMenu="right" variant="raised">
                         {companies}
                     </Dropdown>
-                    <div className="dashboard-buttons-horizontal-spacer"/>
-                    <div className="dashboard-buttons-horizontal-spacer"/>
-                    <div className="dashboard-buttons-horizontal-spacer"/>
+                    <div className="horizontal-spacer-10"/>
+                    <div className="horizontal-spacer-10"/>
+                    <div className="horizontal-spacer-10"/>
                     <div className="commissions-page-file-bin-settings-text">{strings.paymentMonth}</div>
                     <MonthYearBox month={month} year={year} onMonthChange={this.onMonthChange.bind(this)} onYearChange={this.onYearChange.bind(this)}/>
-                    <div className="dashboard-buttons-horizontal-spacer"/>
+                    <div className="horizontal-spacer-10"/>
                     <div className="commissions-page-file-bin-settings-text">{strings.tax}</div>
                     <Dropdown label={this.state.commissionFile.taxState} alignMenu="right" variant="raised">
                         {taxStateOptions}
                     </Dropdown>
-                    <div className="dashboard-buttons-horizontal-spacer"/>
+                    <div className="horizontal-spacer-10"/>
                     {fileTaxInput}
                 </div>
                 <div className="hcontainer-no-wrap left-align">
                     <Button className="shadow" onClick={this.onEditFiles.bind(this)}>{strings.editFiles}</Button>
-                    <div className="dashboard-buttons-horizontal-spacer"/>
-                    <div className="dashboard-buttons-horizontal-spacer"/>
+                    <div className="horizontal-spacer-10"/>
+                    <div className="horizontal-spacer-10"/>
                     <Button className="shadow" onClick={this.onUploadFile.bind(this)} color="primary" disabled={uploadFileButtonDisabled}>{strings.uploadFile}</Button>
                     <div className="commissions-page-file-note-container">
                         <div className="commissions-page-file-bin-settings-text">{strings.notes}</div>

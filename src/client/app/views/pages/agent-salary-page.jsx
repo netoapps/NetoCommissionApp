@@ -120,6 +120,10 @@ class AgentSalaryPage extends React.Component {
     {
 
     }
+    onLoadClick()
+    {
+
+    }
     render () {
 
         var incomesColumns = [
@@ -208,9 +212,18 @@ class AgentSalaryPage extends React.Component {
 
         return (
             <div className="agent-salary-page animated fadeIn">
-                <MonthYearBox month={this.state.selectedMonth} year={this.state.selectedYear}
-                              onMonthChange={this.onMonthChange.bind(this)}
-                              onYearChange={this.onYearChange.bind(this)}/>
+
+                <div className="hcontainer-no-wrap">
+                    <MonthYearBox month={this.state.selectedMonth} year={this.state.selectedYear}
+                                  onMonthChange={this.onMonthChange.bind(this)}
+                                  onYearChange={this.onYearChange.bind(this)}/>
+                    <div className="horizontal-spacer-10"/>
+                    <div className="horizontal-spacer-10"/>
+                    <div className="horizontal-spacer-10"/>
+                    <Button className="shadow" onClick={this.onLoadClick.bind(this)} color="primary">{strings.load}</Button>
+                </div>
+                <div className="vertical-spacer-10"/>
+
                 <div className="hcontainer-no-wrap">
                     <div className="agent-salary-page-total-salary-box shadow">
                         <div className="agent-salary-page-box-title">{strings.totalSalary}</div>
