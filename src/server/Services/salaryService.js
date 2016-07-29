@@ -107,7 +107,18 @@ function SalaryService() {
             });
 
     }
+    this.getNumberOfPayedSalariesForMonthGroupedById = function(paymentDate){
+        return new Promise(function(resolve, reject){
 
+            Salary.find({paymentDate:paymentDate.toISOString()}).distinct('idNumber').exec(function(err, ids){
+                if(err){
+                    return reject(err);
+                }
+                return resolve(ids.length);
+            });
+        })
+
+    }
     //Future support if needed
     this.getAllAgentSalaries = function (idNumber, cb) {
         Salary.find({agentId: idNumber}, function (err, salaries) {

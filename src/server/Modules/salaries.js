@@ -106,6 +106,22 @@ function deleteSalary(req, res){
             return res.status(400).json({err:err});
         })
 }
+
+
+function getNumberOfPayedAgentsForMonth(req, res){
+    const paymentDate = req.params.paymentDate;
+    if(!paymentDate){
+        return res.status(400).json({err:'invalid payment date'});
+    }
+    var pd = new Date(paymentDate);
+    salaryService.getNumberOfPayedSalariesForMonthGroupedById(pd)
+        .then(function(count){
+            return res.status(200).json({count:count});
+        })
+        .catch(function(err){
+            return res.status(400).json({err:err});
+        })
+}
 //function getAllAgentSalaries(req,res){
 //    if(!req.params.agentId){
 //        return res.status(200).json({err:'missing agent id'});
@@ -132,4 +148,4 @@ function deleteSalary(req, res){
 //        return res.status(200).json({salaries:salaries});
 //    })
 //}
-module.exports = {uploadSalariesFile,getSalariesForAgentByDate, addAgentSalary, updateAgentSalary, deleteSalary};
+module.exports = {uploadSalariesFile,getSalariesForAgentByDate, addAgentSalary, updateAgentSalary, deleteSalary,getNumberOfPayedAgentsForMonth};
