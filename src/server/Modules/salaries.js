@@ -51,6 +51,16 @@ function uploadSalariesFile(req, res) {
 
 }
 
+function getAllSalariesSortedByDate(req, res){
+    salaryService.getAllSalariesSortedByDate()
+        .then(function(salaries){
+            return res.status(200).json({salaries:salaries});
+        })
+        .catch(function(err){
+            return res.status(400).json({err:err});
+        })
+}
+
 function getSalariesForAgentByDate(req,res){
     salaryService.getAgentSalariesForDate(req.params.agentId,req.params.startDate,req.params.endDate,function(err, salaries){
         if(err){
@@ -148,4 +158,5 @@ function getNumberOfPayedAgentsForMonth(req, res){
 //        return res.status(200).json({salaries:salaries});
 //    })
 //}
-module.exports = {uploadSalariesFile,getSalariesForAgentByDate, addAgentSalary, updateAgentSalary, deleteSalary,getNumberOfPayedAgentsForMonth};
+module.exports = {uploadSalariesFile,getSalariesForAgentByDate, addAgentSalary, updateAgentSalary, deleteSalary,getNumberOfPayedAgentsForMonth,
+    getAllSalariesSortedByDate};

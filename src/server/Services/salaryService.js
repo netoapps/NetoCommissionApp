@@ -119,6 +119,17 @@ function SalaryService() {
         })
 
     }
+    this.getAllSalariesSortedByDate = function(){
+        return new Promise(function(resolve, reject){
+            Salary.find({}).sort({paymentDate:-1}).exec(function(err, salaries){
+                if(err){
+                    return reject(err);
+                }
+                return resolve(salaries);
+            })
+        })
+
+    }
     //Future support if needed
     this.getAllAgentSalaries = function (idNumber, cb) {
         Salary.find({agentId: idNumber}, function (err, salaries) {
