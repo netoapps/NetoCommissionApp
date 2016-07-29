@@ -5,6 +5,8 @@ import AppDispatcher from '../dispatcher/app-dispatcher.js';
 
 let ActionType = {
 
+    APP_INIT: 'APP_INIT',
+
     USER_LOGGED_IN: 'USER_LOGGED_IN',
     USER_LOGGED_OUT: 'USER_LOGGED_OUT',
 
@@ -26,6 +28,12 @@ let ActionType = {
 export {ActionType}
 
 export default class AppActions {
+
+    static appInit()
+    {
+        AppDispatcher.dispatch(ActionType.APP_INIT,{
+        });
+    }
 
     static userLoggedIn(apiToken, fullName, gender)
     {

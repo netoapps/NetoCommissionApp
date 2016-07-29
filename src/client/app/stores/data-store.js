@@ -2,10 +2,8 @@
  * Created by asaf on 25/04/2016.
  */
 import Store from '../lib/store.js';
-import dispatcher from '../dispatcher/app-dispatcher.js';
 import {ActionType} from '../actions/app-actions.js';
-import {CommissionFile} from '../model/commission-file.js';
-import { strings } from '../constants/strings'
+import DataService from '../services/data-service.js';
 
 class DataStore extends Store {
 
@@ -25,72 +23,54 @@ class DataStore extends Store {
         var commissionType = ["היקף","נפרעים","בונוס"]
         this.initialize('commissionType',commissionType);
 
-        $.ajax(
+        this.initialize('agents',[]);
+        this.initialize('partnerships',[]);
+        this.initialize('files', []);
+
+    }
+
+    loadData()
+    {
+        DataService.loadAgents( (response) => {
+
+            if(response.result == true)
             {
-                url: '/api/v1/agent',
-                type: 'GET',
-                contentType: 'application/json',
-                success: function(result)
-                {
-                    console.log('load agents - server responded with success!');
-                    this.initialize('agents',result.agents);
-                    this.eventbus.emit(ActionType.AGENTS_LOADED);
-                    // if(callback != null)
-                    //     callback('success');
-                }.bind(this),
-                error: function(jqXHR, textStatus, errorThrown)
-                {
-                    console.error('load agents - ', textStatus, errorThrown.toString());
-                    // if(callback != null)
-                    //     callback('error');
-                }.bind(this)
-            });
-
-        $.ajax(
+                this.set('agents',response.data,true);
+                this.eventbus.emit(ActionType.AGENTS_LOADED);
+            }
+            else
             {
-                url: '/api/v1/partnership',
-                type: 'GET',
-                contentType: 'application/json',
-                success: function(result)
-                {
-                    console.log('load partnerships - server responded with success!');
-                    this.initialize('partnerships',result.partnerships);
-                    this.eventbus.emit(ActionType.PARTNERSHIPS_LOADED);
-                    // if(callback != null)
-                    //     callback('success');
-                }.bind(this),
-                error: function(jqXHR, textStatus, errorThrown)
-                {
-                    console.error('load partnerships - ', textStatus, errorThrown.toString());
-                    // if(callback != null)
-                    //     callback('error');
-                }.bind(this)
-            });
+                this.logger.error("Error while loading agents");
+            }
+        })
 
+        DataService.loadPartnerships( (response) => {
 
-        $.ajax(
+            if(response.result == true)
             {
-                url: '/api/v1/file',
-                type: 'GET',
-                contentType: 'application/json',
-                success: function(result)
-                {
-                    console.log(result);
-                    console.log('load commission files - server responded with success!');
-                    this.initialize('files', result.files);
-                    this.eventbus.emit(ActionType.COMMISSION_FILES_LOADED);
+                this.set('partnerships',response.data,true);
+                this.eventbus.emit(ActionType.PARTNERSHIPS_LOADED);
+            }
+            else
+            {
+                this.logger.error("Error while loading partnerships");
+            }
 
-                    // if(callback != null)
-                    //     callback('success');
-                }.bind(this),
-                error: function(jqXHR, textStatus, errorThrown)
-                {
-                    console.error('load commission files - ', textStatus, errorThrown.toString());
-                    // if(callback != null)
-                    //     callback('error');
-                }.bind(this)
-            });
+        })
 
+        DataService.loadCommissionFiles( (response) => {
+
+            if(response.result == true)
+            {
+                this.set('files', response.data,true);
+                this.eventbus.emit(ActionType.COMMISSION_FILES_LOADED);
+            }
+            else
+            {
+                this.logger.error("Error while loading commission files");
+            }
+
+        })
     }
 
     setDummyData() {
@@ -246,30 +226,45 @@ class DataStore extends Store {
     }
     addAgent(agent)
     {
-        //post to server...
-        $.ajax(
+        DataService.addAgent(agent, (response) => {
+
+            if(response.result == true)
             {
-                url: '/api/v1/agent',
-                type: 'POST',
-                data: JSON.stringify(agent),
-                contentType: 'application/json',
-                success: function(result)
-                {
-                    console.log(result);
-                    console.log('addAgent - Server responded with success!');
-                    var agents = this.getAgents()
-                    agents.push(result.agent)
-                    this.eventbus.emit(ActionType.ADD_AGENT);
-                    // if(callback != null)
-                    //     callback('success');
-                }.bind(this),
-                error: function(jqXHR, textStatus, errorThrown)
-                {
-                    console.error('addAgent - ', textStatus, errorThrown.toString());
-                    // if(callback != null)
-                    //     callback('error');
-                }.bind(this)
-            });
+                var agents = this.getAgents()
+                agents.push(response.data)
+                this.eventbus.emit(ActionType.ADD_AGENT);
+            }
+            else
+            {
+                this.logger.error("Error while adding agent");
+            }
+
+        })
+
+        // //post to server...
+        // $.ajax(
+        //     {
+        //         url: '/api/v1/agent',
+        //         type: 'POST',
+        //         data: JSON.stringify(agent),
+        //         contentType: 'application/json',
+        //         success: function(result)
+        //         {
+        //             console.log(result);
+        //             console.log('addAgent - Server responded with success!');
+        //             var agents = this.getAgents()
+        //             agents.push(result.agent)
+        //             this.eventbus.emit(ActionType.ADD_AGENT);
+        //             // if(callback != null)
+        //             //     callback('success');
+        //         }.bind(this),
+        //         error: function(jqXHR, textStatus, errorThrown)
+        //         {
+        //             console.error('addAgent - ', textStatus, errorThrown.toString());
+        //             // if(callback != null)
+        //             //     callback('error');
+        //         }.bind(this)
+        //     });
     }
     deleteAgentAtIndex(index)
     {
@@ -528,6 +523,10 @@ class DataStore extends Store {
         this.logger.debug('Received Action ${actionType} with data', data);
         switch (actionType)
         {
+            case ActionType.APP_INIT:
+                this.loadData()
+                break;
+
             case ActionType.DELETE_COMMISSION_FILE:
                 this.deleteCommissionFile(data)
                 break;
@@ -566,5 +565,4 @@ class DataStore extends Store {
 }
 
 var dataStore = new DataStore();
-dispatcher.registerStore(dataStore);
 export default dataStore;

@@ -6,49 +6,6 @@ import AppActions from '../actions/app-actions';
 
 class AuthService {
 
-    login(email, password, callback)
-    {
-        this.pretendRequest(email,password,(res) => {
-            if (res.authenticated)
-            {
-                localStorage.apiToken = res.apiToken
-                localStorage.fullName = res.fullName
-                localStorage.gender = res.gender
-                if (callback)
-                    callback(true)
-                this.onChange(true)
-            }
-            else
-            {
-                if (callback)
-                    callback(false)
-                this.onChange(false)
-            }
-        })
-
-        //request({
-        //    url: AppConstants.LOGIN_URL,
-        //    type: 'json',
-        //    method: 'POST',
-        //    crossOrigin: true,
-        //    data: {
-        //        username,
-        //        password
-        //    },
-        //    error: function (err)
-        //    {
-        //        callback(false,err)
-        //    },
-        //    success: function (response)
-        //    {
-        //        localStorage.apiToken = response.apiToken
-
-        //        callback(true,"success")
-        //     //   AppActions.loginUser(response.apiToken);
-        //    }
-        //})
-    }
-
     pretendRequest(email, pass, callback)
     {
         setTimeout(() => {
