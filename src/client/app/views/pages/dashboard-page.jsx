@@ -49,16 +49,20 @@ class DashboardToolbar extends React.Component {
     render () {
 
         return (
-            <div className="hcontainer-no-wrap">
-                <MonthYearBox month={this.state.selectedMonth} year={this.state.selectedYear}
+            <div>
+                <div className="hcontainer-no-wrap">
+                    <MonthYearBox month={this.state.selectedMonth} year={this.state.selectedYear}
                               onMonthChange={this.onMonthChange.bind(this)}
                               onYearChange={this.onYearChange.bind(this)}/>
-                <div className="dashboard-buttons-horizontal-spacer"/>
-                <div className="dashboard-buttons-horizontal-spacer"/>
-                <div className="dashboard-buttons-horizontal-spacer"/>
-                <Button className="shadow" onClick={this.onLoadClick.bind(this)} color="primary">{strings.load}</Button>
+                        <div className="horizontal-spacer-10"/>
+                        <div className="horizontal-spacer-10"/>
+                        <div className="horizontal-spacer-10"/>
+                        <Button className="shadow" onClick={this.onLoadClick.bind(this)} color="primary">{strings.load}</Button>
+                    </div>
+                <div className="vertical-spacer-10"/>
             </div>
-        );
+
+    );
     }
 }
 
@@ -335,18 +339,18 @@ class Dashboard extends React.Component {
                 <DashboardToolbar month={this.state.selectedMonth} year={this.state.selectedYear} onMonthChange={this.onMonthChange.bind(this)} onYearChange={this.onYearChange.bind(this)}/>
                 <div className="hcontainer-no-wrap">
                     <DashboardRankTable  />
-                    <div className="dashboard-horizontal-spacer"/>
+                    <div className="horizontal-spacer-20"/>
                     <div className="dashboard-stats-container">
                         <div className="hcontainer-no-wrap dashboard-stats-container-top">
                             <DashboardMonthTotalCommissions />
-                            <div className="dashboard-horizontal-spacer"/>
+                            <div className="horizontal-spacer-20"/>
                             <DashboardMonthTotalAgents />
                         </div>
-                        <div className="dashboard-vertical-spacer"/>
+                        <div className="vertical-spacer-20"/>
                         <DashboardTotalInvestments />
                     </div>
                 </div>
-                <div className="dashboard-vertical-spacer"/>
+                <div className="vertical-spacer-20"/>
                 <DashboardCommissionChangeChart />
             </div>
         );

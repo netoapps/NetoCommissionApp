@@ -1,8 +1,4 @@
 import React from 'react';
-import FlatRippleButton from './flat-ripple-button.jsx'
-import TableDropdown from './table-dropdown.jsx'
-import DropdownItem from '../../../../../node_modules/muicss/lib/react/dropdown-item';
-import FixedWidthDropdown from './fixed-width-dropdown.jsx';
 var moment = require('react-datepicker/node_modules/moment')
 
 class TableCell extends React.Component {
@@ -22,6 +18,20 @@ class TableCell extends React.Component {
         this.setState(this.state)
     }
 
+
+    onChange(event)
+    {
+        if(this.state.column.type == "select")
+        {
+            event.preventDefault();
+            this.state.value = event.target.value;
+            this.setState( this.state );
+            //this.props.onBlur(this.props.column, this.props.rowIndex, this.props.field , event.target.value);
+            var action = this.state.column.action
+            action(this.props.rowIndex,event.target.value)
+        }
+
+    }
     render()
     {
         var className = "table-cell";
@@ -81,14 +91,38 @@ class TableCell extends React.Component {
         }
         if (this.state.column.type === "select")
         {
-            const options = [];
-            action = this.state.column.action
-            for (let type = 0; type <= this.state.column.options.length; type++ ) {
-                options.push(<DropdownItem onClick={ function(action,item) { action(this.props.rowIndex,item) }.bind(this,action)} value={this.state.column.options[type]} key={type}>{this.state.column.options[type]}</DropdownItem>);
+            // const options = [];
+            // action = this.state.column.action
+            // for (let type = 0; type <= this.state.column.options.length; type++ ) {
+            //     options.push(<DropdownItem onClick={ function(action,item) { action(this.props.rowIndex,item) }.bind(this,action)}
+            //                                value={this.state.column.options[type]}
+            //                                key={type}>{this.state.column.options[type]}</DropdownItem>);
+            // }
+            // node = <div className="h-center">
+            //           <TableDropdown  className="table-dropdown" label={this.state.value} alignMenu="right" >
+            //             {options}
+            //           </TableDropdown>
+            //        </div>;
+
+
+            const options = []
+            for(let option = 0; option < this.state.column.options.length; option++)
+            {
+                options.push(<option key={option}
+                                     value={this.state.column.options[option]}
+                                     >{this.state.column.options[option]}</option>)
             }
-            node = <div className="h-center"><TableDropdown  className="table-dropdown" label={this.state.value} alignMenu="right" >
-                        {options}
-                   </TableDropdown></div>;
+
+            node = <div className="h-center">
+                        <div className="table-select">
+                            <select onChange={this.onChange.bind(this)} defaultValue={this.state.value}>
+                                {options}
+                            </select>
+                        </div>
+                   </div>;
+
+
+
         }
         if (this.state.column.type === "input")
         {
