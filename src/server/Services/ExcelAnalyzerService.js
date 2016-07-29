@@ -88,8 +88,11 @@ function ExcelAnalyzerService() {
                     if(ID && ID.indexOf('-')===-1 && aName.indexOf('/')===-1 && aName.indexOf('+')===-1 ){
                         delete  agent.ID;
                         delete agent['סוכן'];
+                        var splitName = aName.split(' ');
                         _.mapObject(agent, function(aid, compName){
-                            agentService.addAgent(ID,aName,aid, compName)
+
+                            var pd = {companyName:compName, agentNumber:aid};
+                            agentService.addAgent(ID,splitName[0],splitName[1],'','','',true,[pd])
                                 .then(function(){
                                     console.log('created agent '+ID);
                                     len--;
@@ -129,7 +132,9 @@ function ExcelAnalyzerService() {
                     var firstAgent = aName[0];
                     var firstAgentId = nameToIds[firstAgent];
                     if (firstAgentId) {
-                        agentService.addAgent(firstAgentId, firstAgent, aid, compName)
+                        firstAgent = firstAgent.split(' ');
+                        pd = {companyName:compName, agentNumber:firstAgentId};
+                        agentService.addAgent(firstAgentId, firstAgent[0],firstAgent[1],'','','',true,[pd])
                             .then(function () {
                                 console.log('created agent ' + firstAgentId);
                             })
@@ -140,7 +145,9 @@ function ExcelAnalyzerService() {
                     var secondAgent = aName[1];
                     var secondAgentId = nameToIds[secondAgent];
                     if (secondAgentId) {
-                        agentService.addAgent(secondAgentId, secondAgent, aid, compName)
+                        secondAgent = secondAgent.split(' ');
+                        pd = {companyName:compName, agentNumber:secondAgentId};
+                        agentService.addAgent(secondAgentId, secondAgent[0],secondAgent[1], '','','',true,[pd])
                             .then(function () {
                                 console.log('created agent ' + secondAgentId);
                             })

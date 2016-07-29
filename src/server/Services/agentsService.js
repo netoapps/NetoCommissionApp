@@ -8,12 +8,12 @@ var Partnership = require('../Models/partnership');
 var shortid = require('shortid');
 
 function Service() {
-    this.addAgent = function (id, name, familyName, phoneNumber, faxNumber, email, active, agentNumber, companyName) {
+    this.addAgent = function (id, name, familyName, phoneNumber, faxNumber, email, active, paymentDetails) {
         return new Promise(function (resolve, reject) {
             if (!id || !name) {
                 return reject('missing id or name');
             }
-            name = name.split(' ');
+
             Agent.update(
                 {idNumber: id},
                 {
@@ -23,13 +23,8 @@ function Service() {
                     faxNumber:faxNumber,
                     email:email,
                     active:active,
-                    $push: {
-                        paymentsDetails: {
-                            companyName: companyName,
-                            agentNumber: agentNumber,
-                            paymentType: '3',
-                            agentPart: '80'
-                        }
+                    $pushAll: {
+                        paymentsDetails: paymentDetails
                     },
                     $setOnInsert: {_id: shortid.generate()}
                 },
