@@ -95,35 +95,35 @@ class DataStore extends Store {
 
     setDummyData() {
 
-        var file1 = new CommissionFile()
-        file1.company = "כלל"
-        file1.name = "כלל קבצים בעמ.xls";
-        file1.paymentDate = new Date();
-        file1.uploadDate = new Date();
-        file1.note = "אחלה קובץ";
-        file1.taxState = strings.taxIncluded;
-        file1.taxValue = "";
-
-        var file2 = new CommissionFile()
-        file2.company = "מגדל"
-        file2.name = "מגדל עמלות סוכנים.xls";
-        file2.paymentDate = new Date();
-        file2.uploadDate = new Date();
-        file2.note = "קובץ עם הרבה עמלות";
-        file2.taxState = strings.taxNotIncluded;
-        file2.taxValue = "17";
-
-        var file3 = new CommissionFile()
-        file3.company = "אלטשולר שחם"
-        file3.name = "אלטשולר-שחם-עמלות-נטו.xls";
-        file3.paymentDate = new Date();
-        file3.uploadDate = new Date();
-        file3.note = "הקובץ מכיל גם מע״מ";
-        file3.taxState = strings.taxNotIncluded;
-        file3.taxValue = "17";
-
-        var files = [file1,file2,file3]
-        this.initialize('files', files);
+        // var file1 = new CommissionFile()
+        // file1.company = "כלל"
+        // file1.name = "כלל קבצים בעמ.xls";
+        // file1.paymentDate = new Date();
+        // file1.uploadDate = new Date();
+        // file1.note = "אחלה קובץ";
+        // file1.taxState = strings.taxIncluded;
+        // file1.taxValue = "";
+        //
+        // var file2 = new CommissionFile()
+        // file2.company = "מגדל"
+        // file2.name = "מגדל עמלות סוכנים.xls";
+        // file2.paymentDate = new Date();
+        // file2.uploadDate = new Date();
+        // file2.note = "קובץ עם הרבה עמלות";
+        // file2.taxState = strings.taxNotIncluded;
+        // file2.taxValue = "17";
+        //
+        // var file3 = new CommissionFile()
+        // file3.company = "אלטשולר שחם"
+        // file3.name = "אלטשולר-שחם-עמלות-נטו.xls";
+        // file3.paymentDate = new Date();
+        // file3.uploadDate = new Date();
+        // file3.note = "הקובץ מכיל גם מע״מ";
+        // file3.taxState = strings.taxNotIncluded;
+        // file3.taxValue = "17";
+        //
+        // var files = [file1,file2,file3]
+        // this.initialize('files', files);
 
         //defaults
         //nifraim - 70(agent) 30(company)
