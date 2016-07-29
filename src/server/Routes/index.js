@@ -38,6 +38,7 @@ module.exports.registerRoutes = function(app){
     apiRouter.put('/agent/:idNumber/salary/:salaryId', salaries.updateAgentSalary);
     apiRouter.delete('/agent/:idNumber/salary/:salaryId', salaries.deleteSalary);
     apiRouter.get('/salary/:paymentDate',salaries.getNumberOfPayedAgentsForMonth);
+    apiRouter.get('/salary',salaries.getAllSalariesSortedByDate);
 
     //Expanses
     apiRouter.get('/agent/:agentId/expanses/:startDate/:endDate',expanses.getAgentExpanseForDate);
