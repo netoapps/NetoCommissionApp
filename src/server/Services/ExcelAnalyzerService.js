@@ -46,10 +46,9 @@ function ExcelAnalyzerService() {
                 //k = k.trim();
                 var numVal = parseInt(k);
                 if (!_.isNaN(numVal)) {
-                    var val = s[k].replace(',','').trim();
+                    var val = s[k].replace(',', '').trim();
                     val = Number(val);
-                    if(!_.isNaN(val))
-                    {
+                    if (!_.isNaN(val)) {
                         obj[numVal] = val;
                     }
                 }
@@ -78,32 +77,77 @@ function ExcelAnalyzerService() {
         var nameToIds = {};
         var len = agents.length;
         async.series([
-            function(cb){
+            function (cb) {
                 _.map(agents, function (agent) {
                     var aName = agent['סוכן'];
                     var ID = agent.ID;
-                    if (!nameToIds[aName]) {
-                        nameToIds[aName] = ID;
+                    var nameToSplit;
+                    if (aName.indexOf('-') !== -1) {
+                        nameToSplit = aName.split('-');
+                        //if(!nameToIds[nameToSplit[0]]) {
+                        //    nameToIds[nameToSplit[0]] = ID;
+                        //}
+                        len--;
+                        if (len===1){
+                            return cb();
+                        }
+
+                    } else if (aName.indexOf('/') !== -1) {
+                        nameToSplit = aName.split('/');
+                        //if(!nameToIds[nameToSplit[0]]) {
+                        //    nameToIds[nameToSplit[0]] = ID;
+                        //}
+                        len--;
+                        if (len===1){
+                            return cb();
+                        }
+
+                    } else if (aName.indexOf('+') !== -1) {
+                        nameToSplit = aName.split('+');
+                        //if(!nameToIds[nameToSplit[0]]) {
+                        //    nameToIds[nameToSplit[0]] = ID;
+                        //}
+                        len--;
+                        if (len===1){
+                            return cb();
+                        }
+                    } else {
+                            if (!nameToIds[aName]) {
+                                nameToIds[aName] = ID;
+                            }
                     }
-                    if(ID && ID.indexOf('-')===-1 && aName.indexOf('/')===-1 && aName.indexOf('+')===-1 ){
+
+
+
+                    //if(nameToSplit!=null){
+                    //    if (!nameToIds[nameToSplit[0]]) {
+                    //        nameToIds[nameToSplit[0]] = ID;
+                    //    }
+                    //}else{
+                    //    if (!nameToIds[aName]) {
+                    //        nameToIds[aName] = ID;
+                    //    }
+                    //}
+
+                    if (ID && ID.indexOf('-') === -1 && aName.indexOf('/') === -1 && aName.indexOf('+') === -1) {
                         delete  agent.ID;
                         delete agent['סוכן'];
                         var splitName = aName.split(' ');
-                        _.mapObject(agent, function(aid, compName){
+                        _.mapObject(agent, function (aid, compName) {
 
-                            var pd = {companyName:compName, agentNumber:aid};
-                            agentService.addAgent(ID,splitName[0],splitName[1],'','','',true,[pd])
-                                .then(function(){
-                                    console.log('created agent '+ID);
+                            var pd = {companyName: compName, agentNumber: aid};
+                            agentService.addAgent(ID, splitName[0], splitName[1], '', '', '', true, [pd])
+                                .then(function () {
+                                    console.log('created agent ' + ID);
                                     len--;
-                                    if(len===1){
+                                    if (len === 1) {
                                         return cb();
                                     }
                                 })
-                                .catch(function(){
-                                    console.log('ID '+ID+' already in system');
+                                .catch(function () {
+                                    console.log('ID ' + ID + ' already in system');
                                     len--;
-                                    if(len===1){
+                                    if (len === 1) {
                                         return cb();
                                     }
                                 })
@@ -111,10 +155,10 @@ function ExcelAnalyzerService() {
                     }
                 });
             }
-        ],function(err){
+        ], function (err) {
             _.map(agents, function (agent) {
                 var aName = agent['סוכן'];
-                if(!aName){
+                if (!aName) {
                     return;
                 }
                 if (aName.indexOf('-') !== -1) {
@@ -126,36 +170,66 @@ function ExcelAnalyzerService() {
                 } else {
                     return;
                 }
+
                 delete  agent.ID;
                 delete agent['סוכן'];
-                _.mapObject(agent, function (aid, compName) {
-                    var firstAgent = aName[0];
-                    var firstAgentId = nameToIds[firstAgent];
-                    if (firstAgentId) {
-                        firstAgent = firstAgent.split(' ');
-                        pd = {companyName:compName, agentNumber:firstAgentId};
-                        agentService.addAgent(firstAgentId, firstAgent[0],firstAgent[1],'','','',true,[pd])
+
+                var firstAgent, firstAgentId, secondAgent, secondAgentId, thirdAgent, thirdAgentId;
+                var agentsDetails;
+                if(aName.length===2){
+                    firstAgent = aName[0];
+                    firstAgentId = nameToIds[firstAgent];
+                    secondAgent = aName[1];
+                    secondAgentId = nameToIds[secondAgent];
+                    if (firstAgent && firstAgentId && secondAgent && secondAgentId) {
+                        agentsDetails = [{idNumber: firstAgentId, part: 50}, {idNumber: secondAgentId, part: 50}];
+                        var pd2 = [];
+                        _.mapObject(agent, function (aid, compName) {
+                            pd2.push({
+                                companyName: compName,
+                                partnershipNumber: aid,
+                                paymentType: 'נפרעים',
+                                partnershipPart: 50,
+                                agencyPart: 50
+                            });
+                        })
+                        agentService.addPartnership(agentsDetails, true, pd2)
                             .then(function () {
-                                console.log('created agent ' + firstAgentId);
+                                console.log('created partnership ' + aid);
                             })
                             .catch(function () {
-                                console.log('ID ' + firstAgentId + ' already in system');
+                                console.log('ID ' + ait + ' already in system');
                             })
                     }
-                    var secondAgent = aName[1];
-                    var secondAgentId = nameToIds[secondAgent];
-                    if (secondAgentId) {
-                        secondAgent = secondAgent.split(' ');
-                        pd = {companyName:compName, agentNumber:secondAgentId};
-                        agentService.addAgent(secondAgentId, secondAgent[0],secondAgent[1], '','','',true,[pd])
+                }else if(aName.length===3){
+                    firstAgent = aName[0];
+                    firstAgentId = nameToIds[firstAgent];
+                    secondAgent = aName[1];
+                    secondAgentId = nameToIds[secondAgent];
+                    thirdAgent = aName[2];
+                    thirdAgentId = nameToIds[thirdAgent];
+                    if (firstAgent && firstAgentId && secondAgent && secondAgentId && thirdAgent && thirdAgentId) {
+                        agentsDetails = [{idNumber: firstAgentId, part: 33}, {idNumber: secondAgentId, part: 33},{idNumber:thirdAgentId,part:34}];
+                         var pd3 =[];
+                        _.mapObject(agent, function (aid, compName) {
+                            pd3.push({
+                                companyName: compName,
+                                partnershipNumber: aid,
+                                paymentType: 'נפרעים',
+                                partnershipPart: 50,
+                                agencyPart: 50
+                            })
+                        })
+                        agentService.addPartnership(agentsDetails, true, pd3)
                             .then(function () {
-                                console.log('created agent ' + secondAgentId);
+                                console.log('created partnership ' + aid);
                             })
                             .catch(function () {
-                                console.log('ID ' + secondAgentId + ' already in system');
+                                console.log('ID ' + ait + ' already in system');
                             })
                     }
-                })
+                }
+
                 console.log('done');
             })
         })
