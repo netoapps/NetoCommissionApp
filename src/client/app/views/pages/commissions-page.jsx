@@ -307,8 +307,28 @@ class Commissions extends React.Component {
         DataService.loadCommissionFilesEntries( (response) => {
             if(response.result == true)
             {
-               this.state.commissions = response.data
-               this.setState(this.state)
+                var data = []
+                for (const item of response.data)
+                {
+                    var agent = AppStore.getAgent(item.idNumber)
+                    var agentName = ""
+                    if (agent != null)
+                    {
+                        agentName = agent.name + " " + agent.familyName
+                    }
+                    var agentName = agent.name + " " + agent.familyName
+                    data.push({companyName: item.company,
+                               paymentType: item.type,
+                               agentNumber: item.agentInCompanyId,
+                               agentName: agentName,
+                               totalPayment: item.amount,
+                               totalInvestments: "",
+                               paymentDate: item.paymentDate,
+                               creationTime: item.creationTime
+                               })
+                }
+                this.state.commissions = data
+                this.setState(this.state)
             }
             else
             {
@@ -322,7 +342,7 @@ class Commissions extends React.Component {
 
             {
                 title: "חברה",
-                key: "company",
+                key: "companyName",
                 width: "col-33-33",
                 type: 'read-only',
                 color: 'normal'
@@ -336,7 +356,7 @@ class Commissions extends React.Component {
             },
             {
                 title: "מספר סוכן",
-                key: "agentInCompanyId",
+                key: "agentNumber",
                 width: "col-33-33",
                 type: 'read-only',
                 color: 'normal'
@@ -350,7 +370,7 @@ class Commissions extends React.Component {
             },
             {
                 title: "סה״כ תשלום",
-                key: "amount",
+                key: "totalPayment",
                 width: "col-33-33",
                 type: 'read-only',
                 format: 'currency',
