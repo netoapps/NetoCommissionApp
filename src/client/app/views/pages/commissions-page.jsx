@@ -307,7 +307,8 @@ class Commissions extends React.Component {
         DataService.loadCommissionFilesEntries( (response) => {
             if(response.result == true)
             {
-                this.state.commissions = response.data
+               this.state.commissions = response.data
+               this.setState(this.state)
             }
             else
             {
@@ -321,21 +322,21 @@ class Commissions extends React.Component {
 
             {
                 title: "חברה",
-                key: "companyName",
+                key: "company",
                 width: "col-33-33",
                 type: 'read-only',
                 color: 'normal'
             },
             {
                 title: "סוג תשלום",
-                key: "paymentType",
+                key: "type",
                 width: "col-33-33",
                 type: 'read-only',
                 color: 'normal'
             },
             {
                 title: "מספר סוכן",
-                key: "agentNumber",
+                key: "agentInCompanyId",
                 width: "col-33-33",
                 type: 'read-only',
                 color: 'normal'
@@ -349,7 +350,7 @@ class Commissions extends React.Component {
             },
             {
                 title: "סה״כ תשלום",
-                key: "totalPayment",
+                key: "amount",
                 width: "col-33-33",
                 type: 'read-only',
                 format: 'currency',
@@ -365,14 +366,14 @@ class Commissions extends React.Component {
             },
             {
                 title: "חודש שכר",
-                key: "paymentMonth",
+                key: "paymentDate",
                 width: "col-33-33",
                 type: 'read-only',
                 color: 'normal'
             },
             {
                 title: "תאריך העלאה",
-                key: "date",
+                key: "creationTime",
                 width: "col-33-33",
                 type: 'read-only',
                 color: 'normal'
@@ -380,27 +381,12 @@ class Commissions extends React.Component {
 
         ]
 
-        {/*var data = [*/}
-            {/*{companyName: "מגדל", paymentType: "היקף", agentNumber: "2342234523", agentName: "קרין בוזלי לוי", totalPayment: "23423", totalInvestments: "12342232", paymentMonth: "04/16", date: "05/11/2016"},*/}
-            {/*{companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016"},*/}
-            {/*{companyName: "אלטשולר שחם", paymentType: "בונוס", agentNumber: "67868", agentName: "לנצמן", totalPayment: "5675", totalInvestments: "34234535", paymentMonth: "אפריל", date: "05/11/2016"},*/}
-            {/*{companyName: "מנורה", paymentType: "גמ״ח", agentNumber: "789565", agentName: "לירון בן ציון", totalPayment: "4562", totalInvestments: "78768657", paymentMonth: "אפריל", date: "05/11/2016"},*/}
-            {/*{companyName: "ילין לפידות", paymentType: "היקף", agentNumber: "345654", agentName: "ויטלי", totalPayment: "6786", totalInvestments: "3453453", paymentMonth: "אפריל", date: "05/11/2016"},*/}
-            {/*{companyName: "ילין לפידות", paymentType: "היקף", agentNumber: "345654", agentName: "ויטלי", totalPayment: "6786", totalInvestments: "3453453", paymentMonth: "אפריל", date: "05/11/2016"},*/}
-            {/*{companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016"},*/}
-            {/*{companyName: "מנורה", paymentType: "גמ״ח", agentNumber: "789565", agentName: "לירון בן ציון", totalPayment: "4562", totalInvestments: "78768657", paymentMonth: "אפריל", date: "05/11/2016"},*/}
-            {/*{companyName: "ילין לפידות", paymentType: "היקף", agentNumber: "345654", agentName: "ויטלי", totalPayment: "6786", totalInvestments: "3453453", paymentMonth: "אפריל", date: "05/11/2016"},*/}
-            {/*{companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016"},*/}
-            {/*{companyName: "אלטשולר שחם", paymentType: "בונוס", agentNumber: "67868", agentName: "לנצמן", totalPayment: "5675", totalInvestments: "34234535", paymentMonth: "אפריל", date: "05/11/2016"},*/}
-        //     {companyName: "מנורה", paymentType: "גמ״ח", agentNumber: "789565", agentName: "לירון בן ציון", totalPayment: "4562", totalInvestments: "78768657", paymentMonth: "אפריל", date: "05/11/2016"},
-        //     {companyName: "מגדל", paymentType: "היקף", agentNumber: "2342234523", agentName: "קרין בוזלי לוי", totalPayment: "23423", totalInvestments: "12342232", paymentMonth: "אפריל", date: "05/11/2016"},
-        //     {companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016"},
-        //     {companyName: "אלטשולר שחם", paymentType: "בונוס", agentNumber: "67868", agentName: "לנצמן", totalPayment: "5675", totalInvestments: "34234535", paymentMonth: "אפריל", date: "05/11/2016"},
-        //     {companyName: "מנורה", paymentType: "גמ״ח", agentNumber: "789565", agentName: "לירון בן ציון", totalPayment: "4562", totalInvestments: "78768657", paymentMonth: "אפריל", date: "05/11/2016"},
-        //     {companyName: "ילין לפידות", paymentType: "היקף", agentNumber: "345654", agentName: "ויטלי", totalPayment: "6786", totalInvestments: "3453453", paymentMonth: "אפריל", date: "05/11/2016"},
-        //     {companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016"},
-        //
-        // ]
+        var data = [
+            {companyName: "מגדל", paymentType: "היקף", agentNumber: "2342234523", agentName: "קרין בוזלי לוי", totalPayment: "23423", totalInvestments: "12342232", paymentMonth: "04/16", date: "05/11/2016"},
+            {companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016"},
+            {companyName: "אלטשולר שחם", paymentType: "בונוס", agentNumber: "67868", agentName: "לנצמן", totalPayment: "5675", totalInvestments: "34234535", paymentMonth: "אפריל", date: "05/11/2016"},
+            {companyName: "מנורה", paymentType: "גמ״ח", agentNumber: "789565", agentName: "לירון בן ציון", totalPayment: "4562", totalInvestments: "78768657", paymentMonth: "אפריל", date: "05/11/2016"}
+         ]
 
 
         return (

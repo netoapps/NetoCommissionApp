@@ -7,14 +7,16 @@ class TableCell extends React.Component {
         super(props);
 
         this.state = {
-            value: this.props.value,
-            column: this.props.column
+            value: (this.props.value == null) ? "":this.props.value,
+            column: this.props.column,
+            rowIndex: this.props.rowIndex
         }
     }
     componentWillReceiveProps(nextProps)
     {
-        this.state.value = nextProps.value
+        this.state.value = (nextProps.value == null) ? "":nextProps.value
         this.state.column = nextProps.column
+        this.state.rowIndex = nextProps.rowIndex
         this.setState(this.state)
     }
 
@@ -26,9 +28,8 @@ class TableCell extends React.Component {
             event.preventDefault();
             this.state.value = event.target.value;
             this.setState( this.state );
-            //this.props.onBlur(this.props.column, this.props.rowIndex, this.props.field , event.target.value);
             var action = this.state.column.action
-            action(this.props.rowIndex,event.target.value)
+            action(this.state.rowIndex,event.target.value)
         }
 
     }
@@ -52,17 +53,20 @@ class TableCell extends React.Component {
         }
         if (this.state.column.format === "currency")
         {
-            var value = this.props.value;
-            value = parseFloat(value.replace(/,/g, ""))
-                .toFixed(0)
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            this.state.value = "₪ " + value
+            var value = this.state.value.toString();
+            if(!isNaN(parseFloat(value)))
+            {
+                value = parseFloat(value.replace(/,/g, ""))
+                    .toFixed(0)
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                this.state.value = "₪ " + value
+            }
         }
         if (this.state.column.format === "percent")
         {
             className = "table-cell-read-only " + color
-            var value = this.props.value;
+            var value = this.state.value;
             this.state.value = value + " %"
         }
 
@@ -86,7 +90,7 @@ class TableCell extends React.Component {
             action = this.state.column.action
             className = "table-button " + this.state.column.color
             node = <div className={"table-cell-read-only " + color}>
-                <button className={className} onClick={ function(action) { action(this.props.rowIndex) }.bind(this,action)}>{this.state.value}</button>
+                <button className={className} onClick={ function(action) { action(this.state.rowIndex) }.bind(this,action)}>{this.state.value}</button>
             </div>;
         }
         if (this.state.column.type === "select")
@@ -130,7 +134,7 @@ class TableCell extends React.Component {
             node = <div className="h-center"><input className="table-input"
                           type="text"
                           value={this.state.value}
-                          onChange={ function(action,event) { action(this.props.rowIndex, event.target.value) }.bind(this,action) }/></div>
+                          onChange={ function(action,event) { action(this.state.rowIndex, event.target.value) }.bind(this,action) }/></div>
         }
 
         return ( <div className={className + " " + this.state.column.width}>
@@ -154,11 +158,11 @@ class TableRow extends React.Component {
     }
     componentWillReceiveProps(nextProps)
     {
-        this.setState({
-            data: nextProps.data,
-            columns: nextProps.columns,
-            index: nextProps.index
-        })
+        this.state.data = nextProps.data
+        this.state.columns = nextProps.columns
+        this.state.index = nextProps.index
+        this.state.removableRow = !(nextProps.onRemoveRow == null)
+        this.setState(this.state)
     }
     render() {
         var tableCells = [];
@@ -190,6 +194,11 @@ class TableColumn extends React.Component {
             column: this.props.column
         }
     }
+    componentWillReceiveProps(nextProps)
+    {
+        this.state.column = nextProps.column
+        this.setState(this.state)
+    }
     render() {
         var className = "table-column " + this.state.column.width;
         return ( <div className={className}>{this.state.column.title}</div>);
@@ -200,6 +209,10 @@ class TableActionsColumn extends React.Component {
 
     constructor(props) {
         super(props);
+    }
+    componentWillReceiveProps(nextProps)
+    {
+
     }
     render() {
         if (this.props.onAddRow != null)
