@@ -94,15 +94,55 @@ class DashboardRankTable extends React.Component {
         super(props);
         this.state = {
             commissionType: props.commissionType,
-            date: props.date
+            date: props.date,
+            data: []
         }
-        console.log(props.commissionType)
+    }
+    componentDidMount()
+    {
+        this.reloadData((data) => {
+            this.state.data = data
+            this.setState(this.state)
+        })
     }
     componentWillReceiveProps(nextProps)
     {
         this.state.commissionType = nextProps.commissionType
         this.state.date = nextProps.date
-        this.setState(this.state)
+        this.reloadData((data) => {
+            this.state.data = data
+            this.setState(this.state)
+        })
+
+    }
+    reloadData(callback)
+    {
+        DataService.loadCommissionFilesEntriesWithTypeAndDate(this.state.commissionType,this.state.date, (response) => {
+            var data = []
+            if(response.result == true)
+            {
+                for (const item of response.data) {
+                    var agent = AppStore.getAgent(item.idNumber)
+                    var agentName = ""
+                    if (agent != null) {
+                        agentName = agent.name + " " + agent.familyName
+                    }
+                    var agentName = agent.name + " " + agent.familyName
+                    data.push({
+                        agentName: agentName,
+                        commission: item.amount,
+                        commissionChange: "",
+                        portfolio: "",
+                        portfolioChange: ""
+                    })
+                }
+            }
+            else
+            {
+                this.logger.error("Error while loading commission files entries");
+            }
+            callback(data)
+        })
     }
     onCommissionTypeChange(type)
     {
@@ -137,7 +177,7 @@ class DashboardRankTable extends React.Component {
             },
             {
                 title: "גודל תיק",
-                key: "totalInvestments",
+                key: "portfolio",
                 width: "col-33-33",
                 type: 'read-only',
                 format: 'currency',
@@ -145,7 +185,7 @@ class DashboardRankTable extends React.Component {
             },
             {
                 title: "שינוי (גודל תיק)",
-                key: "totalInvestmentsChange",
+                key: "portfolioChange",
                 width: "col-33-33",
                 type: 'read-only',
                 format: 'percent',
@@ -154,22 +194,10 @@ class DashboardRankTable extends React.Component {
 
         ]
 
-        var data = [
-                    {agentName: "קרין בוזלי", commission: "23234233", commissionChange: "2.3", totalInvestments: "23234233", totalInvestmentsChange: "2.3"},
-                    {agentName: "עידן כץ", commission: "43234233", commissionChange: "2.3", totalInvestments: "23234233", totalInvestmentsChange: "2.3"},
-                    {agentName: "מסי", commission: "33224233", commissionChange: "-2.3", totalInvestments: "23234233", totalInvestmentsChange: "6.3"},
-                    {agentName: "מסי", commission: "33224233", commissionChange: "-2.3", totalInvestments: "23234233", totalInvestmentsChange: "6.3"},
-                    {agentName: "מסי", commission: "33224233", commissionChange: "-2.3", totalInvestments: "23234233", totalInvestmentsChange: "6.3"},
-                    {agentName: "מסי", commission: "33224233", commissionChange: "-2.3", totalInvestments: "23234233", totalInvestmentsChange: "6.3"},
-                    {agentName: "קריזבז", commission: "13234233", commissionChange: "1.3", totalInvestments: "23234233", totalInvestmentsChange: "2.3"},
-                    {agentName: "קרין בוזלי", commission: "23234233", commissionChange: "2.3", totalInvestments: "23234233", totalInvestmentsChange: "-2.3"},
-                    {agentName: "קרין בוזלי", commission: "23234233", commissionChange: "2.3", totalInvestments: "23234233", totalInvestmentsChange: "2.3"},
-                    ]
-
         return (
             <div className="dashboard-rank-table shadow">
                 <Table columns={columns}
-                       data={data}/>
+                       data={this.state.data}/>
             </div>
         );
     }
@@ -378,10 +406,12 @@ class Dashboard extends React.Component {
     {
         AppStore.removeEventListener(ActionType.AGENTS_LOADED,this._reloadData);
     }
+
     componentWillReceiveProps(nextProps)
     {
 
     }
+
     reloadData()
     {
         this.setState(this.state)

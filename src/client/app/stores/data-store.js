@@ -506,13 +506,20 @@ class DataStore extends Store {
                 commissionFiles.push(file)
                 this.eventbus.emit(ActionType.UPLOAD_COMMISSION_FILE);
                 if(data.callback != null)
-                    data.callback("success")
+                    data.callback(
+                        {
+                            result: true,
+                            message: ""
+                        })
             }
             else
             {
                 console.log(xhr.response);
                 if(data.callback != null)
-                    data.callback("error")
+                    data.callback({
+                        result: false,
+                        message: JSON.parse(xhr.response).err
+                    })
             }
         }.bind(this);
         xhr.send(formData);

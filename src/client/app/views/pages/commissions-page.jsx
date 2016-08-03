@@ -129,8 +129,8 @@ class FileBin extends React.Component {
         {
             return
         }
-        AppActions.uploadCommissionFile(this.state.commissionFile,this.state.draggedFile, function (result) {
-            if(result == "success")
+        AppActions.uploadCommissionFile(this.state.commissionFile,this.state.draggedFile, function (response) {
+            if(response.result)
             {
                 //if success
                 this.state.commissionFile = new CommissionFile()
@@ -149,7 +149,7 @@ class FileBin extends React.Component {
             {
                 swal({
                     title: "שגיאה",
-                    text: "שגיאה בעת העלאת קובץ לשרת",
+                    text: " שגיאה בעת העלאת קובץ לשרת",
                     type: "error",
                     showCancelButton: false,
                     confirmButtonColor: "#DD6B55",
