@@ -141,6 +141,23 @@ function SalaryService() {
         })
 
     }
+
+    this.getAllSalariesForYearByMonths = function(year){
+        return new Promise(function(resolve, reject){
+            var fromYear = new Date(year,0,1,0,0,0,0);
+            var toYear = new Date(year+1,0,1,0,0,0,0);
+            Salary.aggregate([
+                {$match:{paymentDate:{$gte:fromYear,$lt:toYear}}},
+                {$group:{_id:{$month:'$paymentDate'}, amount:{$sum:'$amount'}}}
+            ],function(err, salaries){
+                if(err){
+                    return reject(err);
+                }
+                return resolve(salaries);
+            })
+
+        })
+    }
     //Future support if needed
     this.getAllAgentSalaries = function (idNumber, cb) {
         Salary.find({agentId: idNumber}, function (err, salaries) {
@@ -150,23 +167,7 @@ function SalaryService() {
             return cb(null, salaries);
         })
     };
-    this.getAgentSalariesByMonthYearAndType = function (agentId, month, year, cb) {
-        Salary.aggregate([
-            {$match: {$and: [{month: month}, {year: year}, {agentId: agentId}]}},
-            {
-                $group: {
-                    _id: '$agentId',
-                    2: {$sum: '$salary.2'},
-                    3: {$sum: '$salary.3'},
-                    4: {$sum: '$salary.4'},
-                    5: {$sum: '$salary.5'}
-                }
-            }
-        ], function (err, salaries) {
-            if (err)return cb(err);
-            return cb(null, salaries);
-        })
-    }
+
     this.deleteSalariesByMonthAndYear = function(month, year){}
     this.deleteAgentSalaries = function () {
 

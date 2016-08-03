@@ -157,6 +157,21 @@ function getAllSalariesByType(req, res){
             return res.status(400).json({err:err});
         })
 }
+
+function getAllSalariesForYearGroupedByMonths(req, res){
+    const year = req.params.year;
+    if(!year){
+        return res.status(400).json({err:'invalid year'});
+    }
+
+    salaryService.getAllSalariesForYearByMonths(year)
+        .then(function(salaries){
+            return res.status(200).json({salaries:salaries});
+        })
+        .catch(function(err){
+            return res.status(400).json({err:err});
+        })
+}
 //function getAllAgentSalaries(req,res){
 //    if(!req.params.agentId){
 //        return res.status(200).json({err:'missing agent id'});
@@ -184,4 +199,4 @@ function getAllSalariesByType(req, res){
 //    })
 //}
 module.exports = {uploadSalariesFile,getSalariesForAgentByDate, addAgentSalary, updateAgentSalary, deleteSalary,getNumberOfPayedAgentsForMonth,
-    getAllSalariesSortedByDate, getAllSalariesByType};
+    getAllSalariesSortedByDate, getAllSalariesByType, getAllSalariesForYearGroupedByMonths};
