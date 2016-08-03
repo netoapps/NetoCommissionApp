@@ -22,9 +22,9 @@ function ExcelAnalyzerService() {
             for (c in COLS) {
                 cell = worksheet[COLS[c] + ROWS[r]]
                 if (cell) {
-                    if (cell.t === 'n' && (cell.v === 1 || cell.v === 2 || cell.v === 3)) {
+                    if (cell.t === 'n' && (cell.v === 1 || cell.v === 2 || cell.v === 3 || cell.v === 4 || cell.v === 5 || cell.v === 6)) {
                         matches++;
-                        if (matches >= 3) {
+                        if (matches >= 2) {
                             headersRowNumber = ROWS[r];
                             break;
                         }
