@@ -199,7 +199,8 @@ class TableColumn extends React.Component {
         this.state.column = nextProps.column
         this.setState(this.state)
     }
-    render() {
+    render()
+    {
         var className = "table-column " + this.state.column.width;
         return ( <div className={className}>{this.state.column.title}</div>);
     }

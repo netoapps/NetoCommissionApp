@@ -9,6 +9,8 @@ import {getMonthName,getMonthNumber,getMonths} from './../common/month-year-box.
 import AppStore from '../../stores/data-store'
 import {ActionType} from '../../actions/app-actions.js'
 import DataService from '../../services/data-service.js';
+import Dropdown from '../../../../../node_modules/muicss/lib/react/dropdown'
+import DropdownItem from '../../../../../node_modules/muicss/lib/react/dropdown-item'
 
 
 class DashboardToolbar extends React.Component {
@@ -18,7 +20,8 @@ class DashboardToolbar extends React.Component {
 
         this.state = {
             selectedMonth: props.month,
-            selectedYear: props.year
+            selectedYear: props.year,
+            commissionType: props.commissionType
         }
     }
 
@@ -44,8 +47,23 @@ class DashboardToolbar extends React.Component {
     {
 
     }
-
+    onSelectCommissionTypeChange(item)
+    {
+        if(item.props.value != this.state.commissionType)
+        {
+            this.state.commissionType = item.props.value;
+            this.setState(this.state);
+            this.props.commissionTypeChange(item.props.value)
+        }
+    }
     render () {
+
+        const commissions = [];
+        var commissionTypes = AppStore.getCommissionTypes()
+        for (let i = 0; i < commissionTypes.length; i++ )
+        {
+            commissions.push(<DropdownItem onClick={this.onSelectCommissionTypeChange.bind(this)} value={commissionTypes[i]} key={i}>{commissionTypes[i]}</DropdownItem>);
+        }
 
         return (
             <div>
@@ -56,7 +74,9 @@ class DashboardToolbar extends React.Component {
                         <div className="horizontal-spacer-10"/>
                         <div className="horizontal-spacer-10"/>
                         <div className="horizontal-spacer-10"/>
-                        <Button className="shadow" onClick={this.onLoadClick.bind(this)} color="primary">{strings.load}</Button>
+                    <Dropdown label={this.state.commissionType} alignMenu="right" color="primary" variant="raised">
+                        {commissions}
+                    </Dropdown>
                     </div>
                 <div className="vertical-spacer-10"/>
             </div>
@@ -65,13 +85,25 @@ class DashboardToolbar extends React.Component {
     }
 }
 
+//<Button className="shadow" onClick={this.onLoadClick.bind(this)} color="primary">{strings.load}</Button>
 
 
 class DashboardRankTable extends React.Component {
 
     constructor(props) {
         super(props);
-
+        this.state = {
+            commissionType: props.commissionType
+        }
+    }
+    componentWillReceiveProps(nextProps)
+    {
+        this.state.commissionType = nextProps.commissionType
+        this.setState(this.state)
+    }
+    onCommissionTypeChange(type)
+    {
+        console.log(type)
     }
     render () {
 
@@ -86,15 +118,15 @@ class DashboardRankTable extends React.Component {
                 color: 'normal'
             },
             {
-                title: "עמלות",
+                title: this.state.commissionType,
                 key: "commission",
                 width: "col-33-33",
                 type: 'read-only',
                 format: 'currency',
-                color: 'normal'
+                color: 'normal',
             },
             {
-                title: "שינוי (עמלות)",
+                title: "שינוי",
                 key: "commissionChange",
                 width: "col-33-33",
                 type: 'read-only',
@@ -323,13 +355,15 @@ class Dashboard extends React.Component {
         var currentMonth = getMonthName(date.getMonth().toString());
         var currentYear = date.getFullYear().toString();
         var monthStartDate = new Date(date.getFullYear(), date.getMonth(), 1, 0, 0, 0, 0);
+        var commissionTypes = AppStore.getCommissionTypes()
+        var selectedCommissionType = commissionTypes[0]
 
         this.state = {
             loginData: AuthService.getLoginData(),
             date: monthStartDate,
             selectedMonth: currentMonth,
-            selectedYear:currentYear
-
+            selectedYear:currentYear,
+            selectedCommissionType:selectedCommissionType
         };
 
         this._reloadData = this.reloadData.bind(this)
@@ -369,13 +403,23 @@ class Dashboard extends React.Component {
             this.setState(this.state);
         }
     }
+    onCommissionTypeChange(type)
+    {
+        this.state.selectedCommissionType = type;
+        this.setState(this.state);
+    }
     render () {
 
         return (
             <div className="dashboard-page animated fadeIn">
-                <DashboardToolbar month={this.state.selectedMonth} year={this.state.selectedYear} onMonthChange={this.onMonthChange.bind(this)} onYearChange={this.onYearChange.bind(this)}/>
+                <DashboardToolbar month={this.state.selectedMonth}
+                                  year={this.state.selectedYear}
+                                  onMonthChange={this.onMonthChange.bind(this)}
+                                  onYearChange={this.onYearChange.bind(this)}
+                                  commissionType={this.state.selectedCommissionType}
+                                  commissionTypeChange={this.onCommissionTypeChange.bind(this)} />
                 <div className="hcontainer-no-wrap">
-                    <DashboardRankTable  />
+                    <DashboardRankTable  commissionType={this.state.selectedCommissionType}/>
                     <div className="horizontal-spacer-20"/>
                     <div className="dashboard-stats-container">
                         <div className="hcontainer-no-wrap dashboard-stats-container-top">
