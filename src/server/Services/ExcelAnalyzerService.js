@@ -135,8 +135,12 @@ function ExcelAnalyzerService() {
                         var splitName = aName.split(' ');
                         _.mapObject(agent, function (aid, compName) {
 
-                            var pd = {companyName: compName, agentNumber: aid};
-                            agentService.addAgent(ID, splitName[0], splitName[1], '', '', '', true, [pd])
+                            var pd = [
+                                {companyName: compName, agentNumber: aid, paymentType:'נפרעים',agentPart:70, agencyPart:30},
+                                {companyName: compName, agentNumber: aid, paymentType:'בונוס',agentPart:70, agencyPart:30},
+                                {companyName: compName, agentNumber: aid, paymentType:'היקף',agentPart:70, agencyPart:30}
+                            ];
+                            agentService.addAgent(ID, splitName[0], splitName[1], '', '', '', true, pd)
                                 .then(function () {
                                     console.log('created agent ' + ID);
                                     len--;
@@ -192,6 +196,20 @@ function ExcelAnalyzerService() {
                                 partnershipPart: 50,
                                 agencyPart: 50
                             });
+                            pd2.push({
+                                companyName: compName,
+                                partnershipNumber: aid,
+                                paymentType: 'בונוס',
+                                partnershipPart: 50,
+                                agencyPart: 50
+                            });
+                            pd2.push({
+                                companyName: compName,
+                                partnershipNumber: aid,
+                                paymentType: 'היקף',
+                                partnershipPart: 50,
+                                agencyPart: 50
+                            });
                         })
                         agentService.addPartnership(agentsDetails, true, pd2)
                             .then(function () {
@@ -216,6 +234,20 @@ function ExcelAnalyzerService() {
                                 companyName: compName,
                                 partnershipNumber: aid,
                                 paymentType: 'נפרעים',
+                                partnershipPart: 50,
+                                agencyPart: 50
+                            })
+                            pd3.push({
+                                companyName: compName,
+                                partnershipNumber: aid,
+                                paymentType: 'בונוס',
+                                partnershipPart: 50,
+                                agencyPart: 50
+                            })
+                            pd3.push({
+                                companyName: compName,
+                                partnershipNumber: aid,
+                                paymentType: 'היקף',
                                 partnershipPart: 50,
                                 agencyPart: 50
                             })
