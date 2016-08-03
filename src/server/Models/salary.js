@@ -12,9 +12,10 @@ var mongoose = require('mongoose');
         agentInCompanyId: String,
         idNumber:String,
         amount:Number,
-        type:Number,
+        type:String,
         company:String,
-        paymentDate:Date
+        paymentDate:Date,
+        portfolio:{type:Number, default:0}
     });
     schema.index({paymentDate:1});
     schema.index({idNumber:1});

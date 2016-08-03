@@ -22,9 +22,9 @@ function ExcelAnalyzerService() {
             for (c in COLS) {
                 cell = worksheet[COLS[c] + ROWS[r]]
                 if (cell) {
-                    if (cell.t === 'n' && (cell.v === 1 || cell.v === 2 || cell.v === 3)) {
+                    if (cell.t === 'n' && (cell.v === 1 || cell.v === 2 || cell.v === 3 || cell.v === 4 || cell.v === 5 || cell.v === 6)) {
                         matches++;
-                        if (matches >= 3) {
+                        if (matches >= 2) {
                             headersRowNumber = ROWS[r];
                             break;
                         }
@@ -57,8 +57,8 @@ function ExcelAnalyzerService() {
         });
         salaries = _.filter(salaries, function (s) {
             var oneFound = '1' in s || 1 in s;
-            var twoFound = '2' in s || 2 in s;
-            return oneFound && twoFound;
+            //var twoFound = '2' in s || 2 in s;
+            return oneFound;
         });
         return cb(null, salaries);
 
