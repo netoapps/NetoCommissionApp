@@ -16,11 +16,12 @@ class DataStore extends Store {
         this.initialize('companies',companies);
 
         //1 - agent number in company
-        //2 - godel tik
+        //2 - portfolio
         //3 - nifraim
         //4 - hekef
         //5 - bonus
         var commissionType = ["היקף","נפרעים","בונוס"]
+
         this.initialize('commissionType',commissionType);
 
         this.initialize('agents',[]);

@@ -1,5 +1,4 @@
 import React from 'react';
-import AuthService from '../../services/auth-service'
 import Table from './../common/table.jsx';
 import AppActions from '../../actions/app-actions'
 import {ActionType} from '../../actions/app-actions.js'
