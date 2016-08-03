@@ -57,8 +57,8 @@ function ExcelAnalyzerService() {
         });
         salaries = _.filter(salaries, function (s) {
             var oneFound = '1' in s || 1 in s;
-            var twoFound = '2' in s || 2 in s;
-            return oneFound && twoFound;
+            //var twoFound = '2' in s || 2 in s;
+            return oneFound;
         });
         return cb(null, salaries);
 
