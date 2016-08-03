@@ -93,12 +93,15 @@ class DashboardRankTable extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            commissionType: props.commissionType
+            commissionType: props.commissionType,
+            date: props.date
         }
+        console.log(props.commissionType)
     }
     componentWillReceiveProps(nextProps)
     {
         this.state.commissionType = nextProps.commissionType
+        this.state.date = nextProps.date
         this.setState(this.state)
     }
     onCommissionTypeChange(type)
@@ -106,7 +109,6 @@ class DashboardRankTable extends React.Component {
         console.log(type)
     }
     render () {
-
 
         var columns = [
 
@@ -262,7 +264,7 @@ class DashboardMonthTotalAgents extends React.Component {
         super(props);
 
         this.state = {
-            value: "1",
+            value: "0",
             change: 0
         }
         this._reloadData = this.reloadData.bind(this)
@@ -419,7 +421,8 @@ class Dashboard extends React.Component {
                                   commissionType={this.state.selectedCommissionType}
                                   commissionTypeChange={this.onCommissionTypeChange.bind(this)} />
                 <div className="hcontainer-no-wrap">
-                    <DashboardRankTable  commissionType={this.state.selectedCommissionType}/>
+                    <DashboardRankTable  commissionType={this.state.selectedCommissionType}
+                                         date={this.state.date}/>
                     <div className="horizontal-spacer-20"/>
                     <div className="dashboard-stats-container">
                         <div className="hcontainer-no-wrap dashboard-stats-container-top">

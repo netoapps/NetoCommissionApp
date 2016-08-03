@@ -7,10 +7,9 @@ class DataService {
     //Agents
     getActiveAgentCountForDate(date, callback)
     {
-        //post to server...
         $.ajax(
             {
-                url: '/api/v1/salary/' + date,
+                url: '/api/v1/salary/' + date + '/count',
                 type: 'GET',
                 contentType: 'application/json',
                 success: function(result)
@@ -154,7 +153,7 @@ class DataService {
     }
 
     //Salaries
-    loadCommissionFilesEntries(callback)
+    loadAllCommissionFilesEntries(callback)
     {
         $.ajax(
             {
@@ -173,7 +172,7 @@ class DataService {
                 }.bind(this),
                 error: function(jqXHR, textStatus, errorThrown)
                 {
-                    console.error('load commission files entries - ', textStatus, errorThrown.toString());
+                    console.error('load all commission files entries - ', textStatus, errorThrown.toString());
                     callback({
                         result:false,
                         data: null
@@ -181,7 +180,33 @@ class DataService {
                 }.bind(this)
             });
     }
+    loadCommissionFilesEntriesWithTypeAndDate(type,date,callback)
+    {
+        $.ajax(
+            {
+                url: '/api/v1/salary/'+ date + '/' + type,
+                type: 'GET',
+                contentType: 'application/json',
+                success: function(result)
+                {
+                    console.log('load commission files entries with type '+type+' - server responded with success!');
+                    if(callback != null)
+                        callback({
+                            result:true,
+                            data: result.salaries
+                        });
 
+                }.bind(this),
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+                    console.error('load commission files entries with type '+type+' - ', textStatus, errorThrown.toString());
+                    callback({
+                        result:false,
+                        data: null
+                    });
+                }.bind(this)
+            });
+    }
 
 }
 

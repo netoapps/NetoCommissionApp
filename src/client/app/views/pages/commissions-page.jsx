@@ -304,7 +304,7 @@ class Commissions extends React.Component {
     }
     componentDidMount()
     {
-        DataService.loadCommissionFilesEntries( (response) => {
+        DataService.loadAllCommissionFilesEntries( (response) => {
             if(response.result == true)
             {
                 var data = []
