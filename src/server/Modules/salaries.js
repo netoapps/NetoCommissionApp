@@ -33,8 +33,11 @@ function uploadSalariesFile(req, res) {
         //return res.status(200).json({file:file});
         analyzer.analyzeSalaryFile(file.pathOnDisk, function (err, salaries) {
             if (err) {
-                fileService.deleteFile(file._id, function(err){
+                fileService.deleteFile(file._id).then(function(){
                     return res.status(400).json({err: err});
+                }).catch(function (error)
+                {
+                    return res.status(400).json({err: error});
                 })
             }else {
                 salaryService.processSalaries(data.paymentDate, data.company, data.taxValue, salaries, function (err, results) {
