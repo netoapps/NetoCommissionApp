@@ -137,8 +137,8 @@ function ExcelAnalyzerService() {
 
                             var pd = [
                                 {companyName: compName, agentNumber: aid, paymentType:'נפרעים',agentPart:70, agencyPart:30},
-                                {companyName: compName, agentNumber: aid, paymentType:'בונוס',agentPart:70, agencyPart:30},
-                                {companyName: compName, agentNumber: aid, paymentType:'היקף',agentPart:70, agencyPart:30}
+                                {companyName: compName, agentNumber: aid, paymentType:'בונוס',agentPart:50, agencyPart:50},
+                                {companyName: compName, agentNumber: aid, paymentType:'היקף',agentPart:55, agencyPart:45}
                             ];
                             agentService.addAgent(ID, splitName[0], splitName[1], '', '', '', true, pd)
                                 .then(function () {
@@ -193,8 +193,8 @@ function ExcelAnalyzerService() {
                                 companyName: compName,
                                 partnershipNumber: aid,
                                 paymentType: 'נפרעים',
-                                partnershipPart: 50,
-                                agencyPart: 50
+                                partnershipPart: 70,
+                                agencyPart: 30
                             });
                             pd2.push({
                                 companyName: compName,
@@ -207,8 +207,8 @@ function ExcelAnalyzerService() {
                                 companyName: compName,
                                 partnershipNumber: aid,
                                 paymentType: 'היקף',
-                                partnershipPart: 50,
-                                agencyPart: 50
+                                partnershipPart: 55,
+                                agencyPart: 45
                             });
                         })
                         agentService.addPartnership(agentsDetails, true, pd2)
@@ -234,8 +234,8 @@ function ExcelAnalyzerService() {
                                 companyName: compName,
                                 partnershipNumber: aid,
                                 paymentType: 'נפרעים',
-                                partnershipPart: 50,
-                                agencyPart: 50
+                                partnershipPart: 70,
+                                agencyPart: 30
                             })
                             pd3.push({
                                 companyName: compName,
@@ -248,8 +248,8 @@ function ExcelAnalyzerService() {
                                 companyName: compName,
                                 partnershipNumber: aid,
                                 paymentType: 'היקף',
-                                partnershipPart: 50,
-                                agencyPart: 50
+                                partnershipPart: 55,
+                                agencyPart: 45
                             })
                         })
                         agentService.addPartnership(agentsDetails, true, pd3)

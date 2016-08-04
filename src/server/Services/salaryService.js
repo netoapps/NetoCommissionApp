@@ -158,6 +158,28 @@ function SalaryService() {
 
         })
     }
+
+    //TODO: get all salaries for year and month and type, grouped by idNumber
+    this.getAllSalariesForDateAndTypeGroupedById = function(date, type){
+        return new Promise(function(resolve, reject){
+            date = new Date(date);
+            var prevDate = new Date(date.getTime());
+            prevDate.setMonth(prevDate.getMonth()-1);
+            Salary.aggregate([
+                {$match:{paymentDate:{'$gte':prevDate,'$lte':date}, type:type}},
+                {$group:{_id:{idNumber:'$idNumber',date:'$paymentDate'}, amount:{$sum:'$amount'}}}
+            ],function(err, salaries){
+                if(err){
+                    return reject(err);
+                }
+                return resolve(salaries);
+            })
+
+        })
+    }
+
+
+
     //Future support if needed
     this.getAllAgentSalaries = function (idNumber, cb) {
         Salary.find({agentId: idNumber}, function (err, salaries) {
