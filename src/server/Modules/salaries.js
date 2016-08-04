@@ -160,11 +160,15 @@ function getAllSalariesByType(req, res){
 
 function getAllSalariesForYearGroupedByMonths(req, res){
     const year = req.params.year;
+    const type = req.params.type;
     if(!year){
         return res.status(400).json({err:'invalid year'});
     }
+    if(!type){
+        return res.status(400).json({err:'invalid type'});
+    }
 
-    salaryService.getAllSalariesForYearByMonths(year)
+    salaryService.getAllSalariesForYearByMonths(year, type)
         .then(function(salaries){
             return res.status(200).json({salaries:salaries});
         })

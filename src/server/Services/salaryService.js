@@ -142,12 +142,12 @@ function SalaryService() {
 
     }
 
-    this.getAllSalariesForYearByMonths = function(year){
+    this.getAllSalariesForYearByMonths = function(year, type){
         return new Promise(function(resolve, reject){
             var fromYear = new Date(year,0,1,0,0,0,0);
             var toYear = new Date(year+1,0,1,0,0,0,0);
             Salary.aggregate([
-                {$match:{paymentDate:{$gte:fromYear,$lt:toYear}}},
+                {$match:{paymentDate:{$gte:fromYear,$lt:toYear}, type:type}},
                 {$group:{_id:{$month:'$paymentDate'}, amount:{$sum:'$amount'}}}
             ],function(err, salaries){
                 if(err){
