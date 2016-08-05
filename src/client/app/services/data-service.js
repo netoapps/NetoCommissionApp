@@ -207,6 +207,33 @@ class DataService {
                 }.bind(this)
             });
     }
+    loadCommissionFilesEntriesByIdWithTypeAndDate(type,date,callback)
+    {
+        $.ajax(
+            {
+                url: '/api/v1/salary/byid/'+ date + '/' + type,
+                type: 'GET',
+                contentType: 'application/json',
+                success: function(result)
+                {
+                    console.log('load commission files entries with type '+type+' - server responded with success!');
+                    if(callback != null)
+                        callback({
+                            result:true,
+                            data: result.salaries
+                        });
+
+                }.bind(this),
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+                    console.error('load commission files entries with type '+type+' - ', textStatus, errorThrown.toString());
+                    callback({
+                        result:false,
+                        data: null
+                    });
+                }.bind(this)
+            });
+    }
 
 }
 
