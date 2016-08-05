@@ -124,36 +124,73 @@ class DashboardRankTable extends React.Component {
                 for (const item of idsData)
                 {
                     var idData = response.data[item]
-                    var agent = AppStore.getAgent(idData[0]._id.idNumber)
+                    var agent = AppStore.getAgent(item)
                     var agentName = ""
                     if (agent != null) {
                         agentName = agent.name + " " + agent.familyName
                     }
                     agentName = agent.name + " " + agent.familyName
 
-                    var amount = idData[0].amount
-                    var lastMonthAmount = idData.length > 1 ? idData[1].amount:0
-                    var amountChange = 100.0
-                    if (lastMonthAmount != 0)
+                    var portfolio = idData.currentMonth.portfolio
+                    var portfolioChange = 0
+                    var amount = idData.currentMonth.amount
+                    var amountChange = 0
+
+                    if(idData.currentMonth.portfolio > idData.previousMonth.portfolio)
                     {
-                        amountChange = (parseFloat(amount)/parseFloat(lastMonthAmount)) * 100.0
+                        portfolioChange = 100
+                        if(idData.previousMonth.portfolio != 0)
+                        {
+                            portfolioChange = idData.currentMonth.portfolio / idData.previousMonth.portfolio
+                        }
+                    }
+                    if(idData.currentMonth.portfolio < idData.previousMonth.portfolio) {
+                        portfolioChange = -100
+                        if (idData.currentMonth.portfolio != 0)
+                        {
+                            portfolioChange = -1*(idData.previousMonth.portfolio / idData.currentMonth.portfolio)
+                        }
                     }
 
-                    var portfolio = idData[0].portfolio
-                    var lastMonthPortfolio = idData.length > 1 ? idData[1].portfolio:0
-                    var portfolioChange = 100.0
-                    if (lastMonthPortfolio != 0)
+                    if(idData.currentMonth.amount > idData.previousMonth.amount)
                     {
-                        portfolioChange = (parseFloat(portfolio)/parseFloat(lastMonthPortfolio)) * 100.0
+                        amountChange = 100
+                        if(idData.previousMonth.amount != 0)
+                        {
+                            amountChange = idData.currentMonth.amount / idData.previousMonth.amount
+                        }
                     }
+                    if(idData.currentMonth.amount < idData.previousMonth.amount) {
+                        amountChange = -100
+                        if (idData.currentMonth.amount != 0)
+                        {
+                            amountChange = -1*(idData.previousMonth.amount / idData.currentMonth.amount)
+                        }
+                    }
+
+                    // var amount = idData[0].amount
+                    // var lastMonthAmount = idData.length > 1 ? idData[1].amount:0
+                    // var amountChange = 100.0
+                    // if (lastMonthAmount != 0)
+                    // {
+                    //     amountChange = (parseFloat(amount)/parseFloat(lastMonthAmount)) * 100.0
+                    // }
+                    //
+                    // var portfolio = idData[0].portfolio
+                    // var lastMonthPortfolio = idData.length > 1 ? idData[1].portfolio:0
+                    // var portfolioChange = 100.0
+                    // if (lastMonthPortfolio != 0)
+                    // {
+                    //     portfolioChange = (parseFloat(portfolio)/parseFloat(lastMonthPortfolio)) * 100.0
+                    // }
 
                     data.push(
                         {
                         agentName: agentName,
                         commission: amount,
-                        commissionChange: amountChange.toString(),
+                        commissionChange: amountChange,
                         portfolio: portfolio,
-                        portfolioChange: portfolioChange.toString()
+                        portfolioChange: portfolioChange
                     })
                 }
             }
@@ -298,7 +335,7 @@ class DashboardCommissionChangeChart extends React.Component {
 
         return (
             <div className="dashboard-commission-change-chart shadow">
-                <div className="dashboard-box-title">{this.state.commissionType}</div>
+                <div className="dashboard-box-title">{"סה״כ " + this.state.commissionType}</div>
                 <div className="dashboard-commission-change-chart-box">
                     <Bar data={data} options={chartOptions} width="600" height="400"/>
                 </div>
