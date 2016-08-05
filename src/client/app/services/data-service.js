@@ -193,7 +193,7 @@ class DataService {
                     if(callback != null)
                         callback({
                             result:true,
-                            data: result.salaries
+                            data: result
                         });
 
                 }.bind(this),
