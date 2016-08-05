@@ -120,30 +120,40 @@ class DashboardRankTable extends React.Component {
             var data = []
             if(response.result == true)
             {
-                for (const item of response.data)
+                var idsData = Object.keys(response.data)
+                for (const item of idsData)
                 {
-                    var agent = AppStore.getAgent(item._id.idNumber)
+                    var idData = response.data[item]
+                    var agent = AppStore.getAgent(idData[0]._id.idNumber)
                     var agentName = ""
                     if (agent != null) {
                         agentName = agent.name + " " + agent.familyName
                     }
                     agentName = agent.name + " " + agent.familyName
 
-                    var amount = item.amount
-                    var lastMonthAmount = item.length > 1 ? item[1].amount:0
-                    var change = 100.0
+                    var amount = idData[0].amount
+                    var lastMonthAmount = idData.length > 1 ? idData[1].amount:0
+                    var amountChange = 100.0
                     if (lastMonthAmount != 0)
                     {
-                        change = (parseFloat(amount)/parseFloat(lastMonthAmount)) * 100.0
+                        amountChange = (parseFloat(amount)/parseFloat(lastMonthAmount)) * 100.0
+                    }
+
+                    var portfolio = idData[0].portfolio
+                    var lastMonthPortfolio = idData.length > 1 ? idData[1].portfolio:0
+                    var portfolioChange = 100.0
+                    if (lastMonthPortfolio != 0)
+                    {
+                        portfolioChange = (parseFloat(portfolio)/parseFloat(lastMonthPortfolio)) * 100.0
                     }
 
                     data.push(
                         {
                         agentName: agentName,
                         commission: amount,
-                        commissionChange: change.toString(),
-                        portfolio: item.portfolio,
-                        portfolioChange: ""
+                        commissionChange: amountChange.toString(),
+                        portfolio: portfolio,
+                        portfolioChange: portfolioChange.toString()
                     })
                 }
             }
@@ -215,11 +225,50 @@ class DashboardRankTable extends React.Component {
 
 class DashboardCommissionChangeChart extends React.Component {
 
-    constructor(props) {
+    constructor(props)
+    {
         super(props);
-
+        this.state = {
+            commissionType: props.commissionType,
+            year: props.year,
+            data: []
+        }
+    }
+    componentWillReceiveProps(nextProps)
+    {
+        this.state.commissionType = nextProps.commissionType
+        this.state.year = nextProps.year
+        this.reloadData((data) => {
+            this.state.data = data
+            this.setState(this.state)
+        })
+    }
+    componentDidMount()
+    {
+        this.reloadData((data) => {
+             this.state.data = data
+            this.setState(this.state)
+        })
     }
 
+    reloadData(callback)
+    {
+        DataService.loadCommissionFilesEntriesWithTypeAndYear(this.state.commissionType,this.state.year, (response) => {
+            var data = [0,0,0,0,0,0,0,0,0,0,0,0]
+            if(response.result == true)
+            {
+                for (const item of response.data)
+                {
+                    data[item._id] = item.amount
+                }
+            }
+            else
+            {
+                this.logger.error("Error while loading commission files entries");
+            }
+            callback(data)
+        })
+    }
     render () {
 
         var data = {
@@ -232,7 +281,7 @@ class DashboardCommissionChangeChart extends React.Component {
                     borderWidth: 1,
                     hoverBackgroundColor: "rgba(255,99,132,0.4)",
                     hoverBorderColor: "rgba(255,99,132,1)",
-                    data: [165, 59, 80, 81, 256, 55, 40],
+                    data: this.state.data,
                     fillColor: "#4286b4"
                 }
             ]
@@ -581,7 +630,9 @@ class Dashboard extends React.Component {
                     </div>
                 </div>
                 <div className="vertical-spacer-20"/>
-                <DashboardCommissionChangeChart />
+                <DashboardCommissionChangeChart
+                    commissionType={this.state.selectedCommissionType}
+                    year={this.state.date.getFullYear()} />
             </div>
         );
     }
