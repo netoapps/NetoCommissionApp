@@ -116,17 +116,19 @@ class DashboardRankTable extends React.Component {
     }
     reloadData(callback)
     {
-        DataService.loadCommissionFilesEntriesWithTypeAndDate(this.state.commissionType,this.state.date, (response) => {
+        DataService.loadCommissionFilesEntriesByIdWithTypeAndDate(this.state.commissionType,this.state.date, (response) => {
             var data = []
             if(response.result == true)
             {
-                for (const item of response.data) {
+                for (const item of response.data)
+                {
                     var agent = AppStore.getAgent(item.idNumber)
                     var agentName = ""
                     if (agent != null) {
                         agentName = agent.name + " " + agent.familyName
                     }
                     var agentName = agent.name + " " + agent.familyName
+
                     data.push({
                         agentName: agentName,
                         commission: item.amount,
@@ -259,6 +261,16 @@ class DashboardMonthTotalCommissions extends React.Component {
             change: "0"
         }
     }
+    componentWillReceiveProps(nextProps)
+    {
+        this.state.commissionType = nextProps.commissionType
+        this.state.date = nextProps.date
+        this.reloadData((data) => {
+            this.state.value = data
+            this.state.change = "0"
+            this.setState(this.state)
+        })
+    }
     componentDidMount()
     {
         this.reloadData((data) => {
@@ -308,7 +320,7 @@ class DashboardMonthTotalCommissions extends React.Component {
 
         return (
             <div className="dashboard-month-total-commissions shadow">
-                <div className="dashboard-box-title">{strings.totalCommissions}</div>
+                <div className="dashboard-box-title">{strings.totalValue + this.state.commissionType}</div>
                 <div className="dashboard-box-value green"><small>{"₪"}&nbsp;</small><b>{value}</b></div>
                 <div className={"dashboard-box-change " + changeColor}>{change}<small>&nbsp;{"%"}</small>&nbsp;<img src={changeIcon}/></div>
             </div>
