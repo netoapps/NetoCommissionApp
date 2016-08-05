@@ -122,17 +122,26 @@ class DashboardRankTable extends React.Component {
             {
                 for (const item of response.data)
                 {
-                    var agent = AppStore.getAgent(item.idNumber)
+                    var agent = AppStore.getAgent(item._id.idNumber)
                     var agentName = ""
                     if (agent != null) {
                         agentName = agent.name + " " + agent.familyName
                     }
-                    var agentName = agent.name + " " + agent.familyName
+                    agentName = agent.name + " " + agent.familyName
 
-                    data.push({
+                    var amount = item.amount
+                    var lastMonthAmount = item.length > 1 ? item[1].amount:0
+                    var change = 100.0
+                    if (lastMonthAmount != 0)
+                    {
+                        change = (parseFloat(amount)/parseFloat(lastMonthAmount)) * 100.0
+                    }
+
+                    data.push(
+                        {
                         agentName: agentName,
-                        commission: item.amount,
-                        commissionChange: "",
+                        commission: amount,
+                        commissionChange: change.toString(),
                         portfolio: item.portfolio,
                         portfolioChange: ""
                     })
@@ -334,27 +343,46 @@ class DashboardMonthTotalAgents extends React.Component {
         super(props);
 
         this.state = {
+            date: props.date,
             value: "0",
             change: 0
         }
     }
+    componentWillReceiveProps(nextProps)
+    {
+        this.state.date = nextProps.date
+        this.reloadData((data) => {
+            this.state.value = data
+            this.state.change = "0"
+            this.setState(this.state)
+        })
+    }
     componentDidMount()
     {
-        this.reloadData()
+        this.reloadData((data) => {
+            this.state.value = data
+            this.state.change = "0"
+            this.setState(this.state)
+        })
     }
     componentWillUnmount()
     {
 
     }
-    reloadData()
+    reloadData(callback)
     {
-        DataService.getActiveAgentCountForDate(this.props.date, (response) => {
+        DataService.getActiveAgentCountForDate(this.state.date, (response) => {
 
+            var data = "0"
             if(response.result == true)
             {
-                this.state.value = response.data
-                this.setState(this.state)
+                data = response.data
             }
+            else
+            {
+
+            }
+            callback(data)
         })
     }
     render () {
@@ -379,16 +407,57 @@ class DashboardMonthTotalAgents extends React.Component {
     }
 }
 
-class DashboardTotalInvestments extends React.Component {
+class DashboardTotalPortfolio extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            commissionType: props.commissionType,
+            date: props.date,
             value: 0,
             change: 0
         }
     }
+    componentWillReceiveProps(nextProps)
+    {
+        this.state.commissionType = nextProps.commissionType
+        this.state.date = nextProps.date
+        this.reloadData((data) => {
+            this.state.value = data
+            this.state.change = "0"
+            this.setState(this.state)
+        })
+    }
+    componentDidMount()
+    {
+        this.reloadData((data) => {
+            this.state.value = data
+            this.state.change = "0"
+            this.setState(this.state)
+        })
+    }
+    componentWillUnmount()
+    {
 
+    }
+    reloadData(callback)
+    {
+        DataService.loadCommissionFilesEntriesWithTypeAndDate(this.state.commissionType,this.state.date, (response) => {
+            var data = 0
+            if(response.result == true)
+            {
+                for (const item of response.data)
+                {
+                    data += parseFloat(item.portfolio)
+                }
+            }
+            else
+            {
+                this.logger.error("Error while loading commission files entries");
+            }
+            callback(data.toString())
+        })
+    }
     render () {
 
         var value = this.state.value.toString();
@@ -505,7 +574,10 @@ class Dashboard extends React.Component {
                             <DashboardMonthTotalAgents date={this.state.date}/>
                         </div>
                         <div className="vertical-spacer-20"/>
-                        <DashboardTotalInvestments />
+                        <DashboardTotalPortfolio
+                            commissionType={this.state.selectedCommissionType}
+                            date={this.state.date}
+                        />
                     </div>
                 </div>
                 <div className="vertical-spacer-20"/>
