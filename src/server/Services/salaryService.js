@@ -150,7 +150,8 @@ function SalaryService() {
             var toYear = new Date(year+1,0,1,0,0,0,0);
             Salary.aggregate([
                 {$match:{paymentDate:{$gte:fromYear,$lt:toYear}, type:type}},
-                {$group:{_id:{$month:'$paymentDate'}, amount:{$sum:'$amount'}}}
+                {$group:{_id:{$month:'$paymentDate'}, amount:{$sum:'$amount'}}},
+                {$sort:{_id:1}}
             ],function(err, salaries){
                 if(err){
                     return reject(err);
