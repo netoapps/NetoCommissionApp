@@ -19,10 +19,10 @@ var _ = require('underscore');
 function SalaryService() {
 
 
-    this.addAgentSalary = function(idNumber, agentInCompanyId, paymentDate, amount, type, company){
-        return new Promise(function(resolve, reject){
-            addSalaryToAgent(idNumber,agentInCompanyId,paymentDate,amount,type,company, function(err){
-                if(err){
+    this.addAgentSalary = function (idNumber, agentInCompanyId, paymentDate, amount, type, company) {
+        return new Promise(function (resolve, reject) {
+            addSalaryToAgent(idNumber, agentInCompanyId, paymentDate, amount, type, company, function (err) {
+                if (err) {
                     return reject(err);
                 }
                 return resolve();
@@ -38,16 +38,16 @@ function SalaryService() {
         });
     }
     this.deleteSalary = function (id) {
-        return new Promise(function(resolve, reject){
-            Salary.findById(id, function(err, salary){
-                if(err){
+        return new Promise(function (resolve, reject) {
+            Salary.findById(id, function (err, salary) {
+                if (err) {
                     return reject(err);
                 }
-                if(!salary){
+                if (!salary) {
                     return reject('salary not found');
                 }
-                salary.remove(function(err){
-                    if(err){
+                salary.remove(function (err) {
+                    if (err) {
                         return reject(err);
                     }
                     return resolve();
@@ -55,13 +55,13 @@ function SalaryService() {
             })
         })
     };
-    this.updateSalary = function(id, agentInCompanyId, paymentDate, amount, type, company){
-        return new Promise(function(resolve, reject){
-            Salary.findById(id, function(err, salary){
-                if(err){
+    this.updateSalary = function (id, agentInCompanyId, paymentDate, amount, type, company) {
+        return new Promise(function (resolve, reject) {
+            Salary.findById(id, function (err, salary) {
+                if (err) {
                     return reject(err);
                 }
-                if(!salary){
+                if (!salary) {
                     return reject('salary not found');
                 }
                 salary.agentInCompanyId = agentInCompanyId;
@@ -69,8 +69,8 @@ function SalaryService() {
                 salary.amount = amount;
                 salary.type = type;
                 salary.company = company;
-                salary.save(function(err){
-                    if(err){
+                salary.save(function (err) {
+                    if (err) {
                         return reject(err);
                     }
                     return resolve();
@@ -78,42 +78,48 @@ function SalaryService() {
             })
         })
     }
-    this.processSalaries = function (paymentDate, company,taxValue, salaries, fileId, cb) {
+    this.processSalaries = function (paymentDate, company, taxValue, salaries, fileId, cb) {
         var agents = {};
         var partnerships = {};
         var fid = fileId;
         agentService.getAllAgents()
-            .then(function(data){
-                _.each(data,function(agent){
-                    _.each(agent.paymentsDetails,function(pd){
-                        agents[pd.companyName+'-'+pd.agentNumber+'-'+pd.paymentType] = {idNumber:agent.idNumber, pd:pd};
+            .then(function (data) {
+                _.each(data, function (agent) {
+                    _.each(agent.paymentsDetails, function (pd) {
+                        agents[pd.companyName + '-' + pd.agentNumber + '-' + pd.paymentType] = {
+                            idNumber: agent.idNumber,
+                            pd: pd
+                        };
                     })
                 })
 
             })
             .then(agentService.getAllPartnerships)
-            .then(function(data){
-                _.each(data,function(partnership){
-                    _.each(partnership.paymentsDetails,function(pd){
-                        partnerships[pd.companyName+'-'+pd.partnershipNumber+'-'+pd.paymentType] = {agentsDetails:partnership.agentsDetails,pd:pd };
+            .then(function (data) {
+                _.each(data, function (partnership) {
+                    _.each(partnership.paymentsDetails, function (pd) {
+                        partnerships[pd.companyName + '-' + pd.partnershipNumber + '-' + pd.paymentType] = {
+                            agentsDetails: partnership.agentsDetails,
+                            pd: pd
+                        };
                     })
                 })
             })
-            .then(checkAgentIds.bind(null,agents,partnerships,company, salaries))
-            .then(assignSalariesToAgents.bind(null, agents, partnerships, salaries,paymentDate, company, taxValue, fid))
-            .then(function(){
+            .then(checkAgentIds.bind(null, agents, partnerships, company, salaries))
+            .then(assignSalariesToAgents.bind(null, agents, partnerships, salaries, paymentDate, company, taxValue, fid))
+            .then(function () {
                 return cb();
             })
-            .catch(function(err){
+            .catch(function (err) {
                 return cb(err);
             });
 
     }
-    this.getNumberOfPayedSalariesForMonthGroupedById = function(paymentDate){
-        return new Promise(function(resolve, reject){
+    this.getNumberOfPayedSalariesForMonthGroupedById = function (paymentDate) {
+        return new Promise(function (resolve, reject) {
 
-            Salary.find({paymentDate:paymentDate.toISOString()}).distinct('idNumber').exec(function(err, ids){
-                if(err){
+            Salary.find({paymentDate: paymentDate.toISOString()}).distinct('idNumber').exec(function (err, ids) {
+                if (err) {
                     return reject(err);
                 }
                 return resolve(ids.length);
@@ -121,10 +127,10 @@ function SalaryService() {
         })
 
     }
-    this.getAllSalariesSortedByDate = function(){
-        return new Promise(function(resolve, reject){
-            Salary.find({}).sort({paymentDate:-1}).exec(function(err, salaries){
-                if(err){
+    this.getAllSalariesSortedByDate = function () {
+        return new Promise(function (resolve, reject) {
+            Salary.find({}).sort({paymentDate: -1}).exec(function (err, salaries) {
+                if (err) {
                     return reject(err);
                 }
                 return resolve(salaries);
@@ -132,50 +138,53 @@ function SalaryService() {
         })
 
     }
-    this.getDateSalariesSummedByType = function(type, pd){
-        return new Promise(function(resolve, reject){
+    this.getDateSalariesSummedByType = function (type, pd) {
+        return new Promise(function (resolve, reject) {
             var prevMonth = new Date(pd.getTime());
-            prevMonth.setMonth(prevMonth.getMonth()-1);
+            prevMonth.setMonth(prevMonth.getMonth() - 1);
             Salary.aggregate([
-                {$match:{paymentDate:{'$gte':prevMonth,'$lte':pd},type:type}},
-                {$group:{_id:'$paymentDate',amount:{$sum:'$amount'}, portfolio:{$sum:'$portfolio'}}},
-                {$sort:{_id:1}}
-            ],function(err, sum){
-                if(err){
+                {$match: {paymentDate: {'$gte': prevMonth, '$lte': pd}, type: type}},
+                {$group: {_id: '$paymentDate', amount: {$sum: '$amount'}, portfolio: {$sum: '$portfolio'}}},
+                {$sort: {_id: 1}}
+            ], function (err, sum) {
+                if (err) {
                     return reject(err);
                 }
-                if(sum.length===0){
-                    return resolve({currentMonth:{amount:0,portfolio:0},previousMonth:{amount:0,portfolio:0}});
+                if (sum.length === 0) {
+                    return resolve({currentMonth: {amount: 0, portfolio: 0}, previousMonth: {amount: 0, portfolio: 0}});
                 }
-                if(sum.length===1){
-                    if(sum[0]._id.toISOString()===pd.toISOString()) {
+                if (sum.length === 1) {
+                    if (sum[0]._id.toISOString() === pd.toISOString()) {
                         return resolve({
                             currentMonth: {amount: sum[0].amount, portfolio: sum[0].portfolio},
                             previousMonth: {amount: 0, portfolio: 0}
                         });
-                    }else{
+                    } else {
                         return resolve({
                             currentMonth: {amount: 0, portfolio: 0},
                             previousMonth: {amount: sum[0].amount, portfolio: sum[0].portfolio}
                         });
                     }
                 }
-                return resolve({currentMonth:{amount:sum[1].amount,portfolio:sum[1].portfolio}, previousMonth:{amount:sum[0].amount,portfolio:sum[0].portfolio}});
+                return resolve({
+                    currentMonth: {amount: sum[1].amount, portfolio: sum[1].portfolio},
+                    previousMonth: {amount: sum[0].amount, portfolio: sum[0].portfolio}
+                });
             })
         })
 
     }
 
-    this.getAllSalariesForYearByMonths = function(year, type){
-        return new Promise(function(resolve, reject){
-            var fromYear = new Date(year,0,1,0,0,0,0);
-            var toYear = new Date(year+1,0,1,0,0,0,0);
+    this.getAllSalariesForYearByMonths = function (year, type) {
+        return new Promise(function (resolve, reject) {
+            var fromYear = new Date(year, 0, 1, 0, 0, 0, 0);
+            var toYear = new Date(year + 1, 0, 1, 0, 0, 0, 0);
             Salary.aggregate([
-                {$match:{paymentDate:{$gte:fromYear,$lt:toYear}, type:type}},
-                {$group:{_id:{$month:'$paymentDate'}, amount:{$sum:'$amount'}}},
-                {$sort:{_id:1}}
-            ],function(err, salaries){
-                if(err){
+                {$match: {paymentDate: {$gte: fromYear, $lt: toYear}, type: type}},
+                {$group: {_id: {$month: '$paymentDate'}, amount: {$sum: '$amount'}}},
+                {$sort: {_id: 1}}
+            ], function (err, salaries) {
+                if (err) {
                     return reject(err);
                 }
                 return resolve(salaries);
@@ -185,21 +194,66 @@ function SalaryService() {
     }
 
     //TODO: get all salaries for year and month and type, grouped by idNumber
-    this.getAllSalariesForDateAndTypeGroupedById = function(date, type){
-        return new Promise(function(resolve, reject){
+    this.getAllSalariesForDateAndTypeGroupedById = function (date, type) {
+        return new Promise(function (resolve, reject) {
             date = new Date(date);
             var prevDate = new Date(date.getTime());
-            prevDate.setMonth(prevDate.getMonth()-1);
+            prevDate.setMonth(prevDate.getMonth() - 1);
             Salary.aggregate([
-                {$match:{paymentDate:{'$gte':prevDate,'$lte':date}, type:type}},
-                {$group:{_id:{idNumber:'$idNumber',date:'$paymentDate'}, amount:{$sum:'$amount'}, portfolio:{$sum:'$portfolio'}}}
-            ],function(err, salaries){
-                if(err){
+                {$match: {paymentDate: {'$gte': prevDate, '$lte': date}, type: type}},
+                {$sort: {paymentDate: 1}},
+                {
+                    $group: {
+                        _id: {idNumber: '$idNumber', date: '$paymentDate'},
+                        amount: {$sum: '$amount'},
+                        portfolio: {$sum: '$portfolio'}
+                    }
+                }
+            ], function (err, salaries) {
+                if (err) {
                     return reject(err);
                 }
-                salaries = _.groupBy(salaries,function(sal){
+
+                salaries = _.groupBy(salaries, function (sal) {
                     return sal._id.idNumber
                 });
+                salaries = _.map(salaries, function (sal, id) {
+                    if (sal.length === 0) {
+                        return [id, {
+                            currentMonth: {
+                                amount: 0, portfolio: 0
+                            }, previousMonth: {
+                                amount: 0, portfolio: 0
+                            }
+                        }]
+                    } else if (sal.length === 1) {
+                        if (sal[0]._id.date.toISOString() == date.toISOString()) {
+                            return [id, {
+                                currentMonth: {amount: sal[0].amount, portfolio: sal[0].portfolio},
+                                previousMonth: {amount: 0, portfolio: 0}
+                            }]
+                        } else {
+                            return [id, {
+                                currentMonth: {amount: 0, portfolio: 0},
+                                previousMonth: {amount: sal[0].amount, portfolio: sal[0].portfolio}
+                            }]
+                        }
+                    } else {
+
+                        return [id, {
+                            currentMonth: {amount: sal[0].amount, portfolio: sal[0].portfolio},
+                            previousMonth: {amount: sal[1].amount, portfolio: sal[1].portfolio}
+                        }]
+
+                    }
+
+                })
+                salaries = _.reduce(salaries,function(memo, sal){
+                    memo[sal[0]]=sal[1];
+                    return memo;
+                },{});
+
+
                 return resolve(salaries);
             })
 
@@ -207,10 +261,10 @@ function SalaryService() {
     }
 
 
-    this.removeSalariesByFileId = function(fileId){
-        return new Promise(function(resolve, reject){
-            Salary.remove({fileId:fileId}, function(err){
-                if(err){
+    this.removeSalariesByFileId = function (fileId) {
+        return new Promise(function (resolve, reject) {
+            Salary.remove({fileId: fileId}, function (err) {
+                if (err) {
                     return reject(err);
                 }
                 return resolve();
@@ -228,7 +282,8 @@ function SalaryService() {
         })
     };
 
-    this.deleteSalariesByMonthAndYear = function(month, year){}
+    this.deleteSalariesByMonthAndYear = function (month, year) {
+    }
     this.deleteAgentSalaries = function () {
 
     };
@@ -238,12 +293,10 @@ function SalaryService() {
     function checkAgentIds(agentsMaps, partnershipsMaps, companyName, salaries) {
         return new Promise(function (resolve, reject) {
             var missingIds = {};
-            _.each(salaries,function(salary){
-                var agentNumber = companyName+'-'+salary[1];
-                if(!agentsMaps[agentNumber+'-'+type3] && !partnershipsMaps[agentNumber+'-'+type3] &&
-                    !agentsMaps[agentNumber+'-'+type4] && !partnershipsMaps[agentNumber+'-'+type4] &&
-                    !agentsMaps[agentNumber+'-'+type5] && !partnershipsMaps[agentNumber+'-'+type5]){
-                    missingIds[salary[1]]=true;
+            _.each(salaries, function (salary) {
+                var agentNumber = companyName + '-' + salary[1];
+                if (!agentsMaps[agentNumber + '-' + type3] && !partnershipsMaps[agentNumber + '-' + type3] && !agentsMaps[agentNumber + '-' + type4] && !partnershipsMaps[agentNumber + '-' + type4] && !agentsMaps[agentNumber + '-' + type5] && !partnershipsMaps[agentNumber + '-' + type5]) {
+                    missingIds[salary[1]] = true;
                 }
             });
             if (Object.keys(missingIds).length > 0) {
@@ -252,11 +305,12 @@ function SalaryService() {
             return resolve();
         });
     }
+
     function addSalaryToAgent(idNumber, agentInCompanyId, paymentDate, amount, type, company, portfolio, fileId, cb) {
         var salary = new Salary();
         salary.idNumber = idNumber;
         salary.agentInCompanyId = agentInCompanyId;
-        salary.paymentDate =paymentDate;
+        salary.paymentDate = paymentDate;
         salary.amount = amount;
         salary.type = type;
         salary.company = company;
@@ -269,80 +323,80 @@ function SalaryService() {
         })
 
     };
-    function assignSalariesToAgents(agents, partnerships, salaries, paymentDate, company, taxValue, fileId){
-        return new Promise(function(resolve, reject){
+    function assignSalariesToAgents(agents, partnerships, salaries, paymentDate, company, taxValue, fileId) {
+        return new Promise(function (resolve, reject) {
             var salaryTasks = [];
-            salaries.map(function(s){
-                if(s[3]){
-                    s[3]*=taxValue;
+            salaries.map(function (s) {
+                if (s[3]) {
+                    s[3] *= taxValue;
                 }
-                if(s[4]){
-                    s[4]*=taxValue;
+                if (s[4]) {
+                    s[4] *= taxValue;
                 }
-                if(s[5]){
-                    s[5]*=taxValue;
+                if (s[5]) {
+                    s[5] *= taxValue;
                 }
             });
 
 
-            _.each(salaries, function(salary){
-                var salaryIdType3 = company+'-'+salary[1] +'-'+type3;
-                var salaryIdType4 = company+'-'+salary[1] +'-'+type4;
-                var salaryIdType5 = company+'-'+salary[1] +'-'+type5;
-                var agentPaymentDetails, pd, amount= 0, partnershipPaymentDetails;
+            _.each(salaries, function (salary) {
+                var salaryIdType3 = company + '-' + salary[1] + '-' + type3;
+                var salaryIdType4 = company + '-' + salary[1] + '-' + type4;
+                var salaryIdType5 = company + '-' + salary[1] + '-' + type5;
+                var agentPaymentDetails, pd, amount = 0, partnershipPaymentDetails;
                 var agentsDetails = [];
-                if(agents[salaryIdType3] && salary[3]){
+                if (agents[salaryIdType3] && salary[3]) {
                     agentPaymentDetails = agents[salaryIdType3];
                     pd = agentPaymentDetails.pd;
                     amount = Number(salary[3]);
-                    amount*=Number(pd.agentPart)/100;
-                    salaryTasks.push(addSalaryToAgent.bind(null,agentPaymentDetails.idNumber,salary[1], paymentDate, amount,type3,company, salary[2],fileId));
+                    amount *= Number(pd.agentPart) / 100;
+                    salaryTasks.push(addSalaryToAgent.bind(null, agentPaymentDetails.idNumber, salary[1], paymentDate, amount, type3, company, salary[2], fileId));
                 }
-                if(agents[salaryIdType4] && salary[4]){
+                if (agents[salaryIdType4] && salary[4]) {
                     agentPaymentDetails = agents[salaryIdType4];
                     pd = agentPaymentDetails.pd;
                     amount = Number(salary[4]);
-                    amount*=Number(pd.agentPart)/100;
-                    salaryTasks.push(addSalaryToAgent.bind(null,agentPaymentDetails.idNumber,salary[1], paymentDate,amount,type4,company,0, fileId));
+                    amount *= Number(pd.agentPart) / 100;
+                    salaryTasks.push(addSalaryToAgent.bind(null, agentPaymentDetails.idNumber, salary[1], paymentDate, amount, type4, company, 0, fileId));
                 }
-                if(agents[salaryIdType5] && salary[5]){
+                if (agents[salaryIdType5] && salary[5]) {
                     agentPaymentDetails = agents[salaryIdType5];
                     pd = agentPaymentDetails.pd;
                     amount = Number(salary[5]);
-                    amount*=Number(pd.agentPart)/100;
-                    salaryTasks.push(addSalaryToAgent.bind(null,agentPaymentDetails.idNumber,salary[1], paymentDate, amount,type5,company,0, fileId));
+                    amount *= Number(pd.agentPart) / 100;
+                    salaryTasks.push(addSalaryToAgent.bind(null, agentPaymentDetails.idNumber, salary[1], paymentDate, amount, type5, company, 0, fileId));
                 }
-                if(partnerships[salaryIdType3] && salary[3]){
+                if (partnerships[salaryIdType3] && salary[3]) {
                     partnershipPaymentDetails = partnerships[salaryIdType3];
                     agentsDetails = partnershipPaymentDetails.agentsDetails;
                     pd = partnershipPaymentDetails.pd;
-                    _.each(agentsDetails, function(agent){
+                    _.each(agentsDetails, function (agent) {
                         amount = Number(salary[3]);
-                        amount*=Number(agent.part)/100;
-                        amount*=Number(pd.partnershipPart)/100;
-                        salaryTasks.push(addSalaryToAgent.bind(null,agent.idNumber,salary[1], paymentDate, amount,type3,company,salary[2], fileId));
+                        amount *= Number(agent.part) / 100;
+                        amount *= Number(pd.partnershipPart) / 100;
+                        salaryTasks.push(addSalaryToAgent.bind(null, agent.idNumber, salary[1], paymentDate, amount, type3, company, salary[2], fileId));
                     })
                 }
-                if(partnerships[salaryIdType4] && salary[4]){
+                if (partnerships[salaryIdType4] && salary[4]) {
                     partnershipPaymentDetails = partnerships[salaryIdType4];
                     agentsDetails = partnershipPaymentDetails.agentsDetails;
                     pd = partnershipPaymentDetails.pd;
-                    _.each(agentsDetails, function(agent){
+                    _.each(agentsDetails, function (agent) {
                         amount = Number(salary[4]);
-                        amount*=Number(agent.part)/100;
-                        amount*=Number(pd.partnershipPart)/100;
-                        salaryTasks.push(addSalaryToAgent.bind(null,agent.idNumber,salary[1], paymentDate, amount,type4,company,0, fileId));
+                        amount *= Number(agent.part) / 100;
+                        amount *= Number(pd.partnershipPart) / 100;
+                        salaryTasks.push(addSalaryToAgent.bind(null, agent.idNumber, salary[1], paymentDate, amount, type4, company, 0, fileId));
                     })
                 }
-                if(partnerships[salaryIdType4] && salary[5]){
+                if (partnerships[salaryIdType4] && salary[5]) {
                     partnershipPaymentDetails = partnerships[salaryIdType5];
                     agentsDetails = partnershipPaymentDetails.agentsDetails;
                     pd = partnershipPaymentDetails.pd;
-                    _.each(agentsDetails, function(agent){
+                    _.each(agentsDetails, function (agent) {
                         amount = Number(salary[5]);
-                        amount*=Number(agent.part)/100;
-                        amount*=Number(pd.partnershipPart)/100;
-                        salaryTasks.push(addSalaryToAgent.bind(null,agent.idNumber,salary[1], paymentDate, amount,type5,company,0, fileId));
+                        amount *= Number(agent.part) / 100;
+                        amount *= Number(pd.partnershipPart) / 100;
+                        salaryTasks.push(addSalaryToAgent.bind(null, agent.idNumber, salary[1], paymentDate, amount, type5, company, 0, fileId));
                     })
                 }
             });
