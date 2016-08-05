@@ -15,9 +15,11 @@ var mongoose = require('mongoose');
         type:String,
         company:String,
         paymentDate:Date,
-        portfolio:{type:Number, default:0}
+        portfolio:{type:Number, default:0},
+        fileId:String
     });
     schema.index({paymentDate:1});
     schema.index({idNumber:1});
+    schema.index({fileId:1});
 
 module.exports = mongoose.model('Salary', schema);
