@@ -180,7 +180,7 @@ class DataService {
                 }.bind(this)
             });
     }
-    loadCommissionFilesEntriesWithTypeAndDate(type,date,callback)
+    loadTotalCommissionAndPortfolioForTypeAndDate(type,date,callback)
     {
         $.ajax(
             {
@@ -238,7 +238,7 @@ class DataService {
     {
         $.ajax(
             {
-                url: '/api/v1/salary/bymonths/'+ year + '/' + year,
+                url: '/api/v1/salary/bymonths/'+ year + '/' + type,
                 type: 'GET',
                 contentType: 'application/json',
                 success: function(result)
