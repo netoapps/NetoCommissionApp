@@ -22,7 +22,6 @@ function ExpanseService() {
 
         })
     }
-
     this.updateExpanse = function (id, date, type, sum, notes) {
         return new Promise(function (resolve, reject) {
             Expanse.findById(id, function (err, expanse) {
@@ -46,7 +45,6 @@ function ExpanseService() {
             })
         })
     }
-
     this.deleteExpanse = function(id){
         return new Promise(function(resolve, reject){
             Expanse.findById(id, function (err, expanse) {
@@ -67,7 +65,6 @@ function ExpanseService() {
             })
         })
     }
-
     this.getAgentExpanseForDate = function(idNumber, startDate, endDate){
         return new Promise(function(resolve, reject){
             Expanse.find({idNumber:idNumber, expanseDate:{'$lte':endDate, 'gte':startDate}}, function(err, expanses){
@@ -82,5 +79,21 @@ function ExpanseService() {
             })
         })
     }
+
+    //this.getExpansesForIdNumberAndDate = function(idNumber, date){
+    //    return new Promise(function(resolve, reject){
+    //        date = new Date(date);
+    //        var month = date.getMonth();
+    //        var year = date.getYear();
+    //        var monthStart = new Date(year, month, 1,0,0,0,0);
+    //        var monthEnd = new Date(year,month+1,1,0,0,0,0);
+    //        Expanse.find({idNumber:idNumber, expanseDate:{'$gte':monthStart,'$lt':monthEnd}}).lean().exec(function(err, expanses){
+    //            if(err){
+    //                return reject(err);
+    //            }
+    //            return resolve(expanses);
+    //        })
+    //    })
+    //}
 }
 module.exports = ExpanseService;
