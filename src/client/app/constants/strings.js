@@ -19,7 +19,6 @@ let strings = {
     totalValue: "סה״כ ",
     totalAgents: "סה״כ סוכנים פעילים",
     totalInvestments: "סה״כ גודל תיק",
-    totalInvestmentsChange: "עמלות (מיליונים)",
     load: "טען",
     dragFileHere: "גרור קובץ עמלות לכאן",
     companyAssignment: "שיוך לחברה",

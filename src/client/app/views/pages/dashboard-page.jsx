@@ -231,7 +231,7 @@ class DashboardCommissionChangeChart extends React.Component {
         this.state = {
             commissionType: props.commissionType,
             year: props.year,
-            data: []
+            data: [0,0,0,0,0,0,0,0,0,0,0,0]
         }
     }
     componentWillReceiveProps(nextProps)
@@ -298,7 +298,7 @@ class DashboardCommissionChangeChart extends React.Component {
 
         return (
             <div className="dashboard-commission-change-chart shadow">
-                <div className="dashboard-box-title">{strings.totalInvestmentsChange}</div>
+                <div className="dashboard-box-title">{this.state.commissionType}</div>
                 <div className="dashboard-commission-change-chart-box">
                     <Bar data={data} options={chartOptions} width="600" height="400"/>
                 </div>
@@ -343,20 +343,9 @@ class DashboardMonthTotalCommissions extends React.Component {
     }
     reloadData(callback)
     {
-        DataService.loadCommissionFilesEntriesWithTypeAndDate(this.state.commissionType,this.state.date, (response) => {
-            var data = 0
-            if(response.result == true)
-            {
-                for (const item of response.data)
-                {
-                    data += parseFloat(item.amount)
-                }
-            }
-            else
-            {
-                this.logger.error("Error while loading commission files entries");
-            }
-            callback(data.toString())
+        DataService.loadTotalCommissionAndPortfolioForTypeAndDate(this.state.commissionType,this.state.date, (response) => {
+
+            callback(response.data.amount)
         })
     }
     render () {
@@ -491,20 +480,8 @@ class DashboardTotalPortfolio extends React.Component {
     }
     reloadData(callback)
     {
-        DataService.loadCommissionFilesEntriesWithTypeAndDate(this.state.commissionType,this.state.date, (response) => {
-            var data = 0
-            if(response.result == true)
-            {
-                for (const item of response.data)
-                {
-                    data += parseFloat(item.portfolio)
-                }
-            }
-            else
-            {
-                this.logger.error("Error while loading commission files entries");
-            }
-            callback(data.toString())
+        DataService.loadTotalCommissionAndPortfolioForTypeAndDate(this.state.commissionType,this.state.date, (response) => {
+             callback(response.data.portfolio)
         })
     }
     render () {
