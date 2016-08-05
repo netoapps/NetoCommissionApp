@@ -168,7 +168,7 @@ function SalaryService() {
             prevDate.setMonth(prevDate.getMonth()-1);
             Salary.aggregate([
                 {$match:{paymentDate:{'$gte':prevDate,'$lte':date}, type:type}},
-                {$group:{_id:{idNumber:'$idNumber',date:'$paymentDate'}, amount:{$sum:'$amount'}}}
+                {$group:{_id:{idNumber:'$idNumber',date:'$paymentDate'}, amount:{$sum:'$amount'}, portfolio:{$sum:'$portfolio'}}}
             ],function(err, salaries){
                 if(err){
                     return reject(err);
