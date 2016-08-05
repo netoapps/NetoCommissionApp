@@ -41,7 +41,7 @@ module.exports.registerRoutes = function(app){
     apiRouter.get('/salary/bymonths/:year/:type',salaries.getAllSalariesForYearGroupedByMonths);
     apiRouter.get('/salary/byId/:paymentDate/:type/', salaries.getAllSalariesForDateAndTypeGroupedByIdNumber);
     apiRouter.get('/salary/:paymentDate/count',salaries.getNumberOfPayedAgentsForMonth);
-    apiRouter.get('/salary/:paymentDate/:type/', salaries.getAllSalariesByType);
+    apiRouter.get('/salary/:paymentDate/:type/', salaries.getDateSalariesSummedByType);
 
 
 

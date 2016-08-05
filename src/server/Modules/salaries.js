@@ -140,14 +140,16 @@ function getNumberOfPayedAgentsForMonth(req, res) {
         })
 }
 
-function getAllSalariesByType(req, res) {
+function getDateSalariesSummedByType(req, res) {
     const type = req.params.type;
+    const pd = req.params.paymentDate;
     if (!type || type < 2 || type > 5) {
         return res.status(400).json({err: 'invalid type'});
     }
-    salaryService.getAllSalariesByType(type)
-        .then(function (salaries) {
-            return res.status(200).json({salaries: salaries});
+    var date = new Date(pd);
+    salaryService.getDateSalariesSummedByType(type, date)
+        .then(function (data) {
+            return res.status(200).json({amount: data.amount, portfolio:data.portfolio});
         })
         .catch(function (err) {
             return res.status(400).json({err: err});
@@ -226,7 +228,7 @@ module.exports = {
     deleteSalary,
     getNumberOfPayedAgentsForMonth,
     getAllSalariesSortedByDate,
-    getAllSalariesByType,
+    getDateSalariesSummedByType,
     getAllSalariesForYearGroupedByMonths,
     getAllSalariesForDateAndTypeGroupedByIdNumber
 };

@@ -132,13 +132,19 @@ function SalaryService() {
         })
 
     }
-    this.getAllSalariesByType = function(type){
+    this.getDateSalariesSummedByType = function(type, pd){
         return new Promise(function(resolve, reject){
-            Salary.find({type:type},function(err, salaries){
+            Salary.aggregate([
+                {$match:{paymentDate:pd,type:type}},
+                {$group:{_id:null,amount:{$sum:'$amount'}, portfolio:{$sum:'$portfolio'}}}
+            ],function(err, sum){
                 if(err){
                     return reject(err);
                 }
-                return resolve(salaries);
+                if(sum.length===0){
+                    return resolve({amount:0,portfolio:0});
+                }
+                return resolve({amount:sum[0].amount, portfolio:sum[0].portfolio});
             })
         })
 
