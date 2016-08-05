@@ -14,6 +14,7 @@ const commisionTypes = constantService.getCommisionTypes();
 const type3 = commisionTypes[0];
 const type4 = commisionTypes[1];
 const type5 = commisionTypes[2];
+var _ = require('underscore');
 
 function SalaryService() {
 
@@ -173,6 +174,9 @@ function SalaryService() {
                 if(err){
                     return reject(err);
                 }
+                salaries = _.groupBy(salaries,function(sal){
+                    return sal._id.idNumber
+                });
                 return resolve(salaries);
             })
 
