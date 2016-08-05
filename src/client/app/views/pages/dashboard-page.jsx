@@ -133,7 +133,7 @@ class DashboardRankTable extends React.Component {
 
                     var amount = idData[0].amount
                     var lastMonthAmount = idData.length > 1 ? idData[1].amount:0
-                    var amountChange = 100.0
+                    var amountChange = 0.0
                     if (lastMonthAmount != 0)
                     {
                         amountChange = (parseFloat(amount)/parseFloat(lastMonthAmount)) * 100.0
@@ -141,7 +141,7 @@ class DashboardRankTable extends React.Component {
 
                     var portfolio = idData[0].portfolio
                     var lastMonthPortfolio = idData.length > 1 ? idData[1].portfolio:0
-                    var portfolioChange = 100.0
+                    var portfolioChange = 0.0
                     if (lastMonthPortfolio != 0)
                     {
                         portfolioChange = (parseFloat(portfolio)/parseFloat(lastMonthPortfolio)) * 100.0
@@ -323,17 +323,17 @@ class DashboardMonthTotalCommissions extends React.Component {
     {
         this.state.commissionType = nextProps.commissionType
         this.state.date = nextProps.date
-        this.reloadData((data) => {
-            this.state.value = data
-            this.state.change = "0"
+        this.reloadData((value,change) => {
+            this.state.value = value
+            this.state.change = change
             this.setState(this.state)
         })
     }
     componentDidMount()
     {
-        this.reloadData((data) => {
-            this.state.value = data
-            this.state.change = "0"
+        this.reloadData((value,change) => {
+            this.state.value = value
+            this.state.change = change
             this.setState(this.state)
         })
     }
@@ -345,7 +345,9 @@ class DashboardMonthTotalCommissions extends React.Component {
     {
         DataService.loadTotalCommissionAndPortfolioForTypeAndDate(this.state.commissionType,this.state.date, (response) => {
 
-            callback(response.data.amount)
+            var value = response.data.currentMonth.amount
+            var change = (response.data.previousMonth.amount != 0 ? ((response.data.currentMonth.amount / response.data.previousMonth.amount)*100).toString():0)
+            callback(value,change)
         })
     }
     render () {
@@ -453,24 +455,24 @@ class DashboardTotalPortfolio extends React.Component {
             commissionType: props.commissionType,
             date: props.date,
             value: 0,
-            change: 0
+            change: "0"
         }
     }
     componentWillReceiveProps(nextProps)
     {
         this.state.commissionType = nextProps.commissionType
         this.state.date = nextProps.date
-        this.reloadData((data) => {
-            this.state.value = data
-            this.state.change = "0"
+        this.reloadData((value,change) => {
+            this.state.value = value
+            this.state.change = change
             this.setState(this.state)
         })
     }
     componentDidMount()
     {
-        this.reloadData((data) => {
-            this.state.value = data
-            this.state.change = "0"
+        this.reloadData((value,change) => {
+            this.state.value = value
+            this.state.change = change
             this.setState(this.state)
         })
     }
@@ -481,7 +483,10 @@ class DashboardTotalPortfolio extends React.Component {
     reloadData(callback)
     {
         DataService.loadTotalCommissionAndPortfolioForTypeAndDate(this.state.commissionType,this.state.date, (response) => {
-             callback(response.data.portfolio)
+
+            var value = response.data.currentMonth.portfolio
+            var change = (response.data.previousMonth.portfolio != 0 ? ((response.data.currentMonth.portfolio / response.data.previousMonth.portfolio)*100).toString():0)
+            callback(value,change)
         })
     }
     render () {
