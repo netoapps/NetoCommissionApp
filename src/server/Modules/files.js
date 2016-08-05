@@ -25,4 +25,15 @@ function deleteFile(req, res){
             return res.status(400).json({err:err});
         })
 }
-module.exports = {getAllFiles, deleteFile};
+
+function downloadFile(req, res){
+    const fileId = req.params.fileId;
+    fileService.getFilePath(fileId)
+        .then(function(data){
+            return res.download(data.path,data.name);
+        })
+        .catch(function(err){
+            return res.status(400).json({err:err});
+        })
+}
+module.exports = {getAllFiles, deleteFile, downloadFile};

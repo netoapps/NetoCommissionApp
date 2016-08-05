@@ -55,6 +55,7 @@ module.exports.registerRoutes = function(app){
     //Files
     apiRouter.get('/file',files.getAllFiles);
     apiRouter.delete('/file/:fileId',files.deleteFile);
+    apiRouter.get('/file/:fileId/download', files.downloadFile);
     //Delete file
 
     //Other
