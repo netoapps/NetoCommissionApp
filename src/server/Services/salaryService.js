@@ -134,17 +134,23 @@ function SalaryService() {
     }
     this.getDateSalariesSummedByType = function(type, pd){
         return new Promise(function(resolve, reject){
+            var prevMonth = new Date(pd.getTime());
+            prevMonth.setMonth(prevMonth.getMonth()-1);
             Salary.aggregate([
-                {$match:{paymentDate:pd,type:type}},
-                {$group:{_id:null,amount:{$sum:'$amount'}, portfolio:{$sum:'$portfolio'}}}
+                {$match:{paymentDate:{'$gte':prevMonth,'$lte':pd},type:type}},
+                {$group:{_id:'$paymentDate',amount:{$sum:'$amount'}, portfolio:{$sum:'$portfolio'}}},
+                {$sort:{_id:1}}
             ],function(err, sum){
                 if(err){
                     return reject(err);
                 }
                 if(sum.length===0){
-                    return resolve({amount:0,portfolio:0});
+                    return resolve({currentMonth:{amount:0,portfolio:0},previousMonth:{amount:0,portfolio:0}});
                 }
-                return resolve({amount:sum[0].amount, portfolio:sum[0].portfolio});
+                if(sum.length===1){
+                    return resolve({currentMonth:{amount:sum[0].amount,portfolio:sum[0].portfolio},previousMonth:{amount:0,portfolio:0}});
+                }
+                return resolve({currentMonth:{amount:sum[0].amount,portfolio:sum[0].portfolio}, previousMonth:{amount:sum[1].amount,portfolio:sum[1].portfolio}});
             })
         })
 

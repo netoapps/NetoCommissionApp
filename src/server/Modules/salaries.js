@@ -149,7 +149,7 @@ function getDateSalariesSummedByType(req, res) {
     var date = new Date(pd);
     salaryService.getDateSalariesSummedByType(type, date)
         .then(function (data) {
-            return res.status(200).json({amount: data.amount, portfolio:data.portfolio});
+            return res.status(200).json(data);
         })
         .catch(function (err) {
             return res.status(400).json({err: err});
