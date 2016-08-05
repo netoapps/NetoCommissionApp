@@ -1,5 +1,5 @@
 import React from 'react';
-var moment = require('react-datepicker/node_modules/moment')
+var moment = require('moment')
 
 class TableCell extends React.Component {
 

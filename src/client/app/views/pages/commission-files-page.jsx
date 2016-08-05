@@ -18,13 +18,13 @@ class EditFilesPage extends React.Component {
     componentDidMount()
     {
         AppStore.addEventListener(ActionType.COMMISSION_FILES_LOADED, this._reloadCommissionFiles);
-        AppStore.addEventListener(ActionType.DELETE_COMMISSION_FILE, this._reloadCommissionFiles);
+        AppStore.addEventListener(ActionType.DELETE_COMMISSION_FILE_COMPLETED, this._reloadCommissionFiles);
     }
 
     componentWillUnmount()
     {
         AppStore.removeEventListener(ActionType.COMMISSION_FILES_LOADED,this._reloadCommissionFiles);
-        AppStore.removeEventListener(ActionType.DELETE_COMMISSION_FILE,this._reloadCommissionFiles);
+        AppStore.removeEventListener(ActionType.DELETE_COMMISSION_FILE_COMPLETED,this._reloadCommissionFiles);
     }
 
     reloadCommissionFiles()

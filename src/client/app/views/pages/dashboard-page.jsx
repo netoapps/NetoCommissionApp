@@ -1,13 +1,11 @@
 import React from 'react';
 import AuthService from '../../services/auth-service'
-import Button from 'muicss/lib/react/button'
 import { strings } from '../../constants/strings'
 import {Bar} from "react-chartjs";
 import Table from './../common/table.jsx';
 import MonthYearBox from './../common/month-year-box.jsx'
 import {getMonthName,getMonthNumber,getMonths} from './../common/month-year-box.jsx'
 import AppStore from '../../stores/data-store'
-import {ActionType} from '../../actions/app-actions.js'
 import DataService from '../../services/data-service.js';
 import Dropdown from '../../../../../node_modules/muicss/lib/react/dropdown'
 import DropdownItem from '../../../../../node_modules/muicss/lib/react/dropdown-item'
@@ -43,10 +41,10 @@ class DashboardToolbar extends React.Component {
             this.props.onYearChange(year)
         }
     }
-    onLoadClick()
-    {
-
-    }
+    // onLoadClick()
+    // {
+    //
+    // }
     onSelectCommissionTypeChange(item)
     {
         if(item.props.value != this.state.commissionType)
@@ -68,9 +66,11 @@ class DashboardToolbar extends React.Component {
         return (
             <div>
                 <div className="hcontainer-no-wrap">
+
                     <MonthYearBox month={this.state.selectedMonth} year={this.state.selectedYear}
                               onMonthChange={this.onMonthChange.bind(this)}
                               onYearChange={this.onYearChange.bind(this)}/>
+
                         <div className="horizontal-spacer-10"/>
                         <div className="horizontal-spacer-10"/>
                         <div className="horizontal-spacer-10"/>
@@ -113,7 +113,6 @@ class DashboardRankTable extends React.Component {
             this.state.data = data
             this.setState(this.state)
         })
-
     }
     reloadData(callback)
     {
@@ -132,7 +131,7 @@ class DashboardRankTable extends React.Component {
                         agentName: agentName,
                         commission: item.amount,
                         commissionChange: "",
-                        portfolio: "",
+                        portfolio: item.portfolio,
                         portfolioChange: ""
                     })
                 }
@@ -254,11 +253,42 @@ class DashboardMonthTotalCommissions extends React.Component {
         super(props);
 
         this.state = {
-            value: 0,
-            change: 0
+            commissionType: props.commissionType,
+            date: props.date,
+            value: "0",
+            change: "0"
         }
     }
+    componentDidMount()
+    {
+        this.reloadData((data) => {
+            this.state.value = data
+            this.state.change = "0"
+            this.setState(this.state)
+        })
+    }
+    componentWillUnmount()
+    {
 
+    }
+    reloadData(callback)
+    {
+        DataService.loadCommissionFilesEntriesWithTypeAndDate(this.state.commissionType,this.state.date, (response) => {
+            var data = 0
+            if(response.result == true)
+            {
+                for (const item of response.data)
+                {
+                    data += parseFloat(item.amount)
+                }
+            }
+            else
+            {
+                this.logger.error("Error while loading commission files entries");
+            }
+            callback(data.toString())
+        })
+    }
     render () {
 
         var value = this.state.value.toString();
@@ -295,15 +325,14 @@ class DashboardMonthTotalAgents extends React.Component {
             value: "0",
             change: 0
         }
-        this._reloadData = this.reloadData.bind(this)
     }
     componentDidMount()
     {
-        AppStore.addEventListener(ActionType.AGENTS_LOADED, this._reloadData);
+        this.reloadData()
     }
     componentWillUnmount()
     {
-        AppStore.removeEventListener(ActionType.AGENTS_LOADED,this._reloadData);
+
     }
     reloadData()
     {
@@ -396,15 +425,15 @@ class Dashboard extends React.Component {
             selectedCommissionType:selectedCommissionType
         };
 
-        this._reloadData = this.reloadData.bind(this)
+        //this._reloadData = this.reloadData.bind(this)
     }
     componentDidMount()
     {
-        AppStore.addEventListener(ActionType.AGENTS_LOADED, this._reloadData);
+        //AppStore.addEventListener(ActionType.AGENTS_LOADED, this._reloadData);
     }
     componentWillUnmount()
     {
-        AppStore.removeEventListener(ActionType.AGENTS_LOADED,this._reloadData);
+        //AppStore.removeEventListener(ActionType.AGENTS_LOADED,this._reloadData);
     }
 
     componentWillReceiveProps(nextProps)
@@ -412,10 +441,10 @@ class Dashboard extends React.Component {
 
     }
 
-    reloadData()
-    {
-        this.setState(this.state)
-    }
+    // reloadData()
+    // {
+    //     this.setState(this.state)
+    // }
 
     onMonthChange(month)
     {
@@ -456,7 +485,10 @@ class Dashboard extends React.Component {
                     <div className="horizontal-spacer-20"/>
                     <div className="dashboard-stats-container">
                         <div className="hcontainer-no-wrap dashboard-stats-container-top">
-                            <DashboardMonthTotalCommissions />
+                            <DashboardMonthTotalCommissions
+                                commissionType={this.state.selectedCommissionType}
+                                date={this.state.date}
+                            />
                             <div className="horizontal-spacer-20"/>
                             <DashboardMonthTotalAgents date={this.state.date}/>
                         </div>

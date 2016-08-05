@@ -61,16 +61,16 @@ var server = new NetoCommisionAppServer();
 server.init();
 server.start();
 
-//var Ea = require('./Services/ExcelAnalyzerService');
-//ea = new Ea();
-//ea.analyzeAgentsFile('agents_fixed.xlsx', function(err){
+// var Ea = require('./Services/ExcelAnalyzerService');
+// ea = new Ea();
+// ea.analyzeAgentsFile('agents_fixed.xlsx', function(err){
 //        if(err)console.log(err);
 //        else console.log('done');
-//})
-//var _ = require('underscore');
-//var AS = require('./Services/agentsService');
-//var as = new AS();
-//as.getAllAgents()
+// })
+// var _ = require('underscore');
+// var AS = require('./Services/agentsService');
+// var as = new AS();
+// as.getAllAgents()
 //    .then(function(agents){
 //        var mapping = {};
 //        _.each(agents,function(agent){
