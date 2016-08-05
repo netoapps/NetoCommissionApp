@@ -298,7 +298,7 @@ class DashboardCommissionChangeChart extends React.Component {
 
         return (
             <div className="dashboard-commission-change-chart shadow">
-                <div className="dashboard-box-title">{this.state.commissionType}</div>
+                <div className="dashboard-box-title">{"סה״כ " + this.state.commissionType}</div>
                 <div className="dashboard-commission-change-chart-box">
                     <Bar data={data} options={chartOptions} width="600" height="400"/>
                 </div>
