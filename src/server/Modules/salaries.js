@@ -39,7 +39,7 @@ function uploadSalariesFile(req, res) {
                     return res.status(400).json({err: error});
                 })
             } else {
-                salaryService.processSalaries(data.paymentDate, data.company, data.taxValue, salaries, function (err, results) {
+                salaryService.processSalaries(data.paymentDate, data.company, data.taxValue, salaries,file._id, function (err, results) {
                     if (err) {
                         fileService.deleteFile(file._id).then(function () {
                             return res.status(400).json({err: err});

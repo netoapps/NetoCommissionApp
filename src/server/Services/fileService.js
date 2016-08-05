@@ -39,16 +39,24 @@ function FileService() {
                if(!file){
                    return reject('file not found');
                }
-               fs.unlinkSync(file.pathOnDisk);
+               try {
+                   fs.unlinkSync(file.pathOnDisk);
+                   salaryService.removeSalariesByFileId(file._id)
+                       .then(function(){
+                           file.remove(function(err){
+                               if(err){
+                                   return reject(err);
+                               }
+                               return resolve();
+                           })
+                       })
+                       .catch(function(err){
+                           return reject('failed deleting old salaries:' +err);
+                       })
 
-               //Add delete old salaries
-
-               file.remove(function(err){
-                   if(err){
-                       return reject(err);
-                   }
-                   return resolve();
-               })
+               }catch(err){
+                   return reject(err);
+               }
            })
         });
     }
