@@ -148,9 +148,19 @@ function SalaryService() {
                     return resolve({currentMonth:{amount:0,portfolio:0},previousMonth:{amount:0,portfolio:0}});
                 }
                 if(sum.length===1){
-                    return resolve({currentMonth:{amount:sum[0].amount,portfolio:sum[0].portfolio},previousMonth:{amount:0,portfolio:0}});
+                    if(sum[0]._id.toISOString()===pd.toISOString()) {
+                        return resolve({
+                            currentMonth: {amount: sum[0].amount, portfolio: sum[0].portfolio},
+                            previousMonth: {amount: 0, portfolio: 0}
+                        });
+                    }else{
+                        return resolve({
+                            currentMonth: {amount: 0, portfolio: 0},
+                            previousMonth: {amount: sum[0].amount, portfolio: sum[0].portfolio}
+                        });
+                    }
                 }
-                return resolve({currentMonth:{amount:sum[0].amount,portfolio:sum[0].portfolio}, previousMonth:{amount:sum[1].amount,portfolio:sum[1].portfolio}});
+                return resolve({currentMonth:{amount:sum[1].amount,portfolio:sum[1].portfolio}, previousMonth:{amount:sum[0].amount,portfolio:sum[0].portfolio}});
             })
         })
 
