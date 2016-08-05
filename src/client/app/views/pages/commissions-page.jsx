@@ -1,5 +1,4 @@
 import React from 'react'
-import AuthService from '../../services/auth-service'
 import { strings } from '../../constants/strings'
 import Table from './../common/table.jsx'
 import Dropdown from '../../../../../node_modules/muicss/lib/react/dropdown'
@@ -12,9 +11,7 @@ import MonthYearBox from './../common/month-year-box.jsx'
 import {getMonthName,getMonthNumber} from './../common/month-year-box.jsx'
 import AppActions from '../../actions/app-actions'
 import DataService from '../../services/data-service.js';
-
-var moment = require('react-datepicker/node_modules/moment')
-
+import {ActionType} from '../../actions/app-actions.js'
 
 class FileBin extends React.Component {
 
@@ -27,6 +24,24 @@ class FileBin extends React.Component {
             commissionFile: commissionFile,
             draggedFile: null
         };
+
+        this._handleUploadCompleted = this.handleUploadCompleted.bind(this)
+
+    }
+    componentDidMount()
+    {
+        AppStore.addEventListener(ActionType.UPLOAD_COMMISSION_FILE_COMPLETED, this._handleUploadCompleted);
+    }
+
+    componentWillUnmount()
+    {
+        AppStore.removeEventListener(ActionType.UPLOAD_COMMISSION_FILE_COMPLETED,this._handleUploadCompleted);
+    }
+    handleUploadCompleted()
+    {
+        this.state.commissionFile = new CommissionFile()
+        this.state.draggedFile = null
+        this.setState(this.state)
     }
 
     onCompanyNameChange(item)
@@ -149,7 +164,7 @@ class FileBin extends React.Component {
             {
                 swal({
                     title: "שגיאה",
-                    text: " שגיאה בעת העלאת קובץ לשרת",
+                    text: "שגיאה בעת העלאת קובץ לשרת",
                     type: "error",
                     showCancelButton: false,
                     confirmButtonColor: "#DD6B55",
@@ -159,8 +174,6 @@ class FileBin extends React.Component {
                 });
             }
         }.bind(this))
-
-
     }
 
     onEditFiles()
@@ -300,14 +313,29 @@ class Commissions extends React.Component {
         this.state = {
             commissions: []
         };
+        this._handleUploadCompleted = this.handleUploadCompleted.bind(this)
+    }
 
+    componentWillUnmount()
+    {
+        AppStore.removeEventListener(ActionType.UPLOAD_COMMISSION_FILE_COMPLETED,this._handleUploadCompleted);
     }
     componentDidMount()
     {
+        AppStore.addEventListener(ActionType.UPLOAD_COMMISSION_FILE_COMPLETED, this._handleUploadCompleted);
+
+        this.reloadData( (data)  => {
+            this.state.commissions = data
+            this.setState(this.state)
+        })
+    }
+
+    reloadData(callback)
+    {
         DataService.loadAllCommissionFilesEntries( (response) => {
+            var data = []
             if(response.result == true)
             {
-                var data = []
                 for (const item of response.data)
                 {
                     var agent = AppStore.getAgent(item.idNumber)
@@ -318,22 +346,30 @@ class Commissions extends React.Component {
                     }
                     var agentName = agent.name + " " + agent.familyName
                     data.push({companyName: item.company,
-                               paymentType: item.type,
-                               agentNumber: item.agentInCompanyId,
-                               agentName: agentName,
-                               totalPayment: item.amount,
-                               totalInvestments: "",
-                               paymentDate: item.paymentDate,
-                               creationTime: item.creationTime
-                               })
+                        paymentType: item.type,
+                        agentNumber: item.agentInCompanyId,
+                        agentName: agentName,
+                        totalPayment: item.amount,
+                        totalInvestments: item.portfolio,
+                        paymentDate: item.paymentDate,
+                        creationTime: item.creationTime
+                    })
                 }
-                this.state.commissions = data
-                this.setState(this.state)
             }
             else
             {
                 this.logger.error("Error while loading commission files entries");
             }
+            callback(data)
+        })
+
+
+    }
+    handleUploadCompleted()
+    {
+        this.reloadData( (data)  => {
+            this.state.commissions = data
+            this.setState(this.state)
         })
     }
     render () {
@@ -349,7 +385,7 @@ class Commissions extends React.Component {
             },
             {
                 title: "סוג תשלום",
-                key: "type",
+                key: "paymentType",
                 width: "col-33-33",
                 type: 'read-only',
                 color: 'normal'
@@ -416,7 +452,6 @@ class Commissions extends React.Component {
                      <Table columns={columns}
                             data={this.state.commissions}/>
                 </div>
-
             </div>
         );
     }

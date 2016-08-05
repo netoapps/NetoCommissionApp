@@ -471,10 +471,7 @@ class DataStore extends Store {
                             files.splice(file, 1);
                             data.callback("success")
                             this.logger.debug('delete doc ' + data.name);
-                            this.eventbus.emit(ActionType.DELETE_COMMISSION_FILE);
-
-                            // if(callback != null)
-                            //     callback('success');
+                            this.eventbus.emit(ActionType.DELETE_COMMISSION_FILE_COMPLETED);
                         }.bind(this),
                         error: function(jqXHR, textStatus, errorThrown)
                         {
@@ -504,7 +501,7 @@ class DataStore extends Store {
                 var file = JSON.parse(xhr.response).file
                 var commissionFiles = this.getCommissionFiles()
                 commissionFiles.push(file)
-                this.eventbus.emit(ActionType.UPLOAD_COMMISSION_FILE);
+                this.eventbus.emit(ActionType.UPLOAD_COMMISSION_FILE_COMPLETED);
                 if(data.callback != null)
                     data.callback(
                         {

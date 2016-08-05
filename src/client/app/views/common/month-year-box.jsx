@@ -21,6 +21,7 @@ export function getMonthNumber(monthName)
     return monthOptions.indexOf(monthName);
 }
 
+
 class MonthYearBox extends React.Component {
 
     constructor(props) {
