@@ -274,8 +274,7 @@ class DataService {
                     success: function(result)
                     {
                         console.log('load agent salary data for date '+ date + ' - server responded with success!');
-                        resolve(result.salaries)
-
+                        resolve(result)
                     },
                     error: function(jqXHR, textStatus, errorThrown)
                     {
