@@ -307,9 +307,9 @@ class AgentPage extends React.Component {
                 </div>
                 <div className="hcontainer-no-wrap">
                     <div className="horizontal-spacer-90"/>
-                    <Button className="shadow" onClick={this.onExitClicked.bind(this)} color="default">{strings.agentPageExit}</Button>
+                    <Button className="shadow" onClick={this.onExitClicked.bind(this)} color="default">{strings.exit}</Button>
                     <div className="horizontal-spacer-20"/>
-                    <Button className="shadow" onClick={this.onSaveClicked.bind(this)} color="primary">{strings.agentPageSave}</Button>
+                    <Button className="shadow" onClick={this.onSaveClicked.bind(this)} color="primary">{strings.save}</Button>
                 </div>
             </div>
         );

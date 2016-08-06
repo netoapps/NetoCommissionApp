@@ -30,6 +30,19 @@ body
     flex-flow: row nowrap;
 }
 
+.modal-title
+{
+    color: #505050;
+    height: 30px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.modal-table
+{
+    height: 100px;
+}
+
 .horizontal-spacer-10
 {
     width: 10px;

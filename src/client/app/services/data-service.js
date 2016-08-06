@@ -273,12 +273,12 @@ class DataService {
                     contentType: 'application/json',
                     success: function(result)
                     {
-                        console.log('load agent salary data for date '+ date + ' - server responded with success!');
+                        console.log('load agent incomes data for date '+ date + ' - server responded with success!');
                         resolve(result)
                     },
                     error: function(jqXHR, textStatus, errorThrown)
                     {
-                        console.error('load agent salary data for date '+ date + ' - ', textStatus, errorThrown.toString());
+                        console.error('load agent incomes data for date '+ date + ' - ', textStatus, errorThrown.toString());
                         reject(textStatus); // failure
                     }
                 });
@@ -295,12 +295,12 @@ class DataService {
                     contentType: 'application/json',
                     success: function(result)
                     {
-                        console.log('load agent salary data for date '+ date + ' - server responded with success!');
+                        console.log('load agent portfolio data for date '+ date + ' - server responded with success!');
                         resolve(result.portfolio)
                     }.bind(this),
                     error: function(jqXHR, textStatus, errorThrown)
                     {
-                        console.error('load agent salary data for date '+ date + ' - ', textStatus, errorThrown.toString());
+                        console.error('load agent portfolio data for date '+ date + ' - ', textStatus, errorThrown.toString());
                         reject(textStatus); // failure
 
                     }.bind(this)
@@ -329,6 +329,38 @@ class DataService {
                     }.bind(this)
                 });
         });
+    }
+    addNewIncome(income, callback)
+    {
+        //post to server...
+        $.ajax(
+            {
+                url: '/api/v1/agent',
+                type: 'POST',
+                data: JSON.stringify(agent),
+                contentType: 'application/json',
+                success: function(result)
+                {
+                    console.log(result);
+                    console.log('addAgent - Server responded with success!');
+
+                    if(callback != null)
+                        callback({
+                            result:true,
+                            data: result.agent
+                        });
+
+                }.bind(this),
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+                    console.error('addAgent - ', textStatus, errorThrown.toString());
+                    if(callback != null)
+                        callback({
+                            result:false,
+                            data: null
+                        });
+                }.bind(this)
+            });
     }
 
 }

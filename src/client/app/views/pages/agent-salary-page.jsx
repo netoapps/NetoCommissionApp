@@ -18,7 +18,126 @@ function currencyFormattedString(stringFloatValue)
     return value
 }
 
+class NewIncomeModal extends React.Component{
+    constructor(props) {
+        super(props);
 
+        var companies = AppStore.getCompanies().concat(["שונות"])
+        var commissionTypes = AppStore.getCommissionTypes().concat(["שונות"])
+
+        this.state = {
+            companies:companies,
+            commissionTypes:commissionTypes,
+            income: [{
+                    company: companies[0],
+                    agentInCompanyId: "",
+                    type: commissionTypes[0],
+                    repeat: 1,
+                    notes:""
+                    }]
+        }
+    }
+    onIncomeCompanyChange(index,value)
+    {
+        // this.state.agent.paymentsDetails[index].companyName = value
+        this.setState(this.state)
+    }
+    onIncomeCommissionTypeChange(index,value)
+    {
+        // this.state.agent.paymentsDetails[index].paymentType = value
+        this.setState(this.state)
+    }
+    onIncomeAgentNumberChange(index,value)
+    {
+        // this.state.agent.paymentsDetails[index].agentNumber = value
+        this.setState(this.state)
+    }
+    onIncomeNoteChange()
+    {
+
+    }
+    onIncomeRepeatChange()
+    {
+
+    }
+
+    onCancel()
+    {
+
+    }
+    onSave()
+    {
+
+    }
+    render(){
+        const { text,onRequestClose } = this.props;
+
+        var columns = [
+
+            {
+                title: "חברה",
+                key: "company",
+                width: "col-33-33",
+                type: 'select',
+                color: 'normal',
+                action: this.onIncomeCompanyChange.bind(this),
+                options: this.state.companies
+            },
+            {
+                title: "מספר סוכן",
+                key: "agentInCompanyId",
+                width: "col-33-33",
+                type: 'input',
+                color: 'normal',
+                action: this.onIncomeAgentNumberChange.bind(this)
+            },
+            {
+                title: "סוג תשלום",
+                key: "type",
+                width: "col-33-33",
+                type: 'select',
+                color: 'normal',
+                action: this.onIncomeCommissionTypeChange.bind(this),
+                options: this.state.commissionTypes
+            },
+            {
+                title: "מחזוריות",
+                key: "repeat",
+                width: "col-33-33",
+                type: 'input',
+                color: 'normal',
+                action: this.onIncomeRepeatChange.bind(this)
+            },
+            {
+                title: "הערות",
+                key: "notes",
+                width: "col-66-66",
+                type: 'input',
+                color: 'normal',
+                action: this.onIncomeNoteChange.bind(this)
+            }
+        ]
+
+        return (
+            <div className="remodal-bg">
+                <div className="remodal" data-remodal-id="modal">
+                    <button data-remodal-action="close" className="remodal-close"></button>
+                    <div className="modal-title">{strings.newIncome}</div>
+                    <div className="modal-table">
+                        <Table columns={columns}
+                               data={this.state.income}/>
+                    </div>
+                    <div className="hcontainer-no-wrap">
+                        <div className="horizontal-spacer-90"/>
+                        <Button data-remodal-action="cancel" className="shadow" onClick={this.onCancel.bind(this)} color="default">{strings.cancel}</Button>
+                        <div className="horizontal-spacer-20"/>
+                        <Button data-remodal-action="confirm" className="shadow" onClick={this.onSave.bind(this)} color="primary">{strings.save}</Button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
 
 class AgentSalaryPage extends React.Component {
 
@@ -44,7 +163,7 @@ class AgentSalaryPage extends React.Component {
             manualIncomes: [],
             expenses: [],
             portfolio: "0"
-    }
+        }
     }
     componentWillReceiveProps(nextProps)
     {
@@ -101,7 +220,13 @@ class AgentSalaryPage extends React.Component {
         {
             this.state.selectedMonth = month;
             this.state.date = new Date(this.state.date.getFullYear(), getMonthNumber(month), 1, 0, 0, 0, 0);
-            this.setState(this.state);
+            this.reloadData((incomes, expenses, portfolio) => {
+
+                this.state.incomes = incomes
+                this.state.expenses = expenses
+                this.state.portfolio = portfolio
+                this.setState(this.state)
+            })
         }
     }
     onYearChange(year)
@@ -110,14 +235,57 @@ class AgentSalaryPage extends React.Component {
         {
             this.state.selectedYear = year;
             this.state.date = new Date(year, this.state.date.getMonth(), 1, 0, 0, 0, 0);
-            this.setState(this.state);
+            this.reloadData((incomes, expenses, portfolio) => {
+
+                this.state.incomes = incomes
+                this.state.expenses = expenses
+                this.state.portfolio = portfolio
+                this.setState(this.state)
+            })
         }
     }
-    onAgentNumberChange(year)
+    //Manual income
+    onNewIncome()
+    {
+        // ModalManager.open(<NewIncomeModal text={"בדיקה"} onRequestClose={() => true}/>);
+
+        var inst = $('[data-remodal-id=modal]').remodal();
+
+        /**
+         * Opens the modal window
+         */
+        inst.open();
+    }
+
+    onIncomeCompanyChange(index,value)
+    {
+       // this.state.agent.paymentsDetails[index].companyName = value
+        this.setState(this.state)
+    }
+    onIncomeCommissionTypeChange(index,value)
+    {
+       // this.state.agent.paymentsDetails[index].paymentType = value
+        this.setState(this.state)
+    }
+    onIncomeAgentNumberChange(index,value)
+    {
+       // this.state.agent.paymentsDetails[index].agentNumber = value
+        this.setState(this.state)
+    }
+    onIncomeNoteChange()
     {
 
     }
-    onNewIncome()
+    handleNewIncomeSave()
+    {
+
+    }
+    //Expense
+    onExpenseNoteChange()
+    {
+
+    }
+    onExpenseAgentNumberChange()
     {
 
     }
@@ -126,40 +294,91 @@ class AgentSalaryPage extends React.Component {
 
     }
 
+    sumOfIncomeWithType(type)
+    {
+        var sum = 0
+        if(this.state.incomes[type].length > 0)
+        {
+            for(var index = 0; index < this.state.incomes[type].length; index++)
+            {
+                sum += this.state.incomes[type][index].amount
+            }
+        }
+        return sum
+    }
+
     render () {
 
         var incomesColumns = [
 
             {
                 title: "חברה",
-                key: "companyName",
+                key: "company",
                 width: "col-33-33",
                 type: 'read-only',
                 color: 'normal'
             },
             {
                 title: "מספר סוכן",
-                key: "agentNumber",
+                key: "agentInCompanyId",
                 width: "col-33-33",
-                type: 'input',
-                color: 'normal',
-                action: this.onAgentNumberChange.bind(this)
+                type: 'read-only',
+                color: 'normal'
             },
             {
                 title: "סוג תשלום",
-                key: "agentNumber",
+                key: "type",
                 width: "col-33-33",
-                type: 'input',
-                color: 'normal',
-                action: this.onAgentNumberChange.bind(this)
+                type: 'read-only',
+                color: 'normal'
             },
             {
                 title: "הערות",
-                key: "totalInvestments",
+                key: "notes",
+                width: "col-66-66",
+                type: 'read-only',
+                color: 'normal',
+            }
+        ]
+
+        var companies = AppStore.getCompanies().concat(["שונות"])
+        var commissionTypes = AppStore.getCommissionTypes().concat(["שונות"])
+
+        var manualIncomesColumns = [
+
+            {
+                title: "חברה",
+                key: "company",
+                width: "col-33-33",
+                type: 'select',
+                color: 'normal',
+                action: this.onIncomeCompanyChange.bind(this),
+                options: companies
+            },
+            {
+                title: "מספר סוכן",
+                key: "agentInCompanyId",
+                width: "col-33-33",
+                type: 'input',
+                color: 'normal',
+                action: this.onIncomeAgentNumberChange.bind(this)
+            },
+            {
+                title: "סוג תשלום",
+                key: "type",
+                width: "col-33-33",
+                type: 'select',
+                color: 'normal',
+                action: this.onIncomeCommissionTypeChange.bind(this),
+                options: commissionTypes
+            },
+            {
+                title: "הערות",
+                key: "notes",
                 width: "col-66-66",
                 type: 'input',
                 color: 'normal',
-                action: this.onAgentNumberChange.bind(this)
+                action: this.onIncomeNoteChange.bind(this)
             }
         ]
 
@@ -178,7 +397,7 @@ class AgentSalaryPage extends React.Component {
                 width: "col-33-33",
                 type: 'input',
                 color: 'normal',
-                action: this.onAgentNumberChange.bind(this)
+                action: this.onExpenseAgentNumberChange.bind(this)
             },
             {
                 title: "הערות",
@@ -186,18 +405,24 @@ class AgentSalaryPage extends React.Component {
                 width: "col-33-33",
                 type: 'input',
                 color: 'normal',
-                action: this.onAgentNumberChange.bind(this)
+                action: this.onExpenseNoteChange.bind(this)
             }
         ]
 
-        var salary = currencyFormattedString("122211")
-        var portfolio = currencyFormattedString(this.state.portfolio)
-        var nifraim = currencyFormattedString("23423")
-        var bonus = currencyFormattedString("53454")
-        var heikef = currencyFormattedString("45334")
+        var nifraim = this.sumOfIncomeWithType("נפרעים")
+        var bonus = this.sumOfIncomeWithType("בונוס")
+        var heikef = this.sumOfIncomeWithType("היקף")
+        var manual = this.sumOfIncomeWithType("ידני")
+        var expenses = 0
+        var salary = nifraim + bonus + heikef + manual - expenses
+
+        var incomesData = this.state.incomes["היקף"].concat(this.state.incomes["נפרעים"]).concat(this.state.incomes["בונוס"])
+        var manualIncomesData = this.state.incomes["ידני"]
 
         return (
             <div className="agent-salary-page animated fadeIn">
+
+                <NewIncomeModal />
 
                 <div className="hcontainer-no-wrap">
                     <MonthYearBox month={this.state.selectedMonth} year={this.state.selectedYear}
@@ -212,26 +437,30 @@ class AgentSalaryPage extends React.Component {
                 <div className="hcontainer-no-wrap">
                     <div className="agent-salary-page-total-salary-box shadow">
                         <div className="agent-salary-page-box-title">{strings.totalSalary}</div>
-                        <div className="agent-salary-page-box-value green"><small>{"₪"}&nbsp;</small><b>{salary}</b></div>
+                        <div className="agent-salary-page-box-value green"><small>{"₪"}&nbsp;</small><b>{currencyFormattedString(salary.toString())}</b></div>
                         <div className="hcontainer-no-wrap">
                             <div className="agent-salary-page-total-salary-sub-value-box">
                                 <div className="agent-salary-page-total-salary-sub-value-box-title">{strings.nifraim}</div>
-                                <div className="agent-salary-page-total-salary-sub-value-box-value green"><small>{"₪"}&nbsp;</small><b>{nifraim}</b></div>
+                                <div className="agent-salary-page-total-salary-sub-value-box-value green"><small>{"₪"}&nbsp;</small><b>{currencyFormattedString(nifraim.toString())}</b></div>
                             </div>
                             <div className="agent-salary-page-total-salary-sub-value-box">
                                 <div className="agent-salary-page-total-salary-sub-value-box-title">{strings.bonus}</div>
-                                <div className="agent-salary-page-total-salary-sub-value-box-value green"><small>{"₪"}&nbsp;</small><b>{bonus}</b></div>
+                                <div className="agent-salary-page-total-salary-sub-value-box-value green"><small>{"₪"}&nbsp;</small><b>{currencyFormattedString(bonus.toString())}</b></div>
                             </div>
                             <div className="agent-salary-page-total-salary-sub-value-box">
                                 <div className="agent-salary-page-total-salary-sub-value-box-title">{strings.heikef}</div>
-                                <div className="agent-salary-page-total-salary-sub-value-box-value green"><small>{"₪"}&nbsp;</small><b>{heikef}</b></div>
+                                <div className="agent-salary-page-total-salary-sub-value-box-value green"><small>{"₪"}&nbsp;</small><b>{currencyFormattedString(heikef.toString())}</b></div>
+                            </div>
+                            <div className="agent-salary-page-total-salary-sub-value-box">
+                                <div className="agent-salary-page-total-salary-sub-value-box-title">{strings.manualIncome}</div>
+                                <div className="agent-salary-page-total-salary-sub-value-box-value green"><small>{"₪"}&nbsp;</small><b>{currencyFormattedString(manual.toString())}</b></div>
                             </div>
                         </div>
                     </div>
                     <div className="horizontal-spacer-20"/>
                     <div className="agent-salary-page-total-investments-box shadow">
                         <div className="agent-salary-page-box-title">{strings.totalPortfolio}</div>
-                        <div className="agent-salary-page-box-value green"><small>{"₪"}&nbsp;</small><b>{portfolio}</b></div>
+                        <div className="agent-salary-page-box-value green"><small>{"₪"}&nbsp;</small><b>{currencyFormattedString(this.state.portfolio.toString())}</b></div>
                     </div>
                 </div>
 
@@ -242,13 +471,13 @@ class AgentSalaryPage extends React.Component {
                     </div>
                     <div className="agent-salary-page-income-table">
                         <Table columns={incomesColumns}
-                               data={null}/>
+                               data={incomesData}/>
                     </div>
                     <Divider className="agent-salary-page-divider"/>
 
                     <div className="agent-salary-page-income-table">
-                        <Table hideHeader={true} columns={incomesColumns}
-                               data={null} noHeader/>
+                        <Table hideHeader={true} columns={manualIncomesColumns}
+                               data={manualIncomesData} noHeader/>
                     </div>
 
                 </div>
