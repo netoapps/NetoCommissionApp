@@ -191,7 +191,7 @@ class AgentSalaryPage extends React.Component {
         ]
 
         var salary = currencyFormattedString("122211")
-        var investments = currencyFormattedString("23123231")
+        var portfolio = currencyFormattedString(this.state.portfolio)
         var nifraim = currencyFormattedString("23423")
         var bonus = currencyFormattedString("53454")
         var heikef = currencyFormattedString("45334")
@@ -230,8 +230,8 @@ class AgentSalaryPage extends React.Component {
                     </div>
                     <div className="horizontal-spacer-20"/>
                     <div className="agent-salary-page-total-investments-box shadow">
-                        <div className="agent-salary-page-box-title">{strings.totalInvestments}</div>
-                        <div className="agent-salary-page-box-value green"><small>{"₪"}&nbsp;</small><b>{investments}</b></div>
+                        <div className="agent-salary-page-box-title">{strings.totalPortfolio}</div>
+                        <div className="agent-salary-page-box-value green"><small>{"₪"}&nbsp;</small><b>{portfolio}</b></div>
                     </div>
                 </div>
 
