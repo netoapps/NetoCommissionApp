@@ -3,7 +3,8 @@
  */
 module.exports = {
     db:{
-        connectionString:'mongodb://localhost:18873/agents',
+        //connectionString:'mongodb://localhost:18873/agents',
+        connectionString:process.env.MONGO_CON,
         options:{
             //server:{
             //    auto_reconnect: true,
