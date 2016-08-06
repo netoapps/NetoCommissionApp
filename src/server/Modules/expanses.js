@@ -31,8 +31,8 @@ function addExpanseToAgentAtDate(req, res) {
     }
 
     expanseService.addExpanseToAgentAtDate(req.params.idNumber, data.expanseDate, data.type, data.sum, data.notes)
-        .then(function (expanse) {
-            return res.status(200).json({expanse: expanse});
+        .then(function (expense) {
+            return res.status(200).json({expense: expense});
         })
         .catch(function (err) {
             return res.status(400).json({err: err});
@@ -42,7 +42,7 @@ function addExpanseToAgentAtDate(req, res) {
 function deleteExpanse(req, res) {
     expanseService.deleteExpanse(req.params.expanseId)
         .then(function () {
-            return res.status(200).json({msg: 'expanse deleted'});
+            return res.status(200).json({msg: 'expense deleted'});
         })
         .catch(function (err) {
             return res.status(400).json({err: err});
@@ -72,8 +72,8 @@ function updateExpanse(req, res) {
         return res.status(400).json({err: 'notes'});
     }
     expanseService.updateExpanse(req.params.expanseId, data.expanseDate, data.type, data.sum, data.notes)
-        .then(function (expanse) {
-            return res.status(200).json({expanse: expanse});
+        .then(function (expense) {
+            return res.status(200).json({expense: expense});
         })
         .catch(function (err) {
             return res.status(400).json({err: err});
@@ -86,8 +86,8 @@ function getAgentExpanseForDate(req, res) {
         return res.status(400).json({err:'missing data'});
     }
     expanseService.getAgentExpanseForDate(data.idNumber, data.paymentDate)
-        .then(function (expanses) {
-            return res.status(200).json({expanses: expanses});
+        .then(function (expenses) {
+            return res.status(200).json({expenses: expenses});
         })
         .catch(function (err) {
             return res.status(400).json({err: err});
