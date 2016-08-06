@@ -65,9 +65,10 @@ function ExpanseService() {
             })
         })
     }
-    this.getAgentExpanseForDate = function(idNumber, startDate, endDate){
+    this.getAgentExpanseForDate = function(idNumber, date){
         return new Promise(function(resolve, reject){
-            Expanse.find({idNumber:idNumber, expanseDate:{'$lte':endDate, 'gte':startDate}}, function(err, expanses){
+            date = new Date(date);
+            Expanse.find({idNumber:idNumber, expanseDate:date}, function(err, expanses){
                 if (err) {
                     return reject(err);
                 }
