@@ -318,10 +318,15 @@ function SalaryService() {
                 if (err) {
                     return reject(err);
                 }
+                if(salaries.length===0){
+                    return resolve({'נפרעים':[],'בונוס':[],'היקף':[],'ידני':[]});
+                }
+
                 salaries = _.groupBy(salaries, function (sal) {
                     return sal.type;
                 });
-                return resolve(salaries);
+
+                return resolve({'נפרעים':salaries['נפרעים'] || [],'בונוס':salaries['בונוס'] || [],'היקף':salaries['היקף'] || [],'ידני':salaries['ידני'] || []});
             })
         });
     }
