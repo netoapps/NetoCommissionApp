@@ -36,7 +36,17 @@ class DataStore extends Store {
 
             if(response.result == true)
             {
-                this.set('agents',response.data,true);
+                var agents = response.data
+
+                agents.sort(function (a,b)
+                {
+                    if (a.name < b.name)
+                        return -1;
+                    if (a.name > b.name)
+                        return 1;
+                    return 0;
+                });
+                this.set('agents',agents,true);
                 this.eventbus.emit(ActionType.AGENTS_LOADED);
             }
             else
@@ -72,136 +82,6 @@ class DataStore extends Store {
             }
 
         })
-    }
-
-    setDummyData() {
-
-        // var file1 = new CommissionFile()
-        // file1.company = "כלל"
-        // file1.name = "כלל קבצים בעמ.xls";
-        // file1.paymentDate = new Date();
-        // file1.uploadDate = new Date();
-        // file1.note = "אחלה קובץ";
-        // file1.taxState = strings.taxIncluded;
-        // file1.taxValue = "";
-        //
-        // var file2 = new CommissionFile()
-        // file2.company = "מגדל"
-        // file2.name = "מגדל עמלות סוכנים.xls";
-        // file2.paymentDate = new Date();
-        // file2.uploadDate = new Date();
-        // file2.note = "קובץ עם הרבה עמלות";
-        // file2.taxState = strings.taxNotIncluded;
-        // file2.taxValue = "17";
-        //
-        // var file3 = new CommissionFile()
-        // file3.company = "אלטשולר שחם"
-        // file3.name = "אלטשולר-שחם-עמלות-נטו.xls";
-        // file3.paymentDate = new Date();
-        // file3.uploadDate = new Date();
-        // file3.note = "הקובץ מכיל גם מע״מ";
-        // file3.taxState = strings.taxNotIncluded;
-        // file3.taxValue = "17";
-        //
-        // var files = [file1,file2,file3]
-        // this.initialize('files', files);
-
-        //defaults
-        //nifraim - 70(agent) 30(company)
-        //heikef - 55(agent) 45(company)
-        //bonus - 50(agent) 50(company)
-        // var agents = []
-        //
-        //
-        // var karinPayments = []
-        // karinPayments.push(new AgentPaymentDetails( {companyName: "מגדל", agentNumber: "2342234523",paymentType: "נפרעים",  agentPart: "55", agencyPart: "45"}  ))
-        // karinPayments.push(new AgentPaymentDetails( {companyName: "אלטשולר שחם", agentNumber: "234234",paymentType: "היקף",  agentPart: "55", agencyPart: "45"}  ))
-        // karinPayments.push(new AgentPaymentDetails( {companyName: "מנורה", agentNumber: "789565",paymentType: "בונוס",  agentPart: "55", agencyPart: "45"}  ))
-        // agents.push(new Agent({
-        //     name: "קרין",
-        //     familyName: "בוזלי לוי",
-        //     idNumber: "112233445",
-        //     phoneNumber: "0521510677",
-        //     faxNumber: "0521510677",
-        //     email: "karin@neto-finance.co.il",
-        //     active: true,
-        //     paymentsDetails: karinPayments
-        // }))
-        //
-        //
-        // var idanPayments = []
-        // idanPayments.push(new AgentPaymentDetails( {companyName: "מגדל", agentNumber: "57546",paymentType: "נפרעים",  agentPart: "55", agencyPart: "45"}  ))
-        // idanPayments.push(new AgentPaymentDetails( {companyName: "אלטשולר שחם", agentNumber: "231",paymentType: "היקף",  agentPart: "55", agencyPart: "45"}  ))
-        // idanPayments.push(new AgentPaymentDetails( {companyName: "כלל", agentNumber: "6865",paymentType: "היקף",  agentPart: "55", agencyPart: "45"}  ))
-        // idanPayments.push(new AgentPaymentDetails( {companyName: "מנורה", agentNumber: "9789",paymentType: "בונוס",  agentPart: "55", agencyPart: "45"}  ))
-        // agents.push(new Agent({
-        //     name: "עידן",
-        //     familyName: "כץ",
-        //     idNumber: "34421134",
-        //     phoneNumber: "0506774836",
-        //     faxNumber: "048323746",
-        //     email: "idan@neto-finance.co.il",
-        //     active: true,
-        //     paymentsDetails: idanPayments
-        // }))
-        //
-        // var tomerPayments = []
-        // tomerPayments.push(new AgentPaymentDetails( {companyName: "מגדל", agentNumber: "54633",paymentType: "נפרעים",  agentPart: "55", agencyPart: "45"}  ))
-        // tomerPayments.push(new AgentPaymentDetails( {companyName: "אלטשולר שחם", agentNumber: "2342",paymentType: "היקף",  agentPart: "55", agencyPart: "45"}  ))
-        // tomerPayments.push(new AgentPaymentDetails( {companyName: "מנורה", agentNumber: "678678",paymentType: "בונוס",  agentPart: "55", agencyPart: "45"}  ))
-        // agents.push(new Agent({
-        //     name: "תומר",
-        //     familyName: "כהן",
-        //     idNumber: "22343452",
-        //     phoneNumber: "0546747636",
-        //     faxNumber: "049324232",
-        //     email: "tomer@neto-finance.co.il",
-        //     active: false,
-        //     paymentsDetails: tomerPayments
-        // }))
-        //
-        // agents.push(new Agent({
-        //     name: "חומוס",
-        //     familyName: "משאושה",
-        //     idNumber: "67865443",
-        //     phoneNumber: "",
-        //     faxNumber: "049324232",
-        //     email: "tomer@neto-finance.co.il",
-        //     active: false,
-        //     paymentsDetails: []
-        //
-        // }))
-        //
-        //
-        // this.initialize('agents',agents);
-
-        // var partnership1 = new Partnership()
-        // partnership1.active = true
-        // var partnershipAgentDetails10 = new PartnershipAgentDetails()
-        // var partnershipAgentDetails11 = new PartnershipAgentDetails()
-        // partnershipAgentDetails10.idNumber = "112233445"
-        // partnershipAgentDetails10.part = "64"
-        // partnershipAgentDetails11.idNumber = "34421134"
-        // partnershipAgentDetails11.part = "36"
-        // partnership1.agentsDetails = [partnershipAgentDetails10,partnershipAgentDetails11]
-        // partnership1.paymentsDetails.push({companyName: "מגדל", partnershipNumber: "789674",paymentType: "נפרעים",  partnershipPart: "55", agencyPart: "45"})
-        // partnership1.paymentsDetails.push({companyName: "כלל", partnershipNumber: "34243254",paymentType: "בונוס",  partnershipPart: "58", agencyPart: "42"})
-        // partnership1.paymentsDetails.push({companyName: "מנורה", partnershipNumber: "546786",paymentType: "היקף",  partnershipPart: "45", agencyPart: "65"})
-        //
-        // var partnership2 = new Partnership()
-        // partnership2.active = false
-        // var partnershipAgentDetails20 = new PartnershipAgentDetails()
-        // var partnershipAgentDetails21 = new PartnershipAgentDetails()
-        // partnershipAgentDetails20.idNumber = "67865443"
-        // partnershipAgentDetails20.part = "50"
-        // partnershipAgentDetails21.idNumber = "34421134"
-        // partnershipAgentDetails21.part = "50"
-        // partnership2.agentsDetails = [partnershipAgentDetails21,partnershipAgentDetails20]
-        // partnership2.paymentsDetails.push({companyName: "מגדל", partnershipNumber: "234234",paymentType: "נפרעים",  partnershipPart: "55", agencyPart: "45"})
-        // partnership2.paymentsDetails.push({companyName: "כלל", partnershipNumber: "6786",paymentType: "בונוס",  partnershipPart: "58", agencyPart: "42"})
-        // partnership2.paymentsDetails.push({companyName: "מנורה", partnershipNumber: "78977655",paymentType: "היקף",  partnershipPart: "45", agencyPart: "65"})
-        // var partnershipsData = [partnership1,partnership2]
-        // this.initialize('partnerships',partnershipsData);
     }
 
     //Companies
@@ -241,31 +121,6 @@ class DataStore extends Store {
             }
 
         })
-
-        // //post to server...
-        // $.ajax(
-        //     {
-        //         url: '/api/v1/agent',
-        //         type: 'POST',
-        //         data: JSON.stringify(agent),
-        //         contentType: 'application/json',
-        //         success: function(result)
-        //         {
-        //             console.log(result);
-        //             console.log('addAgent - Server responded with success!');
-        //             var agents = this.getAgents()
-        //             agents.push(result.agent)
-        //             this.eventbus.emit(ActionType.ADD_AGENT);
-        //             // if(callback != null)
-        //             //     callback('success');
-        //         }.bind(this),
-        //         error: function(jqXHR, textStatus, errorThrown)
-        //         {
-        //             console.error('addAgent - ', textStatus, errorThrown.toString());
-        //             // if(callback != null)
-        //             //     callback('error');
-        //         }.bind(this)
-        //     });
     }
     deleteAgentAtIndex(index)
     {

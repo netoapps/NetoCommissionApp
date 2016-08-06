@@ -216,6 +216,12 @@ body
 {
     background: url('../images/dashboard.png') no-repeat right center;
 }
+
+.right-panel-item-button-salaries
+{
+    background: url('../images/salaries.png') no-repeat right center;
+}
+
 .right-panel-item-button-commissions
 {
     background: url('../images/commissions.png') no-repeat right center;
@@ -563,7 +569,7 @@ body
 .dashboard-commission-change-chart
 {
     width: 100%;
-    height: calc(100% - 415px);
+    height: calc(100% - 425px);
     min-height: 350px;
     background-color: white;
     padding-top: 20px;
@@ -1492,4 +1498,28 @@ body
 
 }
 
+/****  salaries-page ******/
 
+.salaries-page
+{
+    min-width: 1055px;
+    position: absolute;
+    top: 90px;
+    right: 250px;
+    left: 20px;
+    bottom: 20px;
+    height: calc(100% - 110px);
+    max-height: calc(100% - 110px);
+    /*background-color: white;*/
+}
+
+.salaries-page-table
+{
+    background-color: white;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+    height: calc(100% - 58px);
+    max-height: calc(100% - 58px);
+    padding: 20px;
+}

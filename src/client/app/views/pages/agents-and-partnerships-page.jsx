@@ -1,5 +1,4 @@
 import React from 'react';
-import AuthService from '../../services/auth-service'
 import Tabs from 'muicss/lib/react/tabs'
 import Tab from 'muicss/lib/react/tab'
 import { strings } from '../../constants/strings'
@@ -18,7 +17,6 @@ class AgentsAndPartnerships extends React.Component {
         super(props);
 
         this.state = {
-            loginData: AuthService.getLoginData(),
             agents: AppStore.getAgents(),
             partnerships:AppStore.getPartnerships()
         };
