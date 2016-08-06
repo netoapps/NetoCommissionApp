@@ -287,7 +287,7 @@ function SalaryService() {
         })
     }
 
-    this.getAllAgentSalariesByTypesForDate = function (idNumber, date) {
+    this.getAllAgentSalariesByTypesForDateSummed = function (idNumber, date) {
         return new Promise(function (resolve, reject) {
             date = new Date(date);
             Salary.aggregate([
@@ -307,6 +307,23 @@ function SalaryService() {
                 return resolve({'נפרעים': data[0]['נפרעים'], 'בונוס': data[0]['בונוס'], 'היקף': data[0]['היקף']});
             })
         })
+    }
+
+
+    this.getAllAgentSalariesByTypesForDate = function (idNumber, date) {
+        return new Promise(function (resolve, reject) {
+            date = new Date(date);
+
+            Salary.find({idNumber: idNumber, paymentDate: date}).lean().exec(function (err, salaries) {
+                if (err) {
+                    return reject(err);
+                }
+                salaries = _.groupBy(salaries, function (sal) {
+                    return sal.type;
+                });
+                return resolve(salaries);
+            })
+        });
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////FUTURE FUNCTIONS/////////////////////////////////////////////
