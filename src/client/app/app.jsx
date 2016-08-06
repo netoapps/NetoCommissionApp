@@ -5,6 +5,7 @@ import AuthService from './services/auth-service'
 import Login from './views/pages/login-page.jsx'
 import Dashboard from './views/pages/dashboard-page.jsx'
 import Commissions from './views/pages/commissions-page.jsx'
+import Salaries from './views/pages/salaries-page.jsx'
 import Agents from './views/pages/agents-and-partnerships-page.jsx'
 import EditFiles from './views/pages/commission-files-page.jsx'
 import AgentPage from './views/pages/agent-page.jsx'
@@ -51,6 +52,10 @@ class App extends React.Component {
         {
             this.context.router.push('/app/dashboard')
         }
+        if(strings.salaries === item)
+        {
+            this.context.router.push('/app/salaries')
+        }
         if(strings.commissions === item)
         {
             this.context.router.push('/app/commissions')
@@ -87,10 +92,10 @@ render((
         <Route path="/" component={Login} onEnter={isAuthenticated}/>
         <Route path="/app" component={App} >
             <Route path="/app/dashboard" component={Dashboard} />
+            <Route path="/app/salaries" component={Salaries} />
             <Route path="/app/commissions" component={Commissions} />
             <Route path="/app/commissions/edit-files" component={EditFiles} />
             <Route path="/app/agents-and-partnerships" component={Agents} />
-
             <Route path="/app/agents-and-partnerships/agent-salary-page/:index" component={AgentSalaryPage} />
             <Route path="/app/agents-and-partnerships/agent-page/:index" component={AgentPage} />
             <Route path="/app/agents-and-partnerships/partnership-page/:index" component={PartnershipPage} />

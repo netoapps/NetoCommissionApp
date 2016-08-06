@@ -82,6 +82,11 @@ class EditFilesPage extends React.Component {
     onFileNameClicked(rowIndex)
     {
         console.log("download file at row " + rowIndex)
+        var fileId = this.state.commissionFiles[rowIndex]._id
+        var link = document.createElement("a");
+        link.download = name;
+        link.href = '/api/v1/file/'+fileId + '/download';
+        link.click();
     }
 
     render () {

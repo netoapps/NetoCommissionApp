@@ -13,6 +13,7 @@ let strings = {
     loginErrorMessage: "שם משתמש או סיסמה שגויים",
     dashboard: "ראשי",
     commissions: "עמלות",
+    salaries: "שכר",
     agents: "סוכנים",
     agentsAndPartnerships: "סוכנים ושותפויות",
     partnerships: "שותפויות",

@@ -84,7 +84,7 @@ class AgentSalaryPage extends React.Component {
         var currentYear = date.getFullYear().toString();
 
         this.state = {
-            agent: AppStore.getAgent(this.props.params.agentId),
+            agent: AppStore.getAgentAtIndex(this.props.params.index),
             selectedMonth: currentMonth,
             selectedYear: currentYear
         }
@@ -120,10 +120,7 @@ class AgentSalaryPage extends React.Component {
     {
 
     }
-    onLoadClick()
-    {
 
-    }
     render () {
 
         var incomesColumns = [
@@ -217,11 +214,10 @@ class AgentSalaryPage extends React.Component {
                     <MonthYearBox month={this.state.selectedMonth} year={this.state.selectedYear}
                                   onMonthChange={this.onMonthChange.bind(this)}
                                   onYearChange={this.onYearChange.bind(this)}/>
-                    <div className="horizontal-spacer-10"/>
-                    <div className="horizontal-spacer-10"/>
-                    <div className="horizontal-spacer-10"/>
-                    <Button className="shadow" onClick={this.onLoadClick.bind(this)} color="primary">{strings.load}</Button>
                 </div>
+                <div className="vertical-spacer-10"/>
+                <div className="agent-salary-page-name-box shadow">{this.state.agent.name + ' ' + this.state.agent.familyName}</div>
+                <div className="vertical-spacer-10"/>
                 <div className="vertical-spacer-10"/>
 
                 <div className="hcontainer-no-wrap">
@@ -243,7 +239,7 @@ class AgentSalaryPage extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div className="horizontal-spacer-10"/>
+                    <div className="horizontal-spacer-20"/>
                     <div className="agent-salary-page-total-investments-box shadow">
                         <div className="agent-salary-page-box-title">{strings.totalInvestments}</div>
                         <div className="agent-salary-page-box-value green"><small>{"₪"}&nbsp;</small><b>{investments}</b></div>
