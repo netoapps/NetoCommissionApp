@@ -10,7 +10,6 @@ let ActionType = {
     USER_LOGGED_IN: 'USER_LOGGED_IN',
     USER_LOGGED_OUT: 'USER_LOGGED_OUT',
 
-    DOWNLOAD_COMMISSION_FILE: 'DOWNLOAD_COMMISSION_FILE',
     DELETE_COMMISSION_FILE: 'DELETE_COMMISSION_FILE',
     DELETE_COMMISSION_FILE_COMPLETED: 'DELETE_COMMISSION_FILE_COMPLETED',
     UPLOAD_COMMISSION_FILE: 'UPLOAD_COMMISSION_FILE',
@@ -55,13 +54,6 @@ export default class AppActions {
     {
         AppDispatcher.dispatch(ActionType.DELETE_COMMISSION_FILE,{
             fileName: fileName,
-            callback: callback
-        });
-    }
-    static downloadCommissionFile(fileId, callback)
-    {
-        AppDispatcher.dispatch(ActionType.DOWNLOAD_COMMISSION_FILE,{
-            fileId: fileId,
             callback: callback
         });
     }

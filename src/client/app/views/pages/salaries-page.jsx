@@ -97,8 +97,6 @@ class Salaries extends React.Component {
             }
         ]
 
-
-
         var agentsData = []
         for(var agentIndex = 0; agentIndex < this.state.agents.length; agentIndex++)
         {

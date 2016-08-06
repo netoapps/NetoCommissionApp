@@ -1371,6 +1371,20 @@ body
     /*padding-left: 10px;*/
 }
 
+.agent-salary-page-name-box
+{
+    /*width: calc(50% - 10px);*/
+    width: 100%;
+    height: 60px;
+    background-color: white;
+
+    text-align: center;
+    color: #4286b4;
+    font-size: 20px;
+    font-weight: bold;
+    padding-top: 15px;
+}
+
 .agent-salary-page-total-salary-box
 {
     /*width: calc(50% - 10px);*/

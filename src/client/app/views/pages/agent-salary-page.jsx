@@ -84,7 +84,7 @@ class AgentSalaryPage extends React.Component {
         var currentYear = date.getFullYear().toString();
 
         this.state = {
-            agent: AppStore.getAgent(this.props.params.agentId),
+            agent: AppStore.getAgentAtIndex(this.props.params.index),
             selectedMonth: currentMonth,
             selectedYear: currentYear
         }
@@ -216,6 +216,9 @@ class AgentSalaryPage extends React.Component {
                                   onYearChange={this.onYearChange.bind(this)}/>
                 </div>
                 <div className="vertical-spacer-10"/>
+                <div className="agent-salary-page-name-box shadow">{this.state.agent.name + ' ' + this.state.agent.familyName}</div>
+                <div className="vertical-spacer-10"/>
+                <div className="vertical-spacer-10"/>
 
                 <div className="hcontainer-no-wrap">
                     <div className="agent-salary-page-total-salary-box shadow">
@@ -236,7 +239,7 @@ class AgentSalaryPage extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div className="horizontal-spacer-10"/>
+                    <div className="horizontal-spacer-20"/>
                     <div className="agent-salary-page-total-investments-box shadow">
                         <div className="agent-salary-page-box-title">{strings.totalInvestments}</div>
                         <div className="agent-salary-page-box-value green"><small>{"₪"}&nbsp;</small><b>{investments}</b></div>

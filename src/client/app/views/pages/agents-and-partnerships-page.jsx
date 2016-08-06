@@ -97,12 +97,6 @@ class AgentsAndPartnerships extends React.Component {
         this.setState(this.state)
     }
 
-    //Salary
-    onSalaryClicked(rowIndex)
-    {
-        this.context.router.push('/app/agents-and-partnerships/agent-salary-page/'+rowIndex)
-    }
-
     render () {
 
         var agentsColumns = [
@@ -114,15 +108,6 @@ class AgentsAndPartnerships extends React.Component {
                 type: 'button',
                 color: 'blue',
                 action: this.onAgentClicked.bind(this)
-            },
-            {
-                title: "שכר",
-                key: "salary",
-                width: "col-33-33",
-                type: 'button',
-                format: 'currency',
-                color: 'blue',
-                action: this.onSalaryClicked.bind(this)
             },
             {
                 title: "מזהה",
@@ -148,7 +133,6 @@ class AgentsAndPartnerships extends React.Component {
             var agentData = {}
 
             agentData["name"] = this.state.agents[agentIndex].name + " " + this.state.agents[agentIndex].familyName
-            agentData["salary"] = "323432"
             agentData["idNumber"] = this.state.agents[agentIndex].idNumber
             agentData["status"] = this.state.agents[agentIndex].active ? "פעיל":"לא פעיל"
             agentsData.push(agentData)
