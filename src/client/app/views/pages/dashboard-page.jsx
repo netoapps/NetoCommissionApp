@@ -604,28 +604,17 @@ class Dashboard extends React.Component {
             selectedYear:currentYear,
             selectedCommissionType:selectedCommissionType
         };
-
-        //this._reloadData = this.reloadData.bind(this)
     }
     componentDidMount()
     {
-        //AppStore.addEventListener(ActionType.AGENTS_LOADED, this._reloadData);
     }
     componentWillUnmount()
     {
-        //AppStore.removeEventListener(ActionType.AGENTS_LOADED,this._reloadData);
     }
-
     componentWillReceiveProps(nextProps)
     {
 
     }
-
-    // reloadData()
-    // {
-    //     this.setState(this.state)
-    // }
-
     onMonthChange(month)
     {
         if(month != this.state.selectedMonth)
@@ -664,20 +653,35 @@ class Dashboard extends React.Component {
                                          date={this.state.date}/>
                     <div className="horizontal-spacer-20"/>
                     <div className="dashboard-stats-container">
+                        {/*<div className="hcontainer-no-wrap dashboard-stats-container-top">*/}
+                            {/*<DashboardMonthTotalCommissions*/}
+                                {/*commissionType={this.state.selectedCommissionType}*/}
+                                {/*date={this.state.date}*/}
+                            {/*/>*/}
+                            {/*<div className="horizontal-spacer-20"/>*/}
+                            {/*<DashboardMonthTotalAgents date={this.state.date}/>*/}
+                        {/*</div>*/}
+                        {/*<div className="vertical-spacer-20"/>*/}
+                        {/*<DashboardTotalPortfolio*/}
+                            {/*commissionType={this.state.selectedCommissionType}*/}
+                            {/*date={this.state.date}*/}
+                        {/*/>*/}
+                    {/*</div>*/}
+
                         <div className="hcontainer-no-wrap dashboard-stats-container-top">
                             <DashboardMonthTotalCommissions
                                 commissionType={this.state.selectedCommissionType}
-                                date={this.state.date}
-                            />
+                                date={this.state.date}/>
                             <div className="horizontal-spacer-20"/>
-                            <DashboardMonthTotalAgents date={this.state.date}/>
+                            <DashboardTotalPortfolio
+                                commissionType={this.state.selectedCommissionType}
+                                date={this.state.date}/>
                         </div>
                         <div className="vertical-spacer-20"/>
-                        <DashboardTotalPortfolio
-                            commissionType={this.state.selectedCommissionType}
-                            date={this.state.date}
-                        />
+                        <DashboardMonthTotalAgents date={this.state.date}/>
                     </div>
+
+
                 </div>
                 <div className="vertical-spacer-20"/>
                 <DashboardCommissionChangeChart

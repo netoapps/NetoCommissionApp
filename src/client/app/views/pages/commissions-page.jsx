@@ -384,13 +384,6 @@ class Commissions extends React.Component {
                 color: 'normal'
             },
             {
-                title: "סוג תשלום",
-                key: "paymentType",
-                width: "col-33-33",
-                type: 'read-only',
-                color: 'normal'
-            },
-            {
                 title: "מספר סוכן",
                 key: "agentNumber",
                 width: "col-33-33",
@@ -400,6 +393,13 @@ class Commissions extends React.Component {
             {
                 title: "שם סוכן",
                 key: "agentName",
+                width: "col-33-33",
+                type: 'read-only',
+                color: 'normal'
+            },
+            {
+                title: "סוג תשלום",
+                key: "paymentType",
                 width: "col-33-33",
                 type: 'read-only',
                 color: 'normal'
