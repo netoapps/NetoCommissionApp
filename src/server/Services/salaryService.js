@@ -358,7 +358,7 @@ function SalaryService() {
                 }
             });
             if (Object.keys(missingIds).length > 0) {
-                return reject(Object.keys(missingIds));
+                return reject({errCode:34,data:Object.keys(missingIds)});
             }
             return resolve();
         });
