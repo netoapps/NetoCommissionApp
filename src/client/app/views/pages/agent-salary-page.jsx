@@ -50,9 +50,11 @@ class AgentSalaryPage extends React.Component {
     }
     componentDidMount()
     {
-        this.reloadData((value,change) => {
-            this.state.value = value
-            this.state.change = change
+        this.reloadData((incomes,manualIncomes, expenses) => {
+
+            this.state.incomes = incomes
+            this.state.manualIncomes = manualIncomes
+            this.state.expenses = expenses
             this.setState(this.state)
         })
     }
@@ -62,28 +64,9 @@ class AgentSalaryPage extends React.Component {
     }
     reloadData(callback)
     {
-        DataService.loadTotalCommissionAndPortfolioForTypeAndDate(this.state.commissionType,this.state.date, (response) => {
 
-            var value = response.data.currentMonth.portfolio
-            var change = 0
 
-            if(response.data.currentMonth.portfolio > response.data.previousMonth.portfolio)
-            {
-                change = 100
-                if(response.data.previousMonth.portfolio != 0)
-                {
-                    change = response.data.currentMonth.portfolio / response.data.previousMonth.portfolio
-                }
-            }
-            if(response.data.currentMonth.portfolio < response.data.previousMonth.portfolio) {
-                change = -100
-                if (response.data.currentMonth.portfolio != 0)
-                {
-                    change = -1*(response.data.previousMonth.portfolio / response.data.currentMonth.portfolio)
-                }
-            }
-            callback(value,change)
-        })
+
     }
     onMonthChange(month)
     {
