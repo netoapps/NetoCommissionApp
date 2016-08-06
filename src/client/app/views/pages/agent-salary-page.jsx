@@ -35,7 +35,12 @@ class AgentSalaryPage extends React.Component {
             date: monthStartDate,
             selectedMonth: currentMonth,
             selectedYear:currentYear,
-            incomes: [],
+            incomes: {
+                "היקף": [],
+                "בונוס": [],
+                "נפרעים": [],
+                "ידני": []
+            },
             manualIncomes: [],
             expenses: [],
             portfolio: "0"
@@ -72,25 +77,19 @@ class AgentSalaryPage extends React.Component {
         DataService.loadAgentIncomesData(idNumber,date).then(function (value)
         {
             incomes = value
-
             DataService.loadAgentPortfolioData(idNumber, date).then(function (value)
             {
                 portfolio = value
-
                 DataService.loadAgentExpensesData(idNumber, date).then(function (value)
                 {
                     expenses = value
-
                     callback(incomes,expenses,portfolio)
-
                 }, function (reason) {
                     console.log("failed to load expenses data - " + reason)
                 })
-
             }, function (reason) {
                 console.log("failed to load portfolio data - " + reason)
             })
-
         }, function (reason) {
             console.log("failed to income data - " + reason)
         })
