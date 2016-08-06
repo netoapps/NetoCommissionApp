@@ -86,7 +86,7 @@ function addAgentSalary(req, res) {
     var startDate = new Date(data.paymentDate);
 
     for(var i=0;i<repeatCount;i++){
-        salariesRequests.push(salaryService.addAgentSalary(req.params.idNumber, data.agentId, startDate.toISOString(), data.amount, data.type, data.company));
+        salariesRequests.push(salaryService.addAgentSalary(req.params.idNumber, data.agentId, startDate.toISOString(), data.amount, data.type, data.company, data.notes || ''));
         startDate.setMonth(startDate.getMonth()+1);
     }
     Promise.all(salariesRequests)

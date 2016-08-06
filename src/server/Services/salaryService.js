@@ -21,9 +21,9 @@ function SalaryService() {
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////PUBLIC FUNCTIONS/////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    this.addAgentSalary = function (idNumber, agentInCompanyId, paymentDate, amount, type, company) {
+    this.addAgentSalary = function (idNumber, agentInCompanyId, paymentDate, amount, type, company, notes) {
         return new Promise(function (resolve, reject) {
-            addSalaryToAgent(idNumber, agentInCompanyId, paymentDate, amount, type, company, 0, null, function (err) {
+            addSalaryToAgent(idNumber, agentInCompanyId, paymentDate, amount, type, company, 0, null,notes, function (err) {
                 if (err) {
                     return reject(err);
                 }
@@ -364,7 +364,7 @@ function SalaryService() {
         });
     }
 
-    function addSalaryToAgent(idNumber, agentInCompanyId, paymentDate, amount, type, company, portfolio, fileId, cb) {
+    function addSalaryToAgent(idNumber, agentInCompanyId, paymentDate, amount, type, company, portfolio, fileId,notes, cb) {
         var salary = new Salary();
         salary.idNumber = idNumber;
         salary.agentInCompanyId = agentInCompanyId;
@@ -374,6 +374,7 @@ function SalaryService() {
         salary.company = company;
         salary.portfolio = portfolio;
         salary.fileId = fileId;
+        salary.notes = notes || '';
         salary.save(function (err) {
             if (typeof cb === 'function') {
                 return cb(null);
@@ -408,21 +409,21 @@ function SalaryService() {
                     pd = agentPaymentDetails.pd;
                     amount = Number(salary[3]);
                     amount *= Number(pd.agentPart) / 100;
-                    salaryTasks.push(addSalaryToAgent.bind(null, agentPaymentDetails.idNumber, salary[1], paymentDate, amount, type3, company, salary[2], fileId));
+                    salaryTasks.push(addSalaryToAgent.bind(null, agentPaymentDetails.idNumber, salary[1], paymentDate, amount, type3, company, salary[2], fileId, ''));
                 }
                 if (agents[salaryIdType4] && salary[4]) {
                     agentPaymentDetails = agents[salaryIdType4];
                     pd = agentPaymentDetails.pd;
                     amount = Number(salary[4]);
                     amount *= Number(pd.agentPart) / 100;
-                    salaryTasks.push(addSalaryToAgent.bind(null, agentPaymentDetails.idNumber, salary[1], paymentDate, amount, type4, company, 0, fileId));
+                    salaryTasks.push(addSalaryToAgent.bind(null, agentPaymentDetails.idNumber, salary[1], paymentDate, amount, type4, company, 0, fileId,''));
                 }
                 if (agents[salaryIdType5] && salary[5]) {
                     agentPaymentDetails = agents[salaryIdType5];
                     pd = agentPaymentDetails.pd;
                     amount = Number(salary[5]);
                     amount *= Number(pd.agentPart) / 100;
-                    salaryTasks.push(addSalaryToAgent.bind(null, agentPaymentDetails.idNumber, salary[1], paymentDate, amount, type5, company, 0, fileId));
+                    salaryTasks.push(addSalaryToAgent.bind(null, agentPaymentDetails.idNumber, salary[1], paymentDate, amount, type5, company, 0, fileId,''));
                 }
                 if (partnerships[salaryIdType3] && salary[3]) {
                     partnershipPaymentDetails = partnerships[salaryIdType3];
@@ -432,7 +433,7 @@ function SalaryService() {
                         amount = Number(salary[3]);
                         amount *= Number(agent.part) / 100;
                         amount *= Number(pd.partnershipPart) / 100;
-                        salaryTasks.push(addSalaryToAgent.bind(null, agent.idNumber, salary[1], paymentDate, amount, type3, company, salary[2], fileId));
+                        salaryTasks.push(addSalaryToAgent.bind(null, agent.idNumber, salary[1], paymentDate, amount, type3, company, salary[2], fileId,''));
                     })
                 }
                 if (partnerships[salaryIdType4] && salary[4]) {
@@ -443,7 +444,7 @@ function SalaryService() {
                         amount = Number(salary[4]);
                         amount *= Number(agent.part) / 100;
                         amount *= Number(pd.partnershipPart) / 100;
-                        salaryTasks.push(addSalaryToAgent.bind(null, agent.idNumber, salary[1], paymentDate, amount, type4, company, 0, fileId));
+                        salaryTasks.push(addSalaryToAgent.bind(null, agent.idNumber, salary[1], paymentDate, amount, type4, company, 0, fileId,''));
                     })
                 }
                 if (partnerships[salaryIdType4] && salary[5]) {
@@ -454,7 +455,7 @@ function SalaryService() {
                         amount = Number(salary[5]);
                         amount *= Number(agent.part) / 100;
                         amount *= Number(pd.partnershipPart) / 100;
-                        salaryTasks.push(addSalaryToAgent.bind(null, agent.idNumber, salary[1], paymentDate, amount, type5, company, 0, fileId));
+                        salaryTasks.push(addSalaryToAgent.bind(null, agent.idNumber, salary[1], paymentDate, amount, type5, company, 0, fileId,''));
                     })
                 }
             });
