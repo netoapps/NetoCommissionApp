@@ -18,10 +18,12 @@ var _ = require('underscore');
 
 function SalaryService() {
 
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////PUBLIC FUNCTIONS/////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
     this.addAgentSalary = function (idNumber, agentInCompanyId, paymentDate, amount, type, company) {
         return new Promise(function (resolve, reject) {
-            addSalaryToAgent(idNumber, agentInCompanyId, paymentDate, amount, type, company, function (err) {
+            addSalaryToAgent(idNumber, agentInCompanyId, paymentDate, amount, type, company,'manual', function (err) {
                 if (err) {
                     return reject(err);
                 }
@@ -174,7 +176,6 @@ function SalaryService() {
         })
 
     }
-
     this.getAllSalariesForYearByMonths = function (year, type) {
         return new Promise(function (resolve, reject) {
             var fromYear = new Date(year, 0, 1, 0, 0, 0, 0);
@@ -192,8 +193,6 @@ function SalaryService() {
 
         })
     }
-
-    //TODO: get all salaries for year and month and type, grouped by idNumber
     this.getAllSalariesForDateAndTypeGroupedById = function (date, type) {
         return new Promise(function (resolve, reject) {
             date = new Date(date);
@@ -259,8 +258,6 @@ function SalaryService() {
 
         })
     }
-
-
     this.removeSalariesByFileId = function (fileId) {
         return new Promise(function (resolve, reject) {
             Salary.remove({fileId: fileId}, function (err) {
@@ -272,7 +269,22 @@ function SalaryService() {
         })
 
     }
-    //Future support if needed
+    this.getAgentPortfolioForDate = function(idNumber,date){
+        return new Promise(function(resolve, reject){
+            Salary.aggregate([
+                {$match:{idNumber:idNumber, fileId:{$ne:'manual'}, paymentDate:date}},
+                {$group:{_id:null, portfolio:{$sum:'$portfolio'}}}
+            ], function(err, data){
+                if(err){
+                    return reject(err);
+                }
+                return resolve(data.portfolio);
+            })
+        })
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////FUTURE FUNCTIONS/////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
     this.getAllAgentSalaries = function (idNumber, cb) {
         Salary.find({agentId: idNumber}, function (err, salaries) {
             if (err) {
@@ -281,15 +293,13 @@ function SalaryService() {
             return cb(null, salaries);
         })
     };
-
-    this.deleteSalariesByMonthAndYear = function (month, year) {
-    }
     this.deleteAgentSalaries = function () {
 
     };
 
-
-    //Private functions for handling salary processing from file
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////PRIVATE FUNCTIONS////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
     function checkAgentIds(agentsMaps, partnershipsMaps, companyName, salaries) {
         return new Promise(function (resolve, reject) {
             var missingIds = {};
@@ -305,7 +315,6 @@ function SalaryService() {
             return resolve();
         });
     }
-
     function addSalaryToAgent(idNumber, agentInCompanyId, paymentDate, amount, type, company, portfolio, fileId, cb) {
         var salary = new Salary();
         salary.idNumber = idNumber;

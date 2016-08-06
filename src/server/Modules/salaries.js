@@ -194,6 +194,27 @@ function getAllSalariesForDateAndTypeGroupedByIdNumber(req, res) {
             return res.status(400).json({err: err});
         })
 }
+
+function getAgentPortfolioForDate(req, res) {
+    const idNumber = req.params.idNumber;
+    const pd = req.params.paymentDate;
+    if (!pd) {
+        return res.status(400).json({err: 'invalid year'});
+    }
+    if (!type) {
+        return res.status(400).json({err: 'invalid type'});
+    }
+
+    salaryService.getAllSalariesForDateAndTypeGroupedById(pd, type)
+        .then(function (salaries) {
+            return res.status(200).json({salaries: salaries});
+        })
+        .catch(function (err) {
+            return res.status(400).json({err: err});
+        })
+}
+
+
 //function getAllAgentSalaries(req,res){
 //    if(!req.params.agentId){
 //        return res.status(200).json({err:'missing agent id'});

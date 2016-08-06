@@ -19,6 +19,20 @@ function FileService() {
         fs.mkdirSync(config.datafilesDirectory, 0o777);
     }
 
+    this.getFilePath = function(fileId){
+        return new Promise(function(resolve, reject){
+            File.findById(fileId, function(err, file){
+                if(err){
+                    return reject(err);
+                }
+                if(!file){
+                    return reject('file not found');
+                }
+                return resolve({path:file.pathOnDisk, name:file.name});
+            })
+        })
+    }
+
     this.getAllFiles = function(){
         return new Promise(function(resolve, reject){
             File.find({}, function(err, files){
