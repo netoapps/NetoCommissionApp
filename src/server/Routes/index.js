@@ -48,10 +48,10 @@ module.exports.registerRoutes = function(app){
     apiRouter.get('/salary/:paymentDate/:type/', salaries.getDateSalariesSummedByType);
 
     //Expanses
-    apiRouter.get('/agent/:agentId/expanses/:startDate/:endDate',expanses.getAgentExpanseForDate);
-    apiRouter.post('/agent/:idNumber/expanse', expanses.addExpanseToAgentAtDate);
-    apiRouter.put('/agent/:idNumber/expanse/:expanseId', expanses.updateExpanse);
-    apiRouter.delete('/agent/:idNumber/expanse/:expanseId', expanses.deleteExpanse);
+    apiRouter.get('/agent/:idNumber/expenses/:paymentDate/',expanses.getAgentExpanseForDate);
+    apiRouter.post('/agent/:idNumber/expense', expanses.addExpanseToAgentAtDate);
+    apiRouter.put('/agent/:idNumber/expense/:expenseId', expanses.updateExpanse);
+    apiRouter.delete('/agent/:idNumber/expense/:expenseId', expanses.deleteExpanse);
 
     //Files
     apiRouter.get('/file',files.getAllFiles);

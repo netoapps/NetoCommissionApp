@@ -82,10 +82,10 @@ function updateExpanse(req, res) {
 
 function getAgentExpanseForDate(req, res) {
     var data = req.params;
-    if(!data || !data.idNumber || !data.startDate || !data.endDate){
+    if(!data || !data.idNumber || !data.paymentDate){
         return res.status(400).json({err:'missing data'});
     }
-    expanseService.getAgentExpanseForDate(data.idNumber, data.startDate, data.endDate)
+    expanseService.getAgentExpanseForDate(data.idNumber, data.paymentDate)
         .then(function (expanses) {
             return res.status(200).json({expanses: expanses});
         })
