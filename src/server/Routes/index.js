@@ -33,7 +33,7 @@ module.exports.registerRoutes = function(app){
 
     //Salary
     apiRouter.post('/commissions/upload',upload.single('file'),salaries.uploadSalariesFile);
-    apiRouter.get('/agent/:idNumber/salary/bytypes/:paymentDate',salaries.getAgentSalariesSumForDate);
+    apiRouter.get('/agent/:idNumber/salary/bytypes/:paymentDate',salaries.getAgentSalariesForDate);
     apiRouter.get('/agent/:idNumber/salary/:startDate/:endDate', salaries.getSalariesForAgentByDate);
     apiRouter.post('/agent/:idNumber/salary', salaries.addAgentSalary);
     apiRouter.put('/agent/:idNumber/salary/:salaryId', salaries.updateAgentSalary);
