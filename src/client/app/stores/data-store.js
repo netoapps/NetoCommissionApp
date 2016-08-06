@@ -304,6 +304,30 @@ class DataStore extends Store {
         }
     }
 
+    downloadCommissionFile(data)
+    {
+        $.ajax(
+            {
+                url: '/api/v1/file/:'+data.fileId + '/download',
+                type: 'GET',
+                contentType: 'application/json',
+                success: function(result)
+                {
+                    console.log(result);
+                    console.log('downloadCommissionFile - Server responded with success!');
+
+                    data.callback("success")
+                    this.logger.debug('download doc ' + data.fileId);
+
+                }.bind(this),
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+                    console.error('deleteCommissionFile - ', textStatus, errorThrown.toString());
+                    // if(callback != null)
+                    //     callback('error');
+                }.bind(this)
+            });
+    }
 
     deleteCommissionFile(data)
     {
@@ -389,6 +413,10 @@ class DataStore extends Store {
 
             case ActionType.DELETE_COMMISSION_FILE:
                 this.deleteCommissionFile(data)
+                break;
+
+            case ActionType.DOWNLOAD_COMMISSION_FILE:
+                this.downloadCommissionFile(data)
                 break;
 
             case ActionType.UPLOAD_COMMISSION_FILE:
