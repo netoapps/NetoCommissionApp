@@ -37,8 +37,9 @@ class AgentSalaryPage extends React.Component {
             selectedYear:currentYear,
             incomes: [],
             manualIncomes: [],
-            expenses: []
-        }
+            expenses: [],
+            portfolio: "0"
+    }
     }
     componentWillReceiveProps(nextProps)
     {
@@ -50,11 +51,11 @@ class AgentSalaryPage extends React.Component {
     }
     componentDidMount()
     {
-        this.reloadData((incomes,manualIncomes, expenses) => {
+        this.reloadData((incomes, expenses, portfolio) => {
 
             this.state.incomes = incomes
-            this.state.manualIncomes = manualIncomes
             this.state.expenses = expenses
+            this.state.portfolio = portfolio
             this.setState(this.state)
         })
     }
@@ -64,10 +65,37 @@ class AgentSalaryPage extends React.Component {
     }
     reloadData(callback)
     {
+        var incomes,portfolio,expenses
+        var idNumber = this.state.agent.idNumber
+        var date = this.state.date
 
+        DataService.loadAgentIncomesData(idNumber,date).then(function (value)
+        {
+            incomes = value
 
+            DataService.loadAgentPortfolioData(idNumber, date).then(function (value)
+            {
+                portfolio = value
 
+                DataService.loadAgentExpensesData(idNumber, date).then(function (value)
+                {
+                    expenses = value
+
+                    callback(incomes,expenses,portfolio)
+
+                }, function (reason) {
+                    console.log("failed to load expenses data - " + reason)
+                })
+
+            }, function (reason) {
+                console.log("failed to load portfolio data - " + reason)
+            })
+
+        }, function (reason) {
+            console.log("failed to income data - " + reason)
+        })
     }
+
     onMonthChange(month)
     {
         if(month != this.state.selectedMonth)

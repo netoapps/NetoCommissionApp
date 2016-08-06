@@ -262,45 +262,73 @@ class DataService {
             });
     }
 
-    loadAgentSalaryData(agentId, date, callback)
+    loadAgentIncomesData(agentId, date)
     {
         return new Promise(function (resolve, reject)
         {
-            ///agent/:idNumber/salary/bytypes/:paymentDate
-
             $.ajax(
                 {
-                    url: '/api/v1/agent/'+ agentId + '/salary/' + date,
+                    url: '/api/v1/agent/'+ agentId + '/salary/bytypes/' + date,
                     type: 'GET',
                     contentType: 'application/json',
                     success: function(result)
                     {
-                        console.log('load commission files entries with year '+year+' and type ' + type + ' - server responded with success!');
-                        if(callback != null)
-                            callback({
-                                result:true,
-                                data: result.salaries
-                            });
+                        console.log('load agent salary data for date '+ date + ' - server responded with success!');
+                        resolve(result.salaries)
 
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        console.error('load agent salary data for date '+ date + ' - ', textStatus, errorThrown.toString());
+                        reject(textStatus); // failure
+                    }
+                });
+        });
+    }
+    loadAgentPortfolioData(agentId, date)
+    {
+        return new Promise(function (resolve, reject)
+        {
+            $.ajax(
+                {
+                    url: '/api/v1/agent/'+ agentId + '/portfolio/' + date,
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: function(result)
+                    {
+                        console.log('load agent salary data for date '+ date + ' - server responded with success!');
+                        resolve(result.portfolio)
                     }.bind(this),
                     error: function(jqXHR, textStatus, errorThrown)
                     {
-                        console.error('load commission files entries with year '+year+' and type ' + type + ' - ', textStatus, errorThrown.toString());
-                        callback({
-                            result:false,
-                            data: null
-                        });
+                        console.error('load agent salary data for date '+ date + ' - ', textStatus, errorThrown.toString());
+                        reject(textStatus); // failure
+
                     }.bind(this)
                 });
+        });
+    }
+    loadAgentExpensesData(agentId, date)
+    {
+        return new Promise(function (resolve, reject)
+        {
+            $.ajax(
+                {
+                    url: '/api/v1/agent/'+ agentId + '/expanses/' + date + '/' + date,
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: function(result)
+                    {
+                        console.log('load agent salary data for date '+ date + ' - server responded with success!');
+                        resolve(result.salaries)
+                    }.bind(this),
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        console.error('load agent salary data for date '+ date + ' - ', textStatus, errorThrown.toString());
+                        reject(textStatus); // failure
 
-            if (true)
-            {
-                resolve(value); // success
-            }
-            else
-            {
-                reject(reason); // failure
-            }
+                    }.bind(this)
+                });
         });
     }
 
