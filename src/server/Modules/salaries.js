@@ -218,7 +218,7 @@ function getAgentPortfolioForDate(req, res) {
         })
 }
 
-function getAgentSalariesSumForDate(req, res){
+function getAgentSalariesForDate(req, res){
     const idNumber = req.params.idNumber;
     const pd = req.params.paymentDate;
     if (!idNumber) {
@@ -275,5 +275,5 @@ module.exports = {
     getAllSalariesForYearGroupedByMonths,
     getAllSalariesForDateAndTypeGroupedByIdNumber,
     getAgentPortfolioForDate,
-    getAgentSalariesSumForDate
+    getAgentSalariesForDate
 };
