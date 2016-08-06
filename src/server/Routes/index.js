@@ -47,9 +47,6 @@ module.exports.registerRoutes = function(app){
     apiRouter.get('/salary/:paymentDate/count',salaries.getNumberOfPayedAgentsForMonth);
     apiRouter.get('/salary/:paymentDate/:type/', salaries.getDateSalariesSummedByType);
 
-
-
-
     //Expanses
     apiRouter.get('/agent/:idNumber/expenses/:paymentDate/',expanses.getAgentExpanseForDate);
     apiRouter.post('/agent/:idNumber/expense', expanses.addExpanseToAgentAtDate);

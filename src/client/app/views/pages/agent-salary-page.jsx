@@ -37,8 +37,9 @@ class AgentSalaryPage extends React.Component {
             selectedYear:currentYear,
             incomes: [],
             manualIncomes: [],
-            expenses: []
-        }
+            expenses: [],
+            portfolio: "0"
+    }
     }
     componentWillReceiveProps(nextProps)
     {
@@ -50,9 +51,11 @@ class AgentSalaryPage extends React.Component {
     }
     componentDidMount()
     {
-        this.reloadData((value,change) => {
-            this.state.value = value
-            this.state.change = change
+        this.reloadData((incomes, expenses, portfolio) => {
+
+            this.state.incomes = incomes
+            this.state.expenses = expenses
+            this.state.portfolio = portfolio
             this.setState(this.state)
         })
     }
@@ -62,29 +65,37 @@ class AgentSalaryPage extends React.Component {
     }
     reloadData(callback)
     {
-        DataService.loadTotalCommissionAndPortfolioForTypeAndDate(this.state.commissionType,this.state.date, (response) => {
+        var incomes,portfolio,expenses
+        var idNumber = this.state.agent.idNumber
+        var date = this.state.date
 
-            var value = response.data.currentMonth.portfolio
-            var change = 0
+        DataService.loadAgentIncomesData(idNumber,date).then(function (value)
+        {
+            incomes = value
 
-            if(response.data.currentMonth.portfolio > response.data.previousMonth.portfolio)
+            DataService.loadAgentPortfolioData(idNumber, date).then(function (value)
             {
-                change = 100
-                if(response.data.previousMonth.portfolio != 0)
+                portfolio = value
+
+                DataService.loadAgentExpensesData(idNumber, date).then(function (value)
                 {
-                    change = response.data.currentMonth.portfolio / response.data.previousMonth.portfolio
-                }
-            }
-            if(response.data.currentMonth.portfolio < response.data.previousMonth.portfolio) {
-                change = -100
-                if (response.data.currentMonth.portfolio != 0)
-                {
-                    change = -1*(response.data.previousMonth.portfolio / response.data.currentMonth.portfolio)
-                }
-            }
-            callback(value,change)
+                    expenses = value
+
+                    callback(incomes,expenses,portfolio)
+
+                }, function (reason) {
+                    console.log("failed to load expenses data - " + reason)
+                })
+
+            }, function (reason) {
+                console.log("failed to load portfolio data - " + reason)
+            })
+
+        }, function (reason) {
+            console.log("failed to income data - " + reason)
         })
     }
+
     onMonthChange(month)
     {
         if(month != this.state.selectedMonth)

@@ -262,6 +262,75 @@ class DataService {
             });
     }
 
+    loadAgentIncomesData(agentId, date)
+    {
+        return new Promise(function (resolve, reject)
+        {
+            $.ajax(
+                {
+                    url: '/api/v1/agent/'+ agentId + '/salary/bytypes/' + date,
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: function(result)
+                    {
+                        console.log('load agent salary data for date '+ date + ' - server responded with success!');
+                        resolve(result)
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        console.error('load agent salary data for date '+ date + ' - ', textStatus, errorThrown.toString());
+                        reject(textStatus); // failure
+                    }
+                });
+        });
+    }
+    loadAgentPortfolioData(agentId, date)
+    {
+        return new Promise(function (resolve, reject)
+        {
+            $.ajax(
+                {
+                    url: '/api/v1/agent/'+ agentId + '/portfolio/' + date,
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: function(result)
+                    {
+                        console.log('load agent salary data for date '+ date + ' - server responded with success!');
+                        resolve(result.portfolio)
+                    }.bind(this),
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        console.error('load agent salary data for date '+ date + ' - ', textStatus, errorThrown.toString());
+                        reject(textStatus); // failure
+
+                    }.bind(this)
+                });
+        });
+    }
+    loadAgentExpensesData(agentId, date)
+    {
+        return new Promise(function (resolve, reject)
+        {
+            $.ajax(
+                {
+                    url: '/api/v1/agent/'+ agentId + '/expanses/' + date + '/' + date,
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: function(result)
+                    {
+                        console.log('load agent salary data for date '+ date + ' - server responded with success!');
+                        resolve(result.salaries)
+                    }.bind(this),
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        console.error('load agent salary data for date '+ date + ' - ', textStatus, errorThrown.toString());
+                        reject(textStatus); // failure
+
+                    }.bind(this)
+                });
+        });
+    }
+
 }
 
 export default new DataService()
