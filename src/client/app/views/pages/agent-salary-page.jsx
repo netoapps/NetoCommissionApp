@@ -3,9 +3,10 @@ import Table from './../common/table.jsx';
 import AppStore from '../../stores/data-store'
 import { strings } from '../../constants/strings'
 import MonthYearBox from './../common/month-year-box.jsx'
-import {getMonthName,getMonthNumber,getMonths} from './../common/month-year-box.jsx'
+import {getMonthName, getMonthNumber} from './../common/month-year-box.jsx'
 import Button from 'muicss/lib/react/button'
 import Divider from 'muicss/lib/react/divider';
+import DataService from '../../services/data-service.js';
 
 function currencyFormattedString(stringFloatValue)
 {
@@ -17,62 +18,7 @@ function currencyFormattedString(stringFloatValue)
     return value
 }
 
-class AgentSalaryTotalBox extends React.Component {
 
-    constructor(props)
-    {
-        super(props);
-
-        this.state = {
-        }
-    }
-    render () {
-
-        var columns = [
-
-            {
-                key: "",
-                width: "col-33-33",
-                type: 'read-only',
-                color: 'normal'
-            },
-            {
-                key: "",
-                width: "col-33-33",
-                type: 'read-only',
-                color: 'normal'
-            },
-            {
-                key: "nifraim",
-                width: "col-33-33",
-                type: 'read-only',
-                color: 'normal'
-            },
-            {
-                key: "bonus",
-                width: "col-33-33",
-                type: 'read-only',
-                color: 'normal'
-            },
-            {
-                key: "heikef",
-                width: "col-33-33",
-                type: 'read-only',
-                color: 'normal'
-            },
-            {
-                key: "",
-                width: "col-66-66",
-                type: 'read-only',
-                color: 'normal'
-            }
-        ]
-
-        return <div className="agent-salary-page-total-box">
-
-        </div>
-    }
-}
 
 class AgentSalaryPage extends React.Component {
 
@@ -82,21 +28,70 @@ class AgentSalaryPage extends React.Component {
         var date = new Date()
         var currentMonth = getMonthName(date.getMonth().toString());
         var currentYear = date.getFullYear().toString();
+        var monthStartDate = new Date(date.getFullYear(), date.getMonth(), 1, 0, 0, 0, 0);
 
         this.state = {
             agent: AppStore.getAgentAtIndex(this.props.params.index),
+            date: monthStartDate,
             selectedMonth: currentMonth,
-            selectedYear: currentYear
+            selectedYear:currentYear,
+            incomes: [],
+            manualIncomes: [],
+            expenses: []
         }
     }
+    componentWillReceiveProps(nextProps)
+    {
+        // this.reloadData((value,change) => {
+        //     this.state.value = value
+        //     this.state.change = change
+        //     this.setState(this.state)
+        // })
+    }
+    componentDidMount()
+    {
+        this.reloadData((value,change) => {
+            this.state.value = value
+            this.state.change = change
+            this.setState(this.state)
+        })
+    }
+    componentWillUnmount()
+    {
 
+    }
+    reloadData(callback)
+    {
+        DataService.loadTotalCommissionAndPortfolioForTypeAndDate(this.state.commissionType,this.state.date, (response) => {
+
+            var value = response.data.currentMonth.portfolio
+            var change = 0
+
+            if(response.data.currentMonth.portfolio > response.data.previousMonth.portfolio)
+            {
+                change = 100
+                if(response.data.previousMonth.portfolio != 0)
+                {
+                    change = response.data.currentMonth.portfolio / response.data.previousMonth.portfolio
+                }
+            }
+            if(response.data.currentMonth.portfolio < response.data.previousMonth.portfolio) {
+                change = -100
+                if (response.data.currentMonth.portfolio != 0)
+                {
+                    change = -1*(response.data.previousMonth.portfolio / response.data.currentMonth.portfolio)
+                }
+            }
+            callback(value,change)
+        })
+    }
     onMonthChange(month)
     {
         if(month != this.state.selectedMonth)
         {
             this.state.selectedMonth = month;
+            this.state.date = new Date(this.state.date.getFullYear(), getMonthNumber(month), 1, 0, 0, 0, 0);
             this.setState(this.state);
-           // this.props.onMonthChange(month)
         }
     }
     onYearChange(year)
@@ -104,8 +99,8 @@ class AgentSalaryPage extends React.Component {
         if(year != this.state.selectedYear)
         {
             this.state.selectedYear = year;
+            this.state.date = new Date(year, this.state.date.getMonth(), 1, 0, 0, 0, 0);
             this.setState(this.state);
-           // this.props.onYearChange(year)
         }
     }
     onAgentNumberChange(year)
@@ -141,24 +136,8 @@ class AgentSalaryPage extends React.Component {
                 action: this.onAgentNumberChange.bind(this)
             },
             {
-                title: "נפרעים",
+                title: "סוג תשלום",
                 key: "agentNumber",
-                width: "col-33-33",
-                type: 'input',
-                color: 'normal',
-                action: this.onAgentNumberChange.bind(this)
-            },
-            {
-                title: "בונוס",
-                key: "agentName",
-                width: "col-33-33",
-                type: 'input',
-                color: 'normal',
-                action: this.onAgentNumberChange.bind(this)
-            },
-            {
-                title: "היקף",
-                key: "totalPayment",
                 width: "col-33-33",
                 type: 'input',
                 color: 'normal',
