@@ -313,13 +313,13 @@ class DataService {
         {
             $.ajax(
                 {
-                    url: '/api/v1/agent/'+ agentId + '/expanses/' + date,
+                    url: '/api/v1/agent/'+ agentId + '/expenses/' + date,
                     type: 'GET',
                     contentType: 'application/json',
                     success: function(result)
                     {
                         console.log('load agent expenses data for date '+ date + ' - server responded with success!');
-                        resolve(result.salaries)
+                        resolve(result.expenses)
                     }.bind(this),
                     error: function(jqXHR, textStatus, errorThrown)
                     {

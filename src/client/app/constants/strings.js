@@ -19,7 +19,7 @@ let strings = {
     partnerships: "שותפויות",
     totalValue: "סה״כ ",
     totalAgents: "סה״כ סוכנים פעילים",
-    totalInvestments: "סה״כ גודל תיק",
+    totalPortfolio: "סה״כ גודל תיק",
     load: "טען",
     dragFileHere: "גרור קובץ עמלות לכאן",
     companyAssignment: "שיוך לחברה",
