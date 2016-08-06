@@ -12,9 +12,9 @@ var schema = new mongoose.Schema({
     updateTime:{type:Date, default:Date.now},
     type: String,
     sum:String,
-    notes:Number,
     expanseDate:Date,
-    idNumber:String
+    idNumber:String,
+    notes:{type:String, default:''}
 });
 schema.index({idNumber:1, expanseDate:1});
 
