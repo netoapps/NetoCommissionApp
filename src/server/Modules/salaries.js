@@ -1,7 +1,6 @@
 /**
  * Created by efishtain on 19/05/2016.
  */
-
 const SalaryService = require('../Services/salaryService');
 const FileService = require('../Services/fileService');
 const ExcelService = require('../Services/excelAnalyzerService');
@@ -27,10 +26,6 @@ function uploadSalariesFile(req, res) {
         if (err) {
             return res.status(400).json({err: err});
         }
-        //Unmark this if you want to test only file upload without processing/analyzing
-        //It will return you the file data structure
-
-        //return res.status(200).json({file:file});
         analyzer.analyzeSalaryFile(file.pathOnDisk, function (err, salaries) {
             if (err) {
                 fileService.deleteFile(file._id).then(function () {
@@ -85,7 +80,16 @@ function addAgentSalary(req, res) {
     if (!data || !data.agentId || !data.paymentDate || !data.amount || !data.type || !data.company) {
         return res.status(400).json({err: 'missing salary data'});
     }
-    salaryService.addAgentSalary(req.params.idNumber, data.agentId, data.paymentDate, data.amount, data.type, data.company)
+
+    var repeatCount = data.repeat || 1;
+    var salariesRequests = [];
+    var startDate = new Date(data.paymentDate);
+
+    for(var i=0;i<repeatCount;i++){
+        salariesRequests.push(salaryService.addAgentSalary(req.params.idNumber, data.agentId, startDate.toISOString(), data.amount, data.type, data.company));
+        startDate.setMonth(startDate.getMonth()+1);
+    }
+    Promise.all(salariesRequests)
         .then(function (salary) {
             return res.status(200).json({salary: salary});
         })
@@ -198,23 +202,41 @@ function getAllSalariesForDateAndTypeGroupedByIdNumber(req, res) {
 function getAgentPortfolioForDate(req, res) {
     const idNumber = req.params.idNumber;
     const pd = req.params.paymentDate;
-    if (!pd) {
-        return res.status(400).json({err: 'invalid year'});
+    if (!idNumber) {
+        return res.status(400).json({err: 'invalid idNumber'});
     }
-    if (!type) {
-        return res.status(400).json({err: 'invalid type'});
+    if (!pd) {
+        return res.status(400).json({err: 'invalid payment date'});
     }
 
-    salaryService.getAllSalariesForDateAndTypeGroupedById(pd, type)
-        .then(function (salaries) {
-            return res.status(200).json({salaries: salaries});
+    salaryService.getAgentPortfolioForDate(idNumber, pd)
+        .then(function (portfolio) {
+            return res.status(200).json({portfolio: portfolio});
         })
         .catch(function (err) {
             return res.status(400).json({err: err});
         })
 }
 
+function getAgentSalariesSumForDate(req, res){
+    const idNumber = req.params.idNumber;
+    const pd = req.params.paymentDate;
+    if (!idNumber) {
+        return res.status(400).json({err: 'invalid idNumber'});
+    }
+    if (!pd) {
+        return res.status(400).json({err: 'invalid payment date'});
+    }
 
+    salaryService.getAllAgentSalariesByTypesForDate(idNumber, pd)
+        .then(function (salaries) {
+            return res.status(200).json(salaries);
+        })
+        .catch(function (err) {
+            return res.status(400).json({err: err});
+        })
+
+}
 //function getAllAgentSalaries(req,res){
 //    if(!req.params.agentId){
 //        return res.status(200).json({err:'missing agent id'});
@@ -251,5 +273,7 @@ module.exports = {
     getAllSalariesSortedByDate,
     getDateSalariesSummedByType,
     getAllSalariesForYearGroupedByMonths,
-    getAllSalariesForDateAndTypeGroupedByIdNumber
+    getAllSalariesForDateAndTypeGroupedByIdNumber,
+    getAgentPortfolioForDate,
+    getAgentSalariesSumForDate
 };

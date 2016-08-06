@@ -23,7 +23,7 @@ function SalaryService() {
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     this.addAgentSalary = function (idNumber, agentInCompanyId, paymentDate, amount, type, company) {
         return new Promise(function (resolve, reject) {
-            addSalaryToAgent(idNumber, agentInCompanyId, paymentDate, amount, type, company,'manual', function (err) {
+            addSalaryToAgent(idNumber, agentInCompanyId, paymentDate, amount, type, company, 0, null, function (err) {
                 if (err) {
                     return reject(err);
                 }
@@ -33,7 +33,7 @@ function SalaryService() {
     }
     this.getAgentSalariesForDate = function (idNumber, startDate, endDate, cb) {
         Salary.aggregate([
-            {$match: {$and: [{paymentDate: {$gte: startDate}}, {paymentDate: {$lte: endDate}}, {agentId: idNumber}]}}
+            {$match: {$and: [{paymentDate: {$gte: startDate}}, {paymentDate: {$lte: endDate}}, {agentId: idNumber},{type:{$ne:'ידני'}}]}}
         ], function (err, salaries) {
             if (err)return cb(err);
             return cb(null, salaries);
@@ -131,7 +131,7 @@ function SalaryService() {
     }
     this.getAllSalariesSortedByDate = function () {
         return new Promise(function (resolve, reject) {
-            Salary.find({}).sort({paymentDate: -1}).exec(function (err, salaries) {
+            Salary.find({type: {$ne: 'ידני'}}).sort({paymentDate: -1}).exec(function (err, salaries) {
                 if (err) {
                     return reject(err);
                 }
@@ -247,10 +247,10 @@ function SalaryService() {
                     }
 
                 })
-                salaries = _.reduce(salaries,function(memo, sal){
-                    memo[sal[0]]=sal[1];
+                salaries = _.reduce(salaries, function (memo, sal) {
+                    memo[sal[0]] = sal[1];
                     return memo;
-                },{});
+                }, {});
 
 
                 return resolve(salaries);
@@ -269,16 +269,42 @@ function SalaryService() {
         })
 
     }
-    this.getAgentPortfolioForDate = function(idNumber,date){
-        return new Promise(function(resolve, reject){
+    this.getAgentPortfolioForDate = function (idNumber, date) {
+        return new Promise(function (resolve, reject) {
+            date = new Date(date);
             Salary.aggregate([
-                {$match:{idNumber:idNumber, fileId:{$ne:'manual'}, paymentDate:date}},
-                {$group:{_id:null, portfolio:{$sum:'$portfolio'}}}
-            ], function(err, data){
-                if(err){
+                {$match: {idNumber: idNumber, type: 'נפרעים', paymentDate: date}},
+                {$group: {_id: null, portfolio: {$sum: '$portfolio'}}}
+            ], function (err, data) {
+                if (err) {
                     return reject(err);
                 }
-                return resolve(data.portfolio);
+                if (data.length === 0) {
+                    return resolve(0);
+                }
+                return resolve(data[0].portfolio);
+            })
+        })
+    }
+
+    this.getAllAgentSalariesByTypesForDate = function (idNumber, date) {
+        return new Promise(function (resolve, reject) {
+            date = new Date(date);
+            Salary.aggregate([
+                {$match: {idNumber: idNumber, paymentDate: date}},
+                {
+                    $group:{
+                        _id:null, 'נפרעים':{$sum:{$cond: [{$eq:['$type','נפרעים'] },'$amount',0]}},'בונוס':{$sum:{$cond: [{$eq:['$type','בונוס'] },'$amount',0]}},'היקף':{$sum:{$cond: [{$eq:['$type','היקף'] },'$amount',0]}}
+                    }
+                }
+            ], function (err, data) {
+                if (err) {
+                    return reject(err);
+                }
+                if (data.length === 0) {
+                    return resolve({'נפרעים': 0, 'בונוס': 0, 'היקף': 0});
+                }
+                return resolve({'נפרעים': data[0]['נפרעים'], 'בונוס': data[0]['בונוס'], 'היקף': data[0]['היקף']});
             })
         })
     }
@@ -315,6 +341,7 @@ function SalaryService() {
             return resolve();
         });
     }
+
     function addSalaryToAgent(idNumber, agentInCompanyId, paymentDate, amount, type, company, portfolio, fileId, cb) {
         var salary = new Salary();
         salary.idNumber = idNumber;
