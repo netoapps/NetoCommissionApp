@@ -52,6 +52,10 @@ class NewIncomeModal extends React.Component{
         // this.state.agent.paymentsDetails[index].agentNumber = value
         this.setState(this.state)
     }
+    onIncomeCommissionAmountChange()
+    {
+
+    }
     onIncomeNoteChange()
     {
 
@@ -99,6 +103,14 @@ class NewIncomeModal extends React.Component{
                 color: 'normal',
                 action: this.onIncomeCommissionTypeChange.bind(this),
                 options: this.state.commissionTypes
+            },
+            {
+                title: "סה״כ תשלום",
+                key: "amount",
+                width: "col-33-33",
+                type: 'input',
+                color: 'normal',
+                action: this.onIncomeCommissionAmountChange.bind(this),
             },
             {
                 title: "מחזוריות",
@@ -276,6 +288,10 @@ class AgentSalaryPage extends React.Component {
     {
 
     }
+    onIncomeCommissionAmountChange()
+    {
+
+    }
     handleNewIncomeSave()
     {
 
@@ -333,11 +349,18 @@ class AgentSalaryPage extends React.Component {
                 color: 'normal'
             },
             {
+                title: "סה״כ תשלום",
+                key: "amount",
+                width: "col-33-33",
+                type: 'read-only',
+                color: 'normal'
+            },
+            {
                 title: "הערות",
                 key: "notes",
                 width: "col-66-66",
                 type: 'read-only',
-                color: 'normal',
+                color: 'normal'
             }
         ]
 
@@ -371,6 +394,14 @@ class AgentSalaryPage extends React.Component {
                 color: 'normal',
                 action: this.onIncomeCommissionTypeChange.bind(this),
                 options: commissionTypes
+            },
+            {
+                title: "סה״כ תשלום",
+                key: "amount",
+                width: "col-33-33",
+                type: 'input',
+                color: 'normal',
+                action: this.onIncomeCommissionAmountChange.bind(this),
             },
             {
                 title: "הערות",
