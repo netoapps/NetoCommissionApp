@@ -8,7 +8,7 @@ const ExcelService = require('../Services/excelAnalyzerService');
 const salaryService = new SalaryService();
 const fileService = new FileService();
 const analyzer = new ExcelService();
-
+var _ = require('underscore');
 function uploadSalariesFile(req, res) {
     if (!req.file) {
         return res.status(400).json({err: 'invalid file'});
@@ -90,7 +90,10 @@ function addAgentSalary(req, res) {
         startDate.setMonth(startDate.getMonth()+1);
     }
     Promise.all(salariesRequests)
-        .then(function (salary) {
+        .then(function (salaries) {
+            var salary = _.filter(salaries, function(s){
+                return s.paymentDate.toISOString() === data.paymentDate;
+            });
             return res.status(200).json({salary: salary});
         })
         .catch(function (err) {

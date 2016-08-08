@@ -392,7 +392,7 @@ function SalaryService() {
         salary.notes = notes || '';
         salary.save(function (err) {
             if (typeof cb === 'function') {
-                return cb(salary);
+                return cb(null, salary);
             }
         })
 
