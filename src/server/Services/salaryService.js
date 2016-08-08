@@ -30,11 +30,11 @@ function SalaryService() {
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     this.addAgentSalary = function (idNumber, agentInCompanyId, paymentDate, amount, type, company, notes) {
         return new Promise(function (resolve, reject) {
-            addSalaryToAgent(idNumber, agentInCompanyId, paymentDate, amount, type, company, 0, null, notes, function (err) {
+            addSalaryToAgent(idNumber, agentInCompanyId, paymentDate, amount, type, company, 0, null, notes, function (err, salary) {
                 if (err) {
                     return reject(err);
                 }
-                return resolve();
+                return resolve(salary);
             })
         })
     }
@@ -392,7 +392,7 @@ function SalaryService() {
         salary.notes = notes || '';
         salary.save(function (err) {
             if (typeof cb === 'function') {
-                return cb(null);
+                return cb(salary);
             }
         })
 
