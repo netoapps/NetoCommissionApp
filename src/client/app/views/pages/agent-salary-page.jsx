@@ -18,8 +18,8 @@ function currencyFormattedString(stringFloatValue)
     return value
 }
 
-var companies = AppStore.getCompanies().concat(["שונות"])
-var commissionTypes = AppStore.getCommissionTypes().concat(["שונות"])
+var companies = AppStore.getCompanies().concat(["ידני"])
+var commissionTypes = AppStore.getCommissionTypes().concat(["ידני"])
 
 class Income
 {
@@ -28,10 +28,10 @@ class Income
         this.company = companies[0]
         this.agentInCompanyId = ""
         this.type = commissionTypes[0]
-        this.amount = ""
+        this.amount = 0
         this.paymentDate = ""
         this.repeat = 1
-        this.notes = ""
+        this.notes = "ידני"
     }
 }
 
@@ -311,15 +311,19 @@ class AgentSalaryPage extends React.Component {
         else
         {
             income.paymentDate = this.state.date
-            this.state.incomes["ידני"].push(income)
+            DataService.addManualIncome(income,this.state.agent.idNumber, (response) => {
 
-            // DataService.addManualIncome(this.state.agent.idNumber,income, (response) => {
-            //
-            //     if(response.result == true)
-            //     {
-            //         this.state.incomes["ידני"].push(income)
-            //     }
-            // })
+                if(response.result == true)
+                {
+                    if(income != null)
+                    {
+                        this.state.incomes["ידני"].push(response.data)
+                    }
+                }
+                this.state.selectedIncome = null
+                this.state.selectedIncomeIndex = -1
+                this.setState(this.state)
+            })
 
         }
         this.state.selectedIncome = null
@@ -470,8 +474,7 @@ class AgentSalaryPage extends React.Component {
         var expenses = 0
         var salary = nifraim + bonus + heikef + manual - expenses
 
-        var incomesData = this.state.incomes["היקף"].concat(this.state.incomes["נפרעים"]).concat(this.state.incomes["בונוס"])
-        var manualIncomesData = this.state.incomes["ידני"]
+        var incomesData = this.state.incomes["ידני"].concat(this.state.incomes["בונוס"]).concat(this.state.incomes["היקף"].concat(this.state.incomes["נפרעים"]))
 
         return (
             <div className="agent-salary-page animated fadeIn">
@@ -530,14 +533,13 @@ class AgentSalaryPage extends React.Component {
                         <Table columns={incomesColumns}
                                data={incomesData}/>
                     </div>
-                    <Divider className="agent-salary-page-divider"/>
-
-                    <div className="agent-salary-page-income-table">
-                        <Table onRemoveRow={this.onRemoveManualIncome.bind(this)}
-                               onRowClick={this.onManualIncomeRowClick.bind(this)}
-                               hideHeader={true} columns={manualIncomesColumns}
-                               data={manualIncomesData} noHeader/>
-                    </div>
+                    {/*<Divider className="agent-salary-page-divider"/>*/}
+                    {/*<div className="agent-salary-page-income-table">*/}
+                        {/*<Table onRemoveRow={this.onRemoveManualIncome.bind(this)}*/}
+                               {/*onRowClick={this.onManualIncomeRowClick.bind(this)}*/}
+                               {/*hideHeader={true} columns={manualIncomesColumns}*/}
+                               {/*data={manualIncomesData} noHeader/>*/}
+                    {/*</div>*/}
 
                 </div>
 

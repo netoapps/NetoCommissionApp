@@ -6,7 +6,7 @@ var ConstantsService = require('../Services/constantService');
 var constantsService = new ConstantsService();
 
 module.exports.getCommissions = function(req, res){
-    constantsService.getCommisionTypes()
+    constantsService.getCommissionTypes()
         .then(function(ct){
             return res.status(200).json({commissionTypes:ct});
         })

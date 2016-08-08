@@ -10,7 +10,7 @@ function ConstantsService(){
 
     init();
 
-    this.getCommisionTypes = function(){
+    this.getCommissionTypes = function(){
         return new Promise(function(resolve, reject){
             Constant.findOne({name:'commissionType'}).lean().exec(function(err, ct){
                 if(err){
@@ -62,7 +62,12 @@ function ConstantsService(){
             }
 
         });
-        Constant.update({name:'commissionType'},{$setOnInsert:{value:commissionType}});
+        Constant.update({name:'commissionType'},{$setOnInsert:{value:commissionType}},{upsert:true},function(err, n){
+            if(err){
+                console.log(err);
+            }
+
+        });
     }
 }
 

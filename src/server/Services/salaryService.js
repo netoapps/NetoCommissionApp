@@ -16,14 +16,14 @@ var _ = require('underscore');
 
 function SalaryService() {
 
-    var commisionTypes = [];
+    var commissionTypes = [];
     var type3, type4, type5;
-    constantService.getCommisionTypes()
+    constantService.getCommissionTypes()
         .then(function (ct) {
-            commisionTypes = ct;
-            type3 = commisionTypes[0];
-            type4 = commisionTypes[1];
-            type5 = commisionTypes[2];
+            commissionTypes = ct;
+            type3 = commissionTypes[0];
+            type4 = commissionTypes[1];
+            type5 = commissionTypes[2];
         });
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////PUBLIC FUNCTIONS/////////////////////////////////////////////

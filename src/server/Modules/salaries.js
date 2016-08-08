@@ -94,7 +94,7 @@ function addAgentSalary(req, res) {
             var salary = _.filter(salaries, function(s){
                 return s.paymentDate.toISOString() === data.paymentDate;
             });
-            return res.status(200).json({salary: salary});
+            return res.status(200).json({salary: salary.length == 0 ? null:salary[0]});
         })
         .catch(function (err) {
             return res.status(400).json({err: err});
