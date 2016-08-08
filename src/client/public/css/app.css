@@ -1003,6 +1003,17 @@ body
     /*padding-top: 12px;*/
 }
 
+.table-row-data
+{
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    width: 100%;
+    flex-flow: row nowrap;
+}
+
 
 .table-row-add-button
 {

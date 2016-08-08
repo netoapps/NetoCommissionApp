@@ -18,66 +18,90 @@ function currencyFormattedString(stringFloatValue)
     return value
 }
 
+var companies = AppStore.getCompanies().concat(["שונות"])
+var commissionTypes = AppStore.getCommissionTypes().concat(["שונות"])
+
+class Income
+{
+    constructor()
+    {
+        this.company = companies[0]
+        this.agentInCompanyId = ""
+        this.type = commissionTypes[0]
+        this.amount = ""
+        this.paymentDate = ""
+        this.repeat = 1
+        this.notes = ""
+    }
+}
+
 class NewIncomeModal extends React.Component{
     constructor(props) {
         super(props);
 
-        var companies = AppStore.getCompanies().concat(["שונות"])
-        var commissionTypes = AppStore.getCommissionTypes().concat(["שונות"])
+
+        var income = props.income
+        if (income == null) {
+            income = new Income()
+        }
 
         this.state = {
             companies:companies,
             commissionTypes:commissionTypes,
-            income: [{
-                    company: companies[0],
-                    agentInCompanyId: "",
-                    type: commissionTypes[0],
-                    repeat: 1,
-                    notes:""
-                    }]
+            income: income
         }
     }
+    // componentWillReceiveProps(nextProps)
+    // {
+    //     var income = nextProps.income
+    //     if (income == null) {
+    //         income = new Income()
+    //     }
+    //     this.state.income = income
+    //     this.setState(this.state)
+    // }
     onIncomeCompanyChange(index,value)
     {
-        // this.state.agent.paymentsDetails[index].companyName = value
+        this.state.income.company = value
         this.setState(this.state)
     }
     onIncomeCommissionTypeChange(index,value)
     {
-        // this.state.agent.paymentsDetails[index].paymentType = value
+         this.state.income.type = value
         this.setState(this.state)
     }
     onIncomeAgentNumberChange(index,value)
     {
-        // this.state.agent.paymentsDetails[index].agentNumber = value
+        this.state.income.agentInCompanyId = value
         this.setState(this.state)
     }
-    onIncomeCommissionAmountChange()
+    onIncomeCommissionAmountChange(index,value)
     {
-
+        this.state.income.amount = value
+        this.setState(this.state)
     }
-    onIncomeNoteChange()
+    onIncomeNoteChange(index,value)
     {
-
+        this.state.income.notes = value
+        this.setState(this.state)
     }
-    onIncomeRepeatChange()
+    onIncomeRepeatChange(index,value)
     {
-
+        this.state.income.repeat = value
+        this.setState(this.state)
     }
-
     onCancel()
     {
-
+        this.props.onCancelIncome()
     }
     onSave()
     {
-
+        this.props.onSaveIncome(this.state.income)
     }
     render(){
         const { text,onRequestClose } = this.props;
 
         var columns = [
-
             {
                 title: "חברה",
                 key: "company",
@@ -137,7 +161,7 @@ class NewIncomeModal extends React.Component{
                     <div className="modal-title">{strings.newIncome}</div>
                     <div className="modal-table">
                         <Table columns={columns}
-                               data={this.state.income}/>
+                               data={[this.state.income]}/>
                     </div>
                     <div className="hcontainer-no-wrap">
                         <div className="horizontal-spacer-90"/>
@@ -174,7 +198,11 @@ class AgentSalaryPage extends React.Component {
             },
             manualIncomes: [],
             expenses: [],
-            portfolio: "0"
+            portfolio: "0",
+            selectedIncome: null,
+            selectedIncomeIndex: -1,
+            selectedExpense: null,
+            selectedExpenseIndex: -1
         }
     }
     componentWillReceiveProps(nextProps)
@@ -259,51 +287,57 @@ class AgentSalaryPage extends React.Component {
     //Manual income
     onNewIncome()
     {
-        // ModalManager.open(<NewIncomeModal text={"בדיקה"} onRequestClose={() => true}/>);
-
         var inst = $('[data-remodal-id=modal]').remodal();
-
-        /**
-         * Opens the modal window
-         */
+        this.state.selectedIncome = null
+        this.state.selectedIncomeIndex = -1
+        this.setState(this.state)
         inst.open();
     }
 
-    onIncomeCompanyChange(index,value)
+    onManualIncomeRowClick(index)
     {
-       // this.state.agent.paymentsDetails[index].companyName = value
+        var inst = $('[data-remodal-id=modal]').remodal();
+        this.state.selectedIncome = this.state.incomes["ידני"][index]
+        this.state.selectedIncomeIndex = index
+        this.setState(this.state)
+        inst.open();
+    }
+    onSaveManualIncome(income)
+    {
+        if(this.state.selectedIncomeIndex != -1)
+        {
+            this.state.incomes["ידני"][this.state.selectedIncomeIndex] = income
+        }
+        else
+        {
+            income.paymentDate = this.state.date
+            this.state.incomes["ידני"].push(income)
+
+            // DataService.addManualIncome(this.state.agent.idNumber,income, (response) => {
+            //
+            //     if(response.result == true)
+            //     {
+            //         this.state.incomes["ידני"].push(income)
+            //     }
+            // })
+
+        }
+        this.state.selectedIncome = null
+        this.state.selectedIncomeIndex = -1
         this.setState(this.state)
     }
-    onIncomeCommissionTypeChange(index,value)
+    onCancelManualIncome()
     {
-       // this.state.agent.paymentsDetails[index].paymentType = value
+        this.state.selectedIncome = null
+        this.state.selectedIncomeIndex = -1
         this.setState(this.state)
     }
-    onIncomeAgentNumberChange(index,value)
+    onRemoveManualIncome(rowIndex)
     {
-       // this.state.agent.paymentsDetails[index].agentNumber = value
+        this.state.incomes["ידני"].splice(rowIndex, 1)
+        this.state.selectedIncome = null
+        this.state.selectedIncomeIndex = -1
         this.setState(this.state)
-    }
-    onIncomeNoteChange()
-    {
-
-    }
-    onIncomeCommissionAmountChange()
-    {
-
-    }
-    handleNewIncomeSave()
-    {
-
-    }
-    //Expense
-    onExpenseNoteChange()
-    {
-
-    }
-    onExpenseAgentNumberChange()
-    {
-
     }
     onNewExpense()
     {
@@ -322,6 +356,8 @@ class AgentSalaryPage extends React.Component {
         }
         return sum
     }
+
+
 
     render () {
 
@@ -364,57 +400,46 @@ class AgentSalaryPage extends React.Component {
             }
         ]
 
-        var companies = AppStore.getCompanies().concat(["שונות"])
-        var commissionTypes = AppStore.getCommissionTypes().concat(["שונות"])
-
         var manualIncomesColumns = [
 
             {
                 title: "חברה",
                 key: "company",
                 width: "col-33-33",
-                type: 'select',
-                color: 'normal',
-                action: this.onIncomeCompanyChange.bind(this),
-                options: companies
+                type: 'read-only',
+                color: 'normal'
             },
             {
                 title: "מספר סוכן",
                 key: "agentInCompanyId",
                 width: "col-33-33",
-                type: 'input',
-                color: 'normal',
-                action: this.onIncomeAgentNumberChange.bind(this)
+                type: 'read-only',
+                color: 'normal'
             },
             {
                 title: "סוג תשלום",
                 key: "type",
                 width: "col-33-33",
-                type: 'select',
-                color: 'normal',
-                action: this.onIncomeCommissionTypeChange.bind(this),
-                options: commissionTypes
+                type: 'read-only',
+                color: 'normal'
             },
             {
                 title: "סה״כ תשלום",
                 key: "amount",
                 width: "col-33-33",
-                type: 'input',
-                color: 'normal',
-                action: this.onIncomeCommissionAmountChange.bind(this),
+                type: 'read-only',
+                color: 'normal'
             },
             {
                 title: "הערות",
                 key: "notes",
                 width: "col-66-66",
-                type: 'input',
-                color: 'normal',
-                action: this.onIncomeNoteChange.bind(this)
+                type: 'read-only',
+                color: 'normal'
             }
         ]
 
         var expensesColumns = [
-
             {
                 title: "סוג הוצאה",
                 key: "companyName",
@@ -426,17 +451,15 @@ class AgentSalaryPage extends React.Component {
                 title: "סה״כ",
                 key: "agentNumber",
                 width: "col-33-33",
-                type: 'input',
-                color: 'normal',
-                action: this.onExpenseAgentNumberChange.bind(this)
+                type: 'read-only',
+                color: 'normal'
             },
             {
                 title: "הערות",
                 key: "agentName",
                 width: "col-33-33",
-                type: 'input',
-                color: 'normal',
-                action: this.onExpenseNoteChange.bind(this)
+                type: 'read-only',
+                color: 'normal'
             }
         ]
 
@@ -453,7 +476,10 @@ class AgentSalaryPage extends React.Component {
         return (
             <div className="agent-salary-page animated fadeIn">
 
-                <NewIncomeModal />
+                <NewIncomeModal income={this.state.selectedIncome}
+                                incomeIndex={this.state.selectedIncomeIndex}
+                                onSaveIncome={this.onSaveManualIncome.bind(this)}
+                                onCancelIncome={this.onCancelManualIncome.bind(this)}/>
 
                 <div className="hcontainer-no-wrap">
                     <MonthYearBox month={this.state.selectedMonth} year={this.state.selectedYear}
@@ -507,7 +533,9 @@ class AgentSalaryPage extends React.Component {
                     <Divider className="agent-salary-page-divider"/>
 
                     <div className="agent-salary-page-income-table">
-                        <Table hideHeader={true} columns={manualIncomesColumns}
+                        <Table onRemoveRow={this.onRemoveManualIncome.bind(this)}
+                               onRowClick={this.onManualIncomeRowClick.bind(this)}
+                               hideHeader={true} columns={manualIncomesColumns}
                                data={manualIncomesData} noHeader/>
                     </div>
 

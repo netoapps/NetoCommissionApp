@@ -103,7 +103,7 @@ class Salaries extends React.Component {
             var agentData = {}
 
             agentData["name"] = this.state.agents[agentIndex].name + " " + this.state.agents[agentIndex].familyName
-            agentData["salary"] = "323432"
+            agentData["salary"] = "0"
             agentData["idNumber"] = this.state.agents[agentIndex].idNumber
             agentData["status"] = this.state.agents[agentIndex].active ? "פעיל":"לא פעיל"
             agentsData.push(agentData)
