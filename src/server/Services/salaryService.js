@@ -10,30 +10,37 @@ var _ = require('underscore');
 var async = require('async');
 var ConstantService = require('./constantService');
 var constantService = new ConstantService();
-const commisionTypes = constantService.getCommisionTypes();
-const type3 = commisionTypes[0];
-const type4 = commisionTypes[1];
-const type5 = commisionTypes[2];
+
+
 var _ = require('underscore');
 
 function SalaryService() {
 
+    var commisionTypes = [];
+    var type3, type4, type5;
+    constantService.getCommisionTypes()
+        .then(function (ct) {
+            commisionTypes = ct;
+            type3 = commisionTypes[0];
+            type4 = commisionTypes[1];
+            type5 = commisionTypes[2];
+        });
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////PUBLIC FUNCTIONS/////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     this.addAgentSalary = function (idNumber, agentInCompanyId, paymentDate, amount, type, company, notes) {
         return new Promise(function (resolve, reject) {
-            addSalaryToAgent(idNumber, agentInCompanyId, paymentDate, amount, type, company, 0, null,notes, function (err) {
+            addSalaryToAgent(idNumber, agentInCompanyId, paymentDate, amount, type, company, 0, null, notes, function (err, salary) {
                 if (err) {
                     return reject(err);
                 }
-                return resolve();
+                return resolve(salary);
             })
         })
     }
     this.getAgentSalariesForDate = function (idNumber, startDate, endDate, cb) {
         Salary.aggregate([
-            {$match: {$and: [{paymentDate: {$gte: startDate}}, {paymentDate: {$lte: endDate}}, {agentId: idNumber},{type:{$ne:'ידני'}}]}}
+            {$match: {$and: [{paymentDate: {$gte: startDate}}, {paymentDate: {$lte: endDate}}, {agentId: idNumber}, {type: {$ne: 'ידני'}}]}}
         ], function (err, salaries) {
             if (err)return cb(err);
             return cb(null, salaries);
@@ -293,8 +300,11 @@ function SalaryService() {
             Salary.aggregate([
                 {$match: {idNumber: idNumber, paymentDate: date}},
                 {
-                    $group:{
-                        _id:null, 'נפרעים':{$sum:{$cond: [{$eq:['$type','נפרעים'] },'$amount',0]}},'בונוס':{$sum:{$cond: [{$eq:['$type','בונוס'] },'$amount',0]}},'היקף':{$sum:{$cond: [{$eq:['$type','היקף'] },'$amount',0]}}
+                    $group: {
+                        _id: null,
+                        'נפרעים': {$sum: {$cond: [{$eq: ['$type', 'נפרעים']}, '$amount', 0]}},
+                        'בונוס': {$sum: {$cond: [{$eq: ['$type', 'בונוס']}, '$amount', 0]}},
+                        'היקף': {$sum: {$cond: [{$eq: ['$type', 'היקף']}, '$amount', 0]}}
                     }
                 }
             ], function (err, data) {
@@ -318,15 +328,20 @@ function SalaryService() {
                 if (err) {
                     return reject(err);
                 }
-                if(salaries.length===0){
-                    return resolve({'נפרעים':[],'בונוס':[],'היקף':[],'ידני':[]});
+                if (salaries.length === 0) {
+                    return resolve({'נפרעים': [], 'בונוס': [], 'היקף': [], 'ידני': []});
                 }
 
                 salaries = _.groupBy(salaries, function (sal) {
                     return sal.type;
                 });
 
-                return resolve({'נפרעים':salaries['נפרעים'] || [],'בונוס':salaries['בונוס'] || [],'היקף':salaries['היקף'] || [],'ידני':salaries['ידני'] || []});
+                return resolve({
+                    'נפרעים': salaries['נפרעים'] || [],
+                    'בונוס': salaries['בונוס'] || [],
+                    'היקף': salaries['היקף'] || [],
+                    'ידני': salaries['ידני'] || []
+                });
             })
         });
     }
@@ -358,13 +373,13 @@ function SalaryService() {
                 }
             });
             if (Object.keys(missingIds).length > 0) {
-                return reject({errCode:34,data:Object.keys(missingIds)});
+                return reject({errCode: 34, data: Object.keys(missingIds)});
             }
             return resolve();
         });
     }
 
-    function addSalaryToAgent(idNumber, agentInCompanyId, paymentDate, amount, type, company, portfolio, fileId,notes, cb) {
+    function addSalaryToAgent(idNumber, agentInCompanyId, paymentDate, amount, type, company, portfolio, fileId, notes, cb) {
         var salary = new Salary();
         salary.idNumber = idNumber;
         salary.agentInCompanyId = agentInCompanyId;
@@ -377,7 +392,7 @@ function SalaryService() {
         salary.notes = notes || '';
         salary.save(function (err) {
             if (typeof cb === 'function') {
-                return cb(null);
+                return cb(null, salary);
             }
         })
 
@@ -416,14 +431,14 @@ function SalaryService() {
                     pd = agentPaymentDetails.pd;
                     amount = Number(salary[4]);
                     amount *= Number(pd.agentPart) / 100;
-                    salaryTasks.push(addSalaryToAgent.bind(null, agentPaymentDetails.idNumber, salary[1], paymentDate, amount, type4, company, 0, fileId,''));
+                    salaryTasks.push(addSalaryToAgent.bind(null, agentPaymentDetails.idNumber, salary[1], paymentDate, amount, type4, company, 0, fileId, ''));
                 }
                 if (agents[salaryIdType5] && salary[5]) {
                     agentPaymentDetails = agents[salaryIdType5];
                     pd = agentPaymentDetails.pd;
                     amount = Number(salary[5]);
                     amount *= Number(pd.agentPart) / 100;
-                    salaryTasks.push(addSalaryToAgent.bind(null, agentPaymentDetails.idNumber, salary[1], paymentDate, amount, type5, company, 0, fileId,''));
+                    salaryTasks.push(addSalaryToAgent.bind(null, agentPaymentDetails.idNumber, salary[1], paymentDate, amount, type5, company, 0, fileId, ''));
                 }
                 if (partnerships[salaryIdType3] && salary[3]) {
                     partnershipPaymentDetails = partnerships[salaryIdType3];
@@ -433,7 +448,7 @@ function SalaryService() {
                         amount = Number(salary[3]);
                         amount *= Number(agent.part) / 100;
                         amount *= Number(pd.partnershipPart) / 100;
-                        salaryTasks.push(addSalaryToAgent.bind(null, agent.idNumber, salary[1], paymentDate, amount, type3, company, salary[2], fileId,''));
+                        salaryTasks.push(addSalaryToAgent.bind(null, agent.idNumber, salary[1], paymentDate, amount, type3, company, salary[2], fileId, ''));
                     })
                 }
                 if (partnerships[salaryIdType4] && salary[4]) {
@@ -444,7 +459,7 @@ function SalaryService() {
                         amount = Number(salary[4]);
                         amount *= Number(agent.part) / 100;
                         amount *= Number(pd.partnershipPart) / 100;
-                        salaryTasks.push(addSalaryToAgent.bind(null, agent.idNumber, salary[1], paymentDate, amount, type4, company, 0, fileId,''));
+                        salaryTasks.push(addSalaryToAgent.bind(null, agent.idNumber, salary[1], paymentDate, amount, type4, company, 0, fileId, ''));
                     })
                 }
                 if (partnerships[salaryIdType4] && salary[5]) {
@@ -455,7 +470,7 @@ function SalaryService() {
                         amount = Number(salary[5]);
                         amount *= Number(agent.part) / 100;
                         amount *= Number(pd.partnershipPart) / 100;
-                        salaryTasks.push(addSalaryToAgent.bind(null, agent.idNumber, salary[1], paymentDate, amount, type5, company, 0, fileId,''));
+                        salaryTasks.push(addSalaryToAgent.bind(null, agent.idNumber, salary[1], paymentDate, amount, type5, company, 0, fileId, ''));
                     })
                 }
             });

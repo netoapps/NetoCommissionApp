@@ -8,7 +8,7 @@ const ExcelService = require('../Services/excelAnalyzerService');
 const salaryService = new SalaryService();
 const fileService = new FileService();
 const analyzer = new ExcelService();
-
+var _ = require('underscore');
 function uploadSalariesFile(req, res) {
     if (!req.file) {
         return res.status(400).json({err: 'invalid file'});
@@ -77,7 +77,7 @@ function addAgentSalary(req, res) {
         return res.status(400).json({err: 'missing id Number'});
     }
     var data = req.body;
-    if (!data || !data.agentId || !data.paymentDate || !data.amount || !data.type || !data.company) {
+    if (!data || !data.agentInCompanyId || !data.paymentDate || !data.amount || !data.type || !data.company) {
         return res.status(400).json({err: 'missing salary data'});
     }
 
@@ -86,11 +86,14 @@ function addAgentSalary(req, res) {
     var startDate = new Date(data.paymentDate);
 
     for(var i=0;i<repeatCount;i++){
-        salariesRequests.push(salaryService.addAgentSalary(req.params.idNumber, data.agentId, startDate.toISOString(), data.amount, data.type, data.company, data.notes || ''));
+        salariesRequests.push(salaryService.addAgentSalary(req.params.idNumber, data.agentInCompanyId, startDate.toISOString(), data.amount, data.type, data.company, data.notes || ''));
         startDate.setMonth(startDate.getMonth()+1);
     }
     Promise.all(salariesRequests)
-        .then(function (salary) {
+        .then(function (salaries) {
+            var salary = _.filter(salaries, function(s){
+                return s.paymentDate.toISOString() === data.paymentDate;
+            });
             return res.status(200).json({salary: salary});
         })
         .catch(function (err) {
