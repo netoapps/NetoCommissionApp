@@ -62,6 +62,8 @@ module.exports.registerRoutes = function(app){
     //Other
     apiRouter.get('/constants/companies', constants.getCompanyNames);
     apiRouter.get('/constants/commissions', constants.getCommisionTypes);
+    apiRouter.post('/constants/companies/:company', constants.addCompany);
+    apiRouter.delete('/constants/companies/:company', constants.removeCompany);
 
     app.use('/api/v1',apiRouter);
 
