@@ -62,12 +62,11 @@ function ConstantsService(){
             }
 
         });
-        Constant.update({name:'commissionType'},{$setOnInsert:{value:commissionType}},{upsert:true},function(err, n){
-            if(err){
+        Constant.update({name:'commissionType'},{$setOnInsert:{value:commissionType}},{upsert:true},function(err, n) {
+            if (err) {
                 console.log(err);
             }
-
-        });
+        })
     }
 }
 
