@@ -330,30 +330,30 @@ class DataService {
                 });
         });
     }
-    addNewIncome(income, callback)
+    addManualIncome(income,agentId, callback)
     {
         //post to server...
         $.ajax(
             {
-                url: '/api/v1/agent',
+                url: '/api/v1/agent/'+agentId+'/salary',
                 type: 'POST',
-                data: JSON.stringify(agent),
+                data: JSON.stringify(income),
                 contentType: 'application/json',
                 success: function(result)
                 {
                     console.log(result);
-                    console.log('addAgent - Server responded with success!');
+                    console.log('addManualIncome - Server responded with success!');
 
                     if(callback != null)
                         callback({
                             result:true,
-                            data: result.agent
+                            data: result.salary
                         });
 
                 }.bind(this),
                 error: function(jqXHR, textStatus, errorThrown)
                 {
-                    console.error('addAgent - ', textStatus, errorThrown.toString());
+                    console.error('addManualIncome - ', textStatus, errorThrown.toString());
                     if(callback != null)
                         callback({
                             result:false,

@@ -20,7 +20,6 @@ class TableCell extends React.Component {
         this.setState(this.state)
     }
 
-
     onChange(event)
     {
         if(this.state.column.type == "select")
@@ -164,6 +163,10 @@ class TableRow extends React.Component {
         this.state.removableRow = !(nextProps.onRemoveRow == null)
         this.setState(this.state)
     }
+    onRowClick()
+    {
+        this.props.onRowClick(this.state.index)
+    }
     render() {
         var tableCells = [];
         for(var cell = 0; cell < this.state.columns.length; cell++)
@@ -175,12 +178,16 @@ class TableRow extends React.Component {
         var removeRow = null
         if(this.state.removableRow)
         {
-            removeRow = <button onClick= { function(index) { this.props.onRemoveRow(index) }.bind(this,this.state.index)} className="table-row-remove-button"/>
+            removeRow = <button onClick={
+                function(index)
+                {
+                    this.props.onRemoveRow(index)
+                }.bind(this,this.state.index)} className="table-row-remove-button"/>
         }
 
-        return  <div className="table-row">
+        return  <div className="table-row" >
                     {removeRow}
-                    {tableCells}
+                    <div className="table-row-data" onClick={this.onRowClick.bind(this)}>{tableCells} </div>
                  </div>;
     }
 }
@@ -247,7 +254,13 @@ class Table extends React.Component {
         this.state.data = nextProps.data
         this.setState(this.state)
     }
-
+    onRowClick(index)
+    {
+        if (this.props.onRowClick != null)
+        {
+            this.props.onRowClick(index)
+        }
+    }
     render()
     {
         var data = this.state.data
@@ -277,6 +290,7 @@ class Table extends React.Component {
         var tableRows = [];
         for(var row = 0; row < data.length; row++)
             tableRows[row] = <TableRow onRemoveRow = {this.props.onRemoveRow}
+                                       onRowClick = {this.onRowClick.bind(this)}
                                        key={row} index={row}
                                        data={data[row]}
                                        columns={this.state.columns}/>
