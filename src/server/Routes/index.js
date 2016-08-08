@@ -60,8 +60,8 @@ module.exports.registerRoutes = function(app){
     //Delete file
 
     //Other
-    apiRouter.get('/constants/companies', constants.getCompanyNames);
-    apiRouter.get('/constants/commissions', constants.getCommisionTypes);
+    apiRouter.get('/constants/companies', constants.getCompanies);
+    apiRouter.get('/constants/commissions', constants.getCommissions);
     apiRouter.post('/constants/companies/:company', constants.addCompany);
     apiRouter.delete('/constants/companies/:company', constants.removeCompany);
 

@@ -5,7 +5,7 @@
 var ConstantsService = require('../Services/constantService');
 var constantsService = new ConstantsService();
 
-module.exports.getCompanyNames = function(req, res){
+module.exports.getCommissions = function(req, res){
     constantsService.getCommisionTypes()
         .then(function(ct){
             return res.status(200).json({commissionTypes:ct});
@@ -16,7 +16,7 @@ module.exports.getCompanyNames = function(req, res){
 
 }
 
-module.exports.getCommisionTypes = function(req, res){
+module.exports.getCompanies = function(req, res){
     constantsService.getCompanyNames()
         .then(function(ct){
             return res.status(200).json({companies:ct});
