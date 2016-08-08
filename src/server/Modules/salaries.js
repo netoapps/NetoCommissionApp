@@ -77,7 +77,7 @@ function addAgentSalary(req, res) {
         return res.status(400).json({err: 'missing id Number'});
     }
     var data = req.body;
-    if (!data || !data.agentId || !data.paymentDate || !data.amount || !data.type || !data.company) {
+    if (!data || !data.agentInCompanyId || !data.paymentDate || !data.amount || !data.type || !data.company) {
         return res.status(400).json({err: 'missing salary data'});
     }
 
@@ -86,7 +86,7 @@ function addAgentSalary(req, res) {
     var startDate = new Date(data.paymentDate);
 
     for(var i=0;i<repeatCount;i++){
-        salariesRequests.push(salaryService.addAgentSalary(req.params.idNumber, data.agentId, startDate.toISOString(), data.amount, data.type, data.company, data.notes || ''));
+        salariesRequests.push(salaryService.addAgentSalary(req.params.idNumber, data.agentInCompanyId, startDate.toISOString(), data.amount, data.type, data.company, data.notes || ''));
         startDate.setMonth(startDate.getMonth()+1);
     }
     Promise.all(salariesRequests)
