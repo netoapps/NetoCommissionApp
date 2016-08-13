@@ -330,7 +330,7 @@ class DataService {
                 });
         });
     }
-    addManualIncome(income,agentId, callback)
+    addIncome(income,agentId, callback)
     {
         //post to server...
         $.ajax(
@@ -342,7 +342,7 @@ class DataService {
                 success: function(result)
                 {
                     console.log(result);
-                    console.log('addManualIncome - Server responded with success!');
+                    console.log('addIncome - Server responded with success!');
 
                     if(callback != null)
                         callback({
@@ -353,7 +353,70 @@ class DataService {
                 }.bind(this),
                 error: function(jqXHR, textStatus, errorThrown)
                 {
-                    console.error('addManualIncome - ', textStatus, errorThrown.toString());
+                    console.error('addIncome - ', textStatus, errorThrown.toString());
+                    if(callback != null)
+                        callback({
+                            result:false,
+                            data: null
+                        });
+                }.bind(this)
+            });
+    }
+    updateIncome(incomeId,income,agentId, callback)
+    {
+        //post to server...
+        $.ajax(
+            {
+                url: '/api/v1/agent/'+agentId+'/salary/' + incomeId,
+                type: 'PUT',
+                data: JSON.stringify(income),
+                contentType: 'application/json',
+                success: function(result)
+                {
+                    console.log(result);
+                    console.log('updateIncome - Server responded with success!');
+
+                    if(callback != null)
+                        callback({
+                            result:true,
+                            data: result.salary
+                        });
+
+                }.bind(this),
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+                    console.error('updateIncome - ', textStatus, errorThrown.toString());
+                    if(callback != null)
+                        callback({
+                            result:false,
+                            data: null
+                        });
+                }.bind(this)
+            });
+    }
+    deleteIncome(income,agentId, callback)
+    {
+        //post to server...
+        $.ajax(
+            {
+                url: '/api/v1/agent/'+agentId+'/salary/'+income._id,
+                type: 'DELETE',
+                contentType: 'application/json',
+                success: function(result)
+                {
+                    console.log(result);
+                    console.log('deleteIncome - Server responded with success!');
+
+                    if(callback != null)
+                        callback({
+                            result:true,
+                            data: result.salary
+                        });
+
+                }.bind(this),
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+                    console.error('deleteIncome - ', textStatus, errorThrown.toString());
                     if(callback != null)
                         callback({
                             result:false,

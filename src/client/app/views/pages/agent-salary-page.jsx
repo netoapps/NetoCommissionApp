@@ -172,18 +172,12 @@ class AgentSalaryPage extends React.Component {
         var currentYear = date.getFullYear().toString();
         var monthStartDate = new Date(date.getFullYear(), date.getMonth(), 1, 0, 0, 0, 0);
 
-        var incomes = {}
-        for(var type = 0; type < commissionTypes.length; type++) {
-            incomes[commissionTypes[type]] = []
-        }
-
-        this.state = {
+         this.state = {
             agent: AppStore.getAgentAtIndex(this.props.params.index),
             date: monthStartDate,
             selectedMonth: currentMonth,
             selectedYear:currentYear,
-            incomes: incomes,
-            manualIncomes: [],
+            incomes: [],
             expenses: [],
             portfolio: "0",
             newIncomeVisible: false,
@@ -203,13 +197,17 @@ class AgentSalaryPage extends React.Component {
     {
         this.reloadData((incomes, expenses, portfolio) => {
 
-            this.state.incomes = incomes
+            this.state.incomes = this.concatAllIncomes(incomes)
             this.state.expenses = expenses
             this.state.portfolio = portfolio
             this.setState(this.state)
         })
     }
     componentWillUnmount()
+    {
+
+    }
+    setIncomes(incomes)
     {
 
     }
@@ -248,7 +246,7 @@ class AgentSalaryPage extends React.Component {
             this.state.date = new Date(this.state.date.getFullYear(), getMonthNumber(month), 1, 0, 0, 0, 0);
             this.reloadData((incomes, expenses, portfolio) => {
 
-                this.state.incomes = incomes
+                this.state.incomes = this.concatAllIncomes(incomes)
                 this.state.expenses = expenses
                 this.state.portfolio = portfolio
                 this.setState(this.state)
@@ -263,7 +261,7 @@ class AgentSalaryPage extends React.Component {
             this.state.date = new Date(year, this.state.date.getMonth(), 1, 0, 0, 0, 0);
             this.reloadData((incomes, expenses, portfolio) => {
 
-                this.state.incomes = incomes
+                this.state.incomes = this.concatAllIncomes(incomes)
                 this.state.expenses = expenses
                 this.state.portfolio = portfolio
                 this.setState(this.state)
@@ -281,7 +279,10 @@ class AgentSalaryPage extends React.Component {
     }
     onNewIncome()
     {
-        this.openNewIncomeModal(new Income(),-1)
+        var income = new Income()
+        income.company = companies[0]
+        income.type = commissionTypes[0]
+        this.openNewIncomeModal(income,-1)
     }
 
     onManualIncomeRowClick(index,income)
@@ -293,19 +294,12 @@ class AgentSalaryPage extends React.Component {
 
     updateIncome(incomeId, updatedIncome)
     {
-        for(var type = 0; type < commissionTypes.length; type++)
+        for(var index = 0; index < this.state.incomes.length; index++)
         {
-            var incomesOfType = this.state.incomes[commissionTypes[type]]
-            if(incomesOfType != null)
+            if(this.state.incomes[index]._id === incomeId)
             {
-                for(var incomeIndex = 0; incomeIndex < incomesOfType.length; incomeIndex++)
-                {
-                    if(incomesOfType[incomeIndex]._id === incomeId)
-                    {
-                        incomesOfType[incomeIndex] = updatedIncome
-                        return true
-                    }
-                }
+                this.state.incomes[index] = updatedIncome
+                return true
             }
         }
         return false
@@ -315,59 +309,66 @@ class AgentSalaryPage extends React.Component {
     {
         if(index != -1)
         {
-            if(this.updateIncome(this.state.selectedIncome._id,income))
-            {
-                console.log("Income with id " + this.state.selectedIncome._id + " updated successfully")
-            }
-            else
-            {
-                console.log("ERROR while updating income with id " + this.state.selectedIncome._id + " - id not found")
-            }
+            DataService.updateIncome(this.state.selectedIncome._id,income,this.state.agent.idNumber, (response) => {
+
+                if(response.result == true)
+                {
+                    if(this.updateIncome(this.state.selectedIncome._id,response.data))
+                    {
+                        console.log("Income with id " + this.state.selectedIncome._id + " updated successfully")
+                    }
+                    else
+                    {
+                        console.log("ERROR while updating income with id " + this.state.selectedIncome._id + " - id not found")
+                    }
+                }
+            })
+
+
             this.state.selectedIncome = null
             this.setState(this.state)
         }
         else
         {
             income.paymentDate = this.state.date
-            // DataService.addManualIncome(income,this.state.agent.idNumber, (response) => {
-            //
-            //     if(response.result == true)
-            //     {
-            //         if(income != null)
-            //         {
-            //             this.state.incomes[this.state.selectedIncome.type].push(response.data)
-            //         }
-            //     }
-            // this.state.incomes[income.type].push(income)
-            // this.state.selectedIncome = null
-            // this.setState(this.state)
-            // })
+            DataService.addIncome(income,this.state.agent.idNumber, (response) => {
 
-            this.state.incomes[income.type].push(income)
-            this.state.selectedIncome = null
-            this.setState(this.state)
-        }
+                if(response.result == true)
+                {
+                    this.state.incomes.push(response.data)
+                    this.state.selectedIncome = null
+                    this.setState(this.state)
+                }
+            })
+
+         }
         Modal.hide()
     }
-    onRemoveIncome(rowIndex)
+    onDeleteIncome(rowIndex)
     {
-        this.state.incomes[this.state.selectedIncome.type].splice(rowIndex, 1)
-        this.state.selectedIncome = null
-        this.setState(this.state)
+        DataService.deleteIncome(this.state.incomes[rowIndex],this.state.agent.idNumber, (response) => {
+
+            if(response.result == true)
+            {
+                this.state.incomes.splice(rowIndex, 1)
+                this.state.selectedIncome = null
+                this.setState(this.state)
+            }
+        })
     }
     onNewExpense()
     {
 
     }
 
-    sumOfIncome(incomes)
+    sumOfIncomeWithType(type)
     {
         var sum = 0
-        if(incomes.length > 0)
+        for(var index = 0; index < this.state.incomes.length; index++)
         {
-            for(var index = 0; index < incomes.length; index++)
+            if(this.state.incomes[index].type === type)
             {
-                sum += incomes[index].amount
+                sum += this.state.incomes[index].amount
             }
         }
         return sum
@@ -385,16 +386,12 @@ class AgentSalaryPage extends React.Component {
         }
         return allIncomes
     }
-    sumAllIncomes(incomes)
+    sumOfAllIncomes()
     {
         var sum = 0
-        for(var type = 0; type < commissionTypes.length; type++)
+        for(var index = 0; index < this.state.incomes.length; index++)
         {
-            var incomesOfType = incomes[commissionTypes[type]]
-            if(incomesOfType != null)
-            {
-                sum +=  this.sumOfIncome(incomesOfType)
-            }
+            sum += this.state.incomes[index].amount
         }
         return sum
     }
@@ -465,13 +462,12 @@ class AgentSalaryPage extends React.Component {
         ]
 
         var expenses = 0
-        var incomesSum = this.sumAllIncomes(this.state.incomes)
+        var incomesSum = this.sumOfAllIncomes()
         var salary = incomesSum - expenses
-        var incomesData = this.concatAllIncomes(this.state.incomes)
-        var nifraim = this.sumOfIncome(this.state.incomes["נפרעים"])
-        var bonus = this.sumOfIncome(this.state.incomes["בונוס"])
-        var heikef = this.sumOfIncome(this.state.incomes["היקף"])
-        var manual = this.sumOfIncome(this.state.incomes["ידני"])
+        var nifraim = this.sumOfIncomeWithType("נפרעים")
+        var bonus = this.sumOfIncomeWithType("בונוס")
+        var heikef = this.sumOfIncomeWithType("היקף")
+        var manual = this.sumOfIncomeWithType("ידני")
 
         return (
             <div className="agent-salary-page animated fadeIn">
@@ -523,9 +519,9 @@ class AgentSalaryPage extends React.Component {
                     </div>
                     <div className="agent-salary-page-income-table">
                         <Table onRowClick={this.onManualIncomeRowClick.bind(this)}
-                               onRemoveRow={this.onRemoveIncome.bind(this)}
+                               onRemoveRow={this.onDeleteIncome.bind(this)}
                                columns={incomesColumns}
-                               data={incomesData}/>
+                               data={this.state.incomes}/>
                     </div>
                 </div>
 
