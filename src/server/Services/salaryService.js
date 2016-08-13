@@ -64,7 +64,7 @@ function SalaryService() {
             })
         })
     };
-    this.updateSalary = function (id, agentInCompanyId, paymentDate, amount, type, company) {
+    this.updateSalary = function (id,idNumber, agentInCompanyId, paymentDate, amount, type, company, notes) {
         return new Promise(function (resolve, reject) {
             Salary.findById(id, function (err, salary) {
                 if (err) {
@@ -74,10 +74,13 @@ function SalaryService() {
                     return reject('salary not found');
                 }
                 salary.agentInCompanyId = agentInCompanyId;
+                salary.idNumber = idNumber;
                 salary.paymentDate = paymentDate;
                 salary.amount = amount;
                 salary.type = type;
                 salary.company = company;
+                salary.notes = notes;
+                salary.updateTime = Date.now();
                 salary.save(function (err) {
                     if (err) {
                         return reject(err);

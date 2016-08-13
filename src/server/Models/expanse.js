@@ -12,7 +12,7 @@ var schema = new mongoose.Schema({
     updateTime:{type:Date, default:Date.now},
     type: String,
     sum:String,
-    expanseDate:Date,
+    expenseDate:Date,
     idNumber:String,
     notes:{type:String, default:''}
 });

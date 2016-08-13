@@ -9,7 +9,7 @@ function ExpanseService() {
         return new Promise(function (resolve, reject) {
             var expanse = new Expanse();
             expanse.idNumber = idNumber;
-            expanse.expanseDate = date;
+            expanse.expenseDate = date;
             expanse.type = type;
             expanse.sum = sum;
             expanse.notes = notes;
@@ -31,7 +31,7 @@ function ExpanseService() {
                 if (!expanse) {
                     return reject('expanse not found');
                 }
-                expanse.expanseDate = date;
+                expanse.expenseDate = date;
                 expanse.type = type;
                 expanse.sum = sum;
                 expanse.notes = notes;
@@ -68,14 +68,14 @@ function ExpanseService() {
     this.getAgentExpanseForDate = function(idNumber, date){
         return new Promise(function(resolve, reject){
             date = new Date(date);
-            Expanse.find({idNumber:idNumber, expanseDate:date}, function(err, expanses){
+            Expanse.find({idNumber:idNumber, expenseDate:date}, function(err, expenses){
                 if (err) {
                     return reject(err);
                 }
-                if (!expanses) {
+                if (!expenses) {
                     return reject('expanse not found');
                 }
-                return resolve(expanses);
+                return resolve(expenses);
 
             })
         })
