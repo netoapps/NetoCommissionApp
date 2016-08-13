@@ -85,7 +85,7 @@ function SalaryService() {
                     if (err) {
                         return reject(err);
                     }
-                    return resolve();
+                    return resolve(salary);
                 })
             })
         })
