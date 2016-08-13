@@ -38,7 +38,7 @@ function addExpanseToAgentAtDate(req, res) {
 }
 
 function deleteExpanse(req, res) {
-    expanseService.deleteExpanse(req.params.expanseId)
+    expanseService.deleteExpanse(req.params.expenseId)
         .then(function () {
             return res.status(200).json({msg: 'expense deleted'});
         })
