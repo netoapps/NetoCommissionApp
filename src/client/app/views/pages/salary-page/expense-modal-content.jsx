@@ -12,7 +12,7 @@ export default class ExpenseModalContent extends React.Component
 
         this.state = {
             companies:props.companies,
-            commissionTypes:props.commissionTypes,
+            expenseTypes:props.expenseTypes,
             expenseIndex: props.expenseIndex,
             expense: this.setupExpense(props.expense)
         }
@@ -26,18 +26,18 @@ export default class ExpenseModalContent extends React.Component
     {
         if (expense == null) {
             expense = new Expense()
-            expense.type = props.commissionTypes[0]
+            expense.type = props.expenseTypes[0]
         }
         return expense
     }
 
-    onExpenseCommissionTypeChange(index,value)
+    onExpenseTypeChange(index,value)
     {
         this.state.expense.type = value
         this.setState(this.state)
     }
 
-    onExpenseCommissionAmountChange(index,value)
+    onExpenseAmountChange(index,value)
     {
         this.state.expense.amount = value
         this.setState(this.state)
@@ -66,8 +66,8 @@ export default class ExpenseModalContent extends React.Component
                 width: "col-33-33",
                 type: 'select',
                 color: 'normal',
-                action: this.onExpenseCommissionTypeChange.bind(this),
-                options: this.state.commissionTypes
+                action: this.onExpenseTypeChange.bind(this),
+                options: this.state.expenseTypes
             },
             {
                 title: "סה״כ",
@@ -75,7 +75,7 @@ export default class ExpenseModalContent extends React.Component
                 width: "col-33-33",
                 type: 'input',
                 color: 'normal',
-                action: this.onExpenseCommissionAmountChange.bind(this),
+                action: this.onExpenseAmountChange.bind(this),
             },
             {
                 title: "הערות",
