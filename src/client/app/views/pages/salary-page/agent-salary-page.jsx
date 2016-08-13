@@ -24,6 +24,7 @@ function currencyFormattedString(stringFloatValue)
 
 var companies = AppStore.getCompanies()
 var commissionTypes = AppStore.getCommissionTypes().concat(AppStore.getExtendedCommissionTypes())
+var expenseTypes = ["שכר","החזר הלוואות","הוצאות משרד","מקדמה","שונות"]
 
 class AgentSalaryPage extends React.Component {
 
@@ -202,22 +203,49 @@ class AgentSalaryPage extends React.Component {
     }
     onDeleteIncome(rowIndex)
     {
-        DataService.deleteAgentSalaryIncome(this.state.incomes[rowIndex],this.state.agent.idNumber, (response) => {
-
-            if(response.result == true)
+        swal({
+                title: "אישור מחיקת הכנסה",
+                text: "למחוק הכנסה זו לצמיתות מהמערכת?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "כן, מחק את ההכנסה מהמערכת",
+                cancelButtonText: "בטל",
+                closeOnConfirm: false,
+                showLoaderOnConfirm: false
+            },
+            function(isConfirm)
             {
-                this.state.incomes.splice(rowIndex, 1)
-                this.state.selectedIncome = null
-                this.setState(this.state)
-            }
-        })
+                if (isConfirm)
+                {
+                    DataService.deleteAgentSalaryIncome(this.state.incomes[rowIndex]._id,this.state.agent.idNumber, (response) => {
+
+                        if(response.result == true)
+                        {
+                            swal(
+                                {
+                                    title: "",
+                                    text: "ההכנסה נמחקה לצמיתות מהמערכת!",
+                                    type: "success",
+                                    timer: 1500,
+                                    showConfirmButton: false
+                                }
+                            )
+                            this.state.incomes.splice(rowIndex, 1)
+                            this.state.selectedIncome = null
+                            this.setState(this.state)
+                        }
+                    })
+                }
+            }.bind(this));
+
     }
 
     //Manual income
     openExpenseModal(expense, index)
     {
         var expenseModalContent =  <ExpenseModalContent companies={companies}
-                                                        commissionTypes={commissionTypes}
+                                                        expenseTypes={expenseTypes}
                                                         expense={expense}
                                                         expenseIndex={index}
                                                         onSaveExpense={this.onSaveExpense.bind(this)}/>
@@ -228,6 +256,8 @@ class AgentSalaryPage extends React.Component {
     onNewExpense()
     {
         var expense = new Expense()
+        expense.expenseDate = this.state.date
+        expense.type = expenseTypes[0]
         this.openExpenseModal(expense,-1)
     }
 
@@ -267,7 +297,7 @@ class AgentSalaryPage extends React.Component {
         }
         else
         {
-            expense.date = this.state.date
+            expense.expenseDate = this.state.date
             DataService.addAgentSalaryExpense(expense,this.state.agent.idNumber, (response) => {
 
                 if(response.result == true)
@@ -290,15 +320,42 @@ class AgentSalaryPage extends React.Component {
     }
     onDeleteExpense(rowIndex)
     {
-        DataService.deleteAgentSalaryExpense(this.state.expenses[rowIndex],this.state.agent.idNumber, (response) => {
-
-            if(response.result == true)
+        swal({
+                title: "אישור מחיקת הוצאה",
+                text: "למחוק הוצאה זו לצמיתות מהמערכת?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "כן, מחק את ההוצאה מהמערכת",
+                cancelButtonText: "בטל",
+                closeOnConfirm: false,
+                showLoaderOnConfirm: false
+            },
+            function(isConfirm)
             {
-                this.state.expenses.splice(rowIndex, 1)
-                this.state.selectedExpense = null
-                this.setState(this.state)
-            }
-        })
+                if (isConfirm)
+                {
+                    DataService.deleteAgentSalaryExpense(this.state.expenses[rowIndex]._id,this.state.agent.idNumber, (response) => {
+
+                        if(response.result == true)
+                        {
+                            swal(
+                                {
+                                    title: "",
+                                    text: "ההוצאה נמחקה לצמיתות מהמערכת!",
+                                    type: "success",
+                                    timer: 1500,
+                                    showConfirmButton: false
+                                }
+                            )
+                            this.state.expenses.splice(rowIndex, 1)
+                            this.state.selectedExpense = null
+                            this.setState(this.state)
+                        }
+                    })
+                }
+            }.bind(this));
+
     }
 
     sumOfIncomeWithType(type)
@@ -380,21 +437,22 @@ class AgentSalaryPage extends React.Component {
         var expensesColumns = [
             {
                 title: "סוג הוצאה",
-                key: "companyName",
+                key: "type",
                 width: "col-33-33",
                 type: 'read-only',
                 color: 'normal'
             },
             {
                 title: "סה״כ",
-                key: "agentNumber",
+                key: "amount",
                 width: "col-33-33",
                 type: 'read-only',
+                format: "currency",
                 color: 'normal'
             },
             {
                 title: "הערות",
-                key: "agentName",
+                key: "notes",
                 width: "col-33-33",
                 type: 'read-only',
                 color: 'normal'
@@ -474,7 +532,7 @@ class AgentSalaryPage extends React.Component {
                         <Table onRowClick={this.onExpenseRowClick.bind(this)}
                                onRemoveRow={this.onDeleteExpense.bind(this)}
                                columns={expensesColumns}
-                               data={null}/>
+                               data={this.state.expenses}/>
                     </div>
                 </div>
 

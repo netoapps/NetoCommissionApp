@@ -15,8 +15,8 @@ export default class Expense
             this._id = ""
             this.type = ""
             this.amount = 0
-            this.date = 0
-            this.notes = "ידני"
+            this.expenseDate = 0
+            this.notes = ""
         }
     }
     copyFrom(expense)
