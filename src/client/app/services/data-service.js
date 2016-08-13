@@ -410,7 +410,7 @@ class DataService {
                     if(callback != null)
                         callback({
                             result:true,
-                            data: result.salary
+                            data: null
                         });
 
                 }.bind(this),
@@ -443,7 +443,7 @@ class DataService {
                     if(callback != null)
                         callback({
                             result:true,
-                            data: result.salary
+                            data: result.expense
                         });
 
                 }.bind(this),
@@ -475,7 +475,7 @@ class DataService {
                     if(callback != null)
                         callback({
                             result:true,
-                            data: result.salary
+                            data: result.expense
                         });
 
                 }.bind(this),
@@ -506,7 +506,7 @@ class DataService {
                     if(callback != null)
                         callback({
                             result:true,
-                            data: result.salary
+                            data: null
                         });
 
                 }.bind(this),
