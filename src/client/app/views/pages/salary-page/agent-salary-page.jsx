@@ -1,13 +1,16 @@
 import React from 'react';
-import Table from './../common/table.jsx';
-import AppStore from '../../stores/data-store'
-import { strings } from '../../constants/strings'
-import MonthYearBox from './../common/month-year-box.jsx'
-import {getMonthName, getMonthNumber} from './../common/month-year-box.jsx'
+import Table from '../../common/table.jsx';
+import AppStore from '../../../stores/data-store'
+import { strings } from '../../../constants/strings'
+import MonthYearBox from '../../common/month-year-box.jsx'
+import {getMonthName, getMonthNumber} from '../../common/month-year-box.jsx'
 import Button from 'muicss/lib/react/button'
-import DataService from '../../services/data-service.js';
-import {Modal} from './../common/app-modal.jsx';
-import Income from './../../model/income.js';
+import DataService from '../../../services/data-service.js';
+import {Modal} from '../../common/app-modal.jsx';
+import Income from '../../../model/income.js';
+import Expense from '../../../model/expense.js';
+import IncomeModalContent  from './income-modal-content.jsx';
+import ExpenseModalContent  from './expense-modal-content.jsx';
 
 function currencyFormattedString(stringFloatValue)
 {
@@ -21,146 +24,6 @@ function currencyFormattedString(stringFloatValue)
 
 var companies = AppStore.getCompanies()
 var commissionTypes = AppStore.getCommissionTypes().concat(AppStore.getExtendedCommissionTypes())
-
-class IncomeModalContent extends React.Component{
-    constructor(props) {
-        super(props);
-
-       this.state = {
-            companies:companies,
-            commissionTypes:commissionTypes,
-            incomeIndex: props.incomeIndex,
-            income: this.setupIncome(props.income)
-        }
-    }
-    componentWillReceiveProps(nextProps)
-    {
-        this.state.income = this.setupIncome(nextProps.income)
-        this.setState(this.state)
-    }
-    setupIncome(income)
-    {
-        if (income == null) {
-            income = new Income()
-            income.company = companies[0]
-            income.type = commissionTypes[0]
-        }
-        return income
-    }
-    onIncomeCompanyChange(index,value)
-    {
-        this.state.income.company = value
-        this.setState(this.state)
-    }
-    onIncomeCommissionTypeChange(index,value)
-    {
-         this.state.income.type = value
-        this.setState(this.state)
-    }
-    onIncomeAgentNumberChange(index,value)
-    {
-        this.state.income.agentInCompanyId = value
-        this.setState(this.state)
-    }
-    onIncomeCommissionAmountChange(index,value)
-    {
-        this.state.income.amount = value
-        this.setState(this.state)
-    }
-    onIncomeNoteChange(index,value)
-    {
-        this.state.income.notes = value
-        this.setState(this.state)
-    }
-    onIncomeRepeatChange(index,value)
-    {
-        this.state.income.repeat = value
-        this.setState(this.state)
-    }
-    onCancel()
-    {
-        Modal.hide()
-    }
-    onSave()
-    {
-        this.props.onSaveIncome(this.state.income,this.state.incomeIndex)
-    }
-    render(){
-
-        var columns = [
-            {
-                title: "חברה",
-                key: "company",
-                width: "col-33-33",
-                type: 'select',
-                color: 'normal',
-                action: this.onIncomeCompanyChange.bind(this),
-                options: this.state.companies
-            },
-            {
-                title: "מספר סוכן",
-                key: "agentInCompanyId",
-                width: "col-33-33",
-                type: 'input',
-                color: 'normal',
-                action: this.onIncomeAgentNumberChange.bind(this)
-            },
-            {
-                title: "סוג תשלום",
-                key: "type",
-                width: "col-33-33",
-                type: 'select',
-                color: 'normal',
-                action: this.onIncomeCommissionTypeChange.bind(this),
-                options: this.state.commissionTypes
-            },
-            {
-                title: "סה״כ תשלום",
-                key: "amount",
-                width: "col-33-33",
-                type: 'input',
-                color: 'normal',
-                action: this.onIncomeCommissionAmountChange.bind(this),
-            },
-            {
-                title: "מחזוריות",
-                key: "repeat",
-                width: "col-33-33",
-                type: 'input',
-                color: 'normal',
-                action: this.onIncomeRepeatChange.bind(this)
-            },
-            {
-                title: "הערות",
-                key: "notes",
-                width: "col-66-66",
-                type: 'input',
-                color: 'normal',
-                action: this.onIncomeNoteChange.bind(this)
-            }
-        ]
-
-        var modalTitle = strings.newIncome
-        if(this.state.incomeIndex != -1)
-            modalTitle = strings.editIncome
-
-        return (
-            <div className="income-modal">
-                <div className="modal-title">{modalTitle}</div>
-                <div className="income-modal-table">
-                    <Table columns={columns}
-                           data={[this.state.income]}/>
-                </div>
-                <div className="hcontainer-no-wrap">
-                    <div className="horizontal-spacer-90"/>
-                    <Button className="shadow" onClick={this.onCancel.bind(this)} color="default">{strings.cancel}</Button>
-                    <div className="horizontal-spacer-20"/>
-                    <Button className="shadow" onClick={this.onSave.bind(this)} color="primary">{strings.save}</Button>
-                </div>
-            </div>
-        );
-    }
-}
 
 class AgentSalaryPage extends React.Component {
 
@@ -185,14 +48,7 @@ class AgentSalaryPage extends React.Component {
             selectedExpense: null,
         }
     }
-    componentWillReceiveProps(nextProps)
-    {
-        // this.reloadData((value,change) => {
-        //     this.state.value = value
-        //     this.state.change = change
-        //     this.setState(this.state)
-        // })
-    }
+
     componentDidMount()
     {
         this.reloadData((incomes, expenses, portfolio) => {
@@ -269,27 +125,29 @@ class AgentSalaryPage extends React.Component {
         }
     }
     //Manual income
-    openNewIncomeModal(income, index)
+    openIncomeModal(income, index)
     {
-        var newIncomeModal =  <IncomeModalContent income={income}
-                                                  incomeIndex={index}
-                                                  onSaveIncome={this.onSaveManualIncome.bind(this)}/>
+        var incomeModalContent =  <IncomeModalContent companies={companies}
+                                                      commissionTypes={commissionTypes}
+                                                      income={income}
+                                                      incomeIndex={index}
+                                                      onSaveIncome={this.onSaveIncome.bind(this)}/>
 
-        Modal.showWithContent(newIncomeModal)
+        Modal.showWithContent(incomeModalContent)
     }
     onNewIncome()
     {
         var income = new Income()
         income.company = companies[0]
         income.type = commissionTypes[0]
-        this.openNewIncomeModal(income,-1)
+        this.openIncomeModal(income,-1)
     }
 
-    onManualIncomeRowClick(index,income)
+    onIncomeRowClick(index,income)
     {
         //Save income before editing so we can refer to type even if it was edited
         this.state.selectedIncome = income
-        this.openNewIncomeModal(new Income(income),index)
+        this.openIncomeModal(new Income(income),index)
     }
 
     updateIncome(incomeId, updatedIncome)
@@ -305,17 +163,19 @@ class AgentSalaryPage extends React.Component {
         return false
     }
 
-    onSaveManualIncome(income,index)
+    onSaveIncome(income,index)
     {
         if(index != -1)
         {
-            DataService.updateIncome(this.state.selectedIncome._id,income,this.state.agent.idNumber, (response) => {
+            DataService.updateAgentSalaryIncome(this.state.selectedIncome._id,income,this.state.agent.idNumber, (response) => {
 
                 if(response.result == true)
                 {
                     if(this.updateIncome(this.state.selectedIncome._id,response.data))
                     {
                         console.log("Income with id " + this.state.selectedIncome._id + " updated successfully")
+                        this.state.selectedIncome = null
+                        this.setState(this.state)
                     }
                     else
                     {
@@ -323,15 +183,11 @@ class AgentSalaryPage extends React.Component {
                     }
                 }
             })
-
-
-            this.state.selectedIncome = null
-            this.setState(this.state)
         }
         else
         {
             income.paymentDate = this.state.date
-            DataService.addIncome(income,this.state.agent.idNumber, (response) => {
+            DataService.addAgentSalaryIncome(income,this.state.agent.idNumber, (response) => {
 
                 if(response.result == true)
                 {
@@ -346,7 +202,7 @@ class AgentSalaryPage extends React.Component {
     }
     onDeleteIncome(rowIndex)
     {
-        DataService.deleteIncome(this.state.incomes[rowIndex],this.state.agent.idNumber, (response) => {
+        DataService.deleteAgentSalaryIncome(this.state.incomes[rowIndex],this.state.agent.idNumber, (response) => {
 
             if(response.result == true)
             {
@@ -356,9 +212,93 @@ class AgentSalaryPage extends React.Component {
             }
         })
     }
+
+    //Manual income
+    openExpenseModal(expense, index)
+    {
+        var expenseModalContent =  <ExpenseModalContent companies={companies}
+                                                        commissionTypes={commissionTypes}
+                                                        expense={expense}
+                                                        expenseIndex={index}
+                                                        onSaveExpense={this.onSaveExpense.bind(this)}/>
+
+        Modal.showWithContent(expenseModalContent)
+    }
+
     onNewExpense()
     {
+        var expense = new Expense()
+        this.openExpenseModal(expense,-1)
+    }
 
+    updateExpense(expenseId, updatedExpense)
+    {
+        for(var index = 0; index < this.state.expenses.length; index++)
+        {
+            if(this.state.expenses[index]._id === expenseId)
+            {
+                this.state.expenses[index] = updatedExpense
+                return true
+            }
+        }
+        return false
+    }
+
+    onSaveExpense(expense,index)
+    {
+        if(index != -1)
+        {
+            DataService.updateAgentSalaryExpense(this.state.selectedExpense._id,expense,this.state.agent.idNumber, (response) => {
+
+                if(response.result == true)
+                {
+                    if(this.updateExpense(this.state.selectedExpense._id,response.data))
+                    {
+                        console.log("Expense with id " + this.state.selectedExpense._id + " updated successfully")
+                        this.state.selectedExpense = null
+                        this.setState(this.state)
+                    }
+                    else
+                    {
+                        console.log("ERROR while updating expense with id " + this.state.selectedExpense._id + " - id not found")
+                    }
+                 }
+            })
+        }
+        else
+        {
+            expense.date = this.state.date
+            DataService.addAgentSalaryExpense(expense,this.state.agent.idNumber, (response) => {
+
+                if(response.result == true)
+                {
+                    this.state.expenses.push(response.data)
+                    this.state.selectedExpense = null
+                    this.setState(this.state)
+                }
+            })
+
+        }
+        Modal.hide()
+    }
+    onExpenseRowClick(index,expense)
+    {
+        //Save income before editing so we can refer to type even if it was edited
+        this.state.selectedExpense = expense
+        this.openExpenseModal(new Expense(expense),index)
+
+    }
+    onDeleteExpense(rowIndex)
+    {
+        DataService.deleteAgentSalaryExpense(this.state.expenses[rowIndex],this.state.agent.idNumber, (response) => {
+
+            if(response.result == true)
+            {
+                this.state.expenses.splice(rowIndex, 1)
+                this.state.selectedExpense = null
+                this.setState(this.state)
+            }
+        })
     }
 
     sumOfIncomeWithType(type)
@@ -518,7 +458,7 @@ class AgentSalaryPage extends React.Component {
                         <Button className="shadow" onClick={this.onNewIncome.bind(this)} color="primary">{strings.newIncome}</Button>
                     </div>
                     <div className="agent-salary-page-income-table">
-                        <Table onRowClick={this.onManualIncomeRowClick.bind(this)}
+                        <Table onRowClick={this.onIncomeRowClick.bind(this)}
                                onRemoveRow={this.onDeleteIncome.bind(this)}
                                columns={incomesColumns}
                                data={this.state.incomes}/>
@@ -531,7 +471,9 @@ class AgentSalaryPage extends React.Component {
                         <Button className="shadow" onClick={this.onNewExpense.bind(this)} color="primary">{strings.newExpense}</Button>
                     </div>
                     <div className="agent-salary-page-expense-table">
-                        <Table columns={expensesColumns}
+                        <Table onRowClick={this.onExpenseRowClick.bind(this)}
+                               onRemoveRow={this.onDeleteExpense.bind(this)}
+                               columns={expensesColumns}
                                data={null}/>
                     </div>
                 </div>

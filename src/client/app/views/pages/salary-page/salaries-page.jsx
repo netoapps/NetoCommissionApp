@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { strings } from '../../constants/strings'
+import { strings } from '../../../constants/strings'
 import Button from 'muicss/lib/react/button'
-import Table from './../common/table.jsx'
-import AppStore from '../../stores/data-store'
-import {getMonthName,getMonthNumber,getMonths} from './../common/month-year-box.jsx'
-import MonthYearBox from './../common/month-year-box.jsx'
+import Table from '../../common/table.jsx'
+import AppStore from '../../../stores/data-store'
+import {getMonthName,getMonthNumber,getMonths} from '../../common/month-year-box.jsx'
+import MonthYearBox from '../../common/month-year-box.jsx'
 
 
 class Salaries extends React.Component {

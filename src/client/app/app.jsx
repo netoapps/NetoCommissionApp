@@ -5,11 +5,11 @@ import AuthService from './services/auth-service'
 import Login from './views/pages/login-page.jsx'
 import Dashboard from './views/pages/dashboard-page.jsx'
 import Commissions from './views/pages/commissions-page.jsx'
-import Salaries from './views/pages/salaries-page.jsx'
+import Salaries from './views/pages/salary-page/salaries-page.jsx'
 import Agents from './views/pages/agents-and-partnerships-page.jsx'
 import EditFiles from './views/pages/commission-files-page.jsx'
 import AgentPage from './views/pages/agent-page.jsx'
-import AgentSalaryPage from './views/pages/agent-salary-page.jsx'
+import AgentSalaryPage from './views/pages/salary-page/agent-salary-page.jsx'
 import PartnershipPage from './views/pages/partnership-page.jsx'
 import TopBar from './views/top-bar.jsx';
 import RightPanel from './views/right-panel.jsx';

@@ -1641,3 +1641,15 @@ body
     height: 100px;
     width: 100%;
 }
+
+.expense-modal
+{
+    height: 200px;
+    width: 1100px;
+}
+
+.expense-modal-table
+{
+    height: 100px;
+    width: 100%;
+}

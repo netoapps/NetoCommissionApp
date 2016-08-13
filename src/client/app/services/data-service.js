@@ -330,7 +330,7 @@ class DataService {
                 });
         });
     }
-    addIncome(income,agentId, callback)
+    addAgentSalaryIncome(income,agentId, callback)
     {
         //post to server...
         $.ajax(
@@ -362,7 +362,7 @@ class DataService {
                 }.bind(this)
             });
     }
-    updateIncome(incomeId,income,agentId, callback)
+    updateAgentSalaryIncome(incomeId,income,agentId, callback)
     {
         //post to server...
         $.ajax(
@@ -394,7 +394,103 @@ class DataService {
                 }.bind(this)
             });
     }
-    deleteIncome(income,agentId, callback)
+    deleteAgentSalaryIncome(income,agentId, callback)
+    {
+        //post to server...
+        $.ajax(
+            {
+                url: '/api/v1/agent/'+agentId+'/salary/'+income._id,
+                type: 'DELETE',
+                contentType: 'application/json',
+                success: function(result)
+                {
+                    console.log(result);
+                    console.log('deleteIncome - Server responded with success!');
+
+                    if(callback != null)
+                        callback({
+                            result:true,
+                            data: result.salary
+                        });
+
+                }.bind(this),
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+                    console.error('deleteIncome - ', textStatus, errorThrown.toString());
+                    if(callback != null)
+                        callback({
+                            result:false,
+                            data: null
+                        });
+                }.bind(this)
+            });
+    }
+
+    addAgentSalaryExpense(income,agentId, callback)
+    {
+        //post to server...
+        $.ajax(
+            {
+                url: '/api/v1/agent/'+agentId+'/salary',
+                type: 'POST',
+                data: JSON.stringify(income),
+                contentType: 'application/json',
+                success: function(result)
+                {
+                    console.log(result);
+                    console.log('addIncome - Server responded with success!');
+
+                    if(callback != null)
+                        callback({
+                            result:true,
+                            data: result.salary
+                        });
+
+                }.bind(this),
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+                    console.error('addIncome - ', textStatus, errorThrown.toString());
+                    if(callback != null)
+                        callback({
+                            result:false,
+                            data: null
+                        });
+                }.bind(this)
+            });
+    }
+    updateAgentSalaryExpense(incomeId,income,agentId, callback)
+    {
+        //post to server...
+        $.ajax(
+            {
+                url: '/api/v1/agent/'+agentId+'/salary/' + incomeId,
+                type: 'PUT',
+                data: JSON.stringify(income),
+                contentType: 'application/json',
+                success: function(result)
+                {
+                    console.log(result);
+                    console.log('updateIncome - Server responded with success!');
+
+                    if(callback != null)
+                        callback({
+                            result:true,
+                            data: result.salary
+                        });
+
+                }.bind(this),
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+                    console.error('updateIncome - ', textStatus, errorThrown.toString());
+                    if(callback != null)
+                        callback({
+                            result:false,
+                            data: null
+                        });
+                }.bind(this)
+            });
+    }
+    deleteAgentSalaryExpense(income,agentId, callback)
     {
         //post to server...
         $.ajax(
