@@ -26,9 +26,7 @@ function addExpanseToAgentAtDate(req, res) {
     if (!data.amount) {
         return res.status(400).json({err: 'missing amount'});
     }
-    if (!data.notes) {
-        return res.status(400).json({err: 'notes'});
-    }
+
 
     expanseService.addExpanseToAgentAtDate(req.params.idNumber, data.expenseDate, data.type, data.amount, data.notes)
         .then(function (expense) {
@@ -68,9 +66,7 @@ function updateExpanse(req, res) {
     if (!data.amount) {
         return res.status(400).json({err: 'missing amount'});
     }
-    if (!data.notes) {
-        return res.status(400).json({err: 'notes'});
-    }
+
     expanseService.updateExpanse(req.params.expenseId, data.expenseDate, data.type, data.amount, data.notes)
         .then(function (expense) {
             return res.status(200).json({expense: expense});
