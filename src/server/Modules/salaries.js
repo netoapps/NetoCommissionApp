@@ -110,8 +110,8 @@ function updateAgentSalary(req, res) {
         return res.status(400).json({err: 'missing salary data'});
     }
     salaryService.updateSalary(req.params.salaryId, data.idNumber, data.agentInCompanyId, data.paymentDate, data.amount, data.type, data.company, data.notes)
-        .then(function () {
-            return res.status(200).json({msg:'update succeed'});
+        .then(function(salary) {
+            return res.status(200).json({salary:salary});
         })
         .catch(function (err) {
             return res.status(400).json({err: err});

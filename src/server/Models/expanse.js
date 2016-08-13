@@ -11,7 +11,7 @@ var schema = new mongoose.Schema({
     creationTime:{type:Date, default:Date.now},
     updateTime:{type:Date, default:Date.now},
     type: String,
-    sum:String,
+    amount:String,
     expenseDate:Date,
     idNumber:String,
     notes:{type:String, default:''}
