@@ -5,13 +5,13 @@
 var Expanse = require('../Models/expanse');
 
 function ExpanseService() {
-    this.addExpanseToAgentAtDate = function (idNumber, date, type, sum, notes) {
+    this.addExpanseToAgentAtDate = function (idNumber, date, type, amount, notes) {
         return new Promise(function (resolve, reject) {
             var expanse = new Expanse();
             expanse.idNumber = idNumber;
             expanse.expenseDate = date;
             expanse.type = type;
-            expanse.sum = sum;
+            expanse.amount = amount;
             expanse.notes = notes;
             expanse.save(function (err) {
                 if (err) {
@@ -22,7 +22,7 @@ function ExpanseService() {
 
         })
     }
-    this.updateExpanse = function (id, date, type, sum, notes) {
+    this.updateExpanse = function (id, date, type, amount, notes) {
         return new Promise(function (resolve, reject) {
             Expanse.findById(id, function (err, expanse) {
                 if (err) {
@@ -33,7 +33,7 @@ function ExpanseService() {
                 }
                 expanse.expenseDate = date;
                 expanse.type = type;
-                expanse.sum = sum;
+                expanse.amount = amount;
                 expanse.notes = notes;
                 expanse.save(function (err) {
                     if (err) {
