@@ -21,13 +21,13 @@ class DataStore extends Store {
         //4 - hekef
         //5 - bonus
         var commissionType = ["היקף","נפרעים","בונוס"]
+        var extendedCommissionType = ["ידני"]
 
         this.initialize('commissionType',commissionType);
-
+        this.initialize('extendedCommissionType',extendedCommissionType);
         this.initialize('agents',[]);
         this.initialize('partnerships',[]);
         this.initialize('files', []);
-
     }
 
     loadData()
@@ -94,6 +94,10 @@ class DataStore extends Store {
     getCommissionTypes()
     {
         return this.get('commissionType');
+    }
+    getExtendedCommissionTypes()
+    {
+        return this.get('extendedCommissionType');
     }
     getCommissionFiles()
     {

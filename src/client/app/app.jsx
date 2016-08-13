@@ -16,7 +16,9 @@ import RightPanel from './views/right-panel.jsx';
 import { strings } from './constants/strings'
 import AppActions from './actions/app-actions'
 import AppStore from './stores/data-store'
+import AppModal from './views/common/app-modal.jsx';
 import dispatcher from './dispatcher/app-dispatcher.js';
+import {Modal} from './views/common/app-modal.jsx';
 
 dispatcher.registerStore(AppStore);
 AppActions.appInit();
@@ -37,15 +39,24 @@ class App extends React.Component {
     constructor() {
         super()
         this.state = {
+            showModal: false,
+            modalContent: null,
             loginData: AuthService.getLoginData()
         };
+        this.appModalShowBinding = null
+        this.appModalHideBinding = null
     }
-
-    componentWillMount()
+    componentWillUnmount()
     {
-
+        this.appModalShowBinding.detach();
+        this.appModalHideBinding.detach();
     }
-
+    componentDidMount()
+    {
+        //add signal listener
+        this.appModalShowBinding = Modal.showWithContentSignal.add(this.showModal.bind(this));
+        this.appModalHideBinding = Modal.hideSignal.add(this.hideModal.bind(this));
+    }
     onPanelItemClick(item)
     {
         if(strings.dashboard === item)
@@ -70,9 +81,23 @@ class App extends React.Component {
         AuthService.logout()
         this.context.router.push('/')
     }
+
+    showModal(modalContent)
+    {
+        this.state.modalContent = modalContent
+        this.state.showModal = true
+        this.setState(this.state)
+    }
+    hideModal()
+    {
+        this.state.modalContent = null
+        this.state.showModal = false
+        this.setState(this.state)
+    }
     render () {
         return (
             <div>
+                { this.state.showModal ? <AppModal modalContent={this.state.modalContent} /> : null }
                 <TopBar loginData={this.state.loginData}  onLogout={this.onLogout.bind(this)}/>
                 <RightPanel onPanelItemClick={this.onPanelItemClick.bind(this)}/>
                 {this.props.children}

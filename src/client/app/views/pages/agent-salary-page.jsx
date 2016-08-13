@@ -5,8 +5,9 @@ import { strings } from '../../constants/strings'
 import MonthYearBox from './../common/month-year-box.jsx'
 import {getMonthName, getMonthNumber} from './../common/month-year-box.jsx'
 import Button from 'muicss/lib/react/button'
-import Divider from 'muicss/lib/react/divider';
 import DataService from '../../services/data-service.js';
+import {Modal} from './../common/app-modal.jsx';
+import Income from './../../model/income.js';
 
 function currencyFormattedString(stringFloatValue)
 {
@@ -18,48 +19,34 @@ function currencyFormattedString(stringFloatValue)
     return value
 }
 
-var companies = AppStore.getCompanies().concat(["ידני"])
-var commissionTypes = AppStore.getCommissionTypes().concat(["ידני"])
+var companies = AppStore.getCompanies()
+var commissionTypes = AppStore.getCommissionTypes().concat(AppStore.getExtendedCommissionTypes())
 
-class Income
-{
-    constructor()
-    {
-        this.company = companies[0]
-        this.agentInCompanyId = ""
-        this.type = commissionTypes[0]
-        this.amount = 0
-        this.paymentDate = ""
-        this.repeat = 1
-        this.notes = "ידני"
-    }
-}
-
-class NewIncomeModal extends React.Component{
+class IncomeModalContent extends React.Component{
     constructor(props) {
         super(props);
 
-
-        var income = props.income
-        if (income == null) {
-            income = new Income()
-        }
-
-        this.state = {
+       this.state = {
             companies:companies,
             commissionTypes:commissionTypes,
-            income: income
+            incomeIndex: props.incomeIndex,
+            income: this.setupIncome(props.income)
         }
     }
-    // componentWillReceiveProps(nextProps)
-    // {
-    //     var income = nextProps.income
-    //     if (income == null) {
-    //         income = new Income()
-    //     }
-    //     this.state.income = income
-    //     this.setState(this.state)
-    // }
+    componentWillReceiveProps(nextProps)
+    {
+        this.state.income = this.setupIncome(nextProps.income)
+        this.setState(this.state)
+    }
+    setupIncome(income)
+    {
+        if (income == null) {
+            income = new Income()
+            income.company = companies[0]
+            income.type = commissionTypes[0]
+        }
+        return income
+    }
     onIncomeCompanyChange(index,value)
     {
         this.state.income.company = value
@@ -92,14 +79,13 @@ class NewIncomeModal extends React.Component{
     }
     onCancel()
     {
-        this.props.onCancelIncome()
+        Modal.hide()
     }
     onSave()
     {
-        this.props.onSaveIncome(this.state.income)
+        this.props.onSaveIncome(this.state.income,this.state.incomeIndex)
     }
     render(){
-        const { text,onRequestClose } = this.props;
 
         var columns = [
             {
@@ -154,21 +140,22 @@ class NewIncomeModal extends React.Component{
             }
         ]
 
+        var modalTitle = strings.newIncome
+        if(this.state.incomeIndex != -1)
+            modalTitle = strings.editIncome
+
         return (
-            <div className="remodal-bg">
-                <div className="remodal" data-remodal-id="modal">
-                    <button data-remodal-action="close" className="remodal-close"></button>
-                    <div className="modal-title">{strings.newIncome}</div>
-                    <div className="modal-table">
-                        <Table columns={columns}
-                               data={[this.state.income]}/>
-                    </div>
-                    <div className="hcontainer-no-wrap">
-                        <div className="horizontal-spacer-90"/>
-                        <Button data-remodal-action="cancel" className="shadow" onClick={this.onCancel.bind(this)} color="default">{strings.cancel}</Button>
-                        <div className="horizontal-spacer-20"/>
-                        <Button data-remodal-action="confirm" className="shadow" onClick={this.onSave.bind(this)} color="primary">{strings.save}</Button>
-                    </div>
+            <div className="income-modal">
+                <div className="modal-title">{modalTitle}</div>
+                <div className="income-modal-table">
+                    <Table columns={columns}
+                           data={[this.state.income]}/>
+                </div>
+                <div className="hcontainer-no-wrap">
+                    <div className="horizontal-spacer-90"/>
+                    <Button className="shadow" onClick={this.onCancel.bind(this)} color="default">{strings.cancel}</Button>
+                    <div className="horizontal-spacer-20"/>
+                    <Button className="shadow" onClick={this.onSave.bind(this)} color="primary">{strings.save}</Button>
                 </div>
             </div>
         );
@@ -185,24 +172,23 @@ class AgentSalaryPage extends React.Component {
         var currentYear = date.getFullYear().toString();
         var monthStartDate = new Date(date.getFullYear(), date.getMonth(), 1, 0, 0, 0, 0);
 
+        var incomes = {}
+        for(var type = 0; type < commissionTypes.length; type++) {
+            incomes[commissionTypes[type]] = []
+        }
+
         this.state = {
             agent: AppStore.getAgentAtIndex(this.props.params.index),
             date: monthStartDate,
             selectedMonth: currentMonth,
             selectedYear:currentYear,
-            incomes: {
-                "היקף": [],
-                "בונוס": [],
-                "נפרעים": [],
-                "ידני": []
-            },
+            incomes: incomes,
             manualIncomes: [],
             expenses: [],
             portfolio: "0",
+            newIncomeVisible: false,
             selectedIncome: null,
-            selectedIncomeIndex: -1,
             selectedExpense: null,
-            selectedExpenseIndex: -1
         }
     }
     componentWillReceiveProps(nextProps)
@@ -285,62 +271,88 @@ class AgentSalaryPage extends React.Component {
         }
     }
     //Manual income
+    openNewIncomeModal(income, index)
+    {
+        var newIncomeModal =  <IncomeModalContent income={income}
+                                                  incomeIndex={index}
+                                                  onSaveIncome={this.onSaveManualIncome.bind(this)}/>
+
+        Modal.showWithContent(newIncomeModal)
+    }
     onNewIncome()
     {
-        var inst = $('[data-remodal-id=modal]').remodal();
-        this.state.selectedIncome = null
-        this.state.selectedIncomeIndex = -1
-        this.setState(this.state)
-        inst.open();
+        this.openNewIncomeModal(new Income(),-1)
     }
 
-    onManualIncomeRowClick(index)
+    onManualIncomeRowClick(index,income)
     {
-        var inst = $('[data-remodal-id=modal]').remodal();
-        this.state.selectedIncome = this.state.incomes["ידני"][index]
-        this.state.selectedIncomeIndex = index
-        this.setState(this.state)
-        inst.open();
+        //Save income before editing so we can refer to type even if it was edited
+        this.state.selectedIncome = income
+        this.openNewIncomeModal(new Income(income),index)
     }
-    onSaveManualIncome(income)
+
+    updateIncome(incomeId, updatedIncome)
     {
-        if(this.state.selectedIncomeIndex != -1)
+        for(var type = 0; type < commissionTypes.length; type++)
         {
-            this.state.incomes["ידני"][this.state.selectedIncomeIndex] = income
+            var incomesOfType = this.state.incomes[commissionTypes[type]]
+            if(incomesOfType != null)
+            {
+                for(var incomeIndex = 0; incomeIndex < incomesOfType.length; incomeIndex++)
+                {
+                    if(incomesOfType[incomeIndex]._id === incomeId)
+                    {
+                        incomesOfType[incomeIndex] = updatedIncome
+                        return true
+                    }
+                }
+            }
+        }
+        return false
+    }
+
+    onSaveManualIncome(income,index)
+    {
+        if(index != -1)
+        {
+            if(this.updateIncome(this.state.selectedIncome._id,income))
+            {
+                console.log("Income with id " + this.state.selectedIncome._id + " updated successfully")
+            }
+            else
+            {
+                console.log("ERROR while updating income with id " + this.state.selectedIncome._id + " - id not found")
+            }
+            this.state.selectedIncome = null
+            this.setState(this.state)
         }
         else
         {
             income.paymentDate = this.state.date
-            DataService.addManualIncome(income,this.state.agent.idNumber, (response) => {
+            // DataService.addManualIncome(income,this.state.agent.idNumber, (response) => {
+            //
+            //     if(response.result == true)
+            //     {
+            //         if(income != null)
+            //         {
+            //             this.state.incomes[this.state.selectedIncome.type].push(response.data)
+            //         }
+            //     }
+            // this.state.incomes[income.type].push(income)
+            // this.state.selectedIncome = null
+            // this.setState(this.state)
+            // })
 
-                if(response.result == true)
-                {
-                    if(income != null)
-                    {
-                        this.state.incomes["ידני"].push(response.data)
-                    }
-                }
-                this.state.selectedIncome = null
-                this.state.selectedIncomeIndex = -1
-                this.setState(this.state)
-            })
-
+            this.state.incomes[income.type].push(income)
+            this.state.selectedIncome = null
+            this.setState(this.state)
         }
-        this.state.selectedIncome = null
-        this.state.selectedIncomeIndex = -1
-        this.setState(this.state)
+        Modal.hide()
     }
-    onCancelManualIncome()
+    onRemoveIncome(rowIndex)
     {
+        this.state.incomes[this.state.selectedIncome.type].splice(rowIndex, 1)
         this.state.selectedIncome = null
-        this.state.selectedIncomeIndex = -1
-        this.setState(this.state)
-    }
-    onRemoveManualIncome(rowIndex)
-    {
-        this.state.incomes["ידני"].splice(rowIndex, 1)
-        this.state.selectedIncome = null
-        this.state.selectedIncomeIndex = -1
         this.setState(this.state)
     }
     onNewExpense()
@@ -348,25 +360,48 @@ class AgentSalaryPage extends React.Component {
 
     }
 
-    sumOfIncomeWithType(type)
+    sumOfIncome(incomes)
     {
         var sum = 0
-        if(this.state.incomes[type].length > 0)
+        if(incomes.length > 0)
         {
-            for(var index = 0; index < this.state.incomes[type].length; index++)
+            for(var index = 0; index < incomes.length; index++)
             {
-                sum += this.state.incomes[type][index].amount
+                sum += incomes[index].amount
+            }
+        }
+        return sum
+    }
+    concatAllIncomes(incomes)
+    {
+        var allIncomes = []
+        for(var type = 0; type < commissionTypes.length; type++)
+        {
+            var incomesOfType = incomes[commissionTypes[type]]
+            if(incomesOfType != null)
+            {
+                allIncomes = allIncomes.concat(incomesOfType)
+            }
+        }
+        return allIncomes
+    }
+    sumAllIncomes(incomes)
+    {
+        var sum = 0
+        for(var type = 0; type < commissionTypes.length; type++)
+        {
+            var incomesOfType = incomes[commissionTypes[type]]
+            if(incomesOfType != null)
+            {
+                sum +=  this.sumOfIncome(incomesOfType)
             }
         }
         return sum
     }
 
-
-
     render () {
 
         var incomesColumns = [
-
             {
                 title: "חברה",
                 key: "company",
@@ -393,45 +428,7 @@ class AgentSalaryPage extends React.Component {
                 key: "amount",
                 width: "col-33-33",
                 type: 'read-only',
-                color: 'normal'
-            },
-            {
-                title: "הערות",
-                key: "notes",
-                width: "col-66-66",
-                type: 'read-only',
-                color: 'normal'
-            }
-        ]
-
-        var manualIncomesColumns = [
-
-            {
-                title: "חברה",
-                key: "company",
-                width: "col-33-33",
-                type: 'read-only',
-                color: 'normal'
-            },
-            {
-                title: "מספר סוכן",
-                key: "agentInCompanyId",
-                width: "col-33-33",
-                type: 'read-only',
-                color: 'normal'
-            },
-            {
-                title: "סוג תשלום",
-                key: "type",
-                width: "col-33-33",
-                type: 'read-only',
-                color: 'normal'
-            },
-            {
-                title: "סה״כ תשלום",
-                key: "amount",
-                width: "col-33-33",
-                type: 'read-only',
+                format: "currency",
                 color: 'normal'
             },
             {
@@ -467,22 +464,17 @@ class AgentSalaryPage extends React.Component {
             }
         ]
 
-        var nifraim = this.sumOfIncomeWithType("נפרעים")
-        var bonus = this.sumOfIncomeWithType("בונוס")
-        var heikef = this.sumOfIncomeWithType("היקף")
-        var manual = this.sumOfIncomeWithType("ידני")
         var expenses = 0
-        var salary = nifraim + bonus + heikef + manual - expenses
-
-        var incomesData = this.state.incomes["ידני"].concat(this.state.incomes["בונוס"]).concat(this.state.incomes["היקף"].concat(this.state.incomes["נפרעים"]))
+        var incomesSum = this.sumAllIncomes(this.state.incomes)
+        var salary = incomesSum - expenses
+        var incomesData = this.concatAllIncomes(this.state.incomes)
+        var nifraim = this.sumOfIncome(this.state.incomes["נפרעים"])
+        var bonus = this.sumOfIncome(this.state.incomes["בונוס"])
+        var heikef = this.sumOfIncome(this.state.incomes["היקף"])
+        var manual = this.sumOfIncome(this.state.incomes["ידני"])
 
         return (
             <div className="agent-salary-page animated fadeIn">
-
-                <NewIncomeModal income={this.state.selectedIncome}
-                                incomeIndex={this.state.selectedIncomeIndex}
-                                onSaveIncome={this.onSaveManualIncome.bind(this)}
-                                onCancelIncome={this.onCancelManualIncome.bind(this)}/>
 
                 <div className="hcontainer-no-wrap">
                     <MonthYearBox month={this.state.selectedMonth} year={this.state.selectedYear}
@@ -530,17 +522,11 @@ class AgentSalaryPage extends React.Component {
                         <Button className="shadow" onClick={this.onNewIncome.bind(this)} color="primary">{strings.newIncome}</Button>
                     </div>
                     <div className="agent-salary-page-income-table">
-                        <Table columns={incomesColumns}
+                        <Table onRowClick={this.onManualIncomeRowClick.bind(this)}
+                               onRemoveRow={this.onRemoveIncome.bind(this)}
+                               columns={incomesColumns}
                                data={incomesData}/>
                     </div>
-                    {/*<Divider className="agent-salary-page-divider"/>*/}
-                    {/*<div className="agent-salary-page-income-table">*/}
-                        {/*<Table onRemoveRow={this.onRemoveManualIncome.bind(this)}*/}
-                               {/*onRowClick={this.onManualIncomeRowClick.bind(this)}*/}
-                               {/*hideHeader={true} columns={manualIncomesColumns}*/}
-                               {/*data={manualIncomesData} noHeader/>*/}
-                    {/*</div>*/}
-
                 </div>
 
                 <div className="agent-salary-page-table-box shadow">

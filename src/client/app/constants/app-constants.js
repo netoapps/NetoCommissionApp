@@ -1,6 +1,7 @@
 /**
  * Created by asaf on 27/04/2016.
  */
+
 var BASE_URL = 'http://localhost:3001/';
 
 let AppConstants = {
@@ -19,9 +20,3 @@ let AppActions = {
 
 export { AppConstants, AppActions }
 
-//export default {
-//
-//    //Actions
-//    LOGIN_USER: 'LOGIN_USER',
-//    LOGOUT_USER: 'LOGOUT_USER'
-//}

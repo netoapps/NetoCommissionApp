@@ -30,6 +30,68 @@ body
     flex-flow: row nowrap;
 }
 
+@-webkit-keyframes modal-zoom-in {
+    from {
+        opacity: 0;
+        -webkit-transform: scale(0.8);
+        transform: scale(0.8);
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes modal-zoom-in {
+    from {
+        opacity: 0;
+        -webkit-transform: scale(0.8);
+        transform: scale(0.8);
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+.modal-zoom-in {
+    -webkit-animation-name: zoomIn;
+    animation-name: zoomIn;
+}
+.modal-overlay
+{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    background: rgba(204, 204, 204, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-animate {
+    -webkit-animation-duration: 0.25s;
+    animation-duration: 0.25s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+.modal
+{
+    background-color: #ffffff;
+    z-index: 9001;
+    box-shadow: 0px 1px 8px #a0a0a0;
+    -webkit-box-shadow:  0px 1px 8px #a0a0a0;
+    -moz-box-shadow:  0px 1px 8px #a0a0a0;
+    padding: 20px;
+    /*margin: 0 auto*/
+    /*margin-left: 20px;*/
+    /*margin-right: 20px;*/
+}
+
 .modal-title
 {
     color: #505050;
@@ -38,10 +100,7 @@ body
     font-weight: bold;
 }
 
-.modal-table
-{
-    height: 100px;
-}
+
 
 .horizontal-spacer-10
 {
@@ -133,7 +192,7 @@ body
 .fixed
 {
     position: fixed;
-    z-index: 9999;
+    z-index: 1;
     -webkit-backface-visibility: hidden;
     -webkit-transform: translateZ(0);
 }
@@ -181,7 +240,6 @@ body
     width: 100%;
     height: 70px;
     background: white;
-
     /*This makes div occupy full width*/
     display: -webkit-box;
     display: -moz-box;
@@ -222,7 +280,7 @@ body
     width: 230px;
     background-color: #4f875a;
     position: fixed;
-    z-index: 999999;
+    z-index: 9999;
 }
 
 .right-panel-item-button-dashboard
@@ -1003,6 +1061,16 @@ body
     /*padding-top: 12px;*/
 }
 
+.table-row-hover
+{
+}
+
+.table-row-hover:hover
+{
+    background-color: #eeeeee;
+}
+
+
 .table-row-data
 {
     display: -webkit-box;
@@ -1506,8 +1574,8 @@ body
 {
     margin-bottom: 20px;
     width: 100%;
-    height: calc(100% - 320px);
-    max-height: calc(100% - 320px);
+    height: calc(100% - 140px);
+    max-height: calc(100% - 140px);
     padding-left: 20px;
     padding-right: 20px;
 }
@@ -1516,8 +1584,8 @@ body
 {
     margin-bottom: 20px;
     width: 100%;
-    height: calc(100% - 220px);
-    max-height: calc(100% - 220px);
+    height: calc(100% - 150px);
+    max-height: calc(100% - 150px);
     padding-left: 20px;
     padding-right: 20px;
 }
@@ -1560,4 +1628,16 @@ body
     height: calc(100% - 58px);
     max-height: calc(100% - 58px);
     padding: 20px;
+}
+
+.income-modal
+{
+    height: 200px;
+    width: 1100px;
+}
+
+.income-modal-table
+{
+    height: 100px;
+    width: 100%;
 }

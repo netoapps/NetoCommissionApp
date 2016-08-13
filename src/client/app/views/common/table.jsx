@@ -184,8 +184,8 @@ class TableRow extends React.Component {
                     this.props.onRemoveRow(index)
                 }.bind(this,this.state.index)} className="table-row-remove-button"/>
         }
-
-        return  <div className="table-row" >
+        var className = "table-row " + this.props.rowHoverClassName
+        return  <div className={className} >
                     {removeRow}
                     <div className="table-row-data" onClick={this.onRowClick.bind(this)}>{tableCells} </div>
                  </div>;
@@ -288,9 +288,19 @@ class Table extends React.Component {
         }
 
         var tableRows = [];
+        var rowHoverClassName = "";
+        if(this.props.onRowClick != null)
+        {
+            rowHoverClassName = " table-row-hover"
+        }
         for(var row = 0; row < data.length; row++)
-            tableRows[row] = <TableRow onRemoveRow = {this.props.onRemoveRow}
-                                       onRowClick = {this.onRowClick.bind(this)}
+            tableRows[row] = <TableRow rowHoverClassName={rowHoverClassName}
+                                       onRemoveRow = {this.props.onRemoveRow}
+                                       onRowClick = {
+                                           function(index,rowData)
+                                           {
+                                                if(this.props.onRowClick != null)  this.props.onRowClick(index,rowData)
+                                           }.bind(this,row,data[row]) }
                                        key={row} index={row}
                                        data={data[row]}
                                        columns={this.state.columns}/>

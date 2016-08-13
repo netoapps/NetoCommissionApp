@@ -63,6 +63,7 @@ let strings = {
     heikef: "היקף",
     manualIncome: "שונות",
     newIncome: "הכנסה חדשה",
+    editIncome: "עריכת הכנסה",
     newExpense: "הוצאה חדשה"
 
 }
