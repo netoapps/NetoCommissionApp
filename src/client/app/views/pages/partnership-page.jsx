@@ -230,6 +230,20 @@ class PartnershipPage extends React.Component {
     {
         if(this.state.isNewPartnership)
         {
+            if(this.state.agentsData.length == 0)
+            {
+                swal({
+                    title: "שגיאה",
+                    text: "לא ניתן לשמור שותפות ללא סוכנים",
+                    type: "error",
+                    showCancelButton: false,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "סגור",
+                    closeOnConfirm: true,
+                    showLoaderOnConfirm: false
+                });
+                return
+            }
             AppActions.addPartnership(this.state.partnership)
         }
         else

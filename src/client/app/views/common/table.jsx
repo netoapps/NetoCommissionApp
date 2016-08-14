@@ -165,7 +165,8 @@ class TableRow extends React.Component {
     }
     onRowClick()
     {
-        this.props.onRowClick(this.state.index)
+        if(this.props.onRowClick != null)
+            this.props.onRowClick(this.state.index)
     }
     render() {
         var tableCells = [];
@@ -176,13 +177,23 @@ class TableRow extends React.Component {
                                           column={this.state.columns[cell]}
                                           value={this.state.data[this.state.columns[cell].key]}/>
         var removeRow = null
+        var removeButtonClassName = "table-row-remove-button"
+        var removeButtonFunc = function(index)
+        {
+            this.props.onRemoveRow(index)
+        }.bind(this,this.state.index)
+
         if(this.state.removableRow)
         {
-            removeRow = <button onClick={
-                function(index)
+            if(this.props.isEditableRow != null)
+            {
+                if (!this.props.isEditableRow(this.state.data))
                 {
-                    this.props.onRemoveRow(index)
-                }.bind(this,this.state.index)} className="table-row-remove-button"/>
+                    removeButtonClassName = "table-row-remove-button-disabled"
+                    removeButtonFunc = null
+                }
+            }
+            removeRow = <button onClick={removeButtonFunc} className={removeButtonClassName}/>
         }
         var className = "table-row " + this.props.rowHoverClassName
         return  <div className={className} >
@@ -244,7 +255,7 @@ class Table extends React.Component {
 
         this.state = {
             columns: props.columns,
-            data: props.data,
+            data: props.data
         }
     }
 
@@ -293,18 +304,34 @@ class Table extends React.Component {
         {
             rowHoverClassName = " table-row-hover"
         }
-        for(var row = 0; row < data.length; row++)
+
+
+        for(var row = 0; row < data.length; row++) {
+
+            var disableRowClick = false
+            if(this.props.isEditableRow != null)
+            {
+                if (!this.props.isEditableRow(data[row]))
+                {
+                    disableRowClick = true
+                }
+            }
+
+            var onRowClickFunc = function (index, rowData) {
+                if (this.props.onRowClick != null)  this.props.onRowClick(index, rowData)
+            }.bind(this, row, data[row])
+            if(disableRowClick)
+            {
+                onRowClickFunc = null
+            }
             tableRows[row] = <TableRow rowHoverClassName={rowHoverClassName}
-                                       onRemoveRow = {this.props.onRemoveRow}
-                                       onRowClick = {
-                                           function(index,rowData)
-                                           {
-                                                if(this.props.onRowClick != null)  this.props.onRowClick(index,rowData)
-                                           }.bind(this,row,data[row]) }
+                                       onRemoveRow={this.props.onRemoveRow}
+                                       isEditableRow={this.props.isEditableRow}
+                                       onRowClick={onRowClickFunc}
                                        key={row} index={row}
                                        data={data[row]}
                                        columns={this.state.columns}/>
-
+        }
         var tableTrashColumn = null
         if (this.props.onRemoveRow != null && this.props.hideHeader != true)
         {

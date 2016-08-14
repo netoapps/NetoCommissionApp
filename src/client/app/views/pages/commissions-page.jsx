@@ -162,6 +162,8 @@ class FileBin extends React.Component {
             }
             else
             {
+                console.log(response.errorCode)
+                console.log(response.errorData)
                 swal({
                     title: "שגיאה",
                     text: "שגיאה בעת העלאת קובץ לשרת",

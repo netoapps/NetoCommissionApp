@@ -353,10 +353,11 @@ class DataStore extends Store {
         xhr.open('POST', '/api/v1/commissions/upload');
         xhr.onload = function ()
         {
+            var response = JSON.parse(xhr.response)
             if (xhr.status === 200)
             {
                 console.log('all done: ' + xhr.status);
-                var file = JSON.parse(xhr.response).file
+                var file = response.file
                 var commissionFiles = this.getCommissionFiles()
                 commissionFiles.push(file)
                 this.eventbus.emit(ActionType.UPLOAD_COMMISSION_FILE_COMPLETED);
@@ -373,7 +374,8 @@ class DataStore extends Store {
                 if(data.callback != null)
                     data.callback({
                         result: false,
-                        message: JSON.parse(xhr.response).err
+                        errorCode: response.errCode,
+                        errorData: response.errData
                     })
             }
         }.bind(this);
