@@ -48,10 +48,10 @@ function FileService() {
         return new Promise(function(resolve, reject){
            File.findById(fileId, function(err, file){
                if(err){
-                   return reject(err);
+                   return reject({errCode:500,err:err});
                }
                if(!file){
-                   return reject('file not found');
+                   return reject({errCode:13,err:'file not found'});
                }
                try {
                    fs.unlinkSync(file.pathOnDisk);
@@ -65,7 +65,7 @@ function FileService() {
                            })
                        })
                        .catch(function(err){
-                           return reject('failed deleting old salaries:' +err);
+                           return reject({errCode:23,err:'failed deleting old salaries:' +err});
                        })
 
                }catch(err){
@@ -83,11 +83,11 @@ function FileService() {
             File.count({checksum:sum},function(err, count) {
                 if (err) {
                     fs.unlink(file.path);
-                    return cb(err);
+                    return cb({errCode:500,err:err});
                 }
                 if (count > 0) {
                     fs.unlink(file.path);
-                    return cb('file already exist in db');
+                    return cb({errCode:11,err:'file already exist in db'});
                 }
                 var newPath = path.join(config.datafilesDirectory, file.filename);
                 fs.rename(file.path, newPath, function (err) {
@@ -104,7 +104,7 @@ function FileService() {
                     newFile.save(function(err){
                         if(err){
                             fs.unlink(newPath);
-                            return cb(err);
+                            return cb({errCode:500,err:err});
                         }
                         return cb(null,newFile);
                     })

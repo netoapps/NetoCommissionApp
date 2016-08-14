@@ -24,7 +24,7 @@ function uploadSalariesFile(req, res) {
     data.taxValue = data.taxValue || 1.0;
     fileService.saveFileToDb(req.file, data, function (err, file) {
         if (err) {
-            return res.status(400).json({err: err});
+            return res.status(400).json(err);
         }
         analyzer.analyzeSalaryFile(file.pathOnDisk, function (err, salaries) {
             if (err) {
@@ -37,9 +37,9 @@ function uploadSalariesFile(req, res) {
                 salaryService.processSalaries(data.paymentDate, data.company, data.taxValue, salaries,file._id, function (err, results) {
                     if (err) {
                         fileService.deleteFile(file._id).then(function () {
-                            return res.status(400).json({err: err});
+                            return res.status(400).json(err);
                         }).catch(function (error) {
-                            return res.status(400).json({err: error});
+                            return res.status(400).json(error);
                         })
                     }
                     else {

@@ -53,7 +53,7 @@ function SalaryService() {
                     return reject(err);
                 }
                 if (!salary) {
-                    return reject('salary not found');
+                    return reject({errCode:22,err:'salary not found'});
                 }
                 salary.remove(function (err) {
                     if (err) {
@@ -83,7 +83,7 @@ function SalaryService() {
                 salary.updateTime = Date.now();
                 salary.save(function (err) {
                     if (err) {
-                        return reject(err);
+                        return reject({errCode:500,err:err});
                     }
                     return resolve(salary);
                 })
@@ -132,7 +132,7 @@ function SalaryService() {
 
             Salary.find({paymentDate: paymentDate.toISOString()}).distinct('idNumber').exec(function (err, ids) {
                 if (err) {
-                    return reject(err);
+                    return reject({errCode:500,err:err});
                 }
                 return resolve(ids.length);
             });
@@ -143,7 +143,7 @@ function SalaryService() {
         return new Promise(function (resolve, reject) {
             Salary.find({type: {$ne: 'ידני'}}).sort({paymentDate: -1}).exec(function (err, salaries) {
                 if (err) {
-                    return reject(err);
+                    return reject({errCode:500,err:err});
                 }
                 return resolve(salaries);
             })
@@ -160,7 +160,7 @@ function SalaryService() {
                 {$sort: {_id: 1}}
             ], function (err, sum) {
                 if (err) {
-                    return reject(err);
+                    return reject({errCode:500,err:err});
                 }
                 if (sum.length === 0) {
                     return resolve({currentMonth: {amount: 0, portfolio: 0}, previousMonth: {amount: 0, portfolio: 0}});
@@ -196,7 +196,7 @@ function SalaryService() {
                 {$sort: {_id: 1}}
             ], function (err, salaries) {
                 if (err) {
-                    return reject(err);
+                    return reject({errCode:500,err:err});
                 }
                 return resolve(salaries);
             })
@@ -272,7 +272,7 @@ function SalaryService() {
         return new Promise(function (resolve, reject) {
             Salary.remove({fileId: fileId}, function (err) {
                 if (err) {
-                    return reject(err);
+                    return reject({errCode:500,err:err});
                 }
                 return resolve();
             })
@@ -287,7 +287,7 @@ function SalaryService() {
                 {$group: {_id: null, portfolio: {$sum: '$portfolio'}}}
             ], function (err, data) {
                 if (err) {
-                    return reject(err);
+                    return reject({errCode:500,err:err});
                 }
                 if (data.length === 0) {
                     return resolve(0);
@@ -354,7 +354,7 @@ function SalaryService() {
     this.getAllAgentSalaries = function (idNumber, cb) {
         Salary.find({agentId: idNumber}, function (err, salaries) {
             if (err) {
-                return cb(err);
+                return cb({errCode:500,err:err});
             }
             return cb(null, salaries);
         })
@@ -376,7 +376,7 @@ function SalaryService() {
                 }
             });
             if (Object.keys(missingIds).length > 0) {
-                return reject({errCode: 34, data: Object.keys(missingIds)});
+                return reject({errCode: 34,err:'missing agent ids' ,errData: Object.keys(missingIds)});
             }
             return resolve();
         });
