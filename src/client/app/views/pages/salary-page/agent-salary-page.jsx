@@ -402,6 +402,11 @@ class AgentSalaryPage extends React.Component {
         return sum
     }
 
+    isEditableRow(rowData)
+    {
+        return (rowData.fileId == null)
+    }
+
     render () {
 
         var incomesColumns = [
@@ -528,7 +533,8 @@ class AgentSalaryPage extends React.Component {
                         <Table onRowClick={this.onIncomeRowClick.bind(this)}
                                onRemoveRow={this.onDeleteIncome.bind(this)}
                                columns={incomesColumns}
-                               data={this.state.incomes}/>
+                               data={this.state.incomes}
+                               isEditableRow={this.isEditableRow.bind(this)}/>
                     </div>
                 </div>
 
