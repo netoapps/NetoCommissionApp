@@ -133,7 +133,6 @@ class AgentSalaryPage extends React.Component {
                                                       income={income}
                                                       incomeIndex={index}
                                                       onSaveIncome={this.onSaveIncome.bind(this)}/>
-
         Modal.showWithContent(incomeModalContent)
     }
     onNewIncome()
@@ -393,6 +392,16 @@ class AgentSalaryPage extends React.Component {
         return sum
     }
 
+    sumOfAllExpenses()
+    {
+        var sum = 0
+        for(var index = 0; index < this.state.expenses.length; index++)
+        {
+            sum += this.state.expenses[index].amount
+        }
+        return sum
+    }
+
     render () {
 
         var incomesColumns = [
@@ -459,13 +468,13 @@ class AgentSalaryPage extends React.Component {
             }
         ]
 
-        var expenses = 0
+        var expenses = this.sumOfAllExpenses()
         var incomesSum = this.sumOfAllIncomes()
-        var salary = incomesSum - expenses
         var nifraim = this.sumOfIncomeWithType("נפרעים")
         var bonus = this.sumOfIncomeWithType("בונוס")
         var heikef = this.sumOfIncomeWithType("היקף")
         var manual = this.sumOfIncomeWithType("ידני")
+        var salary = incomesSum - expenses
 
         return (
             <div className="agent-salary-page animated fadeIn">
