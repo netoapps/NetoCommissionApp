@@ -92,15 +92,15 @@ function ExcelAnalyzerService() {
                             return cb();
                         }
 
-                    } else if (aName.indexOf('/') !== -1) {
-                        nameToSplit = aName.split('/');
-                        //if(!nameToIds[nameToSplit[0]]) {
-                        //    nameToIds[nameToSplit[0]] = ID;
-                        //}
-                        len--;
-                        if (len===1){
-                            return cb();
-                        }
+                    //} else if (aName.indexOf('/') !== -1) {
+                    //    nameToSplit = aName.split('/');
+                    //    //if(!nameToIds[nameToSplit[0]]) {
+                    //    //    nameToIds[nameToSplit[0]] = ID;
+                    //    //}
+                    //    len--;
+                    //    if (len===1){
+                    //        return cb();
+                    //    }
 
                     } else if (aName.indexOf('+') !== -1) {
                         nameToSplit = aName.split('+');
@@ -112,8 +112,8 @@ function ExcelAnalyzerService() {
                             return cb();
                         }
                     } else {
-                            if (!nameToIds[aName]) {
-                                nameToIds[aName] = ID;
+                            if (!nameToIds[aName.trim()]) {
+                                nameToIds[aName.trim()] = ID;
                             }
                     }
 
@@ -129,10 +129,10 @@ function ExcelAnalyzerService() {
                     //    }
                     //}
 
-                    if (ID && ID.indexOf('-') === -1 && aName.indexOf('/') === -1 && aName.indexOf('+') === -1) {
+                    if (ID && ID.indexOf('-') === -1 && aName.indexOf('+') === -1) {
                         delete  agent.ID;
                         delete agent['סוכן'];
-                        var splitName = aName.split(' ');
+                        var splitName = aName.split('/')[0].split(' ');
                         _.mapObject(agent, function (aid, compName) {
 
                             var pd = [
@@ -140,7 +140,7 @@ function ExcelAnalyzerService() {
                                 {companyName: compName, agentNumber: aid, paymentType:'בונוס',agentPart:50, agencyPart:50},
                                 {companyName: compName, agentNumber: aid, paymentType:'היקף',agentPart:55, agencyPart:45}
                             ];
-                            agentService.addAgent(ID, splitName[0], splitName[1], '', '', '', true, pd)
+                            agentService.addAgent(ID, splitName[0].trim(), splitName.slice(1,splitName.length).join(' ').trim(), '', '', '', true, pd)
                                 .then(function () {
                                     console.log('created agent ' + ID);
                                     len--;
@@ -168,13 +168,15 @@ function ExcelAnalyzerService() {
                 if (aName.indexOf('-') !== -1) {
                     aName = aName.split('-');
                 } else if (aName.indexOf('/') !== -1) {
-                    aName = aName.split('/');
+                    aName = aName.split('/')[0];
                 } else if (aName.indexOf('+') !== -1) {
                     aName = aName.split('+');
                 } else {
                     return;
                 }
-
+                if(agent.ID===7351 || agent.ID==='7351'){
+                    console.log('7351');
+                }
                 delete  agent.ID;
                 delete agent['סוכן'];
 
