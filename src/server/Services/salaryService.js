@@ -307,7 +307,8 @@ function SalaryService() {
                         _id: null,
                         'נפרעים': {$sum: {$cond: [{$eq: ['$type', 'נפרעים']}, '$amount', 0]}},
                         'בונוס': {$sum: {$cond: [{$eq: ['$type', 'בונוס']}, '$amount', 0]}},
-                        'היקף': {$sum: {$cond: [{$eq: ['$type', 'היקף']}, '$amount', 0]}}
+                        'היקף': {$sum: {$cond: [{$eq: ['$type', 'היקף']}, '$amount', 0]}},
+                        'ידני': {$sum: {$cond: [{$eq: ['$type', 'ידני']}, '$amount', 0]}}
                     }
                 }
             ], function (err, data) {
@@ -315,9 +316,9 @@ function SalaryService() {
                     return reject(err);
                 }
                 if (data.length === 0) {
-                    return resolve({'נפרעים': 0, 'בונוס': 0, 'היקף': 0});
+                    return resolve({'נפרעים': 0, 'בונוס': 0, 'היקף': 0, 'ידני':0});
                 }
-                return resolve({'נפרעים': data[0]['נפרעים'], 'בונוס': data[0]['בונוס'], 'היקף': data[0]['היקף']});
+                return resolve({'נפרעים': data[0]['נפרעים'], 'בונוס': data[0]['בונוס'], 'היקף': data[0]['היקף'], 'ידני':data[0]['ידני']});
             })
         })
     }
