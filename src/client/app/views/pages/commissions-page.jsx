@@ -12,6 +12,198 @@ import {getMonthName,getMonthNumber} from './../common/month-year-box.jsx'
 import AppActions from '../../actions/app-actions'
 import DataService from '../../services/data-service.js';
 import {ActionType} from '../../actions/app-actions.js'
+import CommisssionFileParser from '../../services/commission-file-parser.js'
+import {Modal} from '../common/app-modal.jsx';
+import FixedWidthDropdown from './../common/fixed-width-dropdown.jsx';
+
+var notSetValue = "לא נקבע"
+class ColumnSelectModalContentCell extends React.Component
+{
+    constructor(props)
+    {
+        super(props);
+
+        this.state = {
+            types: this.props.types,
+            selectedType: this.props.selectedType
+        }
+    }
+    componentWillReceiveProps(nextProps)
+    {
+        this.state.types = nextProps.types
+        this.state.selectedType = nextProps.selectedType
+        this.setState(this.state)
+    }
+    onTypeChange(item)
+    {
+        if(item.props.value != this.state.selectedType)
+        {
+            this.state.selectedType = item.props.value
+            this.setState(this.state)
+            this.props.onSelectType(this.state.selectedType,this.props.value)
+        }
+    }
+
+    render() {
+
+        var types = []
+        var className = "columns-select-cell-value"
+        var color = "default"
+        if(this.state.selectedType != notSetValue)
+        {
+            //className += " columns-select-cell-value-selected"
+            color = "primary"
+        }
+        for(var type = 0; type < this.state.types.length; type++)
+        {
+            types.push(<DropdownItem onClick={this.onTypeChange.bind(this)} value={this.state.types[type]} key={type}>{this.state.types[type]}</DropdownItem>)
+        }
+
+        return <div className="columns-select-cell">
+                 <div className={className}>{this.props.value}</div>
+                 <div className="columns-select-cell-options h-center">
+                     <FixedWidthDropdown shadow label={this.state.selectedType} alignMenu="right" color={color}>
+                         {types}
+                     </FixedWidthDropdown>
+                 </div>
+        </div>
+    }
+}
+
+class ColumnSelectModalContent extends React.Component
+{
+    constructor(props) {
+        super(props);
+
+        var types = AppStore.getCommissionTypes().concat(notSetValue)
+        var typeSelection = {}
+        for(var type = 0; type < types.length; type++)
+        {
+            typeSelection[types[type]] = null
+        }
+
+        this.state = {
+            types: types,
+            typeSelection: typeSelection,
+            columnToClear: null
+        }
+    }
+    onSelectType(type,columnName)
+    {
+        //If setting an already selected column with not set value (= clearing a column)
+        if(type == notSetValue && this.selectedTypeOfColumn(columnName) != notSetValue)
+        {
+            this.state.columnToClear = columnName
+        }
+        //Clearing other column by settings this one
+        else if(this.state.typeSelection[type] != null)
+        {
+            this.state.columnToClear = this.state.typeSelection[type]
+        }
+        if(type != notSetValue)
+        {
+            this.state.typeSelection[type] = columnName
+        }
+        this.setState(this.state)
+
+        for(var key in this.state.typeSelection)
+        {
+            console.log(key + " = " + this.state.typeSelection[key])
+        }
+    }
+    validateColumnSettings()
+    {
+        var notSet = false
+        var notSetTypeName = ""
+        for(var type = 0; type < this.state.types.length; type++)
+        {
+            if(this.state.types[type] != notSetValue)
+            {
+                var commissionType = this.state.types[type]
+                if (this.state.typeSelection[commissionType] == null) {
+                    notSet = true
+                    notSetTypeName = commissionType
+                    break
+                }
+                else if (this.state.typeSelection[commissionType].length == 0)
+                {
+                    notSet = true
+                    notSetTypeName = commissionType
+                    break
+                }
+            }
+        }
+        if(notSet)
+        {
+            swal({
+                title: "שגיאה",
+                text:  "לא נבחרה עמודה עבור '"+ notSetTypeName + "'",
+                type: "error",
+                showCancelButton: false,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "סגור",
+                closeOnConfirm: true,
+                showLoaderOnConfirm: false
+            });
+            return false
+        }
+        return true
+    }
+    onCancel()
+    {
+        Modal.hide()
+    }
+    onSave()
+    {
+        if(this.validateColumnSettings())
+        {
+            delete this.state.typeSelection[notSetValue]
+            this.props.onSave(this.state.typeSelection)
+            Modal.hide()
+        }
+    }
+    selectedTypeOfColumn(column)
+    {
+        for(var key in this.state.typeSelection)
+        {
+            if(this.state.typeSelection[key] === column)
+            {
+                return key
+            }
+        }
+        return notSetValue
+    }
+    render()
+    {
+        var columns = []
+        var modalTitle = "בחר עמודות"
+        for(var col = 0; col < this.props.columns.length;  col++)
+        {
+            var selectedType = this.selectedTypeOfColumn(this.props.columns[col])
+            if(this.props.columns[col] == this.state.columnToClear)
+            {
+                selectedType = notSetValue
+                this.state.columnToClear = null
+            }
+            columns.push(<ColumnSelectModalContentCell selectedType={selectedType} onSelectType={this.onSelectType.bind(this)} types={this.state.types} key={col} value={this.props.columns[col]}/>)
+        }
+
+        return <div className="columns-select-modal">
+            <div className="modal-title">{modalTitle}</div>
+            <div className="columns-select-container hcontainer-no-wrap">
+                {columns}
+            </div>
+            <div className="hcontainer-no-wrap">
+                <div className="horizontal-spacer-90"/>
+                <Button className="shadow" onClick={this.onCancel.bind(this)} color="default">{strings.cancel}</Button>
+                <div className="horizontal-spacer-20"/>
+                <Button className="shadow" onClick={this.onSave.bind(this)} color="primary">{strings.save}</Button>
+            </div>
+            <div className="vertical-spacer-20"/>
+            <div className="vertical-spacer-20"/>
+        </div>
+    }
+}
 
 class FileBin extends React.Component {
 
@@ -22,7 +214,8 @@ class FileBin extends React.Component {
         commissionFile.paymentDate = new Date(commissionFile.paymentDate.getFullYear(), commissionFile.paymentDate.getMonth(), 1, 0, 0, 0, 0);
         this.state = {
             commissionFile: commissionFile,
-            draggedFile: null
+            draggedFile: null,
+            columnSettings: null
         };
 
         this._handleUploadCompleted = this.handleUploadCompleted.bind(this)
@@ -39,11 +232,15 @@ class FileBin extends React.Component {
     }
     handleUploadCompleted()
     {
+        this.reset()
+    }
+    reset()
+    {
         this.state.commissionFile = new CommissionFile()
         this.state.draggedFile = null
+        this.state.columnSettings = null
         this.setState(this.state)
     }
-
     onCompanyNameChange(item)
     {
         if(item.props.value != this.state.commissionFile.company)
@@ -64,16 +261,40 @@ class FileBin extends React.Component {
         this.state.commissionFile.paymentDate = new Date(year, this.state.commissionFile.paymentDate.getMonth(), 1, 0, 0, 0, 0);
         this.setState(this.state)
     }
+    onSaveColumnSettings(settings)
+    {
+        this.state.columnSettings = settings
+        this.setState(this.state)
+    }
     onDrop(files)
     {
         console.log('Received files: ', files)
         this.state.draggedFile = files[0]
         this.state.commissionFile.name = files[0].name
         this.state.commissionFile.uploadDate = new Date();
-
-        console.log(this.state.commissionFile.paymentDate)
-
         this.setState(this.state)
+
+        CommisssionFileParser.parseCommissionFile("", ((result) => {
+
+            if(result.success)
+            {
+                Modal.showWithContent(<ColumnSelectModalContent columns={result.columns} onSave={this.onSaveColumnSettings.bind(this)}/>)
+            }
+            else
+            {
+                swal({
+                    title: "שגיאה",
+                    text: "שגיאה בעת קריאת הקובץ",
+                    type: "error",
+                    showCancelButton: false,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "סגור",
+                    closeOnConfirm: true,
+                    showLoaderOnConfirm: false
+                });
+                this.reset()
+            }
+        }).bind(this))
     }
     isValidInput()
     {
@@ -144,8 +365,9 @@ class FileBin extends React.Component {
         {
             return
         }
-        AppActions.uploadCommissionFile(this.state.commissionFile,this.state.draggedFile, function (response) {
-            if(response.result)
+
+        AppActions.uploadCommissionFile(this.state.commissionFile,this.state.draggedFile,this.state.columnSettings, function (response) {
+           if(response.result)
             {
                 //if success
                 this.state.commissionFile = new CommissionFile()
@@ -162,11 +384,30 @@ class FileBin extends React.Component {
             }
             else
             {
-                console.log(response.errorCode)
-                console.log(response.errorData)
+                var title = "שגיאה"
+                var message = ""
+                switch(response.errCode)
+                {
+                    case 13:
+                        message = "קובץ אינו קיים במערכת"
+                        break
+                    case 11:
+                        message = "קובץ כבר קיים במערכת"
+                        break
+                    case 34:
+                        message = "הקובץ מכיל מספרי סוכן שאינם קיימים במערכת:"
+                        message += "\n\n"
+                        var agentNumbers = ""
+                        for(var index = 0; index < response.errData.length; index++)
+                        {
+                            agentNumbers +=  response.errData[index] + (((index+1) == response.errData.length) ? "":", ")
+                        }
+                        message += agentNumbers
+                        break
+                }
                 swal({
-                    title: "שגיאה",
-                    text: "שגיאה בעת העלאת קובץ לשרת",
+                    title: title,
+                    text: message,
                     type: "error",
                     showCancelButton: false,
                     confirmButtonColor: "#DD6B55",
