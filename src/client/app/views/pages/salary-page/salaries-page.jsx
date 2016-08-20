@@ -60,6 +60,10 @@ class Salaries extends React.Component {
         this.context.router.push('/app/agents-and-partnerships/agent-salary-page/'+rowIndex)
     }
 
+    onRowClick(index,rowData)
+    {
+        this.context.router.push('/app/agents-and-partnerships/agent-salary-page/'+index)
+    }
     render () {
 
         var agentsColumns = [
@@ -68,9 +72,8 @@ class Salaries extends React.Component {
                 title: "שם",
                 key: "name",
                 width: "col-33-33",
-                type: 'button',
-                color: 'blue',
-                action: this.onAgentClicked.bind(this)
+                type: 'read-only',
+                color: 'blue'
             },
             {
                 title: "מזהה",
@@ -90,10 +93,9 @@ class Salaries extends React.Component {
                 title: "שכר",
                 key: "salary",
                 width: "col-33-33",
-                type: 'button',
+                type: 'read-only',
                 format: 'currency',
-                color: 'blue',
-                action: this.onSalaryClicked.bind(this)
+                color: 'blue'
             }
         ]
 
@@ -118,7 +120,7 @@ class Salaries extends React.Component {
                                   onYearChange={this.onYearChange.bind(this)}/>
                 </div>
                 <div className="salaries-page-table shadow">
-                    <Table columns={agentsColumns} data={agentsData}/>
+                    <Table onRowClick={this.onRowClick.bind(this)} columns={agentsColumns} data={agentsData}/>
                 </div>
             </div>
         );

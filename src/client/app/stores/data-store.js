@@ -347,6 +347,7 @@ class DataStore extends Store {
         var formData = new FormData();
         formData.append('file', data.draggedFile);
         formData.append('data', JSON.stringify(data.commissionFile));
+        formData.append('columnSettings', JSON.stringify(data.columnSettings));
 
         // now post a new XHR request
         var xhr = new XMLHttpRequest();
@@ -374,8 +375,8 @@ class DataStore extends Store {
                 if(data.callback != null)
                     data.callback({
                         result: false,
-                        errorCode: response.errCode,
-                        errorData: response.errData
+                        errCode: response.errCode,
+                        errData: response.errData
                     })
             }
         }.bind(this);
