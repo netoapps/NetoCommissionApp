@@ -12,7 +12,7 @@ import {getMonthName,getMonthNumber} from './../common/month-year-box.jsx'
 import AppActions from '../../actions/app-actions'
 import DataService from '../../services/data-service.js';
 import {ActionType} from '../../actions/app-actions.js'
-import CommisssionFileParser from '../../services/commission-file-parser.js'
+import CommissionFileParser from '../../services/commission-file-parser.js'
 import {Modal} from '../common/app-modal.jsx';
 
 var notSetValue = "לא נקבע"
@@ -343,10 +343,11 @@ class FileBin extends React.Component {
         this.state.commissionFile.uploadDate = new Date();
         this.setState(this.state)
 
-        CommisssionFileParser.parseCommissionFile(this.state.draggedFile, ((result) => {
+        CommissionFileParser.parseCommissionFile(this.state.draggedFile, ((result) => {
 
             if(result.success)
             {
+                this.state.commissionFile.dataRowNumber = result.dataRowNumber
                 Modal.showWithContent(<ColumnSelectModalContent columns={result.columns} onSave={this.onSaveColumnSettings.bind(this)} onCancel={this.onCancelColumnSettings.bind(this)}/>)
             }
             else
@@ -435,7 +436,8 @@ class FileBin extends React.Component {
             return
         }
 
-        AppActions.uploadCommissionFile(this.state.commissionFile,this.state.draggedFile,this.state.columnSettings, function (response) {
+        this.state.commissionFile.columnSettings = this.state.columnSettings
+        AppActions.uploadCommissionFile(this.state.commissionFile,this.state.draggedFile, function (response) {
            if(response.result)
             {
                 //if success

@@ -19,16 +19,12 @@ export class CommissionFile {
             this.note = "";
             this.taxState = strings.taxIncluded;
             this.taxValue = "";
+            this.columnSettings = null
+            this.dataRowNumber = -1
         }
     }
     copyFrom(commissionFile)
     {
-        this.name = commissionFile.name;
-        this.company = commissionFile.company;
-        this.paymentDate = commissionFile.paymentDate;
-        this.uploadDate = commissionFile.uploadDate;
-        this.note = commissionFile.note;
-        this.taxState = commissionFile.taxState;
-        this.taxValue = commissionFile.taxValue;
+        Object.assign(this, commissionFile);
     }
 }

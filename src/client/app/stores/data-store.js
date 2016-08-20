@@ -341,13 +341,14 @@ class DataStore extends Store {
                 break;
             }
         }
+
+
     }
     uploadCommissionFile(data)
     {
         var formData = new FormData();
         formData.append('file', data.draggedFile);
         formData.append('data', JSON.stringify(data.commissionFile));
-        formData.append('columnSettings', JSON.stringify(data.columnSettings));
 
         // now post a new XHR request
         var xhr = new XMLHttpRequest();
