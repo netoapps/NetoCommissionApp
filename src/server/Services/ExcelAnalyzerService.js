@@ -42,27 +42,20 @@ function ExcelAnalyzerService() {
         var columnSettings = _.omit(columnSettings, function(value, key, object){
            return value===null;
         });
-
-        salaries = _.map(salaries, function (s) {
-            var obj = {};
-            Object.keys(columnSettings).map(function(setting){
-                obj[setting] = Number(s[columnSettings[setting]].replace(',','').trim());
+        salaries = salaries
+            .filter(function(s){
+                return s[columnSettings['מספר סוכן']];
             })
+            .map(function(s){
+                var obj = {};
+                Object.keys(columnSettings).map(function(setting){
+                    try {
+                        obj[setting] = Number(s[columnSettings[setting]].replace(',', '').trim());
+                    }catch(err){
+                        return cb(err);
+                    }
+                });
             return obj;
-            //var keys = _.keys(s);
-            //_.map(keys, function (k) {
-            //
-            //    //k = k.trim();
-            //    //var numVal = parseInt(k);
-            //    //if (!_.isNaN(numVal)) {
-            //    //    var val = s[k].replace(',', '').trim();
-            //    //    val = Number(val);
-            //    //    if (!_.isNaN(val)) {
-            //    //        obj[numVal] = val;
-            //    //    }
-            //    //}
-            //});
-            //return obj;
         });
 
         return cb(null, salaries);

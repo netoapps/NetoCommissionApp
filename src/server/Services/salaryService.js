@@ -423,7 +423,7 @@ function SalaryService() {
                 var salaryIdType5 = company + '-' + salary['מספר סוכן'] + '-' + type5;
                 var agentPaymentDetails, pd, amount = 0, partnershipPaymentDetails;
                 var agentsDetails = [];
-                if (agents[salaryIdType3] && salary[3]) {
+                if (agents[salaryIdType3] && salary[type3]) {
                     agentPaymentDetails = agents[salaryIdType3];
                     pd = agentPaymentDetails.pd;
                     amount = Number(salary[type3]);
