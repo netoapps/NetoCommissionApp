@@ -371,7 +371,7 @@ function SalaryService() {
         return new Promise(function (resolve, reject) {
             var missingIds = {};
             _.each(salaries, function (salary) {
-                var agentNumber = companyName + '-' + salary[1];
+                var agentNumber = companyName + '-' + salary['מספר סוכן'];
                 if (!agentsMaps[agentNumber + '-' + type3] && !partnershipsMaps[agentNumber + '-' + type3] && !agentsMaps[agentNumber + '-' + type4] && !partnershipsMaps[agentNumber + '-' + type4] && !agentsMaps[agentNumber + '-' + type5] && !partnershipsMaps[agentNumber + '-' + type5]) {
                     missingIds[salary[1]] = true;
                 }
@@ -405,76 +405,76 @@ function SalaryService() {
         return new Promise(function (resolve, reject) {
             var salaryTasks = [];
             salaries.map(function (s) {
-                if (s[3]) {
-                    s[3] *= taxValue;
+                if (s[type3]) {
+                    s[type3] *= taxValue;
                 }
-                if (s[4]) {
-                    s[4] *= taxValue;
+                if (s[type4]) {
+                    s[type4] *= taxValue;
                 }
-                if (s[5]) {
-                    s[5] *= taxValue;
+                if (s[type5]) {
+                    s[type5] *= taxValue;
                 }
             });
 
 
             _.each(salaries, function (salary) {
-                var salaryIdType3 = company + '-' + salary[1] + '-' + type3;
-                var salaryIdType4 = company + '-' + salary[1] + '-' + type4;
-                var salaryIdType5 = company + '-' + salary[1] + '-' + type5;
+                var salaryIdType3 = company + '-' + salary['מספר סוכן'] + '-' + type3;
+                var salaryIdType4 = company + '-' + salary['מספר סוכן'] + '-' + type4;
+                var salaryIdType5 = company + '-' + salary['מספר סוכן'] + '-' + type5;
                 var agentPaymentDetails, pd, amount = 0, partnershipPaymentDetails;
                 var agentsDetails = [];
                 if (agents[salaryIdType3] && salary[3]) {
                     agentPaymentDetails = agents[salaryIdType3];
                     pd = agentPaymentDetails.pd;
-                    amount = Number(salary[3]);
+                    amount = Number(salary[type3]);
                     amount *= Number(pd.agentPart) / 100;
-                    salaryTasks.push(addSalaryToAgent.bind(null, agentPaymentDetails.idNumber, salary[1], paymentDate, amount, type3, company, salary[2], fileId, ''));
+                    salaryTasks.push(addSalaryToAgent.bind(null, agentPaymentDetails.idNumber, salary['מספר סוכן'], paymentDate, amount, type3, company, salary['גודל תיק'], fileId, ''));
                 }
-                if (agents[salaryIdType4] && salary[4]) {
+                if (agents[salaryIdType4] && salary[type4]) {
                     agentPaymentDetails = agents[salaryIdType4];
                     pd = agentPaymentDetails.pd;
-                    amount = Number(salary[4]);
+                    amount = Number(salary[type4]);
                     amount *= Number(pd.agentPart) / 100;
-                    salaryTasks.push(addSalaryToAgent.bind(null, agentPaymentDetails.idNumber, salary[1], paymentDate, amount, type4, company, 0, fileId, ''));
+                    salaryTasks.push(addSalaryToAgent.bind(null, agentPaymentDetails.idNumber, salary['מספר סוכן'], paymentDate, amount, type4, company, 0, fileId, ''));
                 }
-                if (agents[salaryIdType5] && salary[5]) {
+                if (agents[salaryIdType5] && salary[type5]) {
                     agentPaymentDetails = agents[salaryIdType5];
                     pd = agentPaymentDetails.pd;
-                    amount = Number(salary[5]);
+                    amount = Number(salary[type5]);
                     amount *= Number(pd.agentPart) / 100;
-                    salaryTasks.push(addSalaryToAgent.bind(null, agentPaymentDetails.idNumber, salary[1], paymentDate, amount, type5, company, 0, fileId, ''));
+                    salaryTasks.push(addSalaryToAgent.bind(null, agentPaymentDetails.idNumber, salary['מספר סוכן'], paymentDate, amount, type5, company, 0, fileId, ''));
                 }
-                if (partnerships[salaryIdType3] && salary[3]) {
+                if (partnerships[salaryIdType3] && salary[type3]) {
                     partnershipPaymentDetails = partnerships[salaryIdType3];
                     agentsDetails = partnershipPaymentDetails.agentsDetails;
                     pd = partnershipPaymentDetails.pd;
                     _.each(agentsDetails, function (agent) {
-                        amount = Number(salary[3]);
+                        amount = Number(salary[type3]);
                         amount *= Number(agent.part) / 100;
                         amount *= Number(pd.partnershipPart) / 100;
-                        salaryTasks.push(addSalaryToAgent.bind(null, agent.idNumber, salary[1], paymentDate, amount, type3, company, salary[2], fileId, ''));
+                        salaryTasks.push(addSalaryToAgent.bind(null, agent.idNumber, salary['מספר סוכן'], paymentDate, amount, type3, company, salary['גודל תיק'], fileId, ''));
                     })
                 }
-                if (partnerships[salaryIdType4] && salary[4]) {
+                if (partnerships[salaryIdType4] && salary[type4]) {
                     partnershipPaymentDetails = partnerships[salaryIdType4];
                     agentsDetails = partnershipPaymentDetails.agentsDetails;
                     pd = partnershipPaymentDetails.pd;
                     _.each(agentsDetails, function (agent) {
-                        amount = Number(salary[4]);
+                        amount = Number(salary[type4]);
                         amount *= Number(agent.part) / 100;
                         amount *= Number(pd.partnershipPart) / 100;
-                        salaryTasks.push(addSalaryToAgent.bind(null, agent.idNumber, salary[1], paymentDate, amount, type4, company, 0, fileId, ''));
+                        salaryTasks.push(addSalaryToAgent.bind(null, agent.idNumber, salary['מספר סוכן'], paymentDate, amount, type4, company, 0, fileId, ''));
                     })
                 }
-                if (partnerships[salaryIdType4] && salary[5]) {
+                if (partnerships[salaryIdType4] && salary[type5]) {
                     partnershipPaymentDetails = partnerships[salaryIdType5];
                     agentsDetails = partnershipPaymentDetails.agentsDetails;
                     pd = partnershipPaymentDetails.pd;
                     _.each(agentsDetails, function (agent) {
-                        amount = Number(salary[5]);
+                        amount = Number(salary[type5]);
                         amount *= Number(agent.part) / 100;
                         amount *= Number(pd.partnershipPart) / 100;
-                        salaryTasks.push(addSalaryToAgent.bind(null, agent.idNumber, salary[1], paymentDate, amount, type5, company, 0, fileId, ''));
+                        salaryTasks.push(addSalaryToAgent.bind(null, agent.idNumber, salary['מספר סוכן'], paymentDate, amount, type5, company, 0, fileId, ''));
                     })
                 }
             });

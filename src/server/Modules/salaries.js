@@ -26,7 +26,7 @@ function uploadSalariesFile(req, res) {
         if (err) {
             return res.status(400).json(err);
         }
-        analyzer.analyzeSalaryFile(file.pathOnDisk, function (err, salaries) {
+        analyzer.analyzeSalaryFile(file.pathOnDisk,data.columnSettings, data.dataRowNumber, function (err, salaries) {
             if (err) {
                 fileService.deleteFile(file._id).then(function () {
                     return res.status(400).json({err: err});
