@@ -48,7 +48,8 @@ class CommissionFileParser {
                 {
                     callback({
                         success: true,
-                        columns: columns
+                        columns: columns,
+                        dataRowNumber: r
                     })
                     break;
                 }
