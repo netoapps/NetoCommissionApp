@@ -373,7 +373,7 @@ function SalaryService() {
             _.each(salaries, function (salary) {
                 var agentNumber = companyName + '-' + salary['מספר סוכן'];
                 if (!agentsMaps[agentNumber + '-' + type3] && !partnershipsMaps[agentNumber + '-' + type3] && !agentsMaps[agentNumber + '-' + type4] && !partnershipsMaps[agentNumber + '-' + type4] && !agentsMaps[agentNumber + '-' + type5] && !partnershipsMaps[agentNumber + '-' + type5]) {
-                    missingIds[salary[1]] = true;
+                    missingIds[salary['מספר סוכן']] = true;
                 }
             });
             if (Object.keys(missingIds).length > 0) {
