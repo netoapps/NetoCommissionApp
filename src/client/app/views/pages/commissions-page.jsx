@@ -658,7 +658,6 @@ class Commissions extends React.Component {
                     {
                         agentName = agent.name + " " + agent.familyName
                     }
-                    var agentName = agent.name + " " + agent.familyName
                     data.push({companyName: item.company,
                         paymentType: item.type,
                         agentNumber: item.agentInCompanyId,
