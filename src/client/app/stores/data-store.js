@@ -375,8 +375,8 @@ class DataStore extends Store {
                 if(data.callback != null)
                     data.callback({
                         result: false,
-                        errorCode: response.errCode,
-                        errorData: response.errData
+                        errCode: response.errCode,
+                        errData: response.errData
                     })
             }
         }.bind(this);

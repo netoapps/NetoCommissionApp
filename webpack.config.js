@@ -11,6 +11,20 @@ var config = {
         filename: 'bundle.js'
     },
 
+    /**** required for xlsx to build ****/
+    node: {
+        fs: 'empty'
+    },
+    externals: [
+        {
+            './cptable': 'var cptable'
+        },
+        {
+            './jszip': 'jszip'
+        }
+    ],
+    /*************************************/
+
     module : {
         loaders : [
             {

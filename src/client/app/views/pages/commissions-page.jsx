@@ -14,7 +14,6 @@ import DataService from '../../services/data-service.js';
 import {ActionType} from '../../actions/app-actions.js'
 import CommisssionFileParser from '../../services/commission-file-parser.js'
 import {Modal} from '../common/app-modal.jsx';
-import FixedWidthDropdown from './../common/fixed-width-dropdown.jsx';
 
 var notSetValue = "לא נקבע"
 class ColumnSelectModalContentCell extends React.Component
@@ -61,10 +60,10 @@ class ColumnSelectModalContentCell extends React.Component
 
         return <div className="columns-select-cell">
                  <div className={className}>{this.props.value}</div>
-                 <div className="columns-select-cell-options h-center">
-                     <FixedWidthDropdown shadow label={this.state.selectedType} alignMenu="right" color={color}>
+                 <div className="columns-select-cell-options">
+                     <Dropdown label={this.state.selectedType} alignMenu="right" color={color} variant="raised">
                          {types}
-                     </FixedWidthDropdown>
+                     </Dropdown>
                  </div>
         </div>
     }
@@ -75,7 +74,7 @@ class ColumnSelectModalContent extends React.Component
     constructor(props) {
         super(props);
 
-        var types = AppStore.getCommissionTypes().concat(notSetValue)
+        var types = AppStore.getCommissionTypes().concat("גודל תיק").concat("מספר סוכן").concat(notSetValue)
         var typeSelection = {}
         for(var type = 0; type < types.length; type++)
         {
@@ -151,6 +150,7 @@ class ColumnSelectModalContent extends React.Component
     }
     onCancel()
     {
+        this.props.onCancel()
         Modal.hide()
     }
     onSave()
@@ -266,6 +266,10 @@ class FileBin extends React.Component {
         this.state.columnSettings = settings
         this.setState(this.state)
     }
+    onCancelColumnSettings()
+    {
+        this.reset()
+    }
     onDrop(files)
     {
         console.log('Received files: ', files)
@@ -274,11 +278,11 @@ class FileBin extends React.Component {
         this.state.commissionFile.uploadDate = new Date();
         this.setState(this.state)
 
-        CommisssionFileParser.parseCommissionFile("", ((result) => {
+        CommisssionFileParser.parseCommissionFile(this.state.draggedFile, ((result) => {
 
             if(result.success)
             {
-                Modal.showWithContent(<ColumnSelectModalContent columns={result.columns} onSave={this.onSaveColumnSettings.bind(this)}/>)
+                Modal.showWithContent(<ColumnSelectModalContent columns={result.columns} onSave={this.onSaveColumnSettings.bind(this)} onCancel={this.onCancelColumnSettings.bind(this)}/>)
             }
             else
             {
