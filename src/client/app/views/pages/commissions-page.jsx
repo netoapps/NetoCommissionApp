@@ -16,6 +16,8 @@ import CommisssionFileParser from '../../services/commission-file-parser.js'
 import {Modal} from '../common/app-modal.jsx';
 
 var notSetValue = "לא נקבע"
+var agentNumberValue = "מספר סוכן"
+var portfolioValue = "גודל תיק"
 class ColumnSelectModalContentCell extends React.Component
 {
     constructor(props)
@@ -74,7 +76,9 @@ class ColumnSelectModalContent extends React.Component
     constructor(props) {
         super(props);
 
-        var types = AppStore.getCommissionTypes().concat("גודל תיק").concat("מספר סוכן").concat(notSetValue)
+        var types = AppStore.getCommissionTypes().slice()
+        types = types.concat(portfolioValue).concat(agentNumberValue).concat(notSetValue)
+
         var typeSelection = {}
         for(var type = 0; type < types.length; type++)
         {
@@ -89,54 +93,64 @@ class ColumnSelectModalContent extends React.Component
     }
     onSelectType(type,columnName)
     {
-        //If setting an already selected column with not set value (= clearing a column)
-        if(type == notSetValue && this.selectedTypeOfColumn(columnName) != notSetValue)
+        if(type === notSetValue)
         {
-            this.state.columnToClear = columnName
+            var typeOfColumn = this.selectedTypeOfColumn(columnName)
+            if(typeOfColumn != notSetValue)
+            {
+                this.state.columnToClear = columnName
+            }
+            this.state.typeSelection[typeOfColumn] = null
         }
         //Clearing other column by settings this one
-        else if(this.state.typeSelection[type] != null)
+        else
         {
             this.state.columnToClear = this.state.typeSelection[type]
-        }
-        if(type != notSetValue)
-        {
             this.state.typeSelection[type] = columnName
         }
         this.setState(this.state)
 
+        console.log("==================")
         for(var key in this.state.typeSelection)
         {
             console.log(key + " = " + this.state.typeSelection[key])
         }
+        console.log("==================")
+
     }
-    validateColumnSettings()
+    validateColumnSettings(callback)
     {
-        var notSet = false
-        var notSetTypeName = ""
+        var agentNumberNotSet = false
+        var notSetTypes = []
+        var commissionTypes = AppStore.getCommissionTypes().slice()
+        var indexOfType = -1
+
         for(var type = 0; type < this.state.types.length; type++)
         {
             if(this.state.types[type] != notSetValue)
             {
-                var commissionType = this.state.types[type]
-                if (this.state.typeSelection[commissionType] == null) {
-                    notSet = true
-                    notSetTypeName = commissionType
-                    break
-                }
-                else if (this.state.typeSelection[commissionType].length == 0)
+                var typeValue = this.state.types[type]
+                if (this.state.typeSelection[typeValue] == null)
                 {
-                    notSet = true
-                    notSetTypeName = commissionType
-                    break
+                    if(typeValue == agentNumberValue)
+                    {
+                        agentNumberNotSet = true
+                        break
+                    }
+                    else if ((indexOfType = commissionTypes.indexOf(typeValue)) != -1)
+                    {
+                        //remove it (mark as not set)
+                        commissionTypes.splice(indexOfType, 1)
+                    }
+                    notSetTypes.push(typeValue)
                 }
             }
         }
-        if(notSet)
+        if(agentNumberNotSet)
         {
             swal({
                 title: "שגיאה",
-                text:  "לא נבחרה עמודה עבור '"+ notSetTypeName + "'",
+                text:  "חובה לבחור עמודה עבור 'מספר סוכן'",
                 type: "error",
                 showCancelButton: false,
                 confirmButtonColor: "#DD6B55",
@@ -144,9 +158,58 @@ class ColumnSelectModalContent extends React.Component
                 closeOnConfirm: true,
                 showLoaderOnConfirm: false
             });
-            return false
+            callback(false)
         }
-        return true
+        else if(commissionTypes.length == 0)
+        {
+            var comTypes = AppStore.getCommissionTypes()
+            var comTypesStr = ""
+            for(var comTypeIndex = 0; comTypeIndex < comTypes.length ; comTypeIndex++)
+            {
+                comTypesStr += "'"+comTypes[comTypeIndex]+"'"
+                comTypesStr += " "
+            }
+            swal({
+                title: "שגיאה",
+                text:  "חובה לבחור לפחות אחד מסוגי העמלות " + comTypesStr,
+                type: "error",
+                showCancelButton: false,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "סגור",
+                closeOnConfirm: true,
+                showLoaderOnConfirm: false
+            });
+            callback(false)
+        }
+        else if(notSetTypes.length)
+        {
+            var missingType = ""
+            for(var missingIndex = 0;  missingIndex < notSetTypes.length; missingIndex++)
+            {
+                missingType += "'"+notSetTypes[missingIndex]+"'"
+                missingType += " "
+            }
+            swal({
+                title: "הערה",
+                text:  "לא נבחרה עמודה עבור "+ missingType + ", להמשיך?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "המשך",
+                cancelButtonText: "ביטול",
+                closeOnConfirm: true,
+                closeOnCancel: true
+            },
+            function(isConfirm)
+            {
+                if (!isConfirm)
+                {
+                    callback(false)
+                    return
+                }
+                callback(true)
+            });
+        }
     }
     onCancel()
     {
@@ -155,12 +218,14 @@ class ColumnSelectModalContent extends React.Component
     }
     onSave()
     {
-        if(this.validateColumnSettings())
-        {
-            delete this.state.typeSelection[notSetValue]
-            this.props.onSave(this.state.typeSelection)
-            Modal.hide()
-        }
+        this.validateColumnSettings(((result) => {
+            if(result)
+            {
+                delete this.state.typeSelection[notSetValue]
+                this.props.onSave(this.state.typeSelection)
+                Modal.hide()
+            }
+        }).bind(this))
     }
     selectedTypeOfColumn(column)
     {
