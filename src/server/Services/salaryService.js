@@ -326,33 +326,30 @@ function SalaryService() {
     this.getAllAgentsSalariesByCompanyAndTypesForDateSummed = function (date) {
         return new Promise(function (resolve, reject) {
             date = new Date(date);
-            Salary.aggregate([
-                {$match: {paymentDate: date}},
-                {
-                    $group: {
-                        _id: {company:'$company', agentInCompanyId:'$agentInCompanyId', idNumber:'$idNumber'},
-                        'נפרעים': {$sum: {$cond: [{$eq: ['$type', 'נפרעים']}, '$amount', 0]}},
-                        'בונוס': {$sum: {$cond: [{$eq: ['$type', 'בונוס']}, '$amount', 0]}},
-                        'היקף': {$sum: {$cond: [{$eq: ['$type', 'היקף']}, '$amount', 0]}},
-                        'ידני': {$sum: {$cond: [{$eq: ['$type', 'ידני']}, '$amount', 0]}}
+            Salary.find({paymentDate:date}).lean().exec(function(err, data){
+                data = _.groupBy(data, function(sal){
+                    return sal.company+'#'+sal.agentInCompanyId+'#'+sal.type;
+                })
+                data = _.map(data, function(sals, key){
+                    var sum = _.reduce(sals, function(accum, sal){
+                        accum.portfolio+=sal.portfolio;
+                        accum.amount+=sal.amount;
+                        return accum;
+                    },{portfolio:0, amount:0});
+
+                    return {
+                        agentInCompanyId:sals[0].agentInCompanyId,
+                        amount:sum.amount,
+                        portfolio:sum.portfolio,
+                        creationTime:sals[0].creationTime,
+                        fileId:sals[0].fileId,
+                        idNumber:sals[0].idNumber,
+                        notes:sals[0].notes,
+                        type:sals[0].type,
+                        updateTime:sals[0].updateTime,
                     }
-                }
-            ], function (err, data) {
-                if (err) {
-                    return reject(err);
-                }
-                if (data.length === 0) {
-                    return resolve([]);
-                }
-                data.map(function(salary){
-                    salary.idNumber = salary._id.idNumber;
-                    salary.agentInCompanyId = salary._id.agentInCompanyId;
-                    salary.company = salary._id.company;
-                    delete salary._id;
                 })
-                data = _.groupBy(data,function(sal){
-                    return sal.idNumber;
-                })
+
                 return resolve(data);
             })
         })
