@@ -276,6 +276,27 @@ function getAllAgentsSalariesByCompanyAndTypesForDateSummed(req, res){
         })
 }
 
+function getAgentIdSalariesByCompanyAndTypesForDateSummed(req, res){
+    const idNumber = req.params.idNumber;
+    if (!idNumber) {
+        return res.status(400).json({err: 'invalid idNumber'});
+    }
+    const pd = req.params.paymentDate;
+    if (!pd) {
+        return res.status(400).json({err: 'invalid payment date'});
+    }
+
+    salaryService.getAgentIdSalariesByCompanyAndTypesForDateSummed(idNumber, pd)
+        .then(function (salaries) {
+            return res.status(200).json({salaries:salaries});
+        })
+        .catch(function (err) {
+            return res.status(400).json({err: err});
+        })
+}
+
+
+
 //function getAllAgentSalaries(req,res){
 //    if(!req.params.agentId){
 //        return res.status(200).json({err:'missing agent id'});
@@ -316,5 +337,6 @@ module.exports = {
     getAgentPortfolioForDate,
     getAgentSalariesForDate,
     getAllAgentSalariesByTypesForDateSummed,
-    getAllAgentsSalariesByCompanyAndTypesForDateSummed
+    getAllAgentsSalariesByCompanyAndTypesForDateSummed,
+    getAgentIdSalariesByCompanyAndTypesForDateSummed
 };
