@@ -35,6 +35,12 @@ class AgentSalaryPage extends React.Component {
         var currentMonth = getMonthName(date.getMonth().toString());
         var currentYear = date.getFullYear().toString();
         var monthStartDate = new Date(date.getFullYear(), date.getMonth(), 1, 0, 0, 0, 0);
+        var incomeComponentsSum = {}
+
+        for(var type = 0; type < commissionTypes.length; type++)
+        {
+            incomeComponentsSum[commissionTypes[type]] = 0
+        }
 
          this.state = {
             agent: AppStore.getAgentAtIndex(this.props.params.index),
@@ -43,6 +49,7 @@ class AgentSalaryPage extends React.Component {
             selectedYear:currentYear,
             incomes: [],
             expenses: [],
+            incomeComponentsSum: incomeComponentsSum,
             portfolio: "0",
             newIncomeVisible: false,
             selectedIncome: null,
@@ -62,39 +69,33 @@ class AgentSalaryPage extends React.Component {
     reloadDataWithDate(date)
     {
         this.state.date = date
-        this.reloadData((incomes, expenses, portfolio) => {
+        this.reloadData((incomes, expenses, portfolio,incomeComponentsSum) => {
 
             this.state.incomes = incomes
             this.state.expenses = expenses
             this.state.portfolio = portfolio
+            this.state.incomeComponentsSum = incomeComponentsSum
             this.setState(this.state)
         })
     }
     reloadData(callback)
     {
-        var incomes,portfolio,expenses
         var idNumber = this.state.agent.idNumber
         var date = this.state.date
 
-        DataService.loadAgentIncomeData(idNumber,date).then(function (value)
-        {
-            incomes = value
-            DataService.loadAgentPortfolioData(idNumber, date).then(function (value)
-            {
-                portfolio = value
-                DataService.loadAgentExpensesData(idNumber, date).then(function (value)
-                {
-                    expenses = value
-                    callback(incomes,expenses,portfolio)
-                }, function (reason) {
-                    console.log("failed to load expenses data - " + reason)
-                })
-            }, function (reason) {
-                console.log("failed to load portfolio data - " + reason)
-            })
-        }, function (reason) {
+        var promise = []
+        promise.push(DataService.loadAgentIncomeData(idNumber,date))
+        promise.push(DataService.loadAgentExpensesData(idNumber,date))
+        promise.push(DataService.loadAgentPortfolioData(idNumber,date))
+        promise.push(DataService.loadAgentIncomeComponentsSumData(idNumber,date))
+        Promise.all(promise).then(function (values) {
+            callback(values[0],values[1],values[2],values[3])
+        }).catch(function (reason){
+            callback(null,null,null)
             console.log("failed to income data - " + reason)
         })
+
+
     }
 
     onMonthChange(month)
@@ -351,25 +352,30 @@ class AgentSalaryPage extends React.Component {
 
     sumOfIncomeWithType(type)
     {
-        var sum = 0
-        for(var index = 0; index < this.state.incomes.length; index++)
-        {
-            if(this.state.incomes[index].type === type)
-            {
-                sum += this.state.incomes[index].amount
-            }
-        }
-        return sum
+        return this.state.incomeComponentsSum[type]
+        // var sum = 0
+        // for(var index = 0; index < this.state.incomes.length; index++)
+        // {
+        //     if(this.state.incomes[index].type === type)
+        //     {
+        //         sum += this.state.incomes[index].amount
+        //     }
+        // }
+        // return sum
     }
 
     sumOfAllIncomes()
     {
         var sum = 0
-        for(var index = 0; index < this.state.incomes.length; index++)
+        for(var type in this.state.incomeComponentsSum)
         {
-            sum += this.state.incomes[index].amount
+            sum += parseFloat(this.state.incomeComponentsSum[type])
         }
-        return sum
+        // for(var index = 0; index < this.state.incomes.length; index++)
+        // {
+        //     sum += this.state.incomes[index].amount
+        // }
+        return sum.toString()
     }
 
     sumOfAllExpenses()
@@ -413,7 +419,7 @@ class AgentSalaryPage extends React.Component {
             },
             {
                 title: "סה״כ תשלום",
-                key: "amount",
+                key: "calculatedAmount",
                 width: "col-33-33",
                 type: 'read-only',
                 format: "currency",
