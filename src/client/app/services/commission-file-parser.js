@@ -40,7 +40,7 @@ class CommissionFileParser {
                     cell = worksheet[COLS[c] + ROWS[r]]
                     if (cell)
                     {
-                        columns.unshift(cell.v.toString())
+                        columns.push(cell.v.toString())
                         done = true
                      }
                 }
