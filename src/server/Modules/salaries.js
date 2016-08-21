@@ -269,7 +269,7 @@ function getAllAgentsSalariesByCompanyAndTypesForDateSummed(req, res){
 
     salaryService.getAllAgentsSalariesByCompanyAndTypesForDateSummed(pd)
         .then(function (salaries) {
-            return res.status(200).json(salaries);
+            return res.status(200).json({salaries:salaries});
         })
         .catch(function (err) {
             return res.status(400).json({err: err});
