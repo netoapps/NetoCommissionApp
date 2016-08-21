@@ -153,11 +153,13 @@ class DataService {
     }
 
     //Salaries
-    loadAllCommissionFilesEntries(callback)
+    loadCompanyAllPaymentTypesForMonth(date,callback)
     {
+        ///salary/by_company_types_summed/:paymentDate
+
         $.ajax(
             {
-                url: '/api/v1/salary',
+                url: '/api/v1/salary/by_company_types_summed/'+date,
                 type: 'GET',
                 contentType: 'application/json',
                 success: function(result)
