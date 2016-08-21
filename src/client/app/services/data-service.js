@@ -262,6 +262,8 @@ class DataService {
             });
     }
 
+    //5511 3090 7704 9696
+
     loadAgentIncomeData(agentId, date)
     {
         return new Promise(function (resolve, reject)
@@ -274,7 +276,7 @@ class DataService {
                     success: function(result)
                     {
                         console.log('load agent incomes data for date '+ date + ' - server responded with success!');
-                        resolve(result)
+                        resolve(result.salaries)
                     },
                     error: function(jqXHR, textStatus, errorThrown)
                     {

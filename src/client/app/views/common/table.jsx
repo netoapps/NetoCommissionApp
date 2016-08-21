@@ -207,7 +207,7 @@ class TableColumn extends React.Component {
     {
         if(this.props.sortBy != null)
         {
-            this.props.sortBy(this.state.column.title)
+            this.props.sortBy(this.state.column)
         }
     }
     render()
@@ -265,16 +265,15 @@ class Table extends React.Component {
             this.props.onRowClick(index)
         }
     }
-    onSortBy(columnName)
+    onSortBy(column)
     {
-        console.log(columnName)
-
-        // this.state.data.sort(function(a, b)
-        // {
-        //     var textA = a.DepartmentName.toUpperCase();
-        //     var textB = b.DepartmentName.toUpperCase();
-        //     return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-        // });
+        this.state.data.sort(function(a, b)
+        {
+            var textA = a[column.key].toUpperCase();
+            var textB = b[column.key].toUpperCase();
+            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+        });
+        this.setState(this.state)
     }
 
     render()
