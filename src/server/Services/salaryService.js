@@ -323,6 +323,41 @@ function SalaryService() {
         })
     }
 
+    this.getAllAgentsSalariesByCompanyAndTypesForDateSummed = function (date) {
+        return new Promise(function (resolve, reject) {
+            date = new Date(date);
+            Salary.aggregate([
+                {$match: {paymentDate: date}},
+                {
+                    $group: {
+                        _id: {company:'$company', agentInCompanyId:'$agentInCompanyId', idNumber:'$idNumber'},
+                        'נפרעים': {$sum: {$cond: [{$eq: ['$type', 'נפרעים']}, '$amount', 0]}},
+                        'בונוס': {$sum: {$cond: [{$eq: ['$type', 'בונוס']}, '$amount', 0]}},
+                        'היקף': {$sum: {$cond: [{$eq: ['$type', 'היקף']}, '$amount', 0]}},
+                        'ידני': {$sum: {$cond: [{$eq: ['$type', 'ידני']}, '$amount', 0]}}
+                    }
+                }
+            ], function (err, data) {
+                if (err) {
+                    return reject(err);
+                }
+                if (data.length === 0) {
+                    return resolve([]);
+                }
+                data.map(function(salary){
+                    salary.idNumber = salary._id.idNumber;
+                    salary.agentInCompanyId = salary._id.agentInCompanyId;
+                    salary.company = salary._id.company;
+                    delete salary._id;
+                })
+                data = _.groupBy(data,function(sal){
+                    return sal.idNumber;
+                })
+                return resolve(data);
+            })
+        })
+    }
+
 
     this.getAllAgentSalariesByTypesForDate = function (idNumber, date) {
         return new Promise(function (resolve, reject) {
