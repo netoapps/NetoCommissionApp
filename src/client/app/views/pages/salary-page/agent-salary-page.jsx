@@ -52,21 +52,23 @@ class AgentSalaryPage extends React.Component {
 
     componentDidMount()
     {
-        this.reloadData((incomes, expenses, portfolio) => {
+        this.reloadDataWithDate(this.state.date)
 
-            this.state.incomes = this.concatAllIncomes(incomes)
-            this.state.expenses = expenses
-            this.state.portfolio = portfolio
-            this.setState(this.state)
-        })
     }
     componentWillUnmount()
     {
 
     }
-    setIncomes(incomes)
+    reloadDataWithDate(date)
     {
+        this.state.date = date
+        this.reloadData((incomes, expenses, portfolio) => {
 
+            this.state.incomes = incomes
+            this.state.expenses = expenses
+            this.state.portfolio = portfolio
+            this.setState(this.state)
+        })
     }
     reloadData(callback)
     {
@@ -101,13 +103,8 @@ class AgentSalaryPage extends React.Component {
         {
             this.state.selectedMonth = month;
             this.state.date = new Date(this.state.date.getFullYear(), getMonthNumber(month), 1, 0, 0, 0, 0);
-            this.reloadData((incomes, expenses, portfolio) => {
+            this.reloadDataWithDate(this.state.date)
 
-                this.state.incomes = this.concatAllIncomes(incomes)
-                this.state.expenses = expenses
-                this.state.portfolio = portfolio
-                this.setState(this.state)
-            })
         }
     }
     onYearChange(year)
@@ -116,13 +113,8 @@ class AgentSalaryPage extends React.Component {
         {
             this.state.selectedYear = year;
             this.state.date = new Date(year, this.state.date.getMonth(), 1, 0, 0, 0, 0);
-            this.reloadData((incomes, expenses, portfolio) => {
+            this.reloadDataWithDate(this.state.date)
 
-                this.state.incomes = this.concatAllIncomes(incomes)
-                this.state.expenses = expenses
-                this.state.portfolio = portfolio
-                this.setState(this.state)
-            })
         }
     }
     //Manual income
@@ -369,19 +361,7 @@ class AgentSalaryPage extends React.Component {
         }
         return sum
     }
-    concatAllIncomes(incomes)
-    {
-        var allIncomes = []
-        for(var type = 0; type < commissionTypes.length; type++)
-        {
-            var incomesOfType = incomes[commissionTypes[type]]
-            if(incomesOfType != null)
-            {
-                allIncomes = allIncomes.concat(incomesOfType)
-            }
-        }
-        return allIncomes
-    }
+
     sumOfAllIncomes()
     {
         var sum = 0
