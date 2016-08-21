@@ -6,6 +6,7 @@ var AgentsService = require('./agentsService');
 var _ = require('underscore');
 var async = require('async');
 
+
 function ExcelAnalyzerService() {
     this.analyzeSalaryFile = function (filePath, columnSettings,headersRowNumber, cb) {
         try {
@@ -28,7 +29,11 @@ function ExcelAnalyzerService() {
                 Object.keys(columnSettings).map(function(setting){
                     try {
                     if(setting=='מספר סוכן'){
-                        obj[setting] = s[columnSettings[setting]].trim();
+                        if(isNaN(s[columnSettings[setting]])){
+                            obj[setting] = s[columnSettings[setting]];
+                        }else{
+                            obj[setting] = Number(s[columnSettings[setting]]).trim();
+                        }
                     }else {
                         obj[setting] = Number(s[columnSettings[setting]].replace(',', '').trim());
                     }
