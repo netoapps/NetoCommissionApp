@@ -13,33 +13,10 @@ function ExcelAnalyzerService() {
         } catch (err) {
             return cb(err);
         }
-        //const COLS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'];
-        //const ROWS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
         var worksheet = workbook.Sheets[workbook.SheetNames[0]];
-        //var headersRowNumber = -1;
-        //var cell, c, r, matches = 0;
-        //for (r in ROWS) {
-        //    for (c in COLS) {
-        //        cell = worksheet[COLS[c] + ROWS[r]]
-        //        if (cell) {
-        //            if (cell.t === 'n' && (cell.v === 1 || cell.v === 2 || cell.v === 3 || cell.v === 4 || cell.v === 5 || cell.v === 6)) {
-        //                matches++;
-        //                if (matches >= 2) {
-        //                    headersRowNumber = ROWS[r];
-        //                    break;
-        //                }
-        //            }
-        //        }
-        //    }
-        //    if (headersRowNumber !== -1) {
-        //        break;
-        //    }
-        //}
-
-
         var salaries = xlsx.utils.sheet_to_json(worksheet, {range: headersRowNumber-1});
-
-        var columnSettings = _.omit(columnSettings, function(value, key, object){
+        columnSettings = _.omit(columnSettings, function(value, key, object){
            return value===null;
         });
         salaries = salaries
@@ -50,13 +27,17 @@ function ExcelAnalyzerService() {
                 var obj = {};
                 Object.keys(columnSettings).map(function(setting){
                     try {
+                    if(setting=='מספר סוכן'){
+                        obj[setting] = s[columnSettings[setting]].trim();
+                    }else {
                         obj[setting] = Number(s[columnSettings[setting]].replace(',', '').trim());
+                    }
                     }catch(err){
                         return cb(err);
                     }
                 });
-            return obj;
-        });
+                return obj;
+            });
 
         return cb(null, salaries);
 
