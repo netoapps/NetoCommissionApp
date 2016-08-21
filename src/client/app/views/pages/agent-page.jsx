@@ -196,7 +196,12 @@ class AgentPage extends React.Component {
     }
     onAgentNumberChange(index,value)
     {
-        this.state.agent.paymentsDetails[index].agentNumber = value
+        var agentNumber = value
+        if(!isNaN(agentNumber))
+        {
+            agentNumber = Number(agentNumber).toString()
+        }
+        this.state.agent.paymentsDetails[index].agentNumber = agentNumber
         this.setState(this.state)
     }
     onAgentPartChange(index,value)
