@@ -347,6 +347,8 @@ function SalaryService() {
                         notes:sals[0].notes,
                         type:sals[0].type,
                         updateTime:sals[0].updateTime,
+                        company:sals[0].company,
+                        paymentDate:sals[0].paymentDate
                     }
                 })
 
