@@ -203,10 +203,17 @@ class TableColumn extends React.Component {
         this.state.column = nextProps.column
         this.setState(this.state)
     }
+    sortBy()
+    {
+        if(this.props.sortBy != null)
+        {
+            this.props.sortBy(this.state.column.title)
+        }
+    }
     render()
     {
         var className = "table-column " + this.state.column.width;
-        return ( <div className={className}>{this.state.column.title}</div>);
+        return ( <div className={className} onClick={this.sortBy.bind(this)} >{this.state.column.title}</div>);
     }
 }
 
@@ -258,6 +265,10 @@ class Table extends React.Component {
             this.props.onRowClick(index)
         }
     }
+    onSortBy(columnName)
+    {
+        console.log(columnName)
+    }
 
     render()
     {
@@ -268,8 +279,9 @@ class Table extends React.Component {
         {
             for(var col = 0; col < this.state.columns.length; col++)
             {
-                tableColumns[col] =<TableColumn key={col}
-                                                column={this.state.columns[col]} />
+                tableColumns[col] = <TableColumn key={col}
+                                                 sortBy={this.onSortBy.bind(this)}
+                                                 column={this.state.columns[col]} />
             }
         }
 

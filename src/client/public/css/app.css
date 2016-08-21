@@ -1019,6 +1019,7 @@ body
     color: white;
     padding: 5px 10px;
     text-align: center;
+    cursor: pointer;
 }
 
 .table-column-remove
