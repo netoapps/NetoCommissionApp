@@ -153,7 +153,7 @@ class DataService {
     }
 
     //Salaries
-    loadCompanyAllPaymentTypesForMonth(date,callback)
+    loadAllCompanyPaymentTypesForMonth(date,callback)
     {
         $.ajax(
             {
@@ -262,13 +262,13 @@ class DataService {
             });
     }
 
-    loadAgentIncomesData(agentId, date)
+    loadAgentIncomeData(agentId, date)
     {
         return new Promise(function (resolve, reject)
         {
             $.ajax(
                 {
-                    url: '/api/v1/agent/'+ agentId + '/salary/bytypes/' + date,
+                    url: '/api/v1/agent/'+ agentId + '/salary/by_company_and_types_summed/' + date,
                     type: 'GET',
                     contentType: 'application/json',
                     success: function(result)

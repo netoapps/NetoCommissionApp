@@ -666,7 +666,7 @@ class Commissions extends React.Component {
     }
     reloadData(callback)
     {
-        DataService.loadCompanyAllPaymentTypesForMonth(this.state.date,  (response) => {
+        DataService.loadAllCompanyPaymentTypesForMonth(this.state.date,  (response) => {
             var data = []
             if(response.result == true)
             {
