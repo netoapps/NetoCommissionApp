@@ -131,14 +131,51 @@ function ExcelAnalyzerService() {
                         delete  agent.ID;
                         delete agent['סוכן'];
                         var splitName = aName.split('/')[0].split(' ');
-                        _.mapObject(agent, function (aid, compName) {
+                        var pd=[];
+                        if(Object.keys(agent).length>0) {
+                            _.mapObject(agent, function (aid, compName) {
 
-                            var pd = [
-                                {companyName: compName, agentNumber: aid, paymentType:'נפרעים',agentPart:70, agencyPart:30},
-                                {companyName: compName, agentNumber: aid, paymentType:'בונוס',agentPart:50, agencyPart:50},
-                                {companyName: compName, agentNumber: aid, paymentType:'היקף',agentPart:55, agencyPart:45}
-                            ];
-                            agentService.addAgent(ID, splitName[0].trim(), splitName.slice(1,splitName.length).join(' ').trim(), '', '', '', true, pd)
+                                pd = [
+                                    {
+                                        companyName: compName,
+                                        agentNumber: aid,
+                                        paymentType: 'נפרעים',
+                                        agentPart: 70,
+                                        agencyPart: 30
+                                    },
+                                    {
+                                        companyName: compName,
+                                        agentNumber: aid,
+                                        paymentType: 'בונוס',
+                                        agentPart: 50,
+                                        agencyPart: 50
+                                    },
+                                    {
+                                        companyName: compName,
+                                        agentNumber: aid,
+                                        paymentType: 'היקף',
+                                        agentPart: 55,
+                                        agencyPart: 45
+                                    }
+                                ];
+                                agentService.addAgent(ID, splitName[0].trim(), splitName.slice(1, splitName.length).join(' ').trim(), '', '', '', true, pd)
+                                    .then(function () {
+                                        console.log('created agent ' + ID);
+                                        len--;
+                                        if (len === 1) {
+                                            return cb();
+                                        }
+                                    })
+                                    .catch(function () {
+                                        console.log('ID ' + ID + ' already in system');
+                                        len--;
+                                        if (len === 1) {
+                                            return cb();
+                                        }
+                                    })
+                            });
+                        }else{
+                            agentService.addAgent(ID, splitName[0].trim(), splitName.slice(1, splitName.length).join(' ').trim(), '', '', '', true, pd)
                                 .then(function () {
                                     console.log('created agent ' + ID);
                                     len--;
@@ -153,7 +190,7 @@ function ExcelAnalyzerService() {
                                         return cb();
                                     }
                                 })
-                        });
+                        }
                     }
                 });
             }
@@ -172,9 +209,7 @@ function ExcelAnalyzerService() {
                 } else {
                     return;
                 }
-                if(agent.ID===7351 || agent.ID==='7351'){
-                    console.log('7351');
-                }
+
                 delete  agent.ID;
                 delete agent['סוכן'];
 
