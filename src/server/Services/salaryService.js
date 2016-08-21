@@ -357,6 +357,40 @@ function SalaryService() {
         })
     }
 
+    this.getAgentIdSalariesByCompanyAndTypesForDateSummed = function (id, date) {
+        return new Promise(function (resolve, reject) {
+            date = new Date(date);
+            Salary.find({paymentDate:date,idNumber:id}).lean().exec(function(err, data){
+                data = _.groupBy(data, function(sal){
+                    return sal.company+'#'+sal.agentInCompanyId+'#'+sal.type;
+                })
+                data = _.map(data, function(sals, key){
+                    var sum = _.reduce(sals, function(accum, sal){
+                        accum.portfolio+=sal.portfolio;
+                        accum.amount+=sal.amount;
+                        return accum;
+                    },{portfolio:0, amount:0});
+
+                    return {
+                        agentInCompanyId:sals[0].agentInCompanyId,
+                        amount:sum.amount,
+                        portfolio:sum.portfolio,
+                        creationTime:sals[0].creationTime,
+                        fileId:sals[0].fileId,
+                        idNumber:sals[0].idNumber,
+                        notes:sals[0].notes,
+                        type:sals[0].type,
+                        updateTime:sals[0].updateTime,
+                        company:sals[0].company,
+                        paymentDate:sals[0].paymentDate
+                    }
+                })
+
+                return resolve(data);
+            })
+        })
+    }
+
 
     this.getAllAgentSalariesByTypesForDate = function (idNumber, date) {
         return new Promise(function (resolve, reject) {
