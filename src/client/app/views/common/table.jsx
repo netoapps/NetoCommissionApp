@@ -56,7 +56,7 @@ class TableCell extends React.Component {
             if(!isNaN(parseFloat(value)))
             {
                 value = parseFloat(value.replace(/,/g, ""))
-                    .toFixed(0)
+                    .toFixed(2)
                     .toString()
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 this.state.value = "₪ " + value

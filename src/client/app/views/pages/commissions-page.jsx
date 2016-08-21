@@ -211,6 +211,10 @@ class ColumnSelectModalContent extends React.Component
                 callback(true)
             });
         }
+        else
+        {
+            callback(true)
+        }
     }
     onCancel()
     {
@@ -678,10 +682,7 @@ class Commissions extends React.Component {
                     {
                         agentName = agent.name + " " + agent.familyName
                     }
-                    else
-                    {
-                        console.log("") //305056616
-                    }
+
                     data.push({companyName: item.company,
                         paymentType: item.type,
                         agentNumber: item.agentInCompanyId,
