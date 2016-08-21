@@ -67,8 +67,8 @@ class PartnershipPage extends React.Component {
             else
             {
                 agentsData.push({
-                    name: "",
-                    idNumber: "",
+                    name: "לא ידוע",
+                    idNumber: "----",
                     part: ""
                 })
             }
@@ -94,7 +94,6 @@ class PartnershipPage extends React.Component {
             }
         }
     }
-
 
     onAgentPartChange(index,value)
     {

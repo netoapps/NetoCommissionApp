@@ -155,8 +155,6 @@ class DataService {
     //Salaries
     loadCompanyAllPaymentTypesForMonth(date,callback)
     {
-        ///salary/by_company_types_summed/:paymentDate
-
         $.ajax(
             {
                 url: '/api/v1/salary/by_company_types_summed/'+date,
