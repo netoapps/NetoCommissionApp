@@ -12,6 +12,7 @@ var mongoose = require('mongoose');
         agentInCompanyId: String,
         idNumber:String,
         amount:Number,
+        calculatedAmount:Number,
         type:String,
         company:String,
         paymentDate:Date,
