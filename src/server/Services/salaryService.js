@@ -305,10 +305,10 @@ function SalaryService() {
                 {
                     $group: {
                         _id: null,
-                        'נפרעים': {$sum: {$cond: [{$eq: ['$type', 'נפרעים']}, '$amount', 0]}},
-                        'בונוס': {$sum: {$cond: [{$eq: ['$type', 'בונוס']}, '$amount', 0]}},
-                        'היקף': {$sum: {$cond: [{$eq: ['$type', 'היקף']}, '$amount', 0]}},
-                        'ידני': {$sum: {$cond: [{$eq: ['$type', 'ידני']}, '$amount', 0]}}
+                        'נפרעים': {$sum: {$cond: [{$eq: ['$type', 'נפרעים']}, '$calculatedAmount', 0]}},
+                        'בונוס': {$sum: {$cond: [{$eq: ['$type', 'בונוס']}, '$calculatedAmount', 0]}},
+                        'היקף': {$sum: {$cond: [{$eq: ['$type', 'היקף']}, '$calculatedAmount', 0]}},
+                        'ידני': {$sum: {$cond: [{$eq: ['$type', 'ידני']}, '$calculatedAmount', 0]}}
                     }
                 }
             ], function (err, data) {
@@ -368,12 +368,14 @@ function SalaryService() {
                     var sum = _.reduce(sals, function(accum, sal){
                         accum.portfolio+=sal.portfolio;
                         accum.amount+=sal.amount;
+                        accum.calculatedAmount+=sal.calculatedAmount;
                         return accum;
-                    },{portfolio:0, amount:0});
+                    },{portfolio:0, amount:0, calculatedAmount:0});
 
                     return {
                         agentInCompanyId:sals[0].agentInCompanyId,
                         amount:sum.amount,
+                        calculatedAmount:sum.calculatedAmount,
                         portfolio:sum.portfolio,
                         creationTime:sals[0].creationTime,
                         fileId:sals[0].fileId,
