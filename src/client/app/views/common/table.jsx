@@ -94,20 +94,6 @@ class TableCell extends React.Component {
         }
         if (this.state.column.type === "select")
         {
-            // const options = [];
-            // action = this.state.column.action
-            // for (let type = 0; type <= this.state.column.options.length; type++ ) {
-            //     options.push(<DropdownItem onClick={ function(action,item) { action(this.props.rowIndex,item) }.bind(this,action)}
-            //                                value={this.state.column.options[type]}
-            //                                key={type}>{this.state.column.options[type]}</DropdownItem>);
-            // }
-            // node = <div className="h-center">
-            //           <TableDropdown  className="table-dropdown" label={this.state.value} alignMenu="right" >
-            //             {options}
-            //           </TableDropdown>
-            //        </div>;
-
-
             const options = []
             for(let option = 0; option < this.state.column.options.length; option++)
             {
@@ -272,6 +258,7 @@ class Table extends React.Component {
             this.props.onRowClick(index)
         }
     }
+
     render()
     {
         var data = this.state.data
@@ -285,7 +272,6 @@ class Table extends React.Component {
                                                 column={this.state.columns[col]} />
             }
         }
-
 
         var title = null
         if(this.props.title != null)
@@ -332,6 +318,7 @@ class Table extends React.Component {
                                        data={data[row]}
                                        columns={this.state.columns}/>
         }
+
         var tableTrashColumn = null
         if (this.props.onRemoveRow != null && this.props.hideHeader != true)
         {
@@ -347,12 +334,14 @@ class Table extends React.Component {
                           </div>
         }
 
+        //
+
         return <div className="table">
                     <div className="table-title">{title}</div>
                         {tableHeader}
                     <div className="table-data-container">
                         <div className="table-data">
-                        {tableRows}
+                            {tableRows}
                         </div>
                     </div>
                </div>;

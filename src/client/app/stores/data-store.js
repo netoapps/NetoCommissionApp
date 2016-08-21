@@ -308,7 +308,6 @@ class DataStore extends Store {
         }
     }
 
-
     deleteCommissionFile(data)
     {
         var files = this.getCommissionFiles()

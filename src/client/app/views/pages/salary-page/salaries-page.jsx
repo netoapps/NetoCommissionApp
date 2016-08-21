@@ -12,6 +12,7 @@ class Salaries extends React.Component {
 
     constructor(props) {
         super(props);
+        console.log("Salaries - constructor")
 
         var date = new Date()
         var currentMonth = getMonthName(date.getMonth().toString());
@@ -22,10 +23,10 @@ class Salaries extends React.Component {
             selectedMonth: currentMonth,
             selectedYear: currentYear
         };
-
     }
     componentDidMount()
     {
+        console.log("Salaries - componentDidMount")
     }
     componentWillUnmount()
     {
@@ -37,7 +38,6 @@ class Salaries extends React.Component {
         {
             this.state.selectedMonth = month;
             this.setState(this.state);
-            // this.props.onMonthChange(month)
         }
     }
     onYearChange(year)
@@ -46,7 +46,6 @@ class Salaries extends React.Component {
         {
             this.state.selectedYear = year;
             this.setState(this.state);
-            // this.props.onYearChange(year)
         }
     }
 
@@ -65,6 +64,8 @@ class Salaries extends React.Component {
         this.context.router.push('/app/agents-and-partnerships/agent-salary-page/'+index)
     }
     render () {
+
+        console.log("Salaries - render")
 
         var agentsColumns = [
 

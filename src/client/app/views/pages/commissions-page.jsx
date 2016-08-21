@@ -1,4 +1,5 @@
 import React from 'react'
+import LoadSpinner from 'react-loader'
 import { strings } from '../../constants/strings'
 import Table from './../common/table.jsx'
 import Dropdown from '../../../../../node_modules/muicss/lib/react/dropdown'
@@ -624,8 +625,19 @@ class Commissions extends React.Component {
 
     constructor(props) {
         super(props);
+
+        var date = new Date()
+        var currentMonth = getMonthName(date.getMonth().toString());
+        var currentYear = date.getFullYear().toString();
+        var monthStartDate = new Date(date.getFullYear(), date.getMonth(), 1, 0, 0, 0, 0);
+
         this.state = {
-            commissions: []
+            commissions: [],
+            dataLoaded: false,
+            date: monthStartDate,
+            selectedMonth: currentMonth,
+            selectedYear:currentYear,
+
         };
         this._handleUploadCompleted = this.handleUploadCompleted.bind(this)
     }
@@ -640,13 +652,14 @@ class Commissions extends React.Component {
 
         this.reloadData( (data)  => {
             this.state.commissions = data
+            this.state.dataLoaded = true
             this.setState(this.state)
         })
     }
 
     reloadData(callback)
     {
-        DataService.loadAllCommissionFilesEntries( (response) => {
+        DataService.loadCompanyAllPaymentTypesForMonth(this.state.date,  (response) => {
             var data = []
             if(response.result == true)
             {
@@ -675,15 +688,41 @@ class Commissions extends React.Component {
             }
             callback(data)
         })
-
-
     }
     handleUploadCompleted()
     {
         this.reloadData( (data)  => {
             this.state.commissions = data
+            this.state.dataLoaded = true
             this.setState(this.state)
         })
+    }
+
+    onMonthChange(month)
+    {
+        if(month != this.state.selectedMonth)
+        {
+            this.state.selectedMonth = month;
+            this.state.date = new Date(this.state.date.getFullYear(), getMonthNumber(month), 1, 0, 0, 0, 0);
+            this.reloadData( (data)  => {
+                this.state.commissions = data
+                this.state.dataLoaded = true
+                this.setState(this.state)
+            })
+        }
+    }
+    onYearChange(year)
+    {
+        if(year != this.state.selectedYear)
+        {
+            this.state.selectedYear = year;
+            this.state.date = new Date(year, this.state.date.getMonth(), 1, 0, 0, 0, 0);
+            this.reloadData( (data)  => {
+                this.state.commissions = data
+                this.state.dataLoaded = true
+                this.setState(this.state)
+            })
+        }
     }
     render () {
 
@@ -750,20 +789,23 @@ class Commissions extends React.Component {
 
         ]
 
-        // var data = [
-        //     {companyName: "מגדל", paymentType: "היקף", agentNumber: "2342234523", agentName: "קרין בוזלי לוי", totalPayment: "23423", totalInvestments: "12342232", paymentMonth: "04/16", date: "05/11/2016"},
-        //     {companyName: "כלל", paymentType: "נפרעים", agentNumber: "234234", agentName: "עידן כץ", totalPayment: "2342", totalInvestments: "678646", paymentMonth: "אפריל", date: "05/11/2016"},
-        //     {companyName: "אלטשולר שחם", paymentType: "בונוס", agentNumber: "67868", agentName: "לנצמן", totalPayment: "5675", totalInvestments: "34234535", paymentMonth: "אפריל", date: "05/11/2016"},
-        //     {companyName: "מנורה", paymentType: "גמ״ח", agentNumber: "789565", agentName: "לירון בן ציון", totalPayment: "4562", totalInvestments: "78768657", paymentMonth: "אפריל", date: "05/11/2016"}
-        //  ]
-
 
         return (
             <div className="commissions-page animated fadeIn">
                 <FileBin />
+
+                <div className="vertical-spacer-30"/>
+                <div className="hcontainer-no-wrap">
+                    <MonthYearBox month={this.state.selectedMonth} year={this.state.selectedYear}
+                                  onMonthChange={this.onMonthChange.bind(this)}
+                                  onYearChange={this.onYearChange.bind(this)}/>
+                </div>
+
                 <div className="commissions-page-table shadow">
-                     <Table columns={columns}
-                            data={this.state.commissions}/>
+                    <LoadSpinner loadedClassName="load-spinner" loaded={this.state.dataLoaded}>
+                        <Table columns={columns}
+                               data={this.state.commissions}/>
+                    </LoadSpinner>
                 </div>
             </div>
         );
