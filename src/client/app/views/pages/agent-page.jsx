@@ -59,7 +59,7 @@ class AgentPage extends React.Component {
 
     onNewPaymentRow()
     {
-        this.state.agent.paymentsDetails.push(new AgentPaymentDetails())
+        this.state.agent.paymentsDetails.unshift(new AgentPaymentDetails())
         this.setState(this.state)
     }
 

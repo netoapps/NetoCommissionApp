@@ -30,12 +30,12 @@ function ExcelAnalyzerService() {
                     try {
                     if(setting=='מספר סוכן'){
                         if(isNaN(s[columnSettings[setting]])){
-                            obj[setting] = s[columnSettings[setting]];
+                            obj[setting] = s[columnSettings[setting]].trim();
                         }else{
-                            obj[setting] = Number(s[columnSettings[setting]]).trim();
+                            obj[setting] = Number(s[columnSettings[setting]]);
                         }
                     }else {
-                        obj[setting] = Number(s[columnSettings[setting]].replace(',', '').trim());
+                        obj[setting] = Number(s[columnSettings[setting]].replace(/,/g, '').trim());
                     }
                     }catch(err){
                         return cb(err);
