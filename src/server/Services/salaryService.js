@@ -328,7 +328,7 @@ function SalaryService() {
             date = new Date(date);
             Salary.find({paymentDate:date}).lean().exec(function(err, data){
                 data = _.groupBy(data, function(sal){
-                    return sal.company+'#'+sal.agentInCompanyId+'#'+sal.type;
+                    return sal.company+'#'+sal.agentInCompanyId+'#'+sal.type+'#'+sal.idNumber;
                 })
                 data = _.map(data, function(sals, key){
                     var sum = _.reduce(sals, function(accum, sal){
@@ -362,7 +362,7 @@ function SalaryService() {
             date = new Date(date);
             Salary.find({paymentDate:date,idNumber:id}).lean().exec(function(err, data){
                 data = _.groupBy(data, function(sal){
-                    return sal.company+'#'+sal.agentInCompanyId+'#'+sal.type;
+                    return sal.company+'#'+sal.agentInCompanyId+'#'+sal.type+'#'+sal.idNumber;
                 })
                 data = _.map(data, function(sals, key){
                     var sum = _.reduce(sals, function(accum, sal){
