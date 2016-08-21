@@ -268,6 +268,13 @@ class Table extends React.Component {
     onSortBy(columnName)
     {
         console.log(columnName)
+
+        // this.state.data.sort(function(a, b)
+        // {
+        //     var textA = a.DepartmentName.toUpperCase();
+        //     var textB = b.DepartmentName.toUpperCase();
+        //     return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+        // });
     }
 
     render()

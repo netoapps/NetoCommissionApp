@@ -74,7 +74,7 @@ class AgentSalaryPage extends React.Component {
         var idNumber = this.state.agent.idNumber
         var date = this.state.date
 
-        DataService.loadAgentIncomesData(idNumber,date).then(function (value)
+        DataService.loadAgentIncomeData(idNumber,date).then(function (value)
         {
             incomes = value
             DataService.loadAgentPortfolioData(idNumber, date).then(function (value)
@@ -434,6 +434,14 @@ class AgentSalaryPage extends React.Component {
             {
                 title: "סה״כ תשלום",
                 key: "amount",
+                width: "col-33-33",
+                type: 'read-only',
+                format: "currency",
+                color: 'normal'
+            },
+            {
+                title: "גודל תיק",
+                key: "portfolio",
                 width: "col-33-33",
                 type: 'read-only',
                 format: "currency",
