@@ -286,6 +286,28 @@ class DataService {
                 });
         });
     }
+    loadAgentIncomeComponentsSumData(agentId, date)
+    {
+        return new Promise(function (resolve, reject)
+        {
+            $.ajax(
+                {
+                    url: '/api/v1/agent/'+ agentId + '/salary/bytypes_summed/' + date,
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: function(result)
+                    {
+                        console.log('load agent incomes components sum data for date '+ date + ' - server responded with success!');
+                        resolve(result)
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        console.error('load agent incomes data for date '+ date + ' - ', textStatus, errorThrown.toString());
+                        reject(textStatus); // failure
+                    }
+                });
+        });
+    }
     loadAgentPortfolioData(agentId, date)
     {
         return new Promise(function (resolve, reject)
