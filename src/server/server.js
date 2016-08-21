@@ -50,9 +50,10 @@ function NetoCommisionAppServer(){
 
     self.start = function(){
         const port = process.env.PORT || 8090;
-        self.app.listen(port , function(){
+        var server = self.app.listen(port , function(){
             console.log('started server, listening on: '+port);
         });
+        server.timeout = 1000*60*5 //Set timeout of 5 min
     };
 }
 

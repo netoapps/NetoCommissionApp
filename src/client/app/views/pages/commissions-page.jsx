@@ -285,7 +285,8 @@ class FileBin extends React.Component {
         this.state = {
             commissionFile: commissionFile,
             draggedFile: null,
-            columnSettings: null
+            columnSettings: null,
+            dataLoaded: true
         };
 
         this._handleUploadCompleted = this.handleUploadCompleted.bind(this)
@@ -441,14 +442,14 @@ class FileBin extends React.Component {
             return
         }
 
+        this.state.dataLoaded = false
+        this.setState(this.state);
+
         this.state.commissionFile.columnSettings = this.state.columnSettings
         AppActions.uploadCommissionFile(this.state.commissionFile,this.state.draggedFile, function (response) {
            if(response.result)
-            {
-                //if success
-                this.state.commissionFile = new CommissionFile()
-                this.setState(this.state);
-                swal(
+           {
+                 swal(
                     {
                         title: "",
                         text: "קובץ נשמר בשרת",
@@ -492,6 +493,11 @@ class FileBin extends React.Component {
                     showLoaderOnConfirm: false
                 });
             }
+            //if success
+            this.state.dataLoaded = true
+            this.state.commissionFile = new CommissionFile()
+            this.setState(this.state);
+
         }.bind(this))
     }
 
@@ -575,47 +581,49 @@ class FileBin extends React.Component {
             uploadFileButtonDisabled = false
         }
 
-        return  <div className="commissions-page-file-bin shadow">
-            <Dropzone onDrop={this.onDrop.bind(this)} className="commissions-page-file-bin-drag-area" style={style} activeStyle={activeStyle}>
-                <strong>{dragAreaString}</strong>
-            </Dropzone>
-            <div className="commissions-page-file-bin-settings">
+        return <div className="commissions-page-file-bin shadow">
+            <LoadSpinner loadedClassName="load-spinner"  top={'115px'}  loaded={this.state.dataLoaded}>
+                <div>
+                    <Dropzone onDrop={this.onDrop.bind(this)} className="commissions-page-file-bin-drag-area" style={style} activeStyle={activeStyle}>
+                        <strong>{dragAreaString}</strong>
+                    </Dropzone>
+                    <div className="commissions-page-file-bin-settings">
 
-                <div className="hcontainer-no-wrap">
-                    <div className="commissions-page-file-bin-settings-text">{strings.companyAssignment}</div>
-                    <Dropdown label={this.state.commissionFile.company} alignMenu="right" variant="raised">
-                        {companies}
-                    </Dropdown>
-                    <div className="horizontal-spacer-10"/>
-                    <div className="horizontal-spacer-10"/>
-                    <div className="horizontal-spacer-10"/>
-                    <div className="commissions-page-file-bin-settings-text">{strings.paymentMonth}</div>
-                    <MonthYearBox month={month} year={year} onMonthChange={this.onMonthChange.bind(this)} onYearChange={this.onYearChange.bind(this)}/>
-                    <div className="horizontal-spacer-10"/>
-                    <div className="commissions-page-file-bin-settings-text">{strings.tax}</div>
-                    <Dropdown label={this.state.commissionFile.taxState} alignMenu="right" variant="raised">
-                        {taxStateOptions}
-                    </Dropdown>
-                    <div className="horizontal-spacer-10"/>
-                    {fileTaxInput}
-                </div>
-                <div className="hcontainer-no-wrap left-align">
-                    <Button className="shadow" onClick={this.onEditFiles.bind(this)}>{strings.editFiles}</Button>
-                    <div className="horizontal-spacer-10"/>
-                    <div className="horizontal-spacer-10"/>
-                    <Button className="shadow" onClick={this.onUploadFile.bind(this)} color="primary" disabled={uploadFileButtonDisabled}>{strings.uploadFile}</Button>
-                    <div className="commissions-page-file-note-container">
-                        <div className="commissions-page-file-bin-settings-text">{strings.notes}</div>
-                        <textarea className="commissions-page-file-note"
-                                  value={this.state.commissionFile.notes}
-                                  onChange={this.onFileNoteChange.bind(this)}
-                                  onBlur={this.onFileNoteBlur.bind(this)}/>
+                        <div className="hcontainer-no-wrap">
+                            <div className="commissions-page-file-bin-settings-text">{strings.companyAssignment}</div>
+                            <Dropdown label={this.state.commissionFile.company} alignMenu="right" variant="raised">
+                                {companies}
+                            </Dropdown>
+                            <div className="horizontal-spacer-10"/>
+                            <div className="horizontal-spacer-10"/>
+                            <div className="horizontal-spacer-10"/>
+                            <div className="commissions-page-file-bin-settings-text">{strings.paymentMonth}</div>
+                            <MonthYearBox month={month} year={year} onMonthChange={this.onMonthChange.bind(this)} onYearChange={this.onYearChange.bind(this)}/>
+                            <div className="horizontal-spacer-10"/>
+                            <div className="commissions-page-file-bin-settings-text">{strings.tax}</div>
+                            <Dropdown label={this.state.commissionFile.taxState} alignMenu="right" variant="raised">
+                                {taxStateOptions}
+                            </Dropdown>
+                            <div className="horizontal-spacer-10"/>
+                            {fileTaxInput}
+                        </div>
+                        <div className="hcontainer-no-wrap left-align">
+                            <Button className="shadow" onClick={this.onEditFiles.bind(this)}>{strings.editFiles}</Button>
+                            <div className="horizontal-spacer-10"/>
+                            <div className="horizontal-spacer-10"/>
+                            <Button className="shadow" onClick={this.onUploadFile.bind(this)} color="primary" disabled={uploadFileButtonDisabled}>{strings.uploadFile}</Button>
+                            <div className="commissions-page-file-note-container">
+                                <div className="commissions-page-file-bin-settings-text">{strings.notes}</div>
+                                <textarea className="commissions-page-file-note"
+                                          value={this.state.commissionFile.notes}
+                                          onChange={this.onFileNoteChange.bind(this)}
+                                          onBlur={this.onFileNoteBlur.bind(this)}/>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-        </div>
-        ;
+                </LoadSpinner>
+             </div>;
     }
 }
 
@@ -792,6 +800,8 @@ class Commissions extends React.Component {
 
         return (
             <div className="commissions-page animated fadeIn">
+
+
                 <FileBin />
 
                 <div className="vertical-spacer-30"/>
@@ -802,7 +812,7 @@ class Commissions extends React.Component {
                 </div>
 
                 <div className="commissions-page-table shadow">
-                    <LoadSpinner loadedClassName="load-spinner" loaded={this.state.dataLoaded}>
+                    <LoadSpinner loadedClassName="load-spinner" top={'60%'} loaded={this.state.dataLoaded}>
                         <Table columns={columns}
                                data={this.state.commissions}/>
                     </LoadSpinner>
