@@ -649,6 +649,14 @@ class Commissions extends React.Component {
     componentDidMount()
     {
         AppStore.addEventListener(ActionType.UPLOAD_COMMISSION_FILE_COMPLETED, this._handleUploadCompleted);
+        this.reloadDataWithDate(this.state.date)
+    }
+    reloadDataWithDate(date)
+    {
+        this.state.commissions = []
+        this.state.dataLoaded = false
+        this.state.date = date
+        this.setState(this.state)
 
         this.reloadData( (data)  => {
             this.state.commissions = data
@@ -656,7 +664,6 @@ class Commissions extends React.Component {
             this.setState(this.state)
         })
     }
-
     reloadData(callback)
     {
         DataService.loadCompanyAllPaymentTypesForMonth(this.state.date,  (response) => {
@@ -670,6 +677,10 @@ class Commissions extends React.Component {
                     if (agent != null)
                     {
                         agentName = agent.name + " " + agent.familyName
+                    }
+                    else
+                    {
+                        console.log("") //305056616
                     }
                     data.push({companyName: item.company,
                         paymentType: item.type,
@@ -691,11 +702,7 @@ class Commissions extends React.Component {
     }
     handleUploadCompleted()
     {
-        this.reloadData( (data)  => {
-            this.state.commissions = data
-            this.state.dataLoaded = true
-            this.setState(this.state)
-        })
+        this.reloadDataWithDate(this.state.date)
     }
 
     onMonthChange(month)
@@ -704,11 +711,7 @@ class Commissions extends React.Component {
         {
             this.state.selectedMonth = month;
             this.state.date = new Date(this.state.date.getFullYear(), getMonthNumber(month), 1, 0, 0, 0, 0);
-            this.reloadData( (data)  => {
-                this.state.commissions = data
-                this.state.dataLoaded = true
-                this.setState(this.state)
-            })
+            this.reloadDataWithDate(this.state.date)
         }
     }
     onYearChange(year)
@@ -717,11 +720,7 @@ class Commissions extends React.Component {
         {
             this.state.selectedYear = year;
             this.state.date = new Date(year, this.state.date.getMonth(), 1, 0, 0, 0, 0);
-            this.reloadData( (data)  => {
-                this.state.commissions = data
-                this.state.dataLoaded = true
-                this.setState(this.state)
-            })
+            this.reloadDataWithDate(this.state.date)
         }
     }
     render () {

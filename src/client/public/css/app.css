@@ -921,8 +921,8 @@ body
     margin-top: 10px;
     margin-bottom: 20px;
     width: 100%;
-    height: calc(100% - 220px);
-    max-height: calc(100% - 220px);
+    height: calc(100% - 320px);
+    max-height: calc(100% - 320px);
     padding: 20px;
 }
 
