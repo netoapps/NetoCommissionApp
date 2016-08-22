@@ -13,7 +13,7 @@ import {getMonthName,getMonthNumber} from './../common/month-year-box.jsx'
 import AppActions from '../../actions/app-actions'
 import DataService from '../../services/data-service.js';
 import {ActionType} from '../../actions/app-actions.js'
-import CommissionFileParser from '../../services/commission-file-parser.js'
+import ExcelService from '../../services/excel-service.js'
 import {Modal} from '../common/app-modal.jsx';
 
 var notSetValue = "לא נקבע"
@@ -349,7 +349,7 @@ class FileBin extends React.Component {
         this.state.commissionFile.uploadDate = new Date();
         this.setState(this.state)
 
-        CommissionFileParser.parseCommissionFile(this.state.draggedFile, ((result) => {
+        ExcelService.parseCommissionFile(this.state.draggedFile, ((result) => {
 
             if(result.success)
             {

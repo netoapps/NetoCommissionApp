@@ -11,6 +11,7 @@ import Income from '../../../model/income.js';
 import Expense from '../../../model/expense.js';
 import IncomeModalContent  from './income-modal-content.jsx';
 import ExpenseModalContent  from './expense-modal-content.jsx';
+import ExcelService from '../../../services/excel-service.js';
 
 function currencyFormattedString(stringFloatValue)
 {
@@ -247,10 +248,11 @@ class AgentSalaryPage extends React.Component {
 
     onNewExpense()
     {
-        var expense = new Expense()
-        expense.expenseDate = this.state.date
-        expense.type = expenseTypes[0]
-        this.openExpenseModal(expense,-1)
+        ExcelService.generateSalaryReport()
+        // var expense = new Expense()
+        // expense.expenseDate = this.state.date
+        // expense.type = expenseTypes[0]
+        // this.openExpenseModal(expense,-1)
     }
 
     updateExpense(expenseId, updatedExpense)
