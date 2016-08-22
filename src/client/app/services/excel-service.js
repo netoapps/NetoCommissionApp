@@ -1,82 +1,132 @@
 /**
  * Created by asaf on 18/08/2016.
  */
-import XLSX from 'xlsx';
 
+function currencyFormattedString(stringFloatValue)
+{
+    var value = stringFloatValue;
+    value = parseFloat(value.replace(/,/g, ""))
+        .toFixed(0)
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return value
+}
 
 class ExcelService
 {
     constructor() {
 
     }
-    generateSalaryReport()
+    generateSalaryReport(name,date,salary,agencyAmount,portfolio,incomes,expenses)
     {
-        // --- EXAMPLE 1 ---
-        // in this example we want to build an Excel file with one sheet and write some stuff
-        var ep=new ExcelPlus();
-        // We're going to do several tasks in one line of code:
-        // 1) create an Excel with one sheet called "Book1"
-        // 2) write some data from an array to the new-created sheet
-        // 3) create a new sheet called "Book2"
-        // 4) write "A1" in cell "A1" of the new-created sheet
-        // 5) write the today date in D1 of the "Book1" sheet
-        // 6) save it on the user computer (this last step only works with IE10+ and modern browsers)
-        ep.createFile("Book1")
-            .write({ "content":[ ["A1","B1","C1"] ] })
-            .createSheet("Book2")
-            .write({ "cell":"A1", "content":"A1" })
-            .write({ "sheet":"Book1", "cell":"D1", "content":new Date() })
-            .saveAs("demo.xlsx");
+        var ep = new ExcelPlus();
+        var worksheet = ep.createFile("פירוט שכר - " + name )
+        worksheet.writeRow(1,  ["חודש שכר", date] )
 
-    }
-    parseCommissionFile(file, callback)
-    {
-        var columns = []
-
-        var reader = new FileReader();
-        //var name = file.name;
-        reader.onload = function(e)
+        for(var salaryItem in salary )
         {
-            try
-            {
-                var data = e.target.result;
-                var workbook = XLSX.read(data,{type: 'binary'});
-            }
-            catch (err)
-            {
-                return callback({
-                    success: false,
-                    columns: null
-                });
-            }
-            const COLS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-            const ROWS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-            var worksheet = workbook.Sheets[workbook.SheetNames[0]];
-            var cell, c, r;
-            var done = false
-            for (r in ROWS)
-            {
-                for (c in COLS)
-                {
-                    cell = worksheet[COLS[c] + ROWS[r]]
-                    if (cell)
-                    {
-                        columns.push(cell.v.toString())
-                        done = true
-                     }
-                }
-                if (done)
-                {
-                    callback({
-                        success: true,
-                        columns: columns,
-                        dataRowNumber: r
-                    })
-                    break;
-                }
-            }
+            worksheet.writeNextRow([salaryItem + ":", currencyFormattedString(salary[salaryItem].toString())])
         }
-        reader.readAsBinaryString(file);
+        worksheet.writeNextRow(["", ""])
+        worksheet.writeNextRow(["גודל תיק:", currencyFormattedString(portfolio.toString())])
+        worksheet.writeNextRow(["סה״כ לחברת נטו:", currencyFormattedString(agencyAmount.toString())])
+        worksheet.writeNextRow(["", ""])
+        worksheet.writeNextRow(["הכנסות", ""])
+        var incomeColumns = []
+        for(var incomeCol = 0; incomeCol < incomes.columns.length ; incomeCol++)
+        {
+            incomeColumns.push(incomes.columns[incomeCol].title)
+        }
+        worksheet.writeNextRow(incomeColumns)
+        for(var income = 0; income < incomes.data.length ; income++)
+        {
+            var incomeRowData = incomes.data[income]
+            var incomeRowDataOut = []
+            for(incomeCol = 0; incomeCol < incomes.columns.length ; incomeCol++)
+            {
+                var incomeCellData = incomeRowData[incomes.columns[incomeCol].key].toString()
+                if(incomes.columns[incomeCol].format === "currency")
+                {
+                    incomeCellData = currencyFormattedString(incomeCellData)
+                }
+                incomeRowDataOut.push(incomeCellData)
+            }
+            worksheet.writeNextRow(incomeRowDataOut)
+        }
+
+        worksheet.writeNextRow(["", ""])
+        worksheet.writeNextRow(["הוצאות", ""])
+        var expenseColumns = []
+        for(var expenseCol = 0; expenseCol < expenses.columns.length ; expenseCol++)
+        {
+            expenseColumns.push(expenses.columns[expenseCol].title)
+        }
+        worksheet.writeNextRow(expenseColumns)
+        for(var expense = 0; expense < expenses.data.length ; expense++)
+        {
+            var expenseRowData = expenses.data[expense]
+            var expenseRowDataOut = []
+            for(expenseCol = 0; expenseCol < expenses.columns.length ; expenseCol++)
+            {
+                var expenseCellData = expenseRowData[expenses.columns[expenseCol].key].toString()
+                if(expenses.columns[expenseCol].format === "currency")
+                {
+                    expenseCellData = currencyFormattedString(expenseCellData)
+                }
+                expenseRowDataOut.push(expenseCellData)
+            }
+            worksheet.writeNextRow(expenseRowDataOut)
+        }
+        worksheet.saveAs(name + ".xlsx");
+    }
+    parseCommissionFileColumns(file, callback)
+    {
+        var ep = new ExcelPlus();
+        // we call openLocal() and when the file is loaded then we want to display its content
+        // openLocal() will use the FileAPI if exists, otherwise it will use a Flash object
+        ep.openRemote(file.preview,function(passed)
+        {
+            var dataRowNumber = -1
+            var columns = []
+
+            if (!passed)
+            {
+                callback({success: false,
+                    columns: columns,
+                    dataRowNumber: dataRowNumber
+                })
+                return
+            }
+            //Search for starting data x,y
+            for(var row = 1; row < 15; row++)
+            {
+                var data = ep.selectSheet(1).read("A"+row+":Z"+row)
+                if(data instanceof Array)
+                {
+                    var rowData = data[0]
+                    for(var cell = 0; cell < rowData.length; cell++)
+                    {
+                        if(rowData[cell] != null)
+                        {
+                            columns.push(rowData[cell].toString())
+                            dataRowNumber = row
+                        }
+                    }
+                    if(dataRowNumber != -1)
+                    {
+                        callback({success: true,
+                                  columns: columns,
+                                  dataRowNumber: dataRowNumber
+                        })
+                        return
+                    }
+                }
+            }
+            callback({success: false,
+                columns: columns,
+                dataRowNumber: dataRowNumber
+            })
+        })
     }
 }
 

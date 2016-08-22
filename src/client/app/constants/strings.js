@@ -66,7 +66,8 @@ let strings = {
     newIncome: "הכנסה חדשה",
     editIncome: "עריכת הכנסה",
     newExpense: "הוצאה חדשה",
-    editExpense: "עריכת הוצאה"
+    editExpense: "עריכת הוצאה",
+    generateExcelFile: "יצא לקובץ אקסל"
 
 }
 

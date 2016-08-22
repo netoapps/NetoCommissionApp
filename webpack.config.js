@@ -10,21 +10,16 @@ var config = {
         path: BUILD_DIR,
         filename: 'bundle.js'
     },
-
-    /**** required for xlsx to build ****/
-    node: {
-        fs: 'empty'
-    },
-    externals: [
-        {
-            './cptable': 'var cptable'
-        },
-        {
-            './jszip': 'jszip'
-        }
+    plugins: [
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify('production')
+        }),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            }
+        })
     ],
-    /*************************************/
-
     module : {
         loaders : [
             {

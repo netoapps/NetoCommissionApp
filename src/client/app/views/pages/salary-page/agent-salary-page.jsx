@@ -26,6 +26,77 @@ function currencyFormattedString(stringFloatValue)
 var companies = AppStore.getCompanies()
 var commissionTypes = AppStore.getCommissionTypes().concat(AppStore.getExtendedCommissionTypes())
 var expenseTypes = ["שכר","החזר הלוואות","הוצאות משרד","מקדמה","שונות"]
+var incomesColumns = [
+    {
+        title: "חברה",
+        key: "company",
+        width: "col-33-33",
+        type: 'read-only',
+        color: 'normal'
+    },
+    {
+        title: "מספר סוכן",
+        key: "agentInCompanyId",
+        width: "col-33-33",
+        type: 'read-only',
+        color: 'normal'
+    },
+    {
+        title: "סוג תשלום",
+        key: "type",
+        width: "col-33-33",
+        type: 'read-only',
+        color: 'normal'
+    },
+    {
+        title: "סה״כ תשלום",
+        key: "calculatedAmount",
+        width: "col-33-33",
+        type: 'read-only',
+        format: "currency",
+        color: 'normal'
+    },
+    {
+        title: "גודל תיק",
+        key: "portfolio",
+        width: "col-33-33",
+        type: 'read-only',
+        format: "currency",
+        color: 'normal'
+    },
+    {
+        title: "הערות",
+        key: "notes",
+        width: "col-66-66",
+        type: 'read-only',
+        color: 'normal'
+    }
+]
+
+var expensesColumns = [
+    {
+        title: "סוג הוצאה",
+        key: "type",
+        width: "col-33-33",
+        type: 'read-only',
+        color: 'normal'
+    },
+    {
+        title: "סה״כ",
+        key: "amount",
+        width: "col-33-33",
+        type: 'read-only',
+        format: "currency",
+        color: 'normal'
+    },
+    {
+        title: "הערות",
+        key: "notes",
+        width: "col-33-33",
+        type: 'read-only',
+        color: 'normal'
+    }
+]
 
 class AgentSalaryPage extends React.Component {
 
@@ -51,7 +122,11 @@ class AgentSalaryPage extends React.Component {
             incomes: [],
             expenses: [],
             incomeComponentsSum: incomeComponentsSum,
-            portfolio: "0",
+            incomeTotal: 0,
+            expenseTotal: 0,
+            salary: 0,
+            portfolio: 0,
+            agencyAmount: 0,
             newIncomeVisible: false,
             selectedIncome: null,
             selectedExpense: null,
@@ -76,6 +151,10 @@ class AgentSalaryPage extends React.Component {
             this.state.expenses = expenses
             this.state.portfolio = portfolio
             this.state.incomeComponentsSum = incomeComponentsSum
+            this.state.agencyAmount = this.calculateAgencyAmount()
+            this.state.incomeTotal = this.sumOfAllIncomes()
+            this.state.expenseTotal = this.sumOfAllExpenses()
+            this.state.salary = this.state.incomeTotal - this.state.expenseTotal
             this.setState(this.state)
         })
     }
@@ -248,11 +327,10 @@ class AgentSalaryPage extends React.Component {
 
     onNewExpense()
     {
-        ExcelService.generateSalaryReport()
-        // var expense = new Expense()
-        // expense.expenseDate = this.state.date
-        // expense.type = expenseTypes[0]
-        // this.openExpenseModal(expense,-1)
+        var expense = new Expense()
+        expense.expenseDate = this.state.date
+        expense.type = expenseTypes[0]
+        this.openExpenseModal(expense,-1)
     }
 
     updateExpense(expenseId, updatedExpense)
@@ -351,7 +429,7 @@ class AgentSalaryPage extends React.Component {
             }.bind(this));
 
     }
-    sumOfCompanyAmount()
+    calculateAgencyAmount()
     {
         var sum = 0
         for(var index = 0; index < this.state.incomes.length; index++)
@@ -363,7 +441,7 @@ class AgentSalaryPage extends React.Component {
     sumOfIncomeWithType(type)
     {
         return this.state.incomeComponentsSum[type]
-     }
+    }
 
     sumOfAllIncomes()
     {
@@ -389,89 +467,33 @@ class AgentSalaryPage extends React.Component {
     {
         return (rowData.fileId == null)
     }
-
+    onGenerateExcelFile()
+    {
+        var salary =
+        {
+            "שכר": this.state.salary,
+        }
+        for(var type = 0; type < commissionTypes.length; type++)
+        {
+            salary[commissionTypes[type]] = this.state.incomeComponentsSum[commissionTypes[type]]
+        }
+        var incomes = {
+            columns: incomesColumns,
+            data: this.state.incomes
+        }
+        var expenses = {
+            columns: expensesColumns,
+            data: this.state.expenses
+        }
+        ExcelService.generateSalaryReport(this.state.agent.name +" "+ this.state.agent.familyName,
+            this.state.date,salary,this.state.agencyAmount,this.state.portfolio,incomes,expenses)
+    }
     render () {
 
-        var incomesColumns = [
-            {
-                title: "חברה",
-                key: "company",
-                width: "col-33-33",
-                type: 'read-only',
-                color: 'normal'
-            },
-            {
-                title: "מספר סוכן",
-                key: "agentInCompanyId",
-                width: "col-33-33",
-                type: 'read-only',
-                color: 'normal'
-            },
-            {
-                title: "סוג תשלום",
-                key: "type",
-                width: "col-33-33",
-                type: 'read-only',
-                color: 'normal'
-            },
-            {
-                title: "סה״כ תשלום",
-                key: "calculatedAmount",
-                width: "col-33-33",
-                type: 'read-only',
-                format: "currency",
-                color: 'normal'
-            },
-            {
-                title: "גודל תיק",
-                key: "portfolio",
-                width: "col-33-33",
-                type: 'read-only',
-                format: "currency",
-                color: 'normal'
-            },
-            {
-                title: "הערות",
-                key: "notes",
-                width: "col-66-66",
-                type: 'read-only',
-                color: 'normal'
-            }
-        ]
-
-        var expensesColumns = [
-            {
-                title: "סוג הוצאה",
-                key: "type",
-                width: "col-33-33",
-                type: 'read-only',
-                color: 'normal'
-            },
-            {
-                title: "סה״כ",
-                key: "amount",
-                width: "col-33-33",
-                type: 'read-only',
-                format: "currency",
-                color: 'normal'
-            },
-            {
-                title: "הערות",
-                key: "notes",
-                width: "col-33-33",
-                type: 'read-only',
-                color: 'normal'
-            }
-        ]
-
-        var expenses = this.sumOfAllExpenses()
-        var incomesSum = this.sumOfAllIncomes()
         var nifraim = this.sumOfIncomeWithType("נפרעים")
         var bonus = this.sumOfIncomeWithType("בונוס")
         var heikef = this.sumOfIncomeWithType("היקף")
         var manual = this.sumOfIncomeWithType("ידני")
-        var companyPart = this.sumOfCompanyAmount()
-        var salary = incomesSum - expenses
 
         return (
             <div className="agent-salary-page animated fadeIn">
@@ -480,6 +502,10 @@ class AgentSalaryPage extends React.Component {
                     <MonthYearBox month={this.state.selectedMonth} year={this.state.selectedYear}
                                   onMonthChange={this.onMonthChange.bind(this)}
                                   onYearChange={this.onYearChange.bind(this)}/>
+                    <div className="horizontal-spacer-10"/>
+                    <div className="horizontal-spacer-10"/>
+                    <div className="horizontal-spacer-10"/>
+                    <Button className="shadow" onClick={this.onGenerateExcelFile.bind(this)} color="primary">{strings.generateExcelFile}</Button>
                 </div>
                 <div className="vertical-spacer-10"/>
                 <div className="agent-salary-page-name-box shadow">{this.state.agent.name + ' ' + this.state.agent.familyName}</div>
@@ -489,7 +515,7 @@ class AgentSalaryPage extends React.Component {
                 <div className="hcontainer-no-wrap">
                     <div className="agent-salary-page-total-salary-box shadow">
                         <div className="agent-salary-page-box-title">{strings.totalSalary}</div>
-                        <div className="agent-salary-page-box-value green"><small>{"₪"}&nbsp;</small><b>{currencyFormattedString(salary.toString())}</b></div>
+                        <div className="agent-salary-page-box-value green"><small>{"₪"}&nbsp;</small><b>{currencyFormattedString(this.state.salary.toString())}</b></div>
                         <div className="hcontainer-no-wrap">
                             <div className="agent-salary-page-total-salary-sub-value-box">
                                 <div className="agent-salary-page-total-salary-sub-value-box-title">{strings.nifraim}</div>
@@ -517,7 +543,7 @@ class AgentSalaryPage extends React.Component {
                     <div className="horizontal-spacer-20"/>
                     <div className="agent-salary-page-company-part-box shadow">
                         <div className="agent-salary-page-box-title">{strings.comapnyPart}</div>
-                        <div className="agent-salary-page-box-value green"><small>{"₪"}&nbsp;</small><b>{currencyFormattedString(companyPart.toString())}</b></div>
+                        <div className="agent-salary-page-box-value green"><small>{"₪"}&nbsp;</small><b>{currencyFormattedString(this.state.agencyAmount.toString())}</b></div>
                     </div>
                 </div>
 

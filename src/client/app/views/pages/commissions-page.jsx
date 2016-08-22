@@ -349,7 +349,7 @@ class FileBin extends React.Component {
         this.state.commissionFile.uploadDate = new Date();
         this.setState(this.state)
 
-        ExcelService.parseCommissionFile(this.state.draggedFile, ((result) => {
+        ExcelService.parseCommissionFileColumns(this.state.draggedFile, ((result) => {
 
             if(result.success)
             {
@@ -735,7 +735,6 @@ class Commissions extends React.Component {
     render () {
 
         var columns = [
-
             {
                 title: "חברה",
                 key: "companyName",
