@@ -296,7 +296,6 @@ function SalaryService() {
             })
         })
     }
-
     this.getAllAgentSalariesByTypesForDateSummed = function (idNumber, date) {
         return new Promise(function (resolve, reject) {
             date = new Date(date);
@@ -322,7 +321,6 @@ function SalaryService() {
             })
         })
     }
-
     this.getAllAgentsSalariesByCompanyAndTypesForDateSummed = function (date) {
         return new Promise(function (resolve, reject) {
             date = new Date(date);
@@ -356,7 +354,6 @@ function SalaryService() {
             })
         })
     }
-
     this.getAgentIdSalariesByCompanyAndTypesForDateSummed = function (id, date) {
         return new Promise(function (resolve, reject) {
             date = new Date(date);
@@ -398,8 +395,6 @@ function SalaryService() {
             })
         })
     }
-
-
     this.getAllAgentSalariesByTypesForDate = function (idNumber, date) {
         return new Promise(function (resolve, reject) {
             date = new Date(date);
@@ -439,7 +434,6 @@ function SalaryService() {
     this.deleteAgentSalaries = function () {
 
     };
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////PRIVATE FUNCTIONS////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
