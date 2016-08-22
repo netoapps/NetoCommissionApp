@@ -541,7 +541,7 @@ function SalaryService() {
                         calculatedAmount *= Number(agent.part) / 100;
                         calculatedAmount *= Number(pd.partnershipPart) / 100;
                         agencyAmount =amount;
-                        agencyAmount*=Number(pd.partnershipPart) / 100;
+                        agencyAmount*=Number(pd.agencyPart) / 100;
                         salaryTasks.push(addSalaryToAgent.bind(null, agent.idNumber, salary['מספר סוכן'], paymentDate, amount,calculatedAmount,agencyAmount, type3, company, salary['גודל תיק'], fileId, ''));
                     })
                 }
@@ -555,7 +555,7 @@ function SalaryService() {
                         calculatedAmount *= Number(agent.part) / 100;
                         calculatedAmount *= Number(pd.partnershipPart) / 100;
                         agencyAmount =amount;
-                        agencyAmount*=Number(pd.partnershipPart) / 100;
+                        agencyAmount*=Number(pd.agencyPart) / 100;
                         salaryTasks.push(addSalaryToAgent.bind(null, agent.idNumber, salary['מספר סוכן'], paymentDate, amount,calculatedAmount,agencyAmount, type4, company, 0, fileId, ''));
                     })
                 }
@@ -569,7 +569,7 @@ function SalaryService() {
                         calculatedAmount *= Number(agent.part) / 100;
                         calculatedAmount *= Number(pd.partnershipPart) / 100;
                         agencyAmount =amount;
-                        agencyAmount*=Number(pd.partnershipPart) / 100;
+                        agencyAmount*=Number(pd.agencyPart) / 100;
                         salaryTasks.push(addSalaryToAgent.bind(null, agent.idNumber, salary['מספר סוכן'], paymentDate, amount,calculatedAmount, agencyAmount,type5, company, 0, fileId, ''));
                     })
                 }
