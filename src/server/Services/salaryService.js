@@ -360,16 +360,20 @@ function SalaryService() {
     this.getAgentIdSalariesByCompanyAndTypesForDateSummed = function (id, date) {
         return new Promise(function (resolve, reject) {
             date = new Date(date);
-            Salary.find({paymentDate:date,idNumber:id}).lean().exec(function(err, data){
-                data = _.groupBy(data, function(sal){
+            Salary.find({paymentDate:date,idNumber:id}).lean().exec(function(err, data)
+            {
+                data = _.groupBy(data, function(sal)
+                {
                     return sal.company+'#'+sal.agentInCompanyId+'#'+sal.type+'#'+sal.idNumber;
                 })
-                data = _.map(data, function(sals, key){
+
+                data = _.map(data, function(sals, key)
+                {
                     var sum = _.reduce(sals, function(accum, sal){
                         accum.portfolio+=sal.portfolio;
                         accum.amount+=sal.amount;
                         accum.calculatedAmount+=sal.calculatedAmount;
-                        accum.agencyAmount+=accum.agencyAmount;
+                        accum.agencyAmount+=sal.agencyAmount;
                         return accum;
                     },{portfolio:0, amount:0, calculatedAmount:0, agencyAmount:0});
 

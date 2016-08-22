@@ -262,8 +262,6 @@ class DataService {
             });
     }
 
-    //5511 3090 7704 9696
-
     loadAgentIncomeData(agentId, date)
     {
         return new Promise(function (resolve, reject)

@@ -349,16 +349,14 @@ class AgentSalaryPage extends React.Component {
             }.bind(this));
 
     }
-    sumOfCompanyPart()
+    sumOfCompanyAmount()
     {
         var sum = 0
-        var sumCalculated = 0
         for(var index = 0; index < this.state.incomes.length; index++)
         {
-            sum += parseFloat(this.state.incomes[index].amount)
-            sumCalculated += parseFloat(this.state.incomes[index].calculatedAmount)
+            sum += parseFloat(this.state.incomes[index].agencyAmount)
         }
-        return (sum - sumCalculated).toString()
+        return sum.toString()
     }
     sumOfIncomeWithType(type)
     {
@@ -470,7 +468,7 @@ class AgentSalaryPage extends React.Component {
         var bonus = this.sumOfIncomeWithType("בונוס")
         var heikef = this.sumOfIncomeWithType("היקף")
         var manual = this.sumOfIncomeWithType("ידני")
-        var companyPart = this.sumOfCompanyPart()
+        var companyPart = this.sumOfCompanyAmount()
         var salary = incomesSum - expenses
 
         return (
