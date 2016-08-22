@@ -1576,9 +1576,16 @@ body
     /*padding-top: 5px;*/
 }
 
-.agent-salary-page-total-investments-box
+.agent-salary-page-total-portfolio-box
 {
-    width: calc(50% - 10px);
+    width: 25%;
+    height: 180px;
+    background-color: white;
+}
+
+.agent-salary-page-company-part-box
+{
+    width: 25%;
     height: 180px;
     background-color: white;
 }

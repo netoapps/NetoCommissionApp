@@ -576,7 +576,7 @@ class DashboardTotalPortfolio extends React.Component {
 
         return (
             <div className="dashboard-total-investments shadow">
-                <div className="dashboard-box-title">{strings.totalInvestments}</div>
+                <div className="dashboard-box-title">{strings.totalPortfolio}</div>
                 <div className="dashboard-box-value green"><small>{"₪"}&nbsp;</small><b>{value}</b></div>
                 <div className={"dashboard-box-change " + changeColor}>{change}<small>&nbsp;{"%"}</small>&nbsp;<img src={changeIcon}/></div>
             </div>

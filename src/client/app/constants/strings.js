@@ -20,6 +20,7 @@ let strings = {
     totalValue: "סה״כ ",
     totalAgents: "סה״כ סוכנים פעילים",
     totalPortfolio: "סה״כ גודל תיק",
+    comapnyPart: "סה״כ לחברת נטו",
     load: "טען",
     dragFileHere: "גרור קובץ עמלות לכאן",
     companyAssignment: "שיוך לחברה",

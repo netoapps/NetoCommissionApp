@@ -349,20 +349,21 @@ class AgentSalaryPage extends React.Component {
             }.bind(this));
 
     }
-
+    sumOfCompanyPart()
+    {
+        var sum = 0
+        var sumCalculated = 0
+        for(var index = 0; index < this.state.incomes.length; index++)
+        {
+            sum += parseFloat(this.state.incomes[index].amount)
+            sumCalculated += parseFloat(this.state.incomes[index].calculatedAmount)
+        }
+        return (sum - sumCalculated).toString()
+    }
     sumOfIncomeWithType(type)
     {
         return this.state.incomeComponentsSum[type]
-        // var sum = 0
-        // for(var index = 0; index < this.state.incomes.length; index++)
-        // {
-        //     if(this.state.incomes[index].type === type)
-        //     {
-        //         sum += this.state.incomes[index].amount
-        //     }
-        // }
-        // return sum
-    }
+     }
 
     sumOfAllIncomes()
     {
@@ -371,10 +372,6 @@ class AgentSalaryPage extends React.Component {
         {
             sum += parseFloat(this.state.incomeComponentsSum[type])
         }
-        // for(var index = 0; index < this.state.incomes.length; index++)
-        // {
-        //     sum += this.state.incomes[index].amount
-        // }
         return sum.toString()
     }
 
@@ -473,6 +470,7 @@ class AgentSalaryPage extends React.Component {
         var bonus = this.sumOfIncomeWithType("בונוס")
         var heikef = this.sumOfIncomeWithType("היקף")
         var manual = this.sumOfIncomeWithType("ידני")
+        var companyPart = this.sumOfCompanyPart()
         var salary = incomesSum - expenses
 
         return (
@@ -512,9 +510,14 @@ class AgentSalaryPage extends React.Component {
                         </div>
                     </div>
                     <div className="horizontal-spacer-20"/>
-                    <div className="agent-salary-page-total-investments-box shadow">
+                    <div className="agent-salary-page-total-portfolio-box shadow">
                         <div className="agent-salary-page-box-title">{strings.totalPortfolio}</div>
                         <div className="agent-salary-page-box-value green"><small>{"₪"}&nbsp;</small><b>{currencyFormattedString(this.state.portfolio.toString())}</b></div>
+                    </div>
+                    <div className="horizontal-spacer-20"/>
+                    <div className="agent-salary-page-company-part-box shadow">
+                        <div className="agent-salary-page-box-title">{strings.comapnyPart}</div>
+                        <div className="agent-salary-page-box-value green"><small>{"₪"}&nbsp;</small><b>{currencyFormattedString(companyPart.toString())}</b></div>
                     </div>
                 </div>
 
