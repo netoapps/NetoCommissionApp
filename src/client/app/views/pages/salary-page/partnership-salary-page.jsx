@@ -8,7 +8,7 @@ class PartnershipSalaryPage extends SalaryPage {
         super(props);
 
         var partnership = AppStore.getPartnershipAtIndex(this.props.params.index)
-        this.context = {
+        this.state.context = {
             type: "partnership",
             id: partnership._id,
             fullName: ""
@@ -18,10 +18,10 @@ class PartnershipSalaryPage extends SalaryPage {
             var agentData = AppStore.getAgent(partnership.agentsDetails[idIndex].idNumber)
             if(agentData != null)
             {
-                this.context.fullName += agentData.name + " " + agentData.familyName
+                this.state.context.fullName += agentData.name + " " + agentData.familyName
                 if(idIndex < (partnership.agentsDetails.length-1))
                 {
-                    this.context.fullName += ", "
+                    this.state.context.fullName += ", "
                 }
             }
         }

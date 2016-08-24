@@ -111,13 +111,6 @@ class ColumnSelectModalContent extends React.Component
         }
         this.setState(this.state)
 
-        console.log("==================")
-        for(var key in this.state.typeSelection)
-        {
-            console.log(key + " = " + this.state.typeSelection[key])
-        }
-        console.log("==================")
-
     }
     validateColumnSettings(callback)
     {
