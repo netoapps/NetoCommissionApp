@@ -85,9 +85,6 @@ class DashboardToolbar extends React.Component {
     }
 }
 
-//<Button className="shadow" onClick={this.onLoadClick.bind(this)} color="primary">{strings.load}</Button>
-
-
 class DashboardRankTable extends React.Component {
 
     constructor(props) {
@@ -280,6 +277,8 @@ class DashboardCommissionChangeChart extends React.Component {
             this.setState(this.state)
         })
     }
+
+
     componentDidMount()
     {
         this.reloadData((data) => {
@@ -337,7 +336,7 @@ class DashboardCommissionChangeChart extends React.Component {
             <div className="dashboard-commission-change-chart shadow">
                 <div className="dashboard-box-title">{"סה״כ " + this.state.commissionType}</div>
                 <div className="dashboard-commission-change-chart-box">
-                    <Bar data={data} options={chartOptions} width="600" height="400"/>
+                    <Bar data={data} options={chartOptions} />
                 </div>
             </div>
         );
@@ -608,6 +607,7 @@ class Dashboard extends React.Component {
     componentDidMount()
     {
     }
+
     componentWillUnmount()
     {
     }
@@ -626,6 +626,7 @@ class Dashboard extends React.Component {
     }
     onYearChange(year)
     {
+
         if(year != this.state.selectedYear)
         {
             this.state.selectedYear = year;
@@ -691,6 +692,8 @@ class Dashboard extends React.Component {
         );
     }
 }
+
+
 
 //Important!! This adds the router object to context
 Dashboard.contextTypes = {

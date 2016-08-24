@@ -262,102 +262,130 @@ class DataService {
             });
     }
 
-    loadAgentIncomeData(agentId, date)
+    loadIncomeData(type,id, date)
     {
+        var url = '/api/v1/agent/'+ id + '/salary/by_company_and_types_summed/' + date
+        if(type === "partnership")
+        {
+            url = '/api/v1/partnership/'+ id + '/salary/by_company_and_types_summed/' + date
+        }
         return new Promise(function (resolve, reject)
         {
             $.ajax(
                 {
-                    url: '/api/v1/agent/'+ agentId + '/salary/by_company_and_types_summed/' + date,
+                    url: url,
                     type: 'GET',
                     contentType: 'application/json',
                     success: function(result)
                     {
-                        console.log('load agent incomes data for date '+ date + ' - server responded with success!');
+                        console.log('load incomes data for date '+ date + ' - server responded with success!');
                         resolve(result.salaries)
                     },
                     error: function(jqXHR, textStatus, errorThrown)
                     {
-                        console.error('load agent incomes data for date '+ date + ' - ', textStatus, errorThrown.toString());
+                        console.error('load incomes data for date '+ date + ' - ', textStatus, errorThrown.toString());
                         reject(textStatus); // failure
                     }
                 });
         });
     }
-    loadAgentIncomeComponentsSumData(agentId, date)
+    loadIncomeComponentsSumData(type,id, date)
     {
+        var url = '/api/v1/agent/'+ id + '/salary/bytypes_summed/' + date
+        if(type === "partnership")
+        {
+            url = '/api/v1/partnership/'+ id + '/salary/bytypes_summed/' + date
+        }
+
         return new Promise(function (resolve, reject)
         {
             $.ajax(
                 {
-                    url: '/api/v1/agent/'+ agentId + '/salary/bytypes_summed/' + date,
+                    url: url,
                     type: 'GET',
                     contentType: 'application/json',
                     success: function(result)
                     {
-                        console.log('load agent incomes components sum data for date '+ date + ' - server responded with success!');
+                        console.log('load incomes components sum data for date '+ date + ' - server responded with success!');
                         resolve(result)
                     },
                     error: function(jqXHR, textStatus, errorThrown)
                     {
-                        console.error('load agent incomes data for date '+ date + ' - ', textStatus, errorThrown.toString());
+                        console.error('load incomes data for date '+ date + ' - ', textStatus, errorThrown.toString());
                         reject(textStatus); // failure
                     }
                 });
         });
     }
-    loadAgentPortfolioData(agentId, date)
+    loadPortfolioData(type,id, date)
     {
+        var url = '/api/v1/agent/'+ id + '/portfolio/' + date
+        if(type === "partnership")
+        {
+            url = '/api/v1/partnership/'+ id + '/portfolio/' + date
+        }
+
         return new Promise(function (resolve, reject)
         {
             $.ajax(
                 {
-                    url: '/api/v1/agent/'+ agentId + '/portfolio/' + date,
+                    url: url,
                     type: 'GET',
                     contentType: 'application/json',
                     success: function(result)
                     {
-                        console.log('load agent portfolio data for date '+ date + ' - server responded with success!');
+                        console.log('load portfolio data for date '+ date + ' - server responded with success!');
                         resolve(result.portfolio)
                     }.bind(this),
                     error: function(jqXHR, textStatus, errorThrown)
                     {
-                        console.error('load agent portfolio data for date '+ date + ' - ', textStatus, errorThrown.toString());
+                        console.error('load portfolio data for date '+ date + ' - ', textStatus, errorThrown.toString());
                         reject(textStatus); // failure
 
                     }.bind(this)
                 });
         });
     }
-    loadAgentExpensesData(agentId, date)
+    loadExpensesData(type,id, date)
     {
+        var url = '/api/v1/agent/'+ id + '/expenses/' + date
+        if(type === "partnership")
+        {
+            url = '/api/v1/partnership/'+ id + '/expenses/' + date
+        }
+
         return new Promise(function (resolve, reject)
         {
             $.ajax(
                 {
-                    url: '/api/v1/agent/'+ agentId + '/expenses/' + date,
+                    url: url,
                     type: 'GET',
                     contentType: 'application/json',
                     success: function(result)
                     {
-                        console.log('load agent expenses data for date '+ date + ' - server responded with success!');
+                        console.log('load expenses data for date '+ date + ' - server responded with success!');
                         resolve(result.expenses)
                     }.bind(this),
                     error: function(jqXHR, textStatus, errorThrown)
                     {
-                        console.error('load agent expenses data for date '+ date + ' - ', textStatus, errorThrown.toString());
+                        console.error('load expenses data for date '+ date + ' - ', textStatus, errorThrown.toString());
                         reject(textStatus); // failure
 
                     }.bind(this)
                 });
         });
     }
-    addAgentSalaryIncome(income,agentId, callback)
+    addSalaryIncome(type,income,id, callback)
     {
-        //post to server...
+        var url = '/api/v1/agent/'+id+'/salary'
+        if(type === "partnership")
+        {
+            url = '/api/v1/partnership/'+id+'/salary'
+        }
+
         $.ajax(
             {
-                url: '/api/v1/agent/'+agentId+'/salary',
+                url: url,
                 type: 'POST',
                 data: JSON.stringify(income),
                 contentType: 'application/json',
@@ -384,19 +412,23 @@ class DataService {
                 }.bind(this)
             });
     }
-    updateAgentSalaryIncome(incomeId,income,agentId, callback)
+    updateSalaryIncome(type,incomeId,income,id, callback)
     {
-        //post to server...
+        var url = '/api/v1/agent/'+id+'/salary/' + incomeId
+        if(type === "partnership")
+        {
+            url = '/api/v1/partnership/'+id+'/salary/' + incomeId
+        }
         $.ajax(
             {
-                url: '/api/v1/agent/'+agentId+'/salary/' + incomeId,
+                url: url,
                 type: 'PUT',
                 data: JSON.stringify(income),
                 contentType: 'application/json',
                 success: function(result)
                 {
                     console.log(result);
-                    console.log('updateIncome - Server responded with success!');
+                    console.log('update income - Server responded with success!');
 
                     if(callback != null)
                         callback({
@@ -407,7 +439,7 @@ class DataService {
                 }.bind(this),
                 error: function(jqXHR, textStatus, errorThrown)
                 {
-                    console.error('updateIncome - ', textStatus, errorThrown.toString());
+                    console.error('update income - ', textStatus, errorThrown.toString());
                     if(callback != null)
                         callback({
                             result:false,
@@ -416,18 +448,22 @@ class DataService {
                 }.bind(this)
             });
     }
-    deleteAgentSalaryIncome(incomeId,agentId, callback)
+    deleteSalaryIncome(type,incomeId,id, callback)
     {
-        //post to server...
+        var url = '/api/v1/agent/'+id+'/salary/'+incomeId
+        if(type === "partnership")
+        {
+            url = '/api/v1/partnership/'+id+'/salary/'+incomeId
+        }
         $.ajax(
             {
-                url: '/api/v1/agent/'+agentId+'/salary/'+incomeId,
+                url: url,
                 type: 'DELETE',
                 contentType: 'application/json',
                 success: function(result)
                 {
                     console.log(result);
-                    console.log('deleteAgentSalaryIncome - Server responded with success!');
+                    console.log('delete income - Server responded with success!');
 
                     if(callback != null)
                         callback({
@@ -438,7 +474,7 @@ class DataService {
                 }.bind(this),
                 error: function(jqXHR, textStatus, errorThrown)
                 {
-                    console.error('deleteAgentSalaryIncome - ', textStatus, errorThrown.toString());
+                    console.error('delete income - ', textStatus, errorThrown.toString());
                     if(callback != null)
                         callback({
                             result:false,
@@ -448,12 +484,16 @@ class DataService {
             });
     }
 
-    addAgentSalaryExpense(expense,agentId, callback)
+    addSalaryExpense(type,expense,id, callback)
     {
-        //post to server...
+        var url = '/api/v1/agent/'+id+'/expense'
+        if(type === "partnership")
+        {
+            url = ""
+        }
         $.ajax(
             {
-                url: '/api/v1/agent/'+agentId+'/expense',
+                url: url,
                 type: 'POST',
                 data: JSON.stringify(expense),
                 contentType: 'application/json',
@@ -480,12 +520,16 @@ class DataService {
                 }.bind(this)
             });
     }
-    updateAgentSalaryExpense(expenseId,expense,agentId, callback)
+    updateSalaryExpense(type,expenseId,expense,id, callback)
     {
-        //post to server...
+        var url = '/api/v1/agent/'+id+'/expense/' + expenseId
+        if(type === "partnership")
+        {
+            url = ""
+        }
         $.ajax(
             {
-                url: '/api/v1/agent/'+agentId+'/expense/' + expenseId,
+                url: url,
                 type: 'PUT',
                 data: JSON.stringify(expense),
                 contentType: 'application/json',
@@ -512,12 +556,17 @@ class DataService {
                 }.bind(this)
             });
     }
-    deleteAgentSalaryExpense(expenseId,agentId, callback)
+    deleteSalaryExpense(type, expenseId,id, callback)
     {
-        //post to server...
+
+        var url = '/api/v1/agent/'+id+'/expense/'+expenseId
+        if(type === "partnership")
+        {
+            url = ""
+        }
         $.ajax(
             {
-                url: '/api/v1/agent/'+agentId+'/expense/'+expenseId,
+                url: url,
                 type: 'DELETE',
                 contentType: 'application/json',
                 success: function(result)

@@ -10,6 +10,7 @@ import Agents from './views/pages/agents-and-partnerships-page.jsx'
 import EditFiles from './views/pages/commission-files-page.jsx'
 import AgentPage from './views/pages/agent-page.jsx'
 import AgentSalaryPage from './views/pages/salary-page/agent-salary-page.jsx'
+import PartnershipSalaryPage from './views/pages/salary-page/partnership-salary-page.jsx'
 import PartnershipPage from './views/pages/partnership-page.jsx'
 import TopBar from './views/top-bar.jsx';
 import RightPanel from './views/right-panel.jsx';
@@ -22,6 +23,7 @@ import {Modal} from './views/common/app-modal.jsx';
 
 dispatcher.registerStore(AppStore);
 AppActions.appInit();
+
 
 function isAuthenticated(nextState, replace)
 {
@@ -122,6 +124,7 @@ render((
             <Route path="/app/commissions/edit-files" component={EditFiles} />
             <Route path="/app/agents-and-partnerships" component={Agents} />
             <Route path="/app/agents-and-partnerships/agent-salary-page/:index" component={AgentSalaryPage} />
+            <Route path="/app/agents-and-partnerships/partnership-salary-page/:index" component={PartnershipSalaryPage} />
             <Route path="/app/agents-and-partnerships/agent-page/:index" component={AgentPage} />
             <Route path="/app/agents-and-partnerships/partnership-page/:index" component={PartnershipPage} />
         </Route>

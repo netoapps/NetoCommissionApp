@@ -207,7 +207,7 @@ class AgentsAndPartnerships extends React.Component {
                     <Tab value="pane-2" label={strings.partnerships}>
 
                         <div className="agents-page-tab-container">
-                            <div className="agents-page-vertical-spacer"/>
+                            <div className="vertical-spacer-20"/>
                             <Button className="shadow" onClick={this.onNewPartnership.bind(this)} color="primary">{strings.newPartnership}</Button>
                             <div className="agents-page-table">
                                 <Table onRemoveRow={this.onDeletePartnershipsClicked.bind(this)} columns={partnershipColumns} data={partnershipsData}/>

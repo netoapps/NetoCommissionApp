@@ -652,7 +652,7 @@ body
 
 .dashboard-commission-change-chart-box
 {
-    height: calc(100% - 40px);
+    min-height: calc(100% - 40px);
     padding: 20px 50px;
 }
 
@@ -664,8 +664,6 @@ body
     background-color: white;
     padding: 20px;
 }
-
-
 
 .dashboard-month-total-agents
 {
@@ -1661,14 +1659,36 @@ body
     /*background-color: white;*/
 }
 
+.salaries-page-tabs-container
+{
+    width: 100%;
+    background-color: white;
+    min-width: 1055px;
+    height: calc(100% - 60px);
+    max-height: calc(100% - 60px);
+    padding-left: 40px;
+}
+
+.salaries-page-tab-container
+{
+    position: absolute;
+    margin-right: 40px;
+    padding-left: 40px;
+
+    width: calc(100% - 40px);
+    height: calc(100% - 140px);
+    max-height: calc(100% - 140px);
+    /*background-color: red;*/
+}
+
+
 .salaries-page-table
 {
-    background-color: white;
     margin-top: 10px;
     margin-bottom: 20px;
     width: 100%;
-    height: calc(100% - 58px);
-    max-height: calc(100% - 58px);
+    height: calc(100% - 55px);
+    max-height: calc(100% - 55px);
     padding: 20px;
 }
 

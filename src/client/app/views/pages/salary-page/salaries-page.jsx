@@ -6,7 +6,10 @@ import Table from '../../common/table.jsx'
 import AppStore from '../../../stores/data-store'
 import {getMonthName,getMonthNumber,getMonths} from '../../common/month-year-box.jsx'
 import MonthYearBox from '../../common/month-year-box.jsx'
+import Tabs from 'muicss/lib/react/tabs'
+import Tab from 'muicss/lib/react/tab'
 
+var selectedTab = 0
 
 class Salaries extends React.Component {
 
@@ -20,6 +23,7 @@ class Salaries extends React.Component {
 
         this.state = {
             agents: AppStore.getAgents(),
+            partnerships: AppStore.getPartnerships(),
             selectedMonth: currentMonth,
             selectedYear: currentYear
         };
@@ -49,23 +53,22 @@ class Salaries extends React.Component {
         }
     }
 
-    onAgentClicked(rowIndex)
-    {
-        this.context.router.push('/app/agents-and-partnerships/agent-page/'+rowIndex)
-    }
-    //Salary
-    onSalaryClicked(rowIndex)
-    {
-        this.context.router.push('/app/agents-and-partnerships/agent-salary-page/'+rowIndex)
-    }
-
-    onRowClick(index,rowData)
+    onAgentRowClick(index,rowData)
     {
         this.context.router.push('/app/agents-and-partnerships/agent-salary-page/'+index)
     }
-    render () {
+    onPartnershipRowClick(index,rowData)
+    {
+        this.context.router.push('/app/agents-and-partnerships/partnership-salary-page/'+index)
+    }
+    //UI
+    onChangeTab(i, value, tab, ev)
+    {
+        selectedTab = i
+        this.setState(this.state)
+    }
 
-        console.log("Salaries - render")
+    render () {
 
         var agentsColumns = [
 
@@ -89,14 +92,31 @@ class Salaries extends React.Component {
                 width: "col-33-33",
                 type: 'read-only',
                 color: 'normal'
-            },
+            }
+        ]
+
+        var partnershipsColumns = [
+
             {
-                title: "שכר",
-                key: "salary",
+                title: "שותפים",
+                key: "names",
                 width: "col-33-33",
                 type: 'read-only',
-                format: 'currency',
-                color: 'blue'
+                color: 'normal'
+            },
+            {
+                title: "מזהה",
+                key: "idNumbers",
+                width: "col-33-33",
+                type: 'read-only',
+                color: 'normal'
+            },
+            {
+                title: "סטטוס",
+                key: "status",
+                width: "col-33-33",
+                type: 'read-only',
+                color: 'normal'
             }
         ]
 
@@ -106,11 +126,36 @@ class Salaries extends React.Component {
             var agentData = {}
 
             agentData["name"] = this.state.agents[agentIndex].name + " " + this.state.agents[agentIndex].familyName
-            agentData["salary"] = "0"
             agentData["idNumber"] = this.state.agents[agentIndex].idNumber
             agentData["status"] = this.state.agents[agentIndex].active ? "פעיל":"לא פעיל"
             agentsData.push(agentData)
         }
+
+        var partnershipsData = []
+        for(var partnershipIndex = 0; partnershipIndex < this.state.partnerships.length; partnershipIndex++)
+        {
+            var partnershipData = {}
+            partnershipData["names"] = ""
+            partnershipData["idNumbers"] = ""
+            for(var idIndex = 0; idIndex < this.state.partnerships[partnershipIndex].agentsDetails.length ; idIndex++)
+            {
+                agentData = AppStore.getAgent(this.state.partnerships[partnershipIndex].agentsDetails[idIndex].idNumber)
+                if(agentData != null)
+                {
+                    partnershipData["names"] += (agentData.name + " " + agentData.familyName)
+                    partnershipData["idNumbers"] += agentData.idNumber
+                    if(idIndex < (this.state.partnerships[partnershipIndex].agentsDetails.length-1))
+                    {
+                        partnershipData["names"] += ", "
+                        partnershipData["idNumbers"] += ", "
+                    }
+                }
+            }
+            partnershipData["status"] = this.state.partnerships[partnershipIndex].active ? "פעיל":"לא פעיל"
+            partnershipsData.push(partnershipData)
+        }
+
+
 
         return (
             <div className="salaries-page animated fadeIn ">
@@ -120,13 +165,35 @@ class Salaries extends React.Component {
                                   onMonthChange={this.onMonthChange.bind(this)}
                                   onYearChange={this.onYearChange.bind(this)}/>
                 </div>
-                <div className="salaries-page-table shadow">
-                    <Table onRowClick={this.onRowClick.bind(this)} columns={agentsColumns} data={agentsData}/>
+                <div className="vertical-spacer-10"/>
+
+                <div className="salaries-page-tabs-container shadow">
+                    <Tabs onChange={this.onChangeTab.bind(this)} justified={true} initialSelectedIndex={selectedTab}>
+
+                            <Tab value="pane-1" label={strings.agents}>
+                                <div className="vertical-spacer-10"/>
+                                <div className="salaries-page-tab-container">
+                                    <Table onRowClick={this.onAgentRowClick.bind(this)} columns={agentsColumns} data={agentsData}/>
+                                </div>
+                            </Tab>
+
+                            <Tab value="pane-2" label={strings.partnerships}>
+                                <div className="vertical-spacer-10"/>
+                                <div className="salaries-page-tab-container">
+                                    <Table onRowClick={this.onPartnershipRowClick.bind(this)} columns={partnershipsColumns} data={partnershipsData}/>
+                                </div>
+                            </Tab>
+
+                    </Tabs>
                 </div>
             </div>
+
+
         );
     }
 }
+
+
 
 //Important!! This adds the router object to context
 Salaries.contextTypes = {
