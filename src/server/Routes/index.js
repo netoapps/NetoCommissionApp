@@ -36,25 +36,36 @@ module.exports.registerRoutes = function(app){
     apiRouter.get('/agent/:idNumber/salary/bytypes/:paymentDate',salaries.getAgentSalariesForDate);
     apiRouter.get('/agent/:idNumber/salary/bytypes_summed/:paymentDate',salaries.getAllAgentSalariesByTypesForDateSummed);
     apiRouter.get('/agent/:idNumber/salary/by_company_and_types_summed/:paymentDate',salaries.getAgentIdSalariesByCompanyAndTypesForDateSummed);
+    apiRouter.get('/partnership/:pid/salary/by_company_and_types_summed/:paymentDate',salaries.getPartnershipIdSalariesByCompanyAndTypesForDateSummed);
 
     apiRouter.get('/agent/:idNumber/salary/:startDate/:endDate', salaries.getSalariesForAgentByDate);
     apiRouter.post('/agent/:idNumber/salary', salaries.addAgentSalary);
+    apiRouter.post('/partnership/:pid/salary', salaries.addPartnershipSalary);
     apiRouter.put('/agent/:idNumber/salary/:salaryId', salaries.updateAgentSalary);
+    apiRouter.put('/partnership/:pid/salary/:salaryId', salaries.updatePartnershipSalary);
     apiRouter.delete('/agent/:idNumber/salary/:salaryId', salaries.deleteSalary);
+    apiRouter.delete('/partnership/:pid/salary/:salaryId', salaries.deleteSalary);
 
     apiRouter.get('/agent/:idNumber/portfolio/:paymentDate', salaries.getAgentPortfolioForDate);
+    apiRouter.get('/partnership/:pid/portfolio/:paymentDate', salaries.getPartnershipPortfolioForDate);
     apiRouter.get('/salary',salaries.getAllSalariesSortedByDate);
     apiRouter.get('/salary/by_company_types_summed/:paymentDate',salaries.getAllAgentsSalariesByCompanyAndTypesForDateSummed);
     apiRouter.get('/salary/bymonths/:year/:type',salaries.getAllSalariesForYearGroupedByMonths);
     apiRouter.get('/salary/byId/:paymentDate/:type/', salaries.getAllSalariesForDateAndTypeGroupedByIdNumber);
     apiRouter.get('/salary/:paymentDate/count',salaries.getNumberOfPayedAgentsForMonth);
     apiRouter.get('/salary/:paymentDate/:type/', salaries.getDateSalariesSummedByType);
+    apiRouter.get('/salary/partnership/:paymentDate/:type/', salaries.getPartnershipDateSalariesSummedByType);
 
     //Expanses
     apiRouter.get('/agent/:idNumber/expenses/:paymentDate/',expanses.getAgentExpanseForDate);
     apiRouter.post('/agent/:idNumber/expense', expanses.addExpanseToAgentAtDate);
     apiRouter.put('/agent/:idNumber/expense/:expenseId', expanses.updateExpanse);
     apiRouter.delete('/agent/:idNumber/expense/:expenseId', expanses.deleteExpanse);
+
+    apiRouter.get('/partnership/:pid/expenses/:paymentDate/',expanses.getPartnershipExpanseForDate);
+    apiRouter.post('/partnership/:pid/expense', expanses.addExpanseToPartnershipAtDate);
+    apiRouter.put('/partnership/:pid/expense/:expenseId', expanses.updatePartnershipExpense);
+    apiRouter.delete('/partnership/:pid/expense/:expenseId', expanses.deletePartnershipExpense);
 
     //Files
     apiRouter.get('/file',files.getAllFiles);
