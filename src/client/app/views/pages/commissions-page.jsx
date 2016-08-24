@@ -677,17 +677,39 @@ class Commissions extends React.Component {
             {
                 for (const item of response.data)
                 {
-                    var agent = AppStore.getAgent(item.idNumber)
-                    var agentName = ""
-                    if (agent != null)
+                    var name = ""
+                    if(item.owner === "partnership")
                     {
-                        agentName = agent.name + " " + agent.familyName
+                        var partnership = AppStore.getPartnership(item.idNumber)
+                        if(partnership != null)
+                        {
+                            for(var idIndex = 0; idIndex < partnership.agentsDetails.length ; idIndex++)
+                            {
+                                var agentData = AppStore.getAgent(partnership.agentsDetails[idIndex].idNumber)
+                                if(agentData != null)
+                                {
+                                    name += agentData.name + " " + agentData.familyName
+                                    if(idIndex < (partnership.agentsDetails.length-1))
+                                    {
+                                         name += ", "
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        var agent = AppStore.getAgent(item.idNumber)
+                        if (agent != null)
+                        {
+                            name = agent.name + " " + agent.familyName
+                        }
                     }
 
                     data.push({companyName: item.company,
                         paymentType: item.type,
                         agentNumber: item.agentInCompanyId,
-                        agentName: agentName,
+                        agentName: name,
                         totalPayment: item.amount,
                         totalInvestments: item.portfolio,
                         paymentDate: item.paymentDate,

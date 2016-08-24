@@ -57,7 +57,6 @@ function NetoCommisionAppServer(){
     };
 }
 
-
 var server = new NetoCommisionAppServer();
 server.init();
 server.start();
@@ -81,4 +80,4 @@ server.start();
 //        })
 //        console.log(mapping);
 //    });
-
+//

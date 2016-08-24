@@ -211,6 +211,16 @@ class DataStore extends Store {
     {
         return this.get('partnerships');
     }
+    getPartnership(idNumber)
+    {
+        var partnerships = this.getPartnerships();
+        for (var partnership = 0; partnership < partnerships.length ;partnership++)
+        {
+            if (partnerships[partnership]._id === idNumber)
+                return partnerships[partnership]
+        }
+        return null
+    }
     addPartnership(partnership)
     {
         //post to server...

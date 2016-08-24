@@ -35,7 +35,9 @@ function ExcelAnalyzerService() {
                             obj[setting] = Number(s[columnSettings[setting]]);
                         }
                     }else {
-                        obj[setting] = Number(s[columnSettings[setting]].replace(/,/g, '').trim());
+                        if(s[columnSettings[setting]] != null) {
+                            obj[setting] = Number(s[columnSettings[setting]].replace(/,/g, '').trim());
+                        }
                     }
                     }catch(err){
                         return cb(err);

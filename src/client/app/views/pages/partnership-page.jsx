@@ -223,7 +223,8 @@ class PartnershipPage extends React.Component {
     //Exit, save
     onExitClicked()
     {
-        this.context.router.goBack()
+        //this.context.router.goBack()
+        this.context.router.push('/app/agents-and-partnerships')
     }
     onSaveClicked()
     {

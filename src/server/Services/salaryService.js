@@ -375,7 +375,7 @@ function SalaryService() {
     this.getAllAgentsSalariesByCompanyAndTypesForDateSummed = function (date) {
         return new Promise(function (resolve, reject) {
             date = new Date(date);
-            Salary.find({paymentDate: date, owner:'agent'}).lean().exec(function (err, data) {
+            Salary.find({paymentDate: date, partnershipSalaryId:null}).lean().exec(function (err, data) {
                 data = _.groupBy(data, function (sal) {
                     return sal.company + '#' + sal.agentInCompanyId + '#' + sal.type + '#' + sal.idNumber;
                 })
@@ -397,7 +397,9 @@ function SalaryService() {
                         type: sals[0].type,
                         updateTime: sals[0].updateTime,
                         company: sals[0].company,
-                        paymentDate: sals[0].paymentDate
+                        paymentDate: sals[0].paymentDate,
+                        owner:sals[0].owner,
+                        partnershipSalaryId:sals[0].partnershipSalaryId
                     }
                 })
 
@@ -435,7 +437,9 @@ function SalaryService() {
                         type: sals[0].type,
                         updateTime: sals[0].updateTime,
                         company: sals[0].company,
-                        paymentDate: sals[0].paymentDate
+                        paymentDate: sals[0].paymentDate,
+                        owner:sals[0].owner,
+                        partnershipSalaryId:sals[0].partnershipSalaryId
                     }
                 })
 
@@ -522,7 +526,7 @@ function SalaryService() {
                 calculatedAmount *= Number(agent.part) / 100;
                 var agencyAmount = agencyPart;
                 agencyAmount *= Number(agent.part) / 100;
-                agentsSalaryTasks.push(addSalary.bind(null, agent.idNumber, partnershipIdInCompany, paymentDate, amount, calculatedAmount, agencyAmount, type3, company, portfolio, fileId, '','agent', pSalId));
+                agentsSalaryTasks.push(addSalary.bind(null, agent.idNumber, partnershipIdInCompany, paymentDate, amount, calculatedAmount, agencyAmount, type, company, portfolio, fileId, '','agent', pSalId));
             });
             async.parallel(agentsSalaryTasks, function(err, result){
                 if(err){
