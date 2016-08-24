@@ -9,6 +9,8 @@ const salaryService = new SalaryService();
 const fileService = new FileService();
 const analyzer = new ExcelService();
 var _ = require('underscore');
+
+//CRUD AGENTS
 function uploadSalariesFile(req, res) {
     if (!req.file) {
         return res.status(400).json({err: 'invalid file'});
@@ -52,26 +54,6 @@ function uploadSalariesFile(req, res) {
     });
 
 }
-
-function getAllSalariesSortedByDate(req, res) {
-    salaryService.getAllSalariesSortedByDate()
-        .then(function (salaries) {
-            return res.status(200).json({salaries: salaries});
-        })
-        .catch(function (err) {
-            return res.status(400).json({err: err});
-        })
-}
-
-function getSalariesForAgentByDate(req, res) {
-    salaryService.getAgentSalariesForDate(req.params.agentId, req.params.startDate, req.params.endDate, function (err, salaries) {
-        if (err) {
-            return res.status(400).json({err: err});
-        }
-        return res.status(200).json({salaries: salaries});
-    })
-}
-
 function addAgentSalary(req, res) {
     if (!req.params.idNumber) {
         return res.status(400).json({err: 'missing id Number'});
@@ -100,7 +82,6 @@ function addAgentSalary(req, res) {
             return res.status(400).json({err: err});
         })
 }
-
 function updateAgentSalary(req, res) {
     if (!req.params.salaryId) {
         return res.status(400).json({err: 'missing salary Id'});
@@ -117,13 +98,12 @@ function updateAgentSalary(req, res) {
             return res.status(400).json({err: err});
         })
 }
-
 function deleteSalary(req, res) {
     if (!req.params.salaryId) {
         return res.status(400).json({err: 'missing salary Id'});
     }
     salaryService.deleteSalary(req.params.salaryId)
-        .then(function (salary) {
+        .then(function () {
             return res.status(200).json({});
         })
         .catch(function (err) {
@@ -131,7 +111,84 @@ function deleteSalary(req, res) {
         })
 }
 
+//CRUD PARTNERSHIPS
+function addPartnershipSalary(req, res){
+    if (!req.params.partnershipId) {
+        return res.status(400).json({err: 'missing partnership id'});
+    }
+    var data = req.body;
+    if (!data || !data.agentInCompanyId || !data.paymentDate || !data.amount || !data.type || !data.company) {
+        return res.status(400).json({err: 'missing salary data'});
+    }
 
+    var repeatCount = data.repeat || 1;
+    var salariesRequests = [];
+    var startDate = new Date(data.paymentDate);
+    for(var i=0;i<repeatCount;i++){
+        salariesRequests.push(salaryService.addPartnershipSalary(req.params.partnershipId, data.agentInCompanyId, startDate.toISOString(), data.amount, data.type, data.company, data.notes || ''));
+        startDate.setMonth(startDate.getMonth()+1);
+    }
+    Promise.all(salariesRequests)
+        .then(function (salaries) {
+            var salary = _.filter(salaries, function(s){
+                return s.paymentDate.toISOString() === data.paymentDate;
+            });
+            return res.status(200).json({salary: salary.length == 0 ? null:salary[0]});
+        })
+        .catch(function (err) {
+            return res.status(400).json({err: err});
+        })
+}
+function deletePartnershipSalary(req, res){
+    if (!req.params.salaryId) {
+        return res.status(400).json({err: 'missing salary Id'});
+    }
+    salaryService.deletePartnershipSalary(req.params.salaryId)
+        .then(function () {
+            return res.status(200).json({});
+        })
+        .catch(function (err) {
+            return res.status(400).json({err: err});
+        })
+}
+function updatePartnershipSalary(req, res) {
+    if (!req.params.salaryId) {
+        return res.status(400).json({err: 'missing salary Id'});
+    }
+    if (!req.params.pid) {
+        return res.status(400).json({err: 'missing partnership Id'});
+    }
+    var data = req.body;
+    if (!data || !data.agentInCompanyId || !data.paymentDate || !data.amount || !data.type || !data.company) {
+        return res.status(400).json({err: 'missing salary data'});
+    }
+    salaryService.deletePartnershipSalary(req.params.salaryId)
+        .then(salaryService.addPartnershipSalary.bind(null, req.params.pid, data.agentInCompanyId, data.paymentDate, data.amount, data.type, data.company))
+        .then(function (salary) {
+            return res.status(200).json({salary: salary});
+        })
+        .catch(function (err) {
+            return res.status(400).json({err: err});
+        })
+}
+//Queries Agents
+function getAllSalariesSortedByDate(req, res) {
+    salaryService.getAllSalariesSortedByDate()
+        .then(function (salaries) {
+            return res.status(200).json({salaries: salaries});
+        })
+        .catch(function (err) {
+            return res.status(400).json({err: err});
+        })
+}
+function getSalariesForAgentByDate(req, res) {
+    salaryService.getAgentSalariesForDate(req.params.agentId, req.params.startDate, req.params.endDate, function (err, salaries) {
+        if (err) {
+            return res.status(400).json({err: err});
+        }
+        return res.status(200).json({salaries: salaries});
+    })
+}
 function getNumberOfPayedAgentsForMonth(req, res) {
     const paymentDate = req.params.paymentDate;
     if (!paymentDate) {
@@ -146,7 +203,6 @@ function getNumberOfPayedAgentsForMonth(req, res) {
             return res.status(400).json({err: err});
         })
 }
-
 function getDateSalariesSummedByType(req, res) {
     const type = req.params.type;
     const pd = req.params.paymentDate;
@@ -154,7 +210,7 @@ function getDateSalariesSummedByType(req, res) {
         return res.status(400).json({err: 'invalid type'});
     }
     var date = new Date(pd);
-    salaryService.getDateSalariesSummedByType(type, date)
+    salaryService.getDateSalariesSummedByType(type, date,'agent')
         .then(function (data) {
             return res.status(200).json(data);
         })
@@ -162,7 +218,6 @@ function getDateSalariesSummedByType(req, res) {
             return res.status(400).json({err: err});
         })
 }
-
 function getAllSalariesForYearGroupedByMonths(req, res) {
     const year = req.params.year;
     const type = req.params.type;
@@ -181,8 +236,6 @@ function getAllSalariesForYearGroupedByMonths(req, res) {
             return res.status(400).json({err: err});
         })
 }
-
-
 function getAllSalariesForDateAndTypeGroupedByIdNumber(req, res) {
     const pd = req.params.paymentDate;
     const type = req.params.type;
@@ -201,7 +254,6 @@ function getAllSalariesForDateAndTypeGroupedByIdNumber(req, res) {
             return res.status(400).json({err: err});
         })
 }
-
 function getAgentPortfolioForDate(req, res) {
     const idNumber = req.params.idNumber;
     const pd = req.params.paymentDate;
@@ -212,7 +264,7 @@ function getAgentPortfolioForDate(req, res) {
         return res.status(400).json({err: 'invalid payment date'});
     }
 
-    salaryService.getAgentPortfolioForDate(idNumber, pd)
+    salaryService.getAgentPortfolioForDate(idNumber, pd,'agent')
         .then(function (portfolio) {
             return res.status(200).json({portfolio: portfolio});
         })
@@ -220,7 +272,6 @@ function getAgentPortfolioForDate(req, res) {
             return res.status(400).json({err: err});
         })
 }
-
 function getAgentSalariesForDate(req, res){
     const idNumber = req.params.idNumber;
     const pd = req.params.paymentDate;
@@ -240,7 +291,6 @@ function getAgentSalariesForDate(req, res){
         })
 
 }
-
 function getAllAgentSalariesByTypesForDateSummed(req, res){
     const idNumber = req.params.idNumber;
     const pd = req.params.paymentDate;
@@ -251,7 +301,7 @@ function getAllAgentSalariesByTypesForDateSummed(req, res){
         return res.status(400).json({err: 'invalid payment date'});
     }
 
-    salaryService.getAllAgentSalariesByTypesForDateSummed(idNumber, pd)
+    salaryService.getAllIdSalariesByTypesForDateSummed(idNumber, pd,'agent')
         .then(function (salaries) {
             return res.status(200).json(salaries);
         })
@@ -261,6 +311,25 @@ function getAllAgentSalariesByTypesForDateSummed(req, res){
 
 }
 
+function getAllPartnershipSalariesByTypesForDateSummed(req, res){
+    const pid = req.params.pid;
+    const pd = req.params.paymentDate;
+    if (!pid) {
+        return res.status(400).json({err: 'pid idNumber'});
+    }
+    if (!pd) {
+        return res.status(400).json({err: 'invalid payment date'});
+    }
+
+    salaryService.getAllIdSalariesByTypesForDateSummed(pid, pd, 'partnership')
+        .then(function (salaries) {
+            return res.status(200).json(salaries);
+        })
+        .catch(function (err) {
+            return res.status(400).json({err: err});
+        })
+
+}
 function getAllAgentsSalariesByCompanyAndTypesForDateSummed(req, res){
     const pd = req.params.paymentDate;
     if (!pd) {
@@ -275,7 +344,6 @@ function getAllAgentsSalariesByCompanyAndTypesForDateSummed(req, res){
             return res.status(400).json({err: err});
         })
 }
-
 function getAgentIdSalariesByCompanyAndTypesForDateSummed(req, res){
     const idNumber = req.params.idNumber;
     if (!idNumber) {
@@ -286,7 +354,7 @@ function getAgentIdSalariesByCompanyAndTypesForDateSummed(req, res){
         return res.status(400).json({err: 'invalid payment date'});
     }
 
-    salaryService.getAgentIdSalariesByCompanyAndTypesForDateSummed(idNumber, pd)
+    salaryService.getSalariesByCompanyAndTypesForDateSummed(idNumber, pd,'agent')
         .then(function (salaries) {
             return res.status(200).json({salaries:salaries});
         })
@@ -295,7 +363,60 @@ function getAgentIdSalariesByCompanyAndTypesForDateSummed(req, res){
         })
 }
 
+//Queries Partnerships
+function getPartnershipIdSalariesByCompanyAndTypesForDateSummed(req, res){
+    const pid = req.params.pid;
+    if (!pid) {
+        return res.status(400).json({err: 'invalid pid'});
+    }
+    const pd = req.params.paymentDate;
+    if (!pd) {
+        return res.status(400).json({err: 'invalid payment date'});
+    }
 
+    salaryService.getSalariesByCompanyAndTypesForDateSummed(pid, pd,'partnership')
+        .then(function (salaries) {
+            return res.status(200).json({salaries:salaries});
+        })
+        .catch(function (err) {
+            return res.status(400).json({err: err});
+        })
+}
+
+function getPartnershipPortfolioForDate(req, res) {
+    const pid = req.params.pid;
+    const pd = req.params.paymentDate;
+    if (!pid) {
+        return res.status(400).json({err: 'invalid pid'});
+    }
+    if (!pd) {
+        return res.status(400).json({err: 'invalid payment date'});
+    }
+
+    salaryService.getAgentPortfolioForDate(pid, pd,'partnership')
+        .then(function (portfolio) {
+            return res.status(200).json({portfolio: portfolio});
+        })
+        .catch(function (err) {
+            return res.status(400).json({err: err});
+        })
+}
+
+function getPartnershipDateSalariesSummedByType(req, res) {
+    const type = req.params.type;
+    const pd = req.params.paymentDate;
+    if (!type || type < 2 || type > 5) {
+        return res.status(400).json({err: 'invalid type'});
+    }
+    var date = new Date(pd);
+    salaryService.getDateSalariesSummedByType(type, date,'partnership')
+        .then(function (data) {
+            return res.status(200).json(data);
+        })
+        .catch(function (err) {
+            return res.status(400).json({err: err});
+        })
+}
 
 //function getAllAgentSalaries(req,res){
 //    if(!req.params.agentId){
@@ -329,6 +450,9 @@ module.exports = {
     addAgentSalary,
     updateAgentSalary,
     deleteSalary,
+    addPartnershipSalary,
+    updatePartnershipSalary,
+    deletePartnershipSalary,
     getNumberOfPayedAgentsForMonth,
     getAllSalariesSortedByDate,
     getDateSalariesSummedByType,
@@ -338,5 +462,9 @@ module.exports = {
     getAgentSalariesForDate,
     getAllAgentSalariesByTypesForDateSummed,
     getAllAgentsSalariesByCompanyAndTypesForDateSummed,
-    getAgentIdSalariesByCompanyAndTypesForDateSummed
+    getAgentIdSalariesByCompanyAndTypesForDateSummed,
+    getAllPartnershipSalariesByTypesForDateSummed,
+    getPartnershipIdSalariesByCompanyAndTypesForDateSummed,
+    getPartnershipPortfolioForDate,
+    getPartnershipDateSalariesSummedByType
 };

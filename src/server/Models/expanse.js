@@ -14,7 +14,9 @@ var schema = new mongoose.Schema({
     amount:Number,
     expenseDate:Date,
     idNumber:String,
-    notes:{type:String, default:''}
+    notes:{type:String, default:''},
+    owner:{type:String, default:'agent'},
+    partnershipExpenseId:{type:String, default:null}
 });
 schema.index({idNumber:1, expanseDate:1});
 

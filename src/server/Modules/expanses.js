@@ -28,7 +28,35 @@ function addExpanseToAgentAtDate(req, res) {
     }
 
 
-    expanseService.addExpanseToAgentAtDate(req.params.idNumber, data.expenseDate, data.type, data.amount, data.notes)
+    expanseService.addExpanseToAgentAtDate(req.params.idNumber, data.expenseDate, data.type, data.amount, data.notes, null)
+        .then(function (expense) {
+            return res.status(200).json({expense: expense});
+        })
+        .catch(function (err) {
+            return res.status(400).json({err: err});
+        })
+}
+
+function addExpanseToPartnershipAtDate(req, res) {
+    if(!req.params.pid){
+        return res.status(400).json({err: 'missing pid'});
+    }
+    var data = req.body;
+    if (!data) {
+        return res.status(400).json({err: 'missing data'});
+    }
+    if (!data.expenseDate) {
+        return res.status(400).json({err: 'missing expanseDate'});
+    }
+    if (!data.type) {
+        return res.status(400).json({err: 'missing type'});
+    }
+    if (!data.amount) {
+        return res.status(400).json({err: 'missing amount'});
+    }
+
+
+    expanseService.addExpanseToPartnershipAtDate(req.params.pid, data.expenseDate, data.type, data.amount, data.notes)
         .then(function (expense) {
             return res.status(200).json({expense: expense});
         })
@@ -46,6 +74,17 @@ function deleteExpanse(req, res) {
             return res.status(400).json({err: err});
         })
 }
+
+function deletePartnershipExpense(req, res) {
+    expanseService.deletePartnershipExpense(req.params.expenseId)
+        .then(function () {
+            return res.status(200).json({msg: 'expense deleted'});
+        })
+        .catch(function (err) {
+            return res.status(400).json({err: err});
+        })
+}
+
 
 
 function updateExpanse(req, res) {
@@ -76,12 +115,45 @@ function updateExpanse(req, res) {
         })
 }
 
+function updatePartnershipExpense(req, res) {
+    if(!req.params.pid){
+        return res.status(400).json({err: 'missing pid'});
+    }
+    if(!req.params.expenseId){
+        return res.status(400).json({err: 'missing expanseId'});
+    }
+    var data = req.body;
+    if (!data) {
+        return res.status(400).json({err: 'missing data'});
+    }
+
+    if (!data.expenseDate) {
+        return res.status(400).json({err: 'missing expanseDate'});
+    }
+    if (!data.type) {
+        return res.status(400).json({err: 'missing type'});
+    }
+    if (!data.amount) {
+        return res.status(400).json({err: 'missing amount'});
+    }
+
+    expanseService.updatePartnershipExpense(req.params.expenseId,req.params.pid, data.expenseDate, data.type, data.amount, data.notes)
+        .then(function (expense) {
+            return res.status(200).json({expense: expense});
+        })
+        .catch(function (err) {
+            return res.status(400).json({err: err});
+        })
+}
+
+
+
 function getAgentExpanseForDate(req, res) {
     var data = req.params;
     if(!data || !data.idNumber || !data.paymentDate){
         return res.status(400).json({err:'missing data'});
     }
-    expanseService.getAgentExpanseForDate(data.idNumber, data.paymentDate)
+    expanseService.getExpensesForDate(data.idNumber, data.paymentDate, 'agent')
         .then(function (expenses) {
             return res.status(200).json({expenses: expenses});
         })
@@ -90,4 +162,22 @@ function getAgentExpanseForDate(req, res) {
         })
 }
 
-module.exports = {addExpanseToAgentAtDate, updateExpanse, deleteExpanse, getAgentExpanseForDate};
+function getPartnershipExpanseForDate(req, res) {
+    if(!req.params.pid){
+        return res.status(400).json({err:'invalid pid'});
+    }
+    var data = req.params;
+    if(!data || !data.paymentDate){
+        return res.status(400).json({err:'missing data'});
+    }
+    expanseService.getExpensesForDate(req.params.pid, data.paymentDate, 'partnership')
+        .then(function (expenses) {
+            return res.status(200).json({expenses: expenses});
+        })
+        .catch(function (err) {
+            return res.status(400).json({err: err});
+        })
+}
+
+module.exports = {addExpanseToAgentAtDate, updateExpanse, deleteExpanse, getAgentExpanseForDate,
+    addExpanseToPartnershipAtDate,updatePartnershipExpense, deletePartnershipExpense, getPartnershipExpanseForDate};

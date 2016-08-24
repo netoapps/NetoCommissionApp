@@ -19,7 +19,9 @@ var mongoose = require('mongoose');
         paymentDate:Date,
         portfolio:{type:Number, default:0},
         fileId:String,
-        notes:{type: String, default:''}
+        notes:{type: String, default:''},
+        owner:{type:String, default:'agent'},
+        partnershipSalaryId:{type:String, default:null}
     });
     schema.index({paymentDate:1});
     schema.index({idNumber:1});
