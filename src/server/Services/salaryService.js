@@ -342,11 +342,11 @@ function SalaryService() {
             })
         })
     }
-    this.getAllAgentSalariesByTypesForDateSummed = function (idNumber, date) {
+    this.getAllIdSalariesByTypesForDateSummed = function (idNumber, date, owner) {
         return new Promise(function (resolve, reject) {
             date = new Date(date);
             Salary.aggregate([
-                {$match: {idNumber: idNumber, paymentDate: date, owner:'agent'}},
+                {$match: {idNumber: idNumber, paymentDate: date, owner:owner}},
                 {
                     $group: {
                         _id: null,

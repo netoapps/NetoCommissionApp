@@ -117,16 +117,15 @@ function addPartnershipSalary(req, res){
         return res.status(400).json({err: 'missing partnership id'});
     }
     var data = req.body;
-    if (!data || !data.partnershipInCompanyId || !data.paymentDate || !data.amount || !data.type || !data.company) {
+    if (!data || !data.agentInCompanyId || !data.paymentDate || !data.amount || !data.type || !data.company) {
         return res.status(400).json({err: 'missing salary data'});
     }
 
     var repeatCount = data.repeat || 1;
     var salariesRequests = [];
     var startDate = new Date(data.paymentDate);
-    //pid, partnershipIdInCompany, paymentDate, amount, type, company, portfolio, fileId, notes
     for(var i=0;i<repeatCount;i++){
-        salariesRequests.push(salaryService.addPartnershipSalary(req.params.partnershipId, data.partnershipInCompanyId, startDate.toISOString(), data.amount, data.type, data.company, data.notes || ''));
+        salariesRequests.push(salaryService.addPartnershipSalary(req.params.partnershipId, data.agentInCompanyId, startDate.toISOString(), data.amount, data.type, data.company, data.notes || ''));
         startDate.setMonth(startDate.getMonth()+1);
     }
     Promise.all(salariesRequests)
@@ -160,11 +159,11 @@ function updatePartnershipSalary(req, res) {
         return res.status(400).json({err: 'missing partnership Id'});
     }
     var data = req.body;
-    if (!data || !data.partnershipIdInCompany || !data.paymentDate || !data.amount || !data.type || !data.company) {
+    if (!data || !data.agentInCompanyId || !data.paymentDate || !data.amount || !data.type || !data.company) {
         return res.status(400).json({err: 'missing salary data'});
     }
     salaryService.deletePartnershipSalary(req.params.salaryId)
-        .then(salaryService.addPartnershipSalary.bind(null, req.params.pid, data.partnershipIdInCompany, data.paymentDate, data.amount, data.type, data.company))
+        .then(salaryService.addPartnershipSalary.bind(null, req.params.pid, data.agentInCompanyId, data.paymentDate, data.amount, data.type, data.company))
         .then(function (salary) {
             return res.status(200).json({salary: salary});
         })
@@ -302,7 +301,27 @@ function getAllAgentSalariesByTypesForDateSummed(req, res){
         return res.status(400).json({err: 'invalid payment date'});
     }
 
-    salaryService.getAllAgentSalariesByTypesForDateSummed(idNumber, pd)
+    salaryService.getAllIdSalariesByTypesForDateSummed(idNumber, pd,'agent')
+        .then(function (salaries) {
+            return res.status(200).json(salaries);
+        })
+        .catch(function (err) {
+            return res.status(400).json({err: err});
+        })
+
+}
+
+function getAllPartnershipSalariesByTypesForDateSummed(req, res){
+    const pid = req.params.pid;
+    const pd = req.params.paymentDate;
+    if (!pid) {
+        return res.status(400).json({err: 'pid idNumber'});
+    }
+    if (!pd) {
+        return res.status(400).json({err: 'invalid payment date'});
+    }
+
+    salaryService.getAllIdSalariesByTypesForDateSummed(pid, pd, 'partnership')
         .then(function (salaries) {
             return res.status(200).json(salaries);
         })
@@ -444,7 +463,7 @@ module.exports = {
     getAllAgentSalariesByTypesForDateSummed,
     getAllAgentsSalariesByCompanyAndTypesForDateSummed,
     getAgentIdSalariesByCompanyAndTypesForDateSummed,
-
+    getAllPartnershipSalariesByTypesForDateSummed,
     getPartnershipIdSalariesByCompanyAndTypesForDateSummed,
     getPartnershipPortfolioForDate,
     getPartnershipDateSalariesSummedByType
