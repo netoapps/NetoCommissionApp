@@ -98,7 +98,7 @@ var expensesColumns = [
     }
 ]
 
-class AgentSalaryPage extends React.Component {
+class SalaryPage extends React.Component {
 
     constructor(props) {
         super(props);
@@ -255,7 +255,7 @@ class AgentSalaryPage extends React.Component {
         else
         {
             income.paymentDate = this.state.date
-            DataService.addSalaryIncome(this.state.context.type, income,this.state.context.id, (response) => {
+            DataService.addSalaryIncome(this.state.context.type, income, this.state.context.id, (response) => {
 
                 if(response.result == true)
                 {
@@ -578,8 +578,8 @@ class AgentSalaryPage extends React.Component {
 }
 
 //Important!! This adds the router object to context
-AgentSalaryPage.contextTypes = {
+SalaryPage.contextTypes = {
     router: React.PropTypes.object.isRequired
 }
 
-export default AgentSalaryPage;
+export default SalaryPage;

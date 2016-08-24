@@ -489,7 +489,7 @@ class DataService {
         var url = '/api/v1/agent/'+id+'/expense'
         if(type === "partnership")
         {
-            url = ""
+            url = '/api/v1/partnership/'+id+'/expense'
         }
         $.ajax(
             {
@@ -500,7 +500,7 @@ class DataService {
                 success: function(result)
                 {
                     console.log(result);
-                    console.log('addAgentSalaryExpense - Server responded with success!');
+                    console.log('add expense - Server responded with success!');
 
                     if(callback != null)
                         callback({
@@ -511,7 +511,7 @@ class DataService {
                 }.bind(this),
                 error: function(jqXHR, textStatus, errorThrown)
                 {
-                    console.error('addAgentSalaryExpense - ', textStatus, errorThrown.toString());
+                    console.error('add expense - ', textStatus, errorThrown.toString());
                     if(callback != null)
                         callback({
                             result:false,
@@ -525,7 +525,7 @@ class DataService {
         var url = '/api/v1/agent/'+id+'/expense/' + expenseId
         if(type === "partnership")
         {
-            url = ""
+            url = '/api/v1/partnership/'+id+'/expense/' + expenseId
         }
         $.ajax(
             {
@@ -536,7 +536,7 @@ class DataService {
                 success: function(result)
                 {
                     console.log(result);
-                    console.log('updateAgentSalaryExpense - Server responded with success!');
+                    console.log('update expense - Server responded with success!');
 
                     if(callback != null)
                         callback({
@@ -547,7 +547,7 @@ class DataService {
                 }.bind(this),
                 error: function(jqXHR, textStatus, errorThrown)
                 {
-                    console.error('updateAgentSalaryExpense - ', textStatus, errorThrown.toString());
+                    console.error('update expense - ', textStatus, errorThrown.toString());
                     if(callback != null)
                         callback({
                             result:false,
@@ -558,11 +558,10 @@ class DataService {
     }
     deleteSalaryExpense(type, expenseId,id, callback)
     {
-
         var url = '/api/v1/agent/'+id+'/expense/'+expenseId
         if(type === "partnership")
         {
-            url = ""
+            url = '/api/v1/partnership/'+id+'/expense/'+expenseId
         }
         $.ajax(
             {
@@ -572,7 +571,7 @@ class DataService {
                 success: function(result)
                 {
                     console.log(result);
-                    console.log('deleteAgentSalaryExpense - Server responded with success!');
+                    console.log('delete expense - Server responded with success!');
 
                     if(callback != null)
                         callback({
@@ -583,7 +582,7 @@ class DataService {
                 }.bind(this),
                 error: function(jqXHR, textStatus, errorThrown)
                 {
-                    console.error('deleteAgentSalaryExpense - ', textStatus, errorThrown.toString());
+                    console.error('delete expense - ', textStatus, errorThrown.toString());
                     if(callback != null)
                         callback({
                             result:false,
