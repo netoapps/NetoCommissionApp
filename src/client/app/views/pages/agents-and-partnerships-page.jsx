@@ -81,17 +81,40 @@ class AgentsAndPartnerships extends React.Component {
                 confirmButtonColor: "#DD6B55",
                 confirmButtonText: "המשך",
                 cancelButtonText: "ביטול",
-                closeOnConfirm: true,
+                closeOnConfirm: false,
                 closeOnCancel: true
             },
             function(isConfirm)
             {
                 if (isConfirm)
                 {
-                    AppActions.deleteAgentAtIndex(rowIndex)
-                    return
+                    AppActions.deleteAgentAtIndex(rowIndex, (response) => {
+                        if (response.result) {
+                            swal(
+                                {
+                                    title: "",
+                                    text: "סוכן נמחק בהצלחה",
+                                    type: "success",
+                                    timer: 1500,
+                                    showConfirmButton: false
+                                })
+                        }
+                        else {
+                            swal({
+                                title: "שגיאה",
+                                text: "שגיאה בעת מחיקת סוכן מהשרת",
+                                type: "error",
+                                showCancelButton: false,
+                                confirmButtonColor: "#DD6B55",
+                                confirmButtonText: "סגור",
+                                closeOnConfirm: true,
+                                showLoaderOnConfirm: false
+                            });
+                        }
+
+                    })
                 }
-            });
+            })
     }
 
     //Partnerships
@@ -132,15 +155,38 @@ class AgentsAndPartnerships extends React.Component {
                 confirmButtonColor: "#DD6B55",
                 confirmButtonText: "המשך",
                 cancelButtonText: "ביטול",
-                closeOnConfirm: true,
+                closeOnConfirm: false,
                 closeOnCancel: true
             },
             function(isConfirm)
             {
                 if (isConfirm)
                 {
-                    AppActions.deletePartnershipAtIndex(rowIndex)
-                    return
+                    AppActions.deletePartnershipAtIndex(rowIndex, (response) => {
+                        if (response.result) {
+                            swal(
+                                {
+                                    title: "",
+                                    text: "שותפות נמחקה בהצלחה",
+                                    type: "success",
+                                    timer: 1500,
+                                    showConfirmButton: false
+                                })
+                        }
+                        else {
+                            swal({
+                                title: "שגיאה",
+                                text: "שגיאה בעת מחיקת שותפות מהשרת",
+                                type: "error",
+                                showCancelButton: false,
+                                confirmButtonColor: "#DD6B55",
+                                confirmButtonText: "סגור",
+                                closeOnConfirm: true,
+                                showLoaderOnConfirm: false
+                            });
+                        }
+
+                    })
                 }
             });
     }

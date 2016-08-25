@@ -243,11 +243,61 @@ class PartnershipPage extends React.Component {
                 });
                 return
             }
-            AppActions.addPartnership(this.state.partnership)
+            AppActions.addPartnership(this.state.partnership,(response) => {
+                if(response.result)
+                {
+                    swal(
+                        {
+                            title: "",
+                            text: "שותפות נשמרה בהצלחה",
+                            type: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        })
+                }
+                else
+                {
+                    swal({
+                        title: "שגיאה",
+                        text: "שגיאה בעת שמירת שותפות בשרת",
+                        type: "error",
+                        showCancelButton: false,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "סגור",
+                        closeOnConfirm: true,
+                        showLoaderOnConfirm: false
+                    });
+                }
+            })
         }
         else
         {
-            AppActions.updatePartnershipAtIndex(this.state.partnershipIndex,this.state.partnership)
+            AppActions.updatePartnershipAtIndex(this.state.partnershipIndex,this.state.partnership,(response) => {
+                if(response.result)
+                {
+                    swal(
+                        {
+                            title: "",
+                            text: "שותפות נשמרה בהצלחה",
+                            type: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        })
+                }
+                else
+                {
+                    swal({
+                        title: "שגיאה",
+                        text: "שגיאה בעת שמירת שותפות בשרת",
+                        type: "error",
+                        showCancelButton: false,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "סגור",
+                        closeOnConfirm: true,
+                        showLoaderOnConfirm: false
+                    });
+                }
+            })
         }
         this.context.router.goBack()
     }
@@ -358,7 +408,7 @@ class PartnershipPage extends React.Component {
                 <div className="hcontainer-no-wrap">
                     <div className="page-title">{strings.partnershipPageDetails}</div>
                     <div className="horizontal-spacer-90"/>
-                    <div className="page-active-box"><Dropdown variant="raised" label={selectedActiveState} alignMenu="right" >
+                    <div className="page-active-box"><Dropdown variant="raised" label={selectedActiveState} alignMenu="left" >
                         {activeStates}
                     </Dropdown></div>
                 </div>
