@@ -4,11 +4,15 @@ import AppActions from '../../actions/app-actions'
 import AppStore from '../../stores/data-store'
 import {ActionType} from '../../actions/app-actions.js'
 import Input from 'muicss/lib/react/input';
-import FixedWidthDropdown from './../common/fixed-width-dropdown.jsx';
+import Dropdown from 'muicss/lib/react/dropdown';
 import DropdownItem from 'muicss/lib/react/dropdown-item';
 import { strings } from '../../constants/strings'
 import Button from 'muicss/lib/react/button'
 import {Agent,AgentPaymentDetails} from '../../model/agent.js';
+var companies = AppStore.getCompanies().concat("")
+var commissionTypes = AppStore.getCommissionTypes().concat("")
+
+
 
 class AgentPage extends React.Component {
 
@@ -56,10 +60,13 @@ class AgentPage extends React.Component {
         this.state.agent.paymentsDetails.splice(rowIndex, 1)
         this.setState(this.state)
     }
+    onSavePayment(income,index) {
 
+
+    }
     onNewPaymentRow()
     {
-        this.state.agent.paymentsDetails.unshift(new AgentPaymentDetails())
+         this.state.agent.paymentsDetails.unshift(new AgentPaymentDetails())
         this.setState(this.state)
     }
 
@@ -96,7 +103,7 @@ class AgentPage extends React.Component {
     }
     onActiveChange(item)
     {
-        if(item.props.value == strings.active)
+        if(item == strings.active)
         {
             this.state.agent.active = true
             this.setState(this.state)
@@ -107,7 +114,6 @@ class AgentPage extends React.Component {
             this.setState(this.state)
         }
     }
-
 
     //Exit, save
     onExitClicked()
@@ -220,8 +226,7 @@ class AgentPage extends React.Component {
 
     render () {
 
-
-        var columns = [
+        var paymentColumns = [
             {
                 title: "חברה",
                 key: "companyName",
@@ -229,7 +234,7 @@ class AgentPage extends React.Component {
                 type: 'select',
                 color: 'normal',
                 action: this.onSelectCompany.bind(this),
-                options: AppStore.getCompanies()
+                options: companies
             },
             {
                 title: "מספר סוכן",
@@ -246,7 +251,7 @@ class AgentPage extends React.Component {
                 type: 'select',
                 color: 'normal',
                 action: this.onSelectPaymentType.bind(this),
-                options: AppStore.getCommissionTypes()
+                options: commissionTypes
             },
             {
                 title: "חלק סוכן %",
@@ -266,19 +271,20 @@ class AgentPage extends React.Component {
         ]
 
 
+
         var activeStates = []
         var selectedActiveState = this.state.agent.active ? strings.active:strings.notActive
-        activeStates.push(<DropdownItem onClick={this.onActiveChange.bind(this)} value={strings.active} key={0}>{strings.active}</DropdownItem>)
-        activeStates.push(<DropdownItem onClick={this.onActiveChange.bind(this)} value={strings.notActive} key={1}>{strings.notActive}</DropdownItem>)
+        activeStates.push(<DropdownItem className="mui--text-right" onClick={this.onActiveChange.bind(this,strings.active)} value={strings.active} key={0}>{strings.active}</DropdownItem>)
+        activeStates.push(<DropdownItem className="mui--text-right" onClick={this.onActiveChange.bind(this,strings.notActive)} value={strings.notActive} key={1}>{strings.notActive}</DropdownItem>)
 
         return (
             <div className="page animated fadeIn shadow">
                 <div className="hcontainer-no-wrap">
                     <div className="page-title">{strings.agentPageDetails}</div>
                     <div className="horizontal-spacer-90"/>
-                    <div className="page-active-box"><FixedWidthDropdown shadow label={selectedActiveState} alignMenu="right" >
+                    <div className="page-active-box"><Dropdown variant="raised" label={selectedActiveState} alignMenu="right" >
                         {activeStates}
-                    </FixedWidthDropdown></div>
+                    </Dropdown></div>
                 </div>
                 <div className="page-form hcontainer-no-wrap">
                     <div className="page-form-item-box">
@@ -308,7 +314,7 @@ class AgentPage extends React.Component {
                 </div>
                 <Button className="shadow" onClick={this.onNewPaymentRow.bind(this)} color="primary">{strings.newPayment}</Button>
                 <div className="agent-page-form-payments-details-table">
-                    <Table onRemoveRow={this.onDeletePaymentRowClicked.bind(this)} columns={columns} data={this.state.agent.paymentsDetails}/>
+                    <Table onRemoveRow={this.onDeletePaymentRowClicked.bind(this)} columns={paymentColumns} data={this.state.agent.paymentsDetails}/>
                 </div>
                 <div className="hcontainer-no-wrap">
                     <div className="horizontal-spacer-90"/>

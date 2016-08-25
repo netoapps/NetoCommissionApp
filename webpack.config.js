@@ -20,6 +20,7 @@ var config = {
     //         }
     //     })
     // ],
+    devtool: 'cheap-source-map',
     module : {
         loaders : [
             {
@@ -28,6 +29,11 @@ var config = {
                 loader : 'babel'
             },
             { test: /\.css$/, loader: "style-loader!css-loader" }
+            //,
+            // {
+            //     test: /(\.css|\.scss)$/,
+            //     loader: 'style!css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!sass?sourceMap'
+            // }
         ]
     }
 };

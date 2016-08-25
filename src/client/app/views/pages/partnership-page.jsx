@@ -5,7 +5,7 @@ import AppStore from '../../stores/data-store'
 import {ActionType} from '../../actions/app-actions.js'
 import { strings } from '../../constants/strings'
 import {Partnership,PartnershipPaymentDetails,PartnershipAgentDetails} from '../../model/partnership.js';
-import FixedWidthDropdown from './../common/fixed-width-dropdown.jsx';
+import Dropdown from 'muicss/lib/react/dropdown';
 import DropdownItem from 'muicss/lib/react/dropdown-item';
 import Button from 'muicss/lib/react/button'
 
@@ -111,7 +111,7 @@ class PartnershipPage extends React.Component {
 
     onActiveChange(item)
     {
-        if(item.props.value == strings.active)
+        if(item == strings.active)
         {
             this.state.partnership.active = true
             this.setState(this.state)
@@ -198,7 +198,7 @@ class PartnershipPage extends React.Component {
     }
     onNewPaymentRow()
     {
-        this.state.partnership.paymentsDetails.push(new PartnershipPaymentDetails())
+        this.state.partnership.paymentsDetails.unshift(new PartnershipPaymentDetails())
         this.setState(this.state)
     }
     onPartnershipNumberChange(index,value)
@@ -223,8 +223,7 @@ class PartnershipPage extends React.Component {
     //Exit, save
     onExitClicked()
     {
-        //this.context.router.goBack()
-        this.context.router.push('/app/agents-and-partnerships')
+        this.context.router.goBack()
     }
     onSaveClicked()
     {
@@ -283,8 +282,8 @@ class PartnershipPage extends React.Component {
 
         var activeStates = []
         var selectedActiveState = this.state.partnership.active ? strings.active:strings.notActive
-        activeStates.push(<DropdownItem onClick={this.onActiveChange.bind(this)} value={strings.active} key={0}>{strings.active}</DropdownItem>)
-        activeStates.push(<DropdownItem onClick={this.onActiveChange.bind(this)} value={strings.notActive} key={1}>{strings.notActive}</DropdownItem>)
+        activeStates.push(<DropdownItem className="mui--text-right" onClick={this.onActiveChange.bind(this,strings.active)} value={strings.active} key={0}>{strings.active}</DropdownItem>)
+        activeStates.push(<DropdownItem className="mui--text-right" onClick={this.onActiveChange.bind(this,strings.notActive)} value={strings.notActive} key={1}>{strings.notActive}</DropdownItem>)
 
         var agentsList = null
         if(this.state.agentsListOpened)
@@ -317,7 +316,7 @@ class PartnershipPage extends React.Component {
                 type: 'select',
                 color: 'normal',
                 action: this.onSelectCompany.bind(this),
-                options: AppStore.getCompanies()
+                options: AppStore.getCompanies().concat("")
             },
             {
                 title: "מספר סוכן",
@@ -334,7 +333,7 @@ class PartnershipPage extends React.Component {
                 type: 'select',
                 color: 'normal',
                 action: this.onSelectPaymentType.bind(this),
-                options: AppStore.getCommissionTypes()
+                options: AppStore.getCommissionTypes().concat("")
             },
             {
                 title: "חלק שותפות %",
@@ -359,9 +358,9 @@ class PartnershipPage extends React.Component {
                 <div className="hcontainer-no-wrap">
                     <div className="page-title">{strings.partnershipPageDetails}</div>
                     <div className="horizontal-spacer-90"/>
-                    <div className="page-active-box"><FixedWidthDropdown shadow label={selectedActiveState} alignMenu="right" >
+                    <div className="page-active-box"><Dropdown variant="raised" label={selectedActiveState} alignMenu="right" >
                         {activeStates}
-                    </FixedWidthDropdown></div>
+                    </Dropdown></div>
                 </div>
                 <div className="hcontainer-no-wrap">
                     <Button className="shadow" onClick={this.onNewAgentRow.bind(this)} color="primary">{strings.newAgent}</Button>

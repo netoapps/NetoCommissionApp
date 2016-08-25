@@ -9,7 +9,7 @@ html
 
 body
 {
-    background-color: #e6e6e6;
+    background-color: #e6e6e6; !important;
     margin: 0;
     width: 100%;
     height: 100%;
@@ -29,6 +29,19 @@ body
     width: 100%;
     flex-flow: row nowrap;
 }
+
+
+/*mui overrides*/
+.select-commission-type > button
+{
+    background-color: #4286b4; !important;
+}
+
+.new-income > button
+{
+    background-color: #4286b4; !important;
+}
+
 
 @-webkit-keyframes modal-zoom-in {
     from {
@@ -175,8 +188,10 @@ body
 
 .green
 {
-    color: #598a62;
+    color: #598a62; !important;
 }
+
+
 
 .light-green
 {
@@ -187,6 +202,8 @@ body
 {
     color: #4286b4;
 }
+
+
 
 .red
 {
@@ -230,6 +247,7 @@ body
     width: 250px;
     flex-flow: row nowrap;
     direction: rtl;
+    text-align: right; !important;
 }
 
 /*
@@ -652,7 +670,7 @@ body
 
 .dashboard-commission-change-chart-box
 {
-    min-height: calc(100% - 40px);
+    height: calc(100% - 40px);
     padding: 20px 50px;
 }
 
@@ -1247,6 +1265,7 @@ body
     margin-left: 1px;
     margin-top: 10px;
     margin-bottom: 10px;
+    align-content: center;
 }
 
 .table-select select {
@@ -1257,9 +1276,11 @@ body
     left:2px;
     font-size:14px;
     border:none;
-    width:120px;
+    width:60%;
     height:25px;
     margin-top: -5px;
+    margin-left:auto;
+    margin-right:auto;
     line-height: 20px;
     /*color: #000e4b;*!*/
     padding-right: 20px;
@@ -1414,6 +1435,7 @@ body
 
 .agents-list
 {
+    right:140px;
     margin-top: 6px;
     margin-right: 5px;
     position: absolute;

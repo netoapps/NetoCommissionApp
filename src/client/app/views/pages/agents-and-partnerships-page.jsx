@@ -67,7 +67,31 @@ class AgentsAndPartnerships extends React.Component {
     }
     onDeleteAgentClicked(rowIndex)
     {
-        AppActions.deleteAgentAtIndex(rowIndex)
+        var string = "למחוק סוכן "
+        var name = ""
+        var agent = AppStore.getAgentAtIndex(rowIndex)
+        name =  "'" + agent.name + " " + agent.familyName + "'"
+        string = string + name + "?"
+
+        swal({
+                title: "הערה",
+                text: string,
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "המשך",
+                cancelButtonText: "ביטול",
+                closeOnConfirm: true,
+                closeOnCancel: true
+            },
+            function(isConfirm)
+            {
+                if (isConfirm)
+                {
+                    AppActions.deleteAgentAtIndex(rowIndex)
+                    return
+                }
+            });
     }
 
     //Partnerships
@@ -83,14 +107,48 @@ class AgentsAndPartnerships extends React.Component {
     }
     onDeletePartnershipsClicked(rowIndex)
     {
-        AppActions.deletePartnershipAtIndex(rowIndex)
+        var string = "למחוק שותפות "
+        var names = ""
+        var partnership = AppStore.getPartnershipAtIndex(rowIndex)
+        for(var idIndex = 0; idIndex < partnership.agentsDetails.length ; idIndex++)
+        {
+            var agentData = AppStore.getAgent(partnership.agentsDetails[idIndex].idNumber)
+            if(agentData != null)
+            {
+                names += agentData.name + " " + agentData.familyName
+                if(idIndex < (partnership.agentsDetails.length-1))
+                {
+                    names += ", "
+                }
+            }
+        }
+        names =  "'" + names + "'"
+        string = string + names + "?"
+        swal({
+                title: "הערה",
+                text: string,
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "המשך",
+                cancelButtonText: "ביטול",
+                closeOnConfirm: true,
+                closeOnCancel: true
+            },
+            function(isConfirm)
+            {
+                if (isConfirm)
+                {
+                    AppActions.deletePartnershipAtIndex(rowIndex)
+                    return
+                }
+            });
     }
     onPartnershipClicked(rowIndex)
     {
         this.context.router.push('/app/agents-and-partnerships/partnership-page/'+rowIndex)
     }
 
-    //UI
     onChangeTab(i, value, tab, ev)
     {
         selectedTab = i

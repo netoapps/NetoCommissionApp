@@ -1,5 +1,5 @@
 import React from 'react';
-import FixedWidthDropdown from './../common/fixed-width-dropdown.jsx';
+import Dropdown from 'muicss/lib/react/dropdown';
 import DropdownItem from 'muicss/lib/react/dropdown-item';
 
 var monthOptions = ["ינואר","פברואר","מרץ","אפריל","מאי","יוני","יולי","אוגוסט","ספטמבר","אוקטובר","נובמבר","דצמבר"];
@@ -35,18 +35,18 @@ class MonthYearBox extends React.Component {
 
     onMonthChange(item)
     {
-        if(item.props.value != this.state.selectedMonth)
+        if(item != this.state.selectedMonth)
         {
-            this.setState({selectedMonth: item.props.value});
-            this.props.onMonthChange(item.props.value)
+            this.setState({selectedMonth: item});
+            this.props.onMonthChange(item)
         }
     }
     onYearChange(item)
     {
-        if(item.props.value != this.state.selectedYear)
+        if(item != this.state.selectedYear)
         {
-            this.setState({selectedYear: item.props.value});
-            this.props.onYearChange(item.props.value)
+            this.setState({selectedYear: item});
+            this.props.onYearChange(item)
         }
     }
     onLoadClick()
@@ -59,25 +59,25 @@ class MonthYearBox extends React.Component {
         const months = [];
         for (let i = 0; i <= 11; i++ ) {
             var monthName = getMonthName(i)
-            months.push(<DropdownItem onClick={this.onMonthChange.bind(this)} value={monthName} key={i}>{monthName}</DropdownItem>);
+            months.push(<DropdownItem className="mui--text-right" onClick={this.onMonthChange.bind(this,monthName)} value={monthName} key={i}>{monthName}</DropdownItem>);
         }
         const years = [];
         var date = new Date();
         var currentYear = date.getFullYear()
         for (let i = 2012; i <= currentYear; i++ ) {
             var yearName = i.toString()
-            years.push(<DropdownItem onClick={this.onYearChange.bind(this)}
+            years.push(<DropdownItem className="mui--text-right" onClick={this.onYearChange.bind(this,yearName)}
                 value={yearName} key={i}>{yearName}</DropdownItem>);
         }
         return (
             <div className="month-year-box">
-                <FixedWidthDropdown shadow label={this.state.selectedMonth} alignMenu="right" >
+                <Dropdown  variant="raised" label={this.state.selectedMonth} alignMenu="right" >
                     {months}
-                </FixedWidthDropdown>
+                </Dropdown>
                 <div className="horizontal-spacer-10"/>
-                <FixedWidthDropdown shadow className="fixed-size-button" label={this.state.selectedYear} alignMenu="right" >
+                <Dropdown variant="raised" label={this.state.selectedYear} alignMenu="right" >
                     {years}
-                </FixedWidthDropdown>
+                </Dropdown>
             </div>
         );
     }

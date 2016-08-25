@@ -32,6 +32,14 @@ class TableCell extends React.Component {
         }
 
     }
+    onSelectText()
+    {
+        //console.log("onSelectText")
+    }
+    onClick()
+    {
+        //console.log("onClick")
+    }
     render()
     {
         var className = "table-cell";
@@ -71,7 +79,7 @@ class TableCell extends React.Component {
 
         if (this.state.column.type === "read-only")
         {
-            node = <div className={"table-cell-read-only " + color}>{this.state.value}</div>;
+            node = <div onClick={this.onClick.bind(this)} onSelect={this.onSelectText.bind(this)} className={"table-cell-read-only " + color}>{this.state.value}</div>;
         }
         if (this.state.column.type === "full-date")
         {
@@ -104,7 +112,7 @@ class TableCell extends React.Component {
 
             node = <div className="h-center">
                         <div className="table-select">
-                            <select onChange={this.onChange.bind(this)} defaultValue={this.state.value}>
+                            <select onChange={this.onChange.bind(this)} value={this.state.value}>
                                 {options}
                             </select>
                         </div>
@@ -184,7 +192,7 @@ class TableRow extends React.Component {
         var className = "table-row " + this.props.rowHoverClassName
         return  <div className={className} >
                     {removeRow}
-                    <div className="table-row-data" onClick={this.onRowClick.bind(this)}>{tableCells} </div>
+                    <div className="table-row-data" onClick={ this.onRowClick.bind(this) }>{tableCells} </div>
                  </div>;
     }
 }

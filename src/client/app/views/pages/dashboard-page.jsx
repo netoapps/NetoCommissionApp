@@ -47,11 +47,11 @@ class DashboardToolbar extends React.Component {
     // }
     onSelectCommissionTypeChange(item)
     {
-        if(item.props.value != this.state.commissionType)
+        if(item != this.state.commissionType)
         {
-            this.state.commissionType = item.props.value;
+            this.state.commissionType = item;
             this.setState(this.state);
-            this.props.commissionTypeChange(item.props.value)
+            this.props.commissionTypeChange(item)
         }
     }
     render () {
@@ -60,7 +60,7 @@ class DashboardToolbar extends React.Component {
         var commissionTypes = AppStore.getCommissionTypes()
         for (let i = 0; i < commissionTypes.length; i++ )
         {
-            commissions.push(<DropdownItem onClick={this.onSelectCommissionTypeChange.bind(this)} value={commissionTypes[i]} key={i}>{commissionTypes[i]}</DropdownItem>);
+            commissions.push(<DropdownItem className="mui--text-right" onClick={this.onSelectCommissionTypeChange.bind(this,commissionTypes[i])} value={commissionTypes[i]} key={i}>{commissionTypes[i]}</DropdownItem>);
         }
 
         return (
@@ -74,7 +74,7 @@ class DashboardToolbar extends React.Component {
                         <div className="horizontal-spacer-10"/>
                         <div className="horizontal-spacer-10"/>
                         <div className="horizontal-spacer-10"/>
-                    <Dropdown label={this.state.commissionType} alignMenu="right" color="primary" variant="raised">
+                    <Dropdown className="select-commission-type" label={this.state.commissionType} alignMenu="right" color="primary" variant="raised">
                         {commissions}
                     </Dropdown>
                     </div>
@@ -331,12 +331,11 @@ class DashboardCommissionChangeChart extends React.Component {
             maintainAspectRatio: false
         }
 
-
         return (
             <div className="dashboard-commission-change-chart shadow">
                 <div className="dashboard-box-title">{"סה״כ " + this.state.commissionType}</div>
                 <div className="dashboard-commission-change-chart-box">
-                    <Bar data={data} options={chartOptions} />
+                    <Bar data={data} options={chartOptions} width="600" height="400"/>
                 </div>
             </div>
         );
@@ -654,21 +653,6 @@ class Dashboard extends React.Component {
                                          date={this.state.date}/>
                     <div className="horizontal-spacer-20"/>
                     <div className="dashboard-stats-container">
-                        {/*<div className="hcontainer-no-wrap dashboard-stats-container-top">*/}
-                            {/*<DashboardMonthTotalCommissions*/}
-                                {/*commissionType={this.state.selectedCommissionType}*/}
-                                {/*date={this.state.date}*/}
-                            {/*/>*/}
-                            {/*<div className="horizontal-spacer-20"/>*/}
-                            {/*<DashboardMonthTotalAgents date={this.state.date}/>*/}
-                        {/*</div>*/}
-                        {/*<div className="vertical-spacer-20"/>*/}
-                        {/*<DashboardTotalPortfolio*/}
-                            {/*commissionType={this.state.selectedCommissionType}*/}
-                            {/*date={this.state.date}*/}
-                        {/*/>*/}
-                    {/*</div>*/}
-
                         <div className="hcontainer-no-wrap dashboard-stats-container-top">
                             <DashboardMonthTotalCommissions
                                 commissionType={this.state.selectedCommissionType}

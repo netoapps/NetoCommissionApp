@@ -38,9 +38,9 @@ class ColumnSelectModalContentCell extends React.Component
     }
     onTypeChange(item)
     {
-        if(item.props.value != this.state.selectedType)
+        if(item != this.state.selectedType)
         {
-            this.state.selectedType = item.props.value
+            this.state.selectedType = item
             this.setState(this.state)
             this.props.onSelectType(this.state.selectedType,this.props.value)
         }
@@ -58,7 +58,7 @@ class ColumnSelectModalContentCell extends React.Component
         }
         for(var type = 0; type < this.state.types.length; type++)
         {
-            types.push(<DropdownItem onClick={this.onTypeChange.bind(this)} value={this.state.types[type]} key={type}>{this.state.types[type]}</DropdownItem>)
+            types.push(<DropdownItem className="mui--text-right" onClick={this.onTypeChange.bind(this,this.state.types[type])} value={this.state.types[type]} key={type}>{this.state.types[type]}</DropdownItem>)
         }
 
         return <div className="columns-select-cell">
@@ -307,9 +307,9 @@ class FileBin extends React.Component {
     }
     onCompanyNameChange(item)
     {
-        if(item.props.value != this.state.commissionFile.company)
+        if(item != this.state.commissionFile.company)
         {
-            this.state.commissionFile.company = item.props.value
+            this.state.commissionFile.company = item
             this.setState(this.state);
         }
     }
@@ -511,9 +511,9 @@ class FileBin extends React.Component {
     }
     onTaxOptionChange(item)
     {
-        if(item.props.value != this.state.taxState)
+        if(item != this.state.taxState)
         {
-            this.state.commissionFile.taxState = item.props.value
+            this.state.commissionFile.taxState = item
             this.setState(this.state);
         }
     }
@@ -533,11 +533,11 @@ class FileBin extends React.Component {
         const companyNames = AppStore.getCompanies()
         for (let i = 0; i < companyNames.length; i++ )
         {
-            companies.push(<DropdownItem onClick={this.onCompanyNameChange.bind(this)} value={companyNames[i]} key={i}>{companyNames[i]}</DropdownItem>);
+            companies.push(<DropdownItem className="mui--text-right" onClick={this.onCompanyNameChange.bind(this,companyNames[i])} value={companyNames[i]} key={i}>{companyNames[i]}</DropdownItem>);
         }
         const taxStateOptions = [];
-        taxStateOptions.push(<DropdownItem onClick={this.onTaxOptionChange.bind(this)} value={strings.taxIncluded} key={0}>{strings.taxIncluded}</DropdownItem>);
-        taxStateOptions.push(<DropdownItem onClick={this.onTaxOptionChange.bind(this)} value={strings.taxNotIncluded} key={1}>{strings.taxNotIncluded}</DropdownItem>);
+        taxStateOptions.push(<DropdownItem className="mui--text-right" onClick={this.onTaxOptionChange.bind(this,strings.taxIncluded)} value={strings.taxIncluded} key={0}>{strings.taxIncluded}</DropdownItem>);
+        taxStateOptions.push(<DropdownItem className="mui--text-right" onClick={this.onTaxOptionChange.bind(this,strings.taxNotIncluded)} value={strings.taxNotIncluded} key={1}>{strings.taxNotIncluded}</DropdownItem>);
 
         let style = {
             backgroundColor: 'transparent',

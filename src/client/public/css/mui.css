@@ -253,7 +253,6 @@ button {
 button,
 select {
   text-transform: none;
-
 }
 
 .shadow
@@ -440,12 +439,12 @@ textarea {
 }
 
 a {
-  color: #2196F3;
+  color: #4286b4;
   text-decoration: none;
 }
 
 a:hover, a:focus {
-  color: #1976D2;
+  color: #367ab4;
   text-decoration: underline;
 }
 
@@ -516,7 +515,7 @@ strong {
 
 abbr[title] {
   cursor: help;
-  border-bottom: 1px dotted #2196F3;
+  border-bottom: 1px dotted #4286b4;
 }
 
 h1, h2, h3 {
@@ -579,7 +578,7 @@ h4, h5, h6 {
 }
 
 .mui-appbar {
-  background-color: #2196F3;
+  background-color: #4286b4;
   color: #FFF;
 }
 
@@ -587,15 +586,13 @@ h4, h5, h6 {
  * MUI Buttons
  */
 .mui-btn {
-  -webkit-animation-duration: 0.0001s;
   animation-duration: 0.0001s;
-  -webkit-animation-name: mui-node-inserted;
   animation-name: mui-node-inserted;
   font-weight: 500;
   font-size: 14px;
   line-height: 18px;
   text-transform: uppercase;
-  color: #505050;
+  color: rgba(0, 0, 0, 0.87);
   background-color: #FFF;
   transition: all 0.2s ease-in-out;
   display: inline-block;
@@ -621,15 +618,7 @@ h4, h5, h6 {
   letter-spacing: 0.03em;
   position: relative;
   overflow: hidden;
-  min-width: 110px;
 }
-
-.table-dropdown-button
-{
-  margin-top: 2px;
-  height: 35px;
-}
-
 
 .mui-btn:hover, .mui-btn:focus, .mui-btn:active {
   color: rgba(0, 0, 0, 0.87);
@@ -672,12 +661,12 @@ h4, h5, h6 {
   }
 }
 
-.mui-btn:active {
+.mui-btn:active:hover {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-  .mui-btn:active {
+  .mui-btn:active:hover {
     box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.12), -1px 0px 2px rgba(0, 0, 0, 0.12), 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   }
 }
@@ -689,11 +678,6 @@ h4, h5, h6 {
   box-shadow: none;
 }
 
-.no-shadow
-{
-  box-shadow: none;
-}
-
 .mui-btn + .mui-btn {
   margin-left: 8px;
 }
@@ -702,7 +686,7 @@ h4, h5, h6 {
   background-color: transparent;
 }
 
-.mui-btn--flat:hover, .mui-btn--flat:focus, .mui-btn--flat:active {
+.mui-btn--flat:hover, .mui-btn--flat:focus, .mui-btn--flat:active, .mui-btn--flat:active:hover {
   box-shadow: none;
   background-color: #f2f2f2;
 }
@@ -739,35 +723,31 @@ h4, h5, h6 {
 
 .mui-btn--primary {
   color: #FFF;
-
   background-color: #4286b4;
-
 }
 
 .mui-btn--primary:hover, .mui-btn--primary:focus, .mui-btn--primary:active {
   color: #FFF;
-  /*background-color: #39a1f4;*/
-  background-color: #448fbe;
+  background-color: #2e88b4;
 }
 
 .mui-btn--primary[disabled]:hover, .mui-btn--primary[disabled]:focus, .mui-btn--primary[disabled]:active {
   color: #FFF;
-  /*background-color: #2196F3;*/
-  background-color: #448fbe;
+  background-color: #2e88b4;
 }
 
 .mui-btn--primary.mui-btn--flat {
-  color: #2196F3;
+  color: #4286b4;
   background-color: transparent;
 }
 
 .mui-btn--primary.mui-btn--flat:hover, .mui-btn--primary.mui-btn--flat:focus, .mui-btn--primary.mui-btn--flat:active {
-  color: #2196F3;
-  background-color: #f2f2f2;
+  color: #4286b4;
+  background-color: #2e88b4;
 }
 
 .mui-btn--primary.mui-btn--flat[disabled]:hover, .mui-btn--primary.mui-btn--flat[disabled]:focus, .mui-btn--primary.mui-btn--flat[disabled]:active {
-  color: #2196F3;
+  color: #4286b4;
   background-color: transparent;
 }
 
@@ -886,70 +866,6 @@ h4, h5, h6 {
   height: 75px;
   line-height: 75px;
 }
-
-/**
-* Flat ripple button
-*/
-.mui-btn-ripple {
-  -webkit-animation-duration: 0.0001s;
-  animation-duration: 0.0001s;
-  -webkit-animation-name: mui-node-inserted;
-  animation-name: mui-node-inserted;
-  line-height: 18px;
-  text-transform: uppercase;
-  transition: all 0.2s ease-in-out;
-  display: inline-block;
-  border: none;
-  border-radius: 2px;
-  cursor: pointer;
-  -ms-touch-action: manipulation;
-  touch-action: manipulation;
-  vertical-align: middle;
-  white-space: nowrap;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  letter-spacing: 0.03em;
-  position: relative;
-  overflow: hidden;
-}
-
-.mui-btn-ripple > .mui-ripple-effect {
-  background-color: #a6a6a6;
-}
-
-.mui-btn-ripple > .mui-ripple-effect-dark {
-  background-color: #000000;
-}
-.mui-btn-ripple > .mui-ripple-effect-light {
-  background-color: #4286b4;
-}
-
-
-.mui-btn-ripple--primary > .mui-ripple-effect {
-  background-color: #FFF;
-}
-
-.mui-btn-ripple--dark > .mui-ripple-effect {
-  background-color: #FFF;
-}
-
-.mui-btn-ripple--danger > .mui-ripple-effect {
-  background-color: #FFF;
-}
-
-.mui-btn-ripple--accent > .mui-ripple-effect {
-  background-color: #FFF;
-}
-
-.mui-btn-ripple--flat > .mui-ripple-effect {
-  background-color: #a6a6a6;
-}
-
-/**
-*
-*/
 
 /**
  * MUI Checkboxe and Radio Components
@@ -1097,7 +1013,7 @@ h4, h5, h6 {
   border-right: 1px solid rgba(0, 0, 0, 0.12);
 }
 
-/**mui-dropdown__menu
+/**
  * MUI Dropdown module
  */
 .mui-dropdown {
@@ -1105,17 +1021,8 @@ h4, h5, h6 {
   position: relative;
 }
 
-.h-center {
-  margin: auto;
-  width: 60%;
-  text-align: center;
-}
-
-
 [data-mui-toggle="dropdown"] {
-  -webkit-animation-duration: 0.0001s;
   animation-duration: 0.0001s;
-  -webkit-animation-name: mui-node-inserted;
   animation-name: mui-node-inserted;
   outline: 0;
 }
@@ -1125,21 +1032,20 @@ h4, h5, h6 {
   top: 100%;
   left: 0;
   display: none;
-  min-width: 108px;
+  min-width: 160px;
   padding: 5px 0;
   margin: 2px 0 0;
   list-style: none;
   font-size: 14px;
-  text-align: right;
+  text-align: left;
   background-color: #FFF;
   border-radius: 2px;
-  z-index: 999999;
+  z-index: 1;
   background-clip: padding-box;
 }
 
 .mui-dropdown__menu.mui--is-open {
   display: block;
-  direction: rtl;
 }
 
 .mui-dropdown__menu > li > a {
@@ -1150,7 +1056,6 @@ h4, h5, h6 {
   line-height: 1.429;
   color: rgba(0, 0, 0, 0.87);
   white-space: nowrap;
-  direction: rtl;
 }
 
 .mui-dropdown__menu > li > a:hover, .mui-dropdown__menu > li > a:focus {
@@ -1172,7 +1077,7 @@ h4, h5, h6 {
 
 .mui-dropdown__menu--right {
   left: auto;
-  right: 0px;
+  right: 0;
 }
 
 /**
@@ -1703,14 +1608,12 @@ h4, h5, h6 {
 .mui-select:focus > select {
   height: 33px;
   margin-bottom: -1px;
-  border-color: #2196F3;
+  border-color: #4286b4;
   border-width: 2px;
 }
 
 .mui-select > select {
-  -webkit-animation-duration: 0.0001s;
   animation-duration: 0.0001s;
-  -webkit-animation-name: mui-node-inserted;
   animation-name: mui-node-inserted;
   display: block;
   height: 32px;
@@ -1741,7 +1644,7 @@ h4, h5, h6 {
   outline: 0;
   height: 33px;
   margin-bottom: -1px;
-  border-color: #2196F3;
+  border-color: #4286b4;
   border-width: 2px;
 }
 
@@ -1752,9 +1655,28 @@ h4, h5, h6 {
   opacity: 1;
 }
 
+.mui-select > label {
+  position: absolute;
+  top: 0;
+  display: block;
+  width: 100%;
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 15px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mui-select:focus > label,
+.mui-select > select:focus ~ label {
+  color: #4286b4;
+}
+
 .mui-select__menu {
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   min-width: 100%;
   overflow-y: auto;
   padding: 8px 0;
@@ -1860,11 +1782,11 @@ th {
 }
 
 .mui-tabs__bar > li.mui--is-active {
-  border-bottom: 2px solid #2196F3;
+  border-bottom: 2px solid #4286b4;
 }
 
 .mui-tabs__bar > li.mui--is-active > a {
-  color: #2196F3;
+  color: #4286b4;
 }
 
 .mui-tabs__bar.mui-tabs__bar--justified {
@@ -1892,9 +1814,7 @@ th {
 }
 
 [data-mui-toggle="tab"] {
-  -webkit-animation-duration: 0.0001s;
   animation-duration: 0.0001s;
-  -webkit-animation-name: mui-node-inserted;
   animation-name: mui-node-inserted;
 }
 
@@ -1933,12 +1853,11 @@ th {
 
 .mui-textfield > input:focus ~ label,
 .mui-textfield > textarea:focus ~ label {
-  color: #2196F3;
+  color: #4286b4;
 }
 
 .mui-textfield--float-label > label {
   position: absolute;
-  -webkit-transform: translate(0px, 15px);
   transform: translate(0px, 15px);
   font-size: 16px;
   line-height: 32px;
@@ -1950,7 +1869,6 @@ th {
 
 .mui-textfield--float-label > input:focus ~ label,
 .mui-textfield--float-label > textarea:focus ~ label {
-  -webkit-transform: translate(0px, 0px);
   transform: translate(0px, 0px);
   font-size: 12px;
   line-height: 15px;
@@ -1964,7 +1882,6 @@ th {
   color: rgba(0, 0, 0, 0.54);
   font-size: 12px;
   line-height: 15px;
-  -webkit-transform: translate(0px, 0px);
   transform: translate(0px, 0px);
   text-overflow: ellipsis;
 }
@@ -1984,9 +1901,7 @@ th {
 
 .mui-textfield > input,
 .mui-textfield > textarea {
-  -webkit-animation-duration: 0.0001s;
   animation-duration: 0.0001s;
-  -webkit-animation-name: mui-node-inserted;
   animation-name: mui-node-inserted;
   display: block;
   background-color: transparent;
@@ -2004,7 +1919,7 @@ th {
 
 .mui-textfield > input:focus,
 .mui-textfield > textarea:focus {
-  border-color: #2196F3;
+  border-color: #4286b4;
   border-width: 2px;
 }
 
@@ -2126,14 +2041,6 @@ th {
 /**
  * MUI Helpers module
  */
-@-webkit-keyframes mui-node-inserted {
-  from {
-    opacity: 0.99;
-  }
-  to {
-    opacity: 1;
-  }
-}
 @keyframes mui-node-inserted {
   from {
     opacity: 0.99;
@@ -2247,6 +2154,34 @@ th {
 
 .mui--text-danger {
   color: #F44336;
+}
+
+.mui--bg-primary {
+  background-color: #4286b4;
+}
+
+.mui--bg-primary-dark {
+  background-color: #3c79a2;
+}
+
+.mui--bg-primary-light {
+  background-color: #BBDEFB;
+}
+
+.mui--bg-accent {
+  background-color: #FF4081;
+}
+
+.mui--bg-accent-dark {
+  background-color: #F50057;
+}
+
+.mui--bg-accent-light {
+  background-color: #FF80AB;
+}
+
+.mui--bg-danger {
+  background-color: #F44336;
 }
 
 .mui-list--unstyled {
@@ -2525,59 +2460,28 @@ body.mui-body--scroll-lock {
   position: absolute;
   border-radius: 50%;
   pointer-events: none;
+  opacity: 0.4;
+  transform: scale(0.0001);
+}
+
+.mui-ripple-effect.mui--animate-in {
   opacity: 0;
-  -webkit-animation: mui-ripple-animation 2s;
-  animation: mui-ripple-animation 2s;
+  transform: scale(1);
+  transition: transform 0.3s cubic-bezier(0, 0, 0.2, 1), opacity 0.6s cubic-bezier(0, 0, 0.2, 1);
 }
 
-.mui-ripple-effect-dark {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
+.mui-ripple-effect.mui--active {
+  opacity: 0.3;
+}
+
+.mui-ripple-effect.mui--animate-out {
   opacity: 0;
-  -webkit-animation: mui-ripple-animation 2s;
-  animation: mui-ripple-animation 2s;
-}
-
-.mui-ripple-effect-light {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  opacity: 0;
-  -webkit-animation: mui-ripple-animation 2s;
-  animation: mui-ripple-animation 2s;
-}
-
-@-webkit-keyframes mui-ripple-animation {
-  from {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    opacity: 0.4;
-  }
-  to {
-    -webkit-transform: scale(100);
-    transform: scale(100);
-    opacity: 0;
-  }
-}
-
-@keyframes mui-ripple-animation {
-  from {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    opacity: 0.4;
-  }
-  to {
-    -webkit-transform: scale(100);
-    transform: scale(100);
-    opacity: 0;
-  }
+  transition: opacity 0.6s cubic-bezier(0, 0, 0.2, 1);
 }
 
 .mui-btn > .mui-ripple-effect {
   background-color: #a6a6a6;
 }
-
 
 .mui-btn--primary > .mui-ripple-effect {
   background-color: #FFF;
