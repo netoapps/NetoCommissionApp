@@ -344,6 +344,25 @@ function getAllAgentsSalariesByCompanyAndTypesForDateSummed(req, res){
             return res.status(400).json({err: err});
         })
 }
+function getAgentIdSalariesByCompanyAndTypesForDateSummedManual(req, res){
+    const idNumber = req.params.idNumber;
+    if (!idNumber) {
+        return res.status(400).json({err: 'invalid idNumber'});
+    }
+    const pd = req.params.paymentDate;
+    if (!pd) {
+        return res.status(400).json({err: 'invalid payment date'});
+    }
+
+    salaryService.getSalariesByCompanyAndTypesForDateSummedManual(idNumber, pd,'agent')
+        .then(function (salaries) {
+            return res.status(200).json({salaries:salaries});
+        })
+        .catch(function (err) {
+            return res.status(400).json({err: err});
+        })
+}
+
 function getAgentIdSalariesByCompanyAndTypesForDateSummed(req, res){
     const idNumber = req.params.idNumber;
     if (!idNumber) {
@@ -374,7 +393,7 @@ function getPartnershipIdSalariesByCompanyAndTypesForDateSummed(req, res){
         return res.status(400).json({err: 'invalid payment date'});
     }
 
-    salaryService.getSalariesByCompanyAndTypesForDateSummed(pid, pd,'partnership')
+    salaryService.getSalariesByCompanyAndTypesForDateSummedManual(pid, pd,'partnership')
         .then(function (salaries) {
             return res.status(200).json({salaries:salaries});
         })
@@ -383,6 +402,25 @@ function getPartnershipIdSalariesByCompanyAndTypesForDateSummed(req, res){
         })
 }
 
+
+function getPartnershipIdSalariesByCompanyAndTypesForDateSummedManual(req, res){
+    const pid = req.params.pid;
+    if (!pid) {
+        return res.status(400).json({err: 'invalid pid'});
+    }
+    const pd = req.params.paymentDate;
+    if (!pd) {
+        return res.status(400).json({err: 'invalid payment date'});
+    }
+
+    salaryService.getSalariesByCompanyAndTypesForDateSummedManual(pid, pd,'partnership')
+        .then(function (salaries) {
+            return res.status(200).json({salaries:salaries});
+        })
+        .catch(function (err) {
+            return res.status(400).json({err: err});
+        })
+}
 function getPartnershipPortfolioForDate(req, res) {
     const pid = req.params.pid;
     const pd = req.params.paymentDate;
@@ -462,8 +500,10 @@ module.exports = {
     getAgentSalariesForDate,
     getAllAgentSalariesByTypesForDateSummed,
     getAllAgentsSalariesByCompanyAndTypesForDateSummed,
+    getAgentIdSalariesByCompanyAndTypesForDateSummedManual,
     getAgentIdSalariesByCompanyAndTypesForDateSummed,
     getAllPartnershipSalariesByTypesForDateSummed,
+    getPartnershipIdSalariesByCompanyAndTypesForDateSummedManual,
     getPartnershipIdSalariesByCompanyAndTypesForDateSummed,
     getPartnershipPortfolioForDate,
     getPartnershipDateSalariesSummedByType
