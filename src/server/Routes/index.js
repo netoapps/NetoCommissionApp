@@ -13,12 +13,14 @@ var salaries = require('../Modules/salaries');
 var files = require('../Modules/files');
 var constants = require('../Modules/constants');
 var expanses = require('../Modules/expanses');
+var excel = require('../Modules/excel');
 module.exports.registerRoutes = function(app){
     var publicRouter = express.Router();
     app.use('/',publicRouter);
 
     var apiRouter = express.Router();
     //APIs
+    apiRouter.post('/excel_columns',upload.single('file'),excel.analyzeColumns)
     //Agents
     apiRouter.get('/agent', agents.getAllAgents);
     apiRouter.get('/agent/:agentId', agents.getAgentById);

@@ -3,14 +3,19 @@
  */
 
 var ExcelAnalyzerService = require('../Services/ExcelAnalyzerService');
-
-module.exports.analyzeFile = function (req, res) {
+var fs = require('fs');
+module.exports.analyzeColumns = function (req, res) {
     var analyzer = new ExcelAnalyzerService();
-    analyzer.analyzeSalaryFile(req.file.path, function (err, result) {
+    if(!req.file){
+        return res.status(400).json({err:'missing file'});
+    }
+
+    analyzer.analyzeColumns(req.file.path, function (err, result) {
+        fs.unlink(req.file.path);
         if (err) {
             return res.status(400).json({err: err});
         }
-        return res.status(200);
+        return res.status(200).json(result);
     });
 }
 

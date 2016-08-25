@@ -49,7 +49,39 @@ function ExcelAnalyzerService() {
         return cb(null, salaries);
 
     };
+    this.analyzeColumns = function(filePath, cb){
+        try {
+            var workbook = xlsx.readFile(filePath);
+        } catch (err) {
+            return cb(err);
+        }
 
+        var sheet = workbook.Sheets[workbook.SheetNames[0]];
+        var cols = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P'];
+        var rows = [1,2,3,4,5,6,7,8,9];
+        var headersRow = -1;
+        var stopExecution=false;
+        var headers=[];
+        rows.forEach(function(row){
+            if(!stopExecution) {
+                cols.forEach(function (col) {
+                    if (sheet[col + row] !== undefined && sheet[col+row] !== '!' && sheet[col+row].v) {
+                        headersRow = row;
+                        headers.push(sheet[col+row].v);
+                        stopExecution = true;
+                    }
+                })
+            }
+        })
+
+        //var salaries = xlsx.utils.sheet_to_json(sheet, {range: headersRow-1});
+        if(headersRow!==-1) {
+            return cb(null, {headersManual: headers});
+        }else{
+            return cb('could not find headers');
+        }
+
+    }
     this.analyzeAgentsFile = function (filePath, cb) {
         try {
             var workbook = xlsx.readFile(filePath);
