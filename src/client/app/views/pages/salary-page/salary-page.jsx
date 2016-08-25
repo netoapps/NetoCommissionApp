@@ -231,7 +231,7 @@ class SalaryPage extends React.Component {
     {
         for(var index = 0; index < this.state.incomes.length; index++)
         {
-            if(this.state.incomes[index].type === "ידני")
+            if(this.state.incomes[index].fileId == null)
             {
                 if(this.state.incomes[index]._id === incomeId)
                 {
@@ -448,12 +448,25 @@ class SalaryPage extends React.Component {
         var sum = 0
         for(var index = 0; index < this.state.incomes.length; index++)
         {
-            sum += parseFloat(this.state.incomes[index].agencyAmount)
+            if(this.state.incomes[index].fileId != null)
+                sum += parseFloat(this.state.incomes[index].agencyAmount)
         }
         return sum.toString()
     }
     sumOfIncomeWithType(type)
     {
+        if(type === "ידני")
+        {
+            var sum = 0
+            for(var index = 0; index < this.state.incomes.length; index++)
+            {
+                if(this.state.incomes[index].fileId == null )
+                {
+                    sum += parseFloat(this.state.incomes[index])
+                }
+            }
+            return sum
+        }
         return this.state.incomeComponentsSum[type]
     }
 
@@ -464,9 +477,9 @@ class SalaryPage extends React.Component {
         {
             sum += parseFloat(this.state.incomeComponentsSum[type])
         }
-        for(var index = 0; index < this.state.manualIncomes.length; index++)
+        for(var index = 0; index < this.state.incomes.length; index++)
         {
-            if(this.state.incomes[index].type === "ידני")
+            if(this.state.incomes[index].fileId == null )
             {
                 sum += parseFloat(this.state.incomes[index])
             }
