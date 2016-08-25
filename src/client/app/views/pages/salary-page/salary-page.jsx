@@ -465,7 +465,11 @@ class SalaryPage extends React.Component {
     }
     sumOfIncomeWithType(type)
     {
-        return this.state.incomeComponentsSum[type]
+        if(this.state.incomeComponentsSum[type] != null)
+        {
+            return this.state.incomeComponentsSum[type]
+        }
+        return 0
     }
 
     sumOfAllIncomes()

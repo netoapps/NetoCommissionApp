@@ -120,7 +120,7 @@ class DataService {
                     success: function(result)
                     {
                         console.log('load partnerships - server responded with success!');
-                        resolve(result.agents)
+                        resolve(result.partnerships)
                     },
                     error: function(jqXHR, textStatus, errorThrown)
                     {
