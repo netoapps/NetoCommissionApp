@@ -109,7 +109,7 @@ class DataStore extends Store {
     {
         return this.get('agents');
     }
-    addAgent(agent)
+    addAgent(agent,callback)
     {
         DataService.addAgent(agent, (response) => {
 
@@ -118,15 +118,19 @@ class DataStore extends Store {
                 var agents = this.getAgents()
                 agents.push(response.data)
                 this.eventbus.emit(ActionType.ADD_AGENT);
+                if(callback != null)
+                    callback({result:true});
             }
             else
             {
                 this.logger.error("Error while adding agent");
+                if(callback != null)
+                    callback({result:false});
             }
 
         })
     }
-    deleteAgentAtIndex(index)
+    deleteAgentAtIndex(index,callback)
     {
         var agent = this.getAgentAtIndex(index)
         if(agent != null)
@@ -146,19 +150,19 @@ class DataStore extends Store {
                         agents.splice(index, 1)
                         this.eventbus.emit(ActionType.DELETE_AGENT);
                         this.logger.debug('Delete agent at index ' + index);
-                        // if(callback != null)
-                        //     callback('success');
+                        if(callback != null)
+                            callback({result:true});
                     }.bind(this),
                     error: function(jqXHR, textStatus, errorThrown)
                     {
                         console.error('deleteAgentAtIndex - ', textStatus, errorThrown.toString());
-                        // if(callback != null)
-                        //     callback('error');
+                        if(callback != null)
+                            callback({result:false});
                     }.bind(this)
                 });
         }
     }
-    setAgentAtIndex(index, updatedAgent)
+    setAgentAtIndex(index, updatedAgent,callback)
     {
         var agent = this.getAgentAtIndex(index)
         if(agent != null)
@@ -175,13 +179,13 @@ class DataStore extends Store {
                         var agents = this.getAgents()
                         agents[index] = result.agent
                         this.eventbus.emit(ActionType.UPDATE_AGENT);
-                        // if(callback != null)
-                        //     callback('success');
+                        if(callback != null)
+                            callback({result:true});
                     }.bind(this),
                     error: function (jqXHR, textStatus, errorThrown) {
                         console.error('setAgentAtIndex - ', textStatus, errorThrown.toString());
-                        // if(callback != null)
-                        //     callback('error');
+                        if(callback != null)
+                            callback({result:false});
                     }.bind(this)
                 });
         }
@@ -221,7 +225,7 @@ class DataStore extends Store {
         }
         return null
     }
-    addPartnership(partnership)
+    addPartnership(partnership,callback)
     {
         //post to server...
         $.ajax(
@@ -237,14 +241,14 @@ class DataStore extends Store {
                     var partnerships = this.getPartnerships()
                     partnerships.push(result.partnership)
                     this.eventbus.emit(ActionType.ADD_PARTNERSHIP);
-                    // if(callback != null)
-                    //     callback('success');
+                    if(callback != null)
+                        callback({result:true});
                 }.bind(this),
                 error: function(jqXHR, textStatus, errorThrown)
                 {
                     console.error('addPartnership - ', textStatus, errorThrown.toString());
-                    // if(callback != null)
-                    //     callback('error');
+                    if(callback != null)
+                        callback({result:false});
                 }.bind(this)
             });
     }
@@ -257,7 +261,7 @@ class DataStore extends Store {
         }
         return null
     }
-    setPartnershipAtIndex(index, updatedPartnership)
+    setPartnershipAtIndex(index, updatedPartnership,callback)
     {
         var partnership = this.getPartnershipAtIndex(index)
         if(partnership != null)
@@ -274,18 +278,18 @@ class DataStore extends Store {
                         var partnerships = this.getPartnerships()
                         partnerships[index] = result.partnership
                         this.eventbus.emit(ActionType.UPDATE_PARTNERSHIP);
-                        // if(callback != null)
-                        //     callback('success');
+                        if(callback != null)
+                            callback({result:true});
                     }.bind(this),
                     error: function (jqXHR, textStatus, errorThrown) {
                         console.error('setPartnershipAtIndex - ', textStatus, errorThrown.toString());
-                        // if(callback != null)
-                        //     callback('error');
+                        if(callback != null)
+                            callback({result:false});
                     }.bind(this)
                 });
         }
     }
-    deletePartnershipAtIndex(index)
+    deletePartnershipAtIndex(index, callback)
     {
         var partnership = this.getPartnershipAtIndex(index)
         if(partnership != null)
@@ -305,14 +309,15 @@ class DataStore extends Store {
                         partnerships.splice(index, 1)
                         this.eventbus.emit(ActionType.DELETE_PARTNERSHIP);
                         this.logger.debug('Delete partnership at index ' + index);
-                        // if(callback != null)
-                        //     callback('success');
+                        if(callback != null)
+                            callback({result:true});
+
                     }.bind(this),
                     error: function(jqXHR, textStatus, errorThrown)
                     {
                         console.error('deletePartnershipAtIndex - ', textStatus, errorThrown.toString());
-                        // if(callback != null)
-                        //     callback('error');
+                        if(callback != null)
+                            callback({result:false});
                     }.bind(this)
                 });
         }
@@ -412,27 +417,27 @@ class DataStore extends Store {
                 break;
 
             case ActionType.ADD_AGENT:
-                this.addAgent(data.agent)
+                this.addAgent(data.agent,data.callback)
                 break;
 
             case ActionType.UPDATE_AGENT:
-                this.setAgentAtIndex(data.index,data.agent)
+                this.setAgentAtIndex(data.index,data.agent,data.callback)
                 break;
 
             case ActionType.DELETE_AGENT:
-                this.deleteAgentAtIndex(data.index)
+                this.deleteAgentAtIndex(data.index,data.callback)
                 break;
 
             case ActionType.ADD_PARTNERSHIP:
-                this.addPartnership(data.partnership)
+                this.addPartnership(data.partnership,data.callback)
                 break;
 
             case ActionType.UPDATE_PARTNERSHIP:
-                this.setPartnershipAtIndex(data.index,data.partnership)
+                this.setPartnershipAtIndex(data.index,data.partnership,data.callback)
                 break;
 
             case ActionType.DELETE_PARTNERSHIP:
-                this.deletePartnershipAtIndex(data.index,data.partnership)
+                this.deletePartnershipAtIndex(data.index,data.callback)
                 break;
 
 

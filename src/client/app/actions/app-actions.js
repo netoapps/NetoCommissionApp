@@ -70,45 +70,51 @@ export default class AppActions {
 
 
     //Agents
-    static addAgent(agent)
+    static addAgent(agent, callback)
     {
         AppDispatcher.dispatch(ActionType.ADD_AGENT,{
-            agent: agent
+            agent: agent,
+            callback:callback
         });
     }
-    static updateAgentAtIndex(index, agent)
+    static updateAgentAtIndex(index, agent, callback)
     {
         AppDispatcher.dispatch(ActionType.UPDATE_AGENT,{
             index: index,
-            agent: agent
+            agent: agent,
+            callback:callback
         });
     }
-    static deleteAgentAtIndex(index)
+    static deleteAgentAtIndex(index, callback)
     {
         AppDispatcher.dispatch(ActionType.DELETE_AGENT,{
-            index: index
+            index: index,
+            callback:callback
         });
     }
 
     //Partnerships
 
-    static addPartnership(partnership)
+    static addPartnership(partnership, callback)
     {
         AppDispatcher.dispatch(ActionType.ADD_PARTNERSHIP,{
-            partnership: partnership
+            partnership: partnership,
+            callback:callback
         });
     }
-    static updatePartnershipAtIndex(index, partnership)
+    static updatePartnershipAtIndex(index, partnership, callback)
     {
         AppDispatcher.dispatch(ActionType.UPDATE_PARTNERSHIP,{
             index: index,
-            partnership: partnership
+            partnership: partnership,
+            callback:callback
         });
     }
-    static deletePartnershipAtIndex(index)
+    static deletePartnershipAtIndex(index, callback)
     {
         AppDispatcher.dispatch(ActionType.DELETE_PARTNERSHIP,{
-            index: index
+            index: index,
+            callback:callback
         });
     }
 }

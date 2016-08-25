@@ -449,8 +449,7 @@ class FileBin extends React.Component {
                         type: "success",
                         timer: 1500,
                         showConfirmButton: false
-                    }
-                )
+                    })
             }
             else
             {

@@ -164,6 +164,7 @@ class AgentPage extends React.Component {
             });
             return
         }
+
         if(this.state.isNewAgent)
         {
             if(AppStore.getAgent(this.state.agent.idNumber) != null)
@@ -180,11 +181,62 @@ class AgentPage extends React.Component {
                 });
                 return
             }
-            AppActions.addAgent(this.state.agent)
+            AppActions.addAgent(this.state.agent, (response) => {
+                if(response.result)
+                {
+                    swal(
+                        {
+                            title: "",
+                            text: "סוכן נשמר בהצלחה",
+                            type: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        })
+                }
+                else
+                {
+                    swal({
+                        title: "שגיאה",
+                        text: "שגיאה בעת שמירת סוכן בשרת",
+                        type: "error",
+                        showCancelButton: false,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "סגור",
+                        closeOnConfirm: true,
+                        showLoaderOnConfirm: false
+                    });
+                }
+            })
         }
         else
         {
-            AppActions.updateAgentAtIndex(this.state.agentIndex,this.state.agent)
+            AppActions.updateAgentAtIndex(this.state.agentIndex,this.state.agent,(response) => {
+                if(response.result)
+                {
+                    swal(
+                        {
+                            title: "",
+                            text: "סוכן נשמר בהצלחה",
+                            type: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        })
+                }
+                else
+                {
+                    swal({
+                        title: "שגיאה",
+                        text: "שגיאה בעת שמירת סוכן בשרת",
+                        type: "error",
+                        showCancelButton: false,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "סגור",
+                        closeOnConfirm: true,
+                        showLoaderOnConfirm: false
+                    });
+                }
+
+            })
         }
         this.context.router.goBack()
     }
@@ -282,7 +334,7 @@ class AgentPage extends React.Component {
                 <div className="hcontainer-no-wrap">
                     <div className="page-title">{strings.agentPageDetails}</div>
                     <div className="horizontal-spacer-90"/>
-                    <div className="page-active-box"><Dropdown variant="raised" label={selectedActiveState} alignMenu="right" >
+                    <div className="page-active-box"><Dropdown variant="raised" label={selectedActiveState} alignMenu="left" >
                         {activeStates}
                     </Dropdown></div>
                 </div>
