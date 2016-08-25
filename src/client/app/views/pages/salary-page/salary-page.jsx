@@ -144,31 +144,40 @@ class SalaryPage extends React.Component {
     reloadDataWithDate(date)
     {
         this.state.date = date
-        this.reloadData((incomes, expenses, portfolio,incomeComponentsSum) => {
+        this.reloadData((incomes,manualIncomes, expenses, portfolio,incomeComponentsSum) => {
 
             this.state.incomes = incomes
+            for(var index = 0; index < manualIncomes; index++)
+            {
+                this.state.incomes.push(manualIncomes[index])
+            }
             this.state.expenses = expenses
             this.state.portfolio = portfolio
             this.state.incomeComponentsSum = incomeComponentsSum
-            this.state.agencyAmount = this.calculateAgencyAmount()
-            this.state.incomeTotal = this.sumOfAllIncomes()
-            this.state.expenseTotal = this.sumOfAllExpenses()
-            this.state.salary = this.state.incomeTotal - this.state.expenseTotal
+            this.calculateAll()
             this.setState(this.state)
         })
+    }
+    calculateAll()
+    {
+        this.state.agencyAmount = this.calculateAgencyAmount()
+        this.state.incomeTotal = this.sumOfAllIncomes()
+        this.state.expenseTotal = this.sumOfAllExpenses()
+        this.state.salary = this.state.incomeTotal - this.state.expenseTotal
     }
     reloadData(callback)
     {
         var date = this.state.date
         var promise = []
         promise.push(DataService.loadIncomeData(this.state.context.type,this.state.context.id,date))
+        promise.push(DataService.loadManualIncomeData(this.state.context.type,this.state.context.id,date))
         promise.push(DataService.loadExpensesData(this.state.context.type,this.state.context.id,date))
         promise.push(DataService.loadPortfolioData(this.state.context.type,this.state.context.id,date))
         promise.push(DataService.loadIncomeComponentsSumData(this.state.context.type,this.state.context.id,date))
         Promise.all(promise).then(function (values) {
-            callback(values[0],values[1],values[2],values[3])
+            callback(values[0],values[1],values[2],values[3],values[4])
         }).catch(function (reason){
-            callback(null,null,null)
+            callback(null,null,null,null)
             console.log("failed to income data - " + reason)
         })
     }
@@ -222,10 +231,13 @@ class SalaryPage extends React.Component {
     {
         for(var index = 0; index < this.state.incomes.length; index++)
         {
-            if(this.state.incomes[index]._id === incomeId)
+            if(this.state.incomes[index].type === "ידני")
             {
-                this.state.incomes[index] = updatedIncome
-                return true
+                if(this.state.incomes[index]._id === incomeId)
+                {
+                    this.state.incomes[index] = updatedIncome
+                    return true
+                }
             }
         }
         return false
@@ -243,6 +255,7 @@ class SalaryPage extends React.Component {
                     {
                         console.log("Income with id " + this.state.selectedIncome._id + " updated successfully")
                         this.state.selectedIncome = null
+                        this.calculateAll()
                         this.setState(this.state)
                     }
                     else
@@ -259,8 +272,9 @@ class SalaryPage extends React.Component {
 
                 if(response.result == true)
                 {
-                    this.state.incomes.push(response.data)
+                    this.state.incomes.unshift(response.data)
                     this.state.selectedIncome = null
+                    this.calculateAll()
                     this.setState(this.state)
                 }
             })
@@ -300,6 +314,7 @@ class SalaryPage extends React.Component {
                             )
                             this.state.incomes.splice(rowIndex, 1)
                             this.state.selectedIncome = null
+                            this.calculateAll()
                             this.setState(this.state)
                         }
                     })
@@ -354,6 +369,7 @@ class SalaryPage extends React.Component {
                     {
                         console.log("Expense with id " + this.state.selectedExpense._id + " updated successfully")
                         this.state.selectedExpense = null
+                        this.calculateAll()
                         this.setState(this.state)
                     }
                     else
@@ -370,8 +386,9 @@ class SalaryPage extends React.Component {
 
                 if(response.result == true)
                 {
-                    this.state.expenses.push(response.data)
+                    this.state.expenses.unshift(response.data)
                     this.state.selectedExpense = null
+                    this.calculateAll()
                     this.setState(this.state)
                 }
             })
@@ -418,6 +435,7 @@ class SalaryPage extends React.Component {
                             )
                             this.state.expenses.splice(rowIndex, 1)
                             this.state.selectedExpense = null
+                            this.calculateAll()
                             this.setState(this.state)
                         }
                     })
@@ -445,6 +463,13 @@ class SalaryPage extends React.Component {
         for(var type in this.state.incomeComponentsSum)
         {
             sum += parseFloat(this.state.incomeComponentsSum[type])
+        }
+        for(var index = 0; index < this.state.manualIncomes.length; index++)
+        {
+            if(this.state.incomes[index].type === "ידני")
+            {
+                sum += parseFloat(this.state.incomes[index])
+            }
         }
         return sum.toString()
     }
@@ -530,6 +555,11 @@ class SalaryPage extends React.Component {
                             <div className="agent-salary-page-total-salary-sub-value-box">
                                 <div className="agent-salary-page-total-salary-sub-value-box-title">{strings.manualIncome}</div>
                                 <div className="agent-salary-page-total-salary-sub-value-box-value green"><small>{"₪"}&nbsp;</small><b>{currencyFormattedString(manual.toString())}</b></div>
+                            </div>
+                            <div className="salary-page-expenses-horizontal-divider"/>
+                            <div className="agent-salary-page-total-salary-sub-value-box">
+                                <div className="agent-salary-page-total-salary-sub-value-box-title">{strings.expenses}</div>
+                                <div className="agent-salary-page-total-salary-sub-value-box-value light-orange"><small>{"₪"}&nbsp;</small><b>{currencyFormattedString(this.state.expenseTotal.toString())}</b></div>
                             </div>
                         </div>
                     </div>

@@ -19,7 +19,7 @@ export default class ExpenseModalContent extends React.Component
     }
     componentWillReceiveProps(nextProps)
     {
-        this.state.expense = this.setupIncome(nextProps.expense)
+        this.state.expense = this.setupExpense(nextProps.expense)
         this.setState(this.state)
     }
     setupExpense(expense)
@@ -47,7 +47,11 @@ export default class ExpenseModalContent extends React.Component
         this.state.expense.notes = value
         this.setState(this.state)
     }
-
+    onExpenseRepeatChange(index,value)
+    {
+        this.state.expense.repeat = value
+        this.setState(this.state)
+    }
     onCancel()
     {
         Modal.hide()
@@ -76,6 +80,14 @@ export default class ExpenseModalContent extends React.Component
                 type: 'input',
                 color: 'normal',
                 action: this.onExpenseAmountChange.bind(this),
+            },
+            {
+                title: "מחזוריות",
+                key: "repeat",
+                width: "col-33-33",
+                type: 'input',
+                color: 'normal',
+                action: this.onExpenseRepeatChange.bind(this)
             },
             {
                 title: "הערות",

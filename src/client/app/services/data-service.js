@@ -262,6 +262,33 @@ class DataService {
             });
     }
 
+    loadManualIncomeData(type,id, date)
+    {
+        var url = '/api/v1/agent/'+ id + '/salary/by_company_and_types_summed_manual/' + date
+        if(type === "partnership")
+        {
+            url = '/api/v1/partnership/'+ id + '/salary/by_company_and_types_summed_manual/' + date
+        }
+        return new Promise(function (resolve, reject)
+        {
+            $.ajax(
+                {
+                    url: url,
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: function(result)
+                    {
+                        console.log('load manual incomes data for date '+ date + ' - server responded with success!');
+                        resolve(result.salaries)
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        console.error('load manual incomes data for date '+ date + ' - ', textStatus, errorThrown.toString());
+                        reject(textStatus); // failure
+                    }
+                });
+        });
+    }
     loadIncomeData(type,id, date)
     {
         var url = '/api/v1/agent/'+ id + '/salary/by_company_and_types_summed/' + date
