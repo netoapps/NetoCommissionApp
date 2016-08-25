@@ -12,18 +12,20 @@ class DataStore extends Store {
         this.logger.debug('Initializing DataStore');
         this.initialize('user', {});
 
-        var companies = ["כלל ביטוח","כלל גמל","מגדל","מנורה","אלטשולר שחם","ילין לפידות","מיטב דש","הראל","הפניקס","אנליסט","איי בי איי","אקסלנס","הכשרה"]
-        this.initialize('companies',companies);
+        //var companies = ["כלל ביטוח","כלל גמל","מגדל","מנורה","אלטשולר שחם","ילין לפידות","מיטב דש","הראל","הפניקס","אנליסט","איי בי איי","אקסלנס","הכשרה"]
+        //this.initialize('companies',companies);
+        this.initialize('companies',[]);
 
         //1 - agent number in company
         //2 - portfolio
         //3 - nifraim
         //4 - hekef
         //5 - bonus
-        var commissionType = ["היקף","נפרעים","בונוס"]
-        var extendedCommissionType = ["ידני"]
+        //var commissionType = ["היקף","נפרעים","בונוס"]
+        var extendedCommissionType = ["וולתסטון", "ידני"]
 
-        this.initialize('commissionType',commissionType);
+        //this.initialize('commissionType',commissionType);
+        this.initialize('commissionType',[]);
         this.initialize('extendedCommissionType',extendedCommissionType);
         this.initialize('agents',[]);
         this.initialize('partnerships',[]);
@@ -32,55 +34,39 @@ class DataStore extends Store {
 
     loadData()
     {
-        DataService.loadAgents( (response) => {
-
-            if(response.result == true)
+        var promise = []
+        promise.push(DataService.loadCompanies())
+        promise.push(DataService.loadCommissionTypes())
+        promise.push(DataService.loadAgents())
+        promise.push(DataService.loadPartnerships())
+        promise.push(DataService.loadCommissionFiles())
+        Promise.all(promise).then((function (values)
+        {
+            this.set('companies',values[0],true);
+            this.set('commissionType',values[1],true);
+            var agents = values[2]
+            agents.sort(function (a,b)
             {
-                var agents = response.data
+                if (a.name < b.name)
+                    return -1;
+                if (a.name > b.name)
+                    return 1;
+                return 0;
+            });
+            this.set('agents',agents,true)
+            this.eventbus.emit(ActionType.AGENTS_LOADED)
 
-                agents.sort(function (a,b)
-                {
-                    if (a.name < b.name)
-                        return -1;
-                    if (a.name > b.name)
-                        return 1;
-                    return 0;
-                });
-                this.set('agents',agents,true);
-                this.eventbus.emit(ActionType.AGENTS_LOADED);
-            }
-            else
-            {
-                this.logger.error("Error while loading agents");
-            }
-        })
+            this.set('partnerships',values[3],true)
+            this.eventbus.emit(ActionType.PARTNERSHIPS_LOADED)
 
-        DataService.loadPartnerships( (response) => {
+            this.set('files',values[4],true)
+            this.eventbus.emit(ActionType.COMMISSION_FILES_LOADED)
 
-            if(response.result == true)
-            {
-                this.set('partnerships',response.data,true);
-                this.eventbus.emit(ActionType.PARTNERSHIPS_LOADED);
-            }
-            else
-            {
-                this.logger.error("Error while loading partnerships");
-            }
-
-        })
-
-        DataService.loadCommissionFiles( (response) => {
-
-            if(response.result == true)
-            {
-                this.set('files', response.data,true);
-                this.eventbus.emit(ActionType.COMMISSION_FILES_LOADED);
-            }
-            else
-            {
-                this.logger.error("Error while loading commission files");
-            }
-
+            this.eventbus.emit(ActionType.APP_INIT_COMPLETED)
+        }).bind(this)).catch(function (reason)
+        {
+            //callback(null,null,null,null)
+            console.log("failed to income data - " + reason)
         })
     }
 
@@ -405,7 +391,7 @@ class DataStore extends Store {
         switch (actionType)
         {
             case ActionType.APP_INIT:
-                this.loadData()
+                setTimeout((function(){ this.loadData() }).bind(this), 1000);
                 break;
 
             case ActionType.DELETE_COMMISSION_FILE:

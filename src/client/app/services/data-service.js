@@ -37,6 +37,129 @@ class DataService {
         xhr.send(formData);
     }
 
+    loadCompanies()
+    {
+        return new Promise(function (resolve, reject)
+        {
+            $.ajax(
+                {
+                    url: '/api/v1//constants/companies',
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: function(result)
+                    {
+                        console.log('load companies - server responded with success!');
+                        resolve(result.companies)
+
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        console.error('load companies - ', textStatus, errorThrown.toString());
+                        reject(textStatus); // failure
+                    }.bind(this)
+                });
+        });
+
+
+    }
+    loadCommissionTypes()
+    {
+        return new Promise(function (resolve, reject)
+        {
+            $.ajax(
+                {
+                    url: '/api/v1//constants/commissions',
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: function(result)
+                    {
+                        console.log('load commissionTypes - server responded with success!');
+                        resolve(result.commissionTypes)
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        console.error('load companies - ', textStatus, errorThrown.toString());
+                        reject(textStatus); // failure
+                    }
+                });
+        });
+
+    }
+    loadAgents()
+    {
+        return new Promise(function (resolve, reject)
+        {
+            $.ajax(
+                {
+                    url: '/api/v1/agent',
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: function(result)
+                    {
+                        console.log('load agents - server responded with success!');
+                        resolve(result.agents)
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        console.error('load agents - ', textStatus, errorThrown.toString());
+                        reject(textStatus); // failure
+                    }
+                });
+        });
+    }
+
+    loadPartnerships()
+    {
+        return new Promise(function (resolve, reject)
+        {
+            $.ajax(
+                {
+                    url: '/api/v1/partnership',
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: function(result)
+                    {
+                        console.log('load partnerships - server responded with success!');
+                        resolve(result.agents)
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        console.error('load partnerships - ', textStatus, errorThrown.toString());
+                        reject(textStatus); // failure
+
+                    }
+                });
+        });
+
+    }
+
+    //Commission files
+    loadCommissionFiles()
+    {
+        return new Promise(function (resolve, reject)
+        {
+            $.ajax(
+                {
+                    url: '/api/v1/file',
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: function(result)
+                    {
+                        console.log('load commission files - server responded with success!');
+                        resolve(result.files)
+
+                    }.bind(this),
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        console.error('load commission files - ', textStatus, errorThrown.toString());
+                        reject(textStatus); // failure
+
+                    }.bind(this)
+                });
+        });
+    }
+
+
     //Agents
     getActiveAgentCountForDate(date, callback)
     {
@@ -97,90 +220,6 @@ class DataService {
                             result:false,
                             data: null
                         });
-                }.bind(this)
-            });
-    }
-    loadAgents(callback)
-    {
-        $.ajax(
-            {
-                url: '/api/v1/agent',
-                type: 'GET',
-                contentType: 'application/json',
-                success: function(result)
-                {
-                    console.log('load agents - server responded with success!');
-                     if(callback != null)
-                         callback({
-                             result:true,
-                             data: result.agents
-                         });
-                }.bind(this),
-                error: function(jqXHR, textStatus, errorThrown)
-                {
-                    console.error('load agents - ', textStatus, errorThrown.toString());
-                    if(callback != null)
-                        callback({
-                            result:false,
-                            data: null
-                        });
-                }.bind(this)
-            });
-    }
-
-    loadPartnerships(callback)
-    {
-        $.ajax(
-            {
-                url: '/api/v1/partnership',
-                type: 'GET',
-                contentType: 'application/json',
-                success: function(result)
-                {
-                    console.log('load partnerships - server responded with success!');
-                    if(callback != null)
-                        callback({
-                            result:true,
-                            data: result.partnerships
-                        });
-
-                }.bind(this),
-                error: function(jqXHR, textStatus, errorThrown)
-                {
-                    console.error('load partnerships - ', textStatus, errorThrown.toString());
-                    callback({
-                        result:false,
-                        data: null
-                    });
-                }.bind(this)
-            });
-    }
-
-    //Commission files
-    loadCommissionFiles(callback)
-    {
-        $.ajax(
-            {
-                url: '/api/v1/file',
-                type: 'GET',
-                contentType: 'application/json',
-                success: function(result)
-                {
-                    console.log('load commission files - server responded with success!');
-                    if(callback != null)
-                        callback({
-                            result:true,
-                            data: result.files
-                        });
-
-                }.bind(this),
-                error: function(jqXHR, textStatus, errorThrown)
-                {
-                    console.error('load commission files - ', textStatus, errorThrown.toString());
-                    callback({
-                        result:false,
-                        data: null
-                    });
                 }.bind(this)
             });
     }

@@ -21,6 +21,8 @@ import AppStore from './stores/data-store'
 import AppModal from './views/common/app-modal.jsx';
 import dispatcher from './dispatcher/app-dispatcher.js';
 import {Modal} from './views/common/app-modal.jsx';
+import {ActionType} from './actions/app-actions.js'
+import LoadSpinner from 'react-loader'
 
 dispatcher.registerStore(AppStore);
 AppActions.appInit();
@@ -44,10 +46,13 @@ class App extends React.Component {
         this.state = {
             showModal: false,
             modalContent: null,
-            loginData: AuthService.getLoginData()
+            loginData: AuthService.getLoginData(),
+            dataLoaded: false
         };
         this.appModalShowBinding = null
         this.appModalHideBinding = null
+        this._renderData = this.renderData.bind(this)
+
     }
     componentWillUnmount()
     {
@@ -56,10 +61,19 @@ class App extends React.Component {
     }
     componentDidMount()
     {
+        AppStore.addEventListener(ActionType.AGENTS_LOADED, this._renderData);
+
         //add signal listener
         this.appModalShowBinding = Modal.showWithContentSignal.add(this.showModal.bind(this));
         this.appModalHideBinding = Modal.hideSignal.add(this.hideModal.bind(this));
     }
+
+    renderData()
+    {
+        this.state.dataLoaded = true
+        this.setState(this.state)
+    }
+
     onPanelItemClick(item)
     {
         if(strings.dashboard === item)
@@ -103,7 +117,9 @@ class App extends React.Component {
                 { this.state.showModal ? <AppModal modalContent={this.state.modalContent} /> : null }
                 <TopBar loginData={this.state.loginData}  onLogout={this.onLogout.bind(this)}/>
                 <RightPanel onPanelItemClick={this.onPanelItemClick.bind(this)}/>
-                {this.props.children}
+                <LoadSpinner loadedClassName="load-spinner" top={'50%'} left={'45%'} loaded={this.state.dataLoaded}>
+                    {this.props.children}
+                </LoadSpinner>
             </div>
         );
     }

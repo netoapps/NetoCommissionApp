@@ -6,6 +6,7 @@ import AppDispatcher from '../dispatcher/app-dispatcher.js';
 let ActionType = {
 
     APP_INIT: 'APP_INIT',
+    APP_INIT_COMPLETED: 'APP_INIT_COMPLETED',
 
     USER_LOGGED_IN: 'USER_LOGGED_IN',
     USER_LOGGED_OUT: 'USER_LOGGED_OUT',
