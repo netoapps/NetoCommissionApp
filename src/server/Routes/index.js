@@ -39,7 +39,9 @@ module.exports.registerRoutes = function(app){
     apiRouter.get('/agent/:idNumber/salary/bytypes_summed/:paymentDate',salaries.getAllAgentSalariesByTypesForDateSummed);
     apiRouter.get('/partnership/:pid/salary/bytypes_summed/:paymentDate',salaries.getAllPartnershipSalariesByTypesForDateSummed);
     apiRouter.get('/agent/:idNumber/salary/by_company_and_types_summed/:paymentDate',salaries.getAgentIdSalariesByCompanyAndTypesForDateSummed);
+    apiRouter.get('/agent/:idNumber/salary/by_company_and_types_summed_manual/:paymentDate',salaries.getAgentIdSalariesByCompanyAndTypesForDateSummedManual);
     apiRouter.get('/partnership/:pid/salary/by_company_and_types_summed/:paymentDate',salaries.getPartnershipIdSalariesByCompanyAndTypesForDateSummed);
+    apiRouter.get('/partnership/:pid/salary/by_company_and_types_summed_manual/:paymentDate',salaries.getPartnershipIdSalariesByCompanyAndTypesForDateSummedManual);
 
     apiRouter.get('/agent/:idNumber/salary/:startDate/:endDate', salaries.getSalariesForAgentByDate);
     apiRouter.post('/agent/:idNumber/salary', salaries.addAgentSalary);
