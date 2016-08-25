@@ -30,7 +30,7 @@ function SalaryService() {
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     this.addAgentSalary = function (idNumber, agentInCompanyId, paymentDate, amount, type, company, notes) {
         return new Promise(function (resolve, reject) {
-            addSalary(idNumber, agentInCompanyId, paymentDate, amount, amount, 0, type, company, 0, null, notes, 'agent', function (err, salary) {
+            addSalary(idNumber, agentInCompanyId, paymentDate, amount, amount, 0, type, company, 0, null, notes, 'agent',null, function (err, salary) {
                 if (err) {
                     return reject(err);
                 }
