@@ -26,82 +26,90 @@ function currencyFormattedString(stringFloatValue)
 var companies = AppStore.getCompanies()
 var commissionTypes = AppStore.getCommissionTypes().concat(AppStore.getExtendedCommissionTypes())
 var expenseTypes = ["שכר","החזר הלוואות","הוצאות משרד","מקדמה","שונות"]
-var incomesColumns = [
-    {
-        title: "חברה",
-        key: "company",
-        width: "col-33-33",
-        type: 'read-only',
-        color: 'normal'
-    },
-    {
-        title: "מספר סוכן",
-        key: "agentInCompanyId",
-        width: "col-33-33",
-        type: 'read-only',
-        color: 'normal'
-    },
-    {
-        title: "סוג תשלום",
-        key: "type",
-        width: "col-33-33",
-        type: 'read-only',
-        color: 'normal'
-    },
-    {
-        title: "סה״כ תשלום",
-        key: "calculatedAmount",
-        width: "col-33-33",
-        type: 'read-only',
-        format: "currency",
-        color: 'normal'
-    },
-    {
-        title: "גודל תיק",
-        key: "portfolio",
-        width: "col-33-33",
-        type: 'read-only',
-        format: "currency",
-        color: 'normal'
-    },
-    {
-        title: "הערות",
-        key: "notes",
-        width: "col-66-66",
-        type: 'read-only',
-        color: 'normal'
-    }
-]
-
-var expensesColumns = [
-    {
-        title: "סוג הוצאה",
-        key: "type",
-        width: "col-33-33",
-        type: 'read-only',
-        color: 'normal'
-    },
-    {
-        title: "סה״כ",
-        key: "amount",
-        width: "col-33-33",
-        type: 'read-only',
-        format: "currency",
-        color: 'normal'
-    },
-    {
-        title: "הערות",
-        key: "notes",
-        width: "col-33-33",
-        type: 'read-only',
-        color: 'normal'
-    }
-]
 
 class SalaryPage extends React.Component {
 
     constructor(props) {
         super(props);
+
+        var incomesColumns = [
+            {
+                title: "חברה",
+                key: "company",
+                width: "col-33-33",
+                type: 'read-only',
+                color: 'normal'
+            },
+            {
+                title: "מספר סוכן",
+                key: "agentInCompanyId",
+                width: "col-33-33",
+                type: 'read-only',
+                color: 'normal'
+            },
+            // {
+            //     title: "שותפות",
+            //     key: "agentInCompanyId",
+            //     width: "col-33-33",
+            //     type: 'read-only',
+            //     color: 'normal'
+            // },
+            {
+                title: "סוג תשלום",
+                key: "type",
+                width: "col-33-33",
+                type: 'read-only',
+                color: 'normal'
+            },
+            {
+                title: "סה״כ תשלום",
+                key: "calculatedAmount",
+                width: "col-33-33",
+                type: 'read-only',
+                format: "currency",
+                color: 'normal'
+            },
+            {
+                title: "גודל תיק",
+                key: "portfolio",
+                width: "col-33-33",
+                type: 'read-only',
+                format: "currency",
+                color: 'normal'
+            },
+            {
+                title: "הערות",
+                key: "notes",
+                width: "col-66-66",
+                type: 'read-only',
+                color: 'normal'
+            }
+        ]
+
+        var expensesColumns = [
+            {
+                title: "סוג הוצאה",
+                key: "type",
+                width: "col-33-33",
+                type: 'read-only',
+                color: 'normal'
+            },
+            {
+                title: "סה״כ",
+                key: "amount",
+                width: "col-33-33",
+                type: 'read-only',
+                format: "currency",
+                color: 'normal'
+            },
+            {
+                title: "הערות",
+                key: "notes",
+                width: "col-33-33",
+                type: 'read-only',
+                color: 'normal'
+            }
+        ]
 
         var date = new Date()
         var currentMonth = getMonthName(date.getMonth().toString());
@@ -113,6 +121,8 @@ class SalaryPage extends React.Component {
         {
             incomeComponentsSum[commissionTypes[type]] = 0
         }
+        this.incomesColumns = incomesColumns
+        this.expensesColumns = expensesColumns
 
         this.state = {
             date: monthStartDate,
@@ -500,11 +510,11 @@ class SalaryPage extends React.Component {
             salary[commissionTypes[type]] = this.state.incomeComponentsSum[commissionTypes[type]]
         }
         var incomes = {
-            columns: incomesColumns,
+            columns: this.incomesColumns,
             data: this.state.incomes
         }
         var expenses = {
-            columns: expensesColumns,
+            columns: this.expensesColumns,
             data: this.state.expenses
         }
         var fullName = this.state.context.fullName
@@ -519,6 +529,7 @@ class SalaryPage extends React.Component {
         var manual = this.sumOfIncomeWithType("ידני")
         var fullName = this.state.context.fullName
         var salaryColor = this.state.salary >= 0 ? " green":" red"
+        var expensesColor = this.state.expenseTotal > 0 ? " red":" gray"
 
 
         return (
@@ -562,7 +573,7 @@ class SalaryPage extends React.Component {
                             <div className="salary-page-expenses-horizontal-divider"/>
                             <div className="agent-salary-page-total-salary-sub-value-box">
                                 <div className="agent-salary-page-total-salary-sub-value-box-title">{strings.expenses}</div>
-                                <div className="agent-salary-page-total-salary-sub-value-box-value red"><small>{"₪"}&nbsp;</small><b>{currencyFormattedString(this.state.expenseTotal.toString())}</b></div>
+                                <div className={"agent-salary-page-total-salary-sub-value-box-value " + expensesColor}><small>{"₪"}&nbsp;</small><b>{currencyFormattedString(this.state.expenseTotal.toString())}</b></div>
                             </div>
                         </div>
                     </div>
@@ -586,7 +597,7 @@ class SalaryPage extends React.Component {
                     <div className="agent-salary-page-income-table">
                         <Table onRowClick={this.onIncomeRowClick.bind(this)}
                                onRemoveRow={this.onDeleteIncome.bind(this)}
-                               columns={incomesColumns}
+                               columns={this.incomesColumns}
                                data={this.state.incomes}
                                isEditableRow={this.isEditableRow.bind(this)}/>
                     </div>
@@ -600,7 +611,7 @@ class SalaryPage extends React.Component {
                     <div className="agent-salary-page-expense-table">
                         <Table onRowClick={this.onExpenseRowClick.bind(this)}
                                onRemoveRow={this.onDeleteExpense.bind(this)}
-                               columns={expensesColumns}
+                               columns={this.expensesColumns}
                                data={this.state.expenses}/>
                     </div>
                 </div>
