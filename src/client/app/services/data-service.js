@@ -21,7 +21,8 @@ class DataService {
                    callback(
                         {
                             result: true,
-                            headers: response.headers
+                            headers: response.headers,
+                            dataRowNumber: response.dataRowNumber
                         })
             }
             else
@@ -29,9 +30,7 @@ class DataService {
                 console.log(xhr.response);
                 if(callback != null)
                     callback({
-                        result: false,
-                        errCode: response.errCode,
-                        errData: response.errData
+                        result: false
                     })
             }
         }.bind(this);

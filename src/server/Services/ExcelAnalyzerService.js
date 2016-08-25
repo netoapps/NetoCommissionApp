@@ -76,7 +76,8 @@ function ExcelAnalyzerService() {
 
         //var salaries = xlsx.utils.sheet_to_json(sheet, {range: headersRow-1});
         if(headersRow!==-1) {
-            return cb(null, {headers: headers});
+            return cb(null, {headers: headers,
+                             dataRowNumber:headersRow});
         }else{
             return cb('could not find headers');
         }

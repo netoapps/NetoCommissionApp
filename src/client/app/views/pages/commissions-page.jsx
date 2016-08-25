@@ -340,12 +340,17 @@ class FileBin extends React.Component {
         this.state.draggedFile = files[0]
         this.state.commissionFile.name = files[0].name
         this.state.commissionFile.uploadDate = new Date();
+        this.state.dataLoaded = false;
         this.setState(this.state)
 
         DataService.parseExcelColumns(this.state.draggedFile,(response) => {
 
+            this.state.dataLoaded = true;
+            this.setState(this.state)
+
             if(response.result)
             {
+                this.state.commissionFile.dataRowNumber = response.dataRowNumber
                 Modal.showWithContent(<ColumnSelectModalContent columns={response.headers} onSave={this.onSaveColumnSettings.bind(this)} onCancel={this.onCancelColumnSettings.bind(this)}/>)
             }
             else
@@ -433,10 +438,8 @@ class FileBin extends React.Component {
         {
             return
         }
-
         this.state.dataLoaded = false
         this.setState(this.state);
-
         this.state.commissionFile.columnSettings = this.state.columnSettings
         AppActions.uploadCommissionFile(this.state.commissionFile,this.state.draggedFile, function (response) {
            if(response.result)

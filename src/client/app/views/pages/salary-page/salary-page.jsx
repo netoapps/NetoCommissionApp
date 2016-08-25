@@ -518,6 +518,8 @@ class SalaryPage extends React.Component {
         var heikef = this.sumOfIncomeWithType("היקף")
         var manual = this.sumOfIncomeWithType("ידני")
         var fullName = this.state.context.fullName
+        var salaryColor = this.state.salary >= 0 ? " green":" red"
+
 
         return (
             <div className="agent-salary-page animated fadeIn">
@@ -539,7 +541,7 @@ class SalaryPage extends React.Component {
                 <div className="hcontainer-no-wrap">
                     <div className="agent-salary-page-total-salary-box shadow">
                         <div className="agent-salary-page-box-title">{strings.totalSalary}</div>
-                        <div className="agent-salary-page-box-value green"><small>{"₪"}&nbsp;</small><b>{currencyFormattedString(this.state.salary.toString())}</b></div>
+                        <div className={"agent-salary-page-box-value" + salaryColor}><small>{"₪"}&nbsp;</small><b>{currencyFormattedString(this.state.salary.toString())}</b></div>
                         <div className="hcontainer-no-wrap">
                             <div className="agent-salary-page-total-salary-sub-value-box">
                                 <div className="agent-salary-page-total-salary-sub-value-box-title">{strings.nifraim}</div>
@@ -560,7 +562,7 @@ class SalaryPage extends React.Component {
                             <div className="salary-page-expenses-horizontal-divider"/>
                             <div className="agent-salary-page-total-salary-sub-value-box">
                                 <div className="agent-salary-page-total-salary-sub-value-box-title">{strings.expenses}</div>
-                                <div className="agent-salary-page-total-salary-sub-value-box-value light-orange"><small>{"₪"}&nbsp;</small><b>{currencyFormattedString(this.state.expenseTotal.toString())}</b></div>
+                                <div className="agent-salary-page-total-salary-sub-value-box-value red"><small>{"₪"}&nbsp;</small><b>{currencyFormattedString(this.state.expenseTotal.toString())}</b></div>
                             </div>
                         </div>
                     </div>

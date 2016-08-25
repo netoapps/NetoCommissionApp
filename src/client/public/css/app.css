@@ -211,16 +211,16 @@ body
 }
 
 
-.light-orange
+.red
 {
     color: #8e2113;
 }
 
 
-.red
-{
-    color: #d03007;
-}
+/*.red*/
+/*{*/
+    /*color: #d03007;*/
+/*}*/
 
 .fixed
 {
