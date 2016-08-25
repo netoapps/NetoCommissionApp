@@ -410,7 +410,7 @@ function SalaryService() {
     this.getSalariesByCompanyAndTypesForDateSummed = function (id, date, owner) {
         return new Promise(function (resolve, reject) {
             date = new Date(date);
-            Salary.find({paymentDate: date, idNumber: id, owner:owner, type:{'$ne':'ידני'}}).lean().exec(function (err, data) {
+            Salary.find({paymentDate: date, idNumber: id, owner:owner, fileId:{'$ne':null}}).lean().exec(function (err, data) {
                 data = _.groupBy(data, function (sal) {
                     return sal.company + '#' + sal.agentInCompanyId + '#' + sal.type + '#' + sal.idNumber;
                 })
@@ -452,7 +452,7 @@ function SalaryService() {
     this.getSalariesByCompanyAndTypesForDateSummedManual = function (id, date, owner) {
         return new Promise(function (resolve, reject) {
             date = new Date(date);
-            Salary.find({paymentDate: date, idNumber: id, owner:owner, type:'ידני'}).lean().exec(function (err, data) {
+            Salary.find({paymentDate: date, idNumber: id, owner:owner, fileId:null}).lean().exec(function (err, data) {
                 if(err){
                     return reject(err);
                 }
