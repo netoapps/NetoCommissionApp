@@ -147,7 +147,7 @@ class SalaryPage extends React.Component {
         this.reloadData((incomes,manualIncomes, expenses, portfolio,incomeComponentsSum) => {
 
             this.state.incomes = incomes
-            for(var index = 0; index < manualIncomes; index++)
+            for(var index = 0; index < manualIncomes.length; index++)
             {
                 this.state.incomes.push(manualIncomes[index])
             }
@@ -455,18 +455,6 @@ class SalaryPage extends React.Component {
     }
     sumOfIncomeWithType(type)
     {
-        if(type === "ידני")
-        {
-            var sum = 0
-            for(var index = 0; index < this.state.incomes.length; index++)
-            {
-                if(this.state.incomes[index].fileId == null )
-                {
-                    sum += parseFloat(this.state.incomes[index])
-                }
-            }
-            return sum
-        }
         return this.state.incomeComponentsSum[type]
     }
 
