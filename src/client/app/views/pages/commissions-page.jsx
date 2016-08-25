@@ -342,12 +342,11 @@ class FileBin extends React.Component {
         this.state.commissionFile.uploadDate = new Date();
         this.setState(this.state)
 
-        ExcelService.parseCommissionFileColumns(this.state.draggedFile, ((result) => {
+        DataService.parseExcelColumns(this.state.draggedFile,(response) => {
 
-            if(result.success)
+            if(response.result)
             {
-                this.state.commissionFile.dataRowNumber = result.dataRowNumber
-                Modal.showWithContent(<ColumnSelectModalContent columns={result.columns} onSave={this.onSaveColumnSettings.bind(this)} onCancel={this.onCancelColumnSettings.bind(this)}/>)
+                Modal.showWithContent(<ColumnSelectModalContent columns={response.headers} onSave={this.onSaveColumnSettings.bind(this)} onCancel={this.onCancelColumnSettings.bind(this)}/>)
             }
             else
             {
@@ -363,7 +362,7 @@ class FileBin extends React.Component {
                 });
                 this.reset()
             }
-        }).bind(this))
+        })
     }
     isValidInput()
     {
@@ -705,7 +704,7 @@ class Commissions extends React.Component {
                         }
                     }
 
-                    data.push({companyName: item.company,
+                    data.unshift({companyName: item.company,
                         paymentType: item.type,
                         agentNumber: item.agentInCompanyId,
                         agentName: name,

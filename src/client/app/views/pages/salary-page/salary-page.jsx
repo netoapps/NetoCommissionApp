@@ -465,13 +465,13 @@ class SalaryPage extends React.Component {
         {
             sum += parseFloat(this.state.incomeComponentsSum[type])
         }
-        for(var index = 0; index < this.state.incomes.length; index++)
-        {
-            if(this.state.incomes[index].fileId == null )
-            {
-                sum += parseFloat(this.state.incomes[index])
-            }
-        }
+        // for(var index = 0; index < this.state.incomes.length; index++)
+        // {
+        //     if(this.state.incomes[index].fileId == null )
+        //     {
+        //         sum += parseFloat(this.state.incomes[index].amount)
+        //     }
+        // }
         return sum.toString()
     }
 

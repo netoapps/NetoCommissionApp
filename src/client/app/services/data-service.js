@@ -4,6 +4,40 @@
 
 class DataService {
 
+    parseExcelColumns(draggedFile,callback)
+    {
+        var formData = new FormData();
+        formData.append('file', draggedFile);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/api/v1/excel_columns');
+
+        xhr.onload = function ()
+        {
+            var response = JSON.parse(xhr.response)
+            if (xhr.status === 200)
+            {
+                console.log('all done: ' + xhr.status);
+                if(callback != null)
+                   callback(
+                        {
+                            result: true,
+                            headers: response.headers
+                        })
+            }
+            else
+            {
+                console.log(xhr.response);
+                if(callback != null)
+                    callback({
+                        result: false,
+                        errCode: response.errCode,
+                        errData: response.errData
+                    })
+            }
+        }.bind(this);
+        xhr.send(formData);
+    }
+
     //Agents
     getActiveAgentCountForDate(date, callback)
     {
