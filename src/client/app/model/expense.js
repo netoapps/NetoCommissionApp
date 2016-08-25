@@ -17,6 +17,7 @@ export default class Expense
             this.amount = 0
             this.expenseDate = 0
             this.notes = ""
+            this.repeat = 1
         }
     }
     copyFrom(expense)

@@ -170,6 +170,8 @@ body
     height: 30px;
     width: 100%;
 }
+
+
 .fixed-size-button
 {
     min-width: 110px;  !important;
@@ -208,6 +210,11 @@ body
     color: #4286b4;
 }
 
+
+.light-orange
+{
+    color: #8e2113;
+}
 
 
 .red
@@ -1526,6 +1533,15 @@ body
     /*max-height: calc(100% - 110px);*/
     /*padding-left: 10px;*/
 }
+
+.salary-page-expenses-horizontal-divider
+{
+    margin-top: 20px;
+    height: 40px;
+    width: 1px;
+    background-color: lightgray;
+}
+
 
 .agent-salary-page-name-box
 {
