@@ -353,7 +353,7 @@ function SalaryService() {
                         'נפרעים': {$sum: {$cond: [{$eq: ['$type', 'נפרעים']}, '$calculatedAmount', 0]}},
                         'בונוס': {$sum: {$cond: [{$eq: ['$type', 'בונוס']}, '$calculatedAmount', 0]}},
                         'היקף': {$sum: {$cond: [{$eq: ['$type', 'היקף']}, '$calculatedAmount', 0]}},
-                        'ידני': {$sum: {$cond: [{$eq: ['$type', 'ידני']}, '$calculatedAmount', 0]}}
+                        'ידני': {$sum: {$cond: [{$eq: ['$fileId', null]}, '$calculatedAmount', 0]}}
                     }
                 }
             ], function (err, data) {
