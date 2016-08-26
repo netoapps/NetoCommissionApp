@@ -75,7 +75,7 @@ export default class IncomeModalContent extends React.Component
             {
                 title: "חברה",
                 key: "company",
-                width: "col-33-33",
+                width: "20%",
                 type: 'select',
                 color: 'normal',
                 action: this.onIncomeCompanyChange.bind(this),
@@ -84,7 +84,7 @@ export default class IncomeModalContent extends React.Component
             {
                 title: "מספר סוכן",
                 key: "agentInCompanyId",
-                width: "col-33-33",
+                width: "10%",
                 type: 'input',
                 color: 'normal',
                 action: this.onIncomeAgentNumberChange.bind(this)
@@ -92,7 +92,7 @@ export default class IncomeModalContent extends React.Component
             {
                 title: "סוג תשלום",
                 key: "type",
-                width: "col-33-33",
+                width: "15%",
                 type: 'select',
                 color: 'normal',
                 action: this.onIncomeCommissionTypeChange.bind(this),
@@ -101,7 +101,7 @@ export default class IncomeModalContent extends React.Component
             {
                 title: "סה״כ תשלום",
                 key: "amount",
-                width: "col-33-33",
+                width: "10%",
                 type: 'input',
                 color: 'normal',
                 action: this.onIncomeCommissionAmountChange.bind(this),
@@ -109,7 +109,7 @@ export default class IncomeModalContent extends React.Component
             {
                 title: "מחזוריות",
                 key: "repeat",
-                width: "col-33-33",
+                width: "10%",
                 type: 'input',
                 color: 'normal',
                 action: this.onIncomeRepeatChange.bind(this)
@@ -117,7 +117,7 @@ export default class IncomeModalContent extends React.Component
             {
                 title: "הערות",
                 key: "notes",
-                width: "col-66-66",
+                width: "35%",
                 type: 'input',
                 color: 'normal',
                 action: this.onIncomeNoteChange.bind(this)

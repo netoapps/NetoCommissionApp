@@ -19,7 +19,7 @@ export default class Income
             this.amount = 0
             this.paymentDate = ""
             this.repeat = 1
-            this.notes = "הוכנס ידנית"
+            this.notes = ""
         }
     }
     copyFrom(income)

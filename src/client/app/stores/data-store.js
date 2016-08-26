@@ -42,8 +42,19 @@ class DataStore extends Store {
         promise.push(DataService.loadCommissionFiles())
         Promise.all(promise).then((function (values)
         {
-            this.set('companies',values[0],true);
+            var companies = values[0]
+            companies.sort(function (a,b)
+            {
+                if (a < b)
+                    return -1;
+                if (a > b)
+                    return 1;
+                return 0;
+            });
+            this.set('companies',companies,true);
+
             this.set('commissionType',values[1],true);
+
             var agents = values[2]
             agents.sort(function (a,b)
             {
@@ -65,8 +76,7 @@ class DataStore extends Store {
             this.eventbus.emit(ActionType.APP_INIT_COMPLETED)
         }).bind(this)).catch(function (reason)
         {
-            //callback(null,null,null,null)
-            console.log("failed to income data - " + reason)
+            console.log("failed to load init data - " + reason)
         })
     }
 

@@ -23,48 +23,50 @@ function currencyFormattedString(stringFloatValue)
     return value
 }
 
-var companies = AppStore.getCompanies()
-var commissionTypes = AppStore.getCommissionTypes().concat(AppStore.getExtendedCommissionTypes())
-var expenseTypes = ["שכר","החזר הלוואות","הוצאות משרד","מקדמה","שונות"]
 
 class SalaryPage extends React.Component {
 
     constructor(props) {
         super(props);
 
+        this.companies = AppStore.getCompanies().concat("")
+        this.commissionTypes = AppStore.getCommissionTypes().concat(AppStore.getExtendedCommissionTypes()).concat("")
+        this.expenseTypes = ["שכר","החזר הלוואות","הוצאות משרד","מקדמה","שונות", ""]
+
         var incomesColumns = [
             {
                 title: "חברה",
                 key: "company",
-                width: "col-33-33",
+                width: "18%",
                 type: 'read-only',
                 color: 'normal'
             },
             {
                 title: "מספר סוכן",
                 key: "agentInCompanyId",
-                width: "col-33-33",
+                width: "10%",
                 type: 'read-only',
                 color: 'normal'
             },
-            // {
-            //     title: "שותפות",
-            //     key: "agentInCompanyId",
-            //     width: "col-33-33",
-            //     type: 'read-only',
-            //     color: 'normal'
-            // },
+            {
+                title: "מקור",
+                key: "",
+                width: "20%",
+                type: 'read-only-request',
+                color: 'normal',
+                requestCellData: this.onRequestIncomeCellData.bind(this)
+            },
             {
                 title: "סוג תשלום",
                 key: "type",
-                width: "col-33-33",
+                width: "10%",
                 type: 'read-only',
                 color: 'normal'
             },
             {
                 title: "סה״כ תשלום",
                 key: "calculatedAmount",
-                width: "col-33-33",
+                width: "10%",
                 type: 'read-only',
                 format: "currency",
                 color: 'normal'
@@ -72,7 +74,7 @@ class SalaryPage extends React.Component {
             {
                 title: "גודל תיק",
                 key: "portfolio",
-                width: "col-33-33",
+                width: "15%",
                 type: 'read-only',
                 format: "currency",
                 color: 'normal'
@@ -80,7 +82,7 @@ class SalaryPage extends React.Component {
             {
                 title: "הערות",
                 key: "notes",
-                width: "col-66-66",
+                width: "17%",
                 type: 'read-only',
                 color: 'normal'
             }
@@ -90,14 +92,14 @@ class SalaryPage extends React.Component {
             {
                 title: "סוג הוצאה",
                 key: "type",
-                width: "col-33-33",
+                width: "33%",
                 type: 'read-only',
                 color: 'normal'
             },
             {
                 title: "סה״כ",
                 key: "amount",
-                width: "col-33-33",
+                width: "33%",
                 type: 'read-only',
                 format: "currency",
                 color: 'normal'
@@ -105,7 +107,7 @@ class SalaryPage extends React.Component {
             {
                 title: "הערות",
                 key: "notes",
-                width: "col-33-33",
+                width: "33%",
                 type: 'read-only',
                 color: 'normal'
             }
@@ -117,10 +119,10 @@ class SalaryPage extends React.Component {
         var monthStartDate = new Date(date.getFullYear(), date.getMonth(), 1, 0, 0, 0, 0);
         var incomeComponentsSum = {}
 
-        for(var type = 0; type < commissionTypes.length; type++)
-        {
-            incomeComponentsSum[commissionTypes[type]] = 0
-        }
+        // for(var type = 0; type < this.commissionTypes.length; type++)
+        // {
+        //     incomeComponentsSum[this.commissionTypes[type]] = 0
+        // }
         this.incomesColumns = incomesColumns
         this.expensesColumns = expensesColumns
 
@@ -133,9 +135,9 @@ class SalaryPage extends React.Component {
             incomeComponentsSum: incomeComponentsSum,
             incomeTotal: 0,
             expenseTotal: 0,
+            agencyAmountTotal: 0,
             salary: 0,
             portfolio: 0,
-            agencyAmount: 0,
             newIncomeVisible: false,
             selectedIncome: null,
             selectedExpense: null,
@@ -151,15 +153,62 @@ class SalaryPage extends React.Component {
     {
 
     }
+    onRequestIncomeCellData(rowIndex, title)
+    {
+        var cellData = ""
+        var income = this.state.incomes[rowIndex]
+        if(title === "מקור")
+        {
+            if(income.partnershipSalaryId != null)
+            {
+                cellData = "שותפות"
+                // var partnership = AppStore.getPartnership(income.partnershipSalaryId)
+                // if(partnership != null)
+                // {
+                //     for(var idIndex = 0; idIndex < partnership.agentsDetails.length ; idIndex++)
+                //     {
+                //         var agentData = AppStore.getAgent(partnership.agentsDetails[idIndex].idNumber)
+                //         if(agentData != null)
+                //         {
+                //             cellData += agentData.name + " " + agentData.familyName
+                //             if(idIndex < (partnership.agentsDetails.length-1))
+                //             {
+                //                 cellData += ", "
+                //             }
+                //         }
+                //     }
+                // }
+            }
+            else
+            {
+                cellData = this.state.context.fullName
+            }
+        }
+        return cellData
+    }
+    reloadSalaryComponentsDataWithDate(date)
+    {
+        var promise = []
+        promise.push(DataService.loadIncomeComponentsSumData(this.state.context.type,this.state.context.id,date))
+        Promise.all(promise).then((function (values)
+        {
+            this.state.incomeComponentsSum = values[0]
+            this.calculateAll()
+            this.setState(this.state)
+
+        }).bind(this)).catch(function (reason)
+        {
+            console.log("failed to load salary components data - " + reason)
+        })
+    }
     reloadDataWithDate(date)
     {
-        this.state.date = date
-        this.reloadData((incomes,manualIncomes, expenses, portfolio,incomeComponentsSum) => {
+        this.reloadData(date,(incomes,manualIncomes, expenses, portfolio,incomeComponentsSum) => {
 
             this.state.incomes = incomes
             for(var index = 0; index < manualIncomes.length; index++)
             {
-                this.state.incomes.push(manualIncomes[index])
+                this.state.incomes.unshift(manualIncomes[index])
             }
             this.state.expenses = expenses
             this.state.portfolio = portfolio
@@ -170,14 +219,13 @@ class SalaryPage extends React.Component {
     }
     calculateAll()
     {
-        this.state.agencyAmount = this.calculateAgencyAmount()
-        this.state.incomeTotal = this.sumOfAllIncomes()
-        this.state.expenseTotal = this.sumOfAllExpenses()
+        this.state.agencyAmountTotal = this.agencyAmountTotal()
+        this.state.incomeTotal = this.incomesTotal()
+        this.state.expenseTotal = this.expensesTotal()
         this.state.salary = this.state.incomeTotal - this.state.expenseTotal
     }
-    reloadData(callback)
+    reloadData(date,callback)
     {
-        var date = this.state.date
         var promise = []
         promise.push(DataService.loadIncomeData(this.state.context.type,this.state.context.id,date))
         promise.push(DataService.loadManualIncomeData(this.state.context.type,this.state.context.id,date))
@@ -215,8 +263,8 @@ class SalaryPage extends React.Component {
     //Manual income
     openIncomeModal(income, index)
     {
-        var incomeModalContent =  <IncomeModalContent companies={companies}
-                                                      commissionTypes={commissionTypes}
+        var incomeModalContent =  <IncomeModalContent companies={this.companies}
+                                                      commissionTypes={this.commissionTypes}
                                                       income={income}
                                                       incomeIndex={index}
                                                       onSaveIncome={this.onSaveIncome.bind(this)}/>
@@ -225,8 +273,8 @@ class SalaryPage extends React.Component {
     onNewIncome()
     {
         var income = new Income()
-        income.company = companies[0]
-        income.type = commissionTypes[0]
+        // income.company = this.companies[0]
+        // income.type = this.commissionTypes[0]
         this.openIncomeModal(income,-1)
     }
 
@@ -265,8 +313,7 @@ class SalaryPage extends React.Component {
                     {
                         console.log("Income with id " + this.state.selectedIncome._id + " updated successfully")
                         this.state.selectedIncome = null
-                        this.calculateAll()
-                        this.setState(this.state)
+                        this.reloadSalaryComponentsDataWithDate(this.state.date)
                     }
                     else
                     {
@@ -284,8 +331,7 @@ class SalaryPage extends React.Component {
                 {
                     this.state.incomes.unshift(response.data)
                     this.state.selectedIncome = null
-                    this.calculateAll()
-                    this.setState(this.state)
+                    this.reloadSalaryComponentsDataWithDate(this.state.date)
                 }
             })
 
@@ -324,8 +370,7 @@ class SalaryPage extends React.Component {
                             )
                             this.state.incomes.splice(rowIndex, 1)
                             this.state.selectedIncome = null
-                            this.calculateAll()
-                            this.setState(this.state)
+                            this.reloadSalaryComponentsDataWithDate(this.state.date)
                         }
                     })
                 }
@@ -336,8 +381,8 @@ class SalaryPage extends React.Component {
     //Manual income
     openExpenseModal(expense, index)
     {
-        var expenseModalContent =  <ExpenseModalContent companies={companies}
-                                                        expenseTypes={expenseTypes}
+        var expenseModalContent =  <ExpenseModalContent companies={this.companies}
+                                                        expenseTypes={this.expenseTypes}
                                                         expense={expense}
                                                         expenseIndex={index}
                                                         onSaveExpense={this.onSaveExpense.bind(this)}/>
@@ -349,7 +394,7 @@ class SalaryPage extends React.Component {
     {
         var expense = new Expense()
         expense.expenseDate = this.state.date
-        expense.type = expenseTypes[0]
+        // expense.type = expenseTypes[0]
         this.openExpenseModal(expense,-1)
     }
 
@@ -453,7 +498,7 @@ class SalaryPage extends React.Component {
             }.bind(this));
 
     }
-    calculateAgencyAmount()
+    agencyAmountTotal()
     {
         var sum = 0
         for(var index = 0; index < this.state.incomes.length; index++)
@@ -472,7 +517,7 @@ class SalaryPage extends React.Component {
         return 0
     }
 
-    sumOfAllIncomes()
+    incomesTotal()
     {
         var sum = 0
         for(var type in this.state.incomeComponentsSum)
@@ -489,7 +534,7 @@ class SalaryPage extends React.Component {
         return sum.toString()
     }
 
-    sumOfAllExpenses()
+    expensesTotal()
     {
         var sum = 0
         for(var index = 0; index < this.state.expenses.length; index++)
@@ -509,9 +554,9 @@ class SalaryPage extends React.Component {
         {
             "שכר": this.state.salary,
         }
-        for(var type = 0; type < commissionTypes.length; type++)
+        for(var type = 0; type < this.commissionTypes.length; type++)
         {
-            salary[commissionTypes[type]] = this.state.incomeComponentsSum[commissionTypes[type]]
+            salary[this.commissionTypes[type]] = this.state.incomeComponentsSum[this.commissionTypes[type]]
         }
         var incomes = {
             columns: this.incomesColumns,
@@ -523,7 +568,7 @@ class SalaryPage extends React.Component {
         }
         var fullName = this.state.context.fullName
         ExcelService.generateSalaryReport(fullName,
-            this.state.date,salary,this.state.agencyAmount,this.state.portfolio,incomes,expenses)
+            this.state.date,salary,this.state.agencyAmountTotal,this.state.portfolio,incomes,expenses)
     }
     render () {
 
@@ -589,7 +634,7 @@ class SalaryPage extends React.Component {
                     <div className="horizontal-spacer-20"/>
                     <div className="agent-salary-page-company-part-box shadow">
                         <div className="agent-salary-page-box-title">{strings.comapnyPart}</div>
-                        <div className="agent-salary-page-box-value green"><small>{"₪"}&nbsp;</small><b>{currencyFormattedString(this.state.agencyAmount.toString())}</b></div>
+                        <div className="agent-salary-page-box-value green"><small>{"₪"}&nbsp;</small><b>{currencyFormattedString(this.state.agencyAmountTotal.toString())}</b></div>
                     </div>
                 </div>
 

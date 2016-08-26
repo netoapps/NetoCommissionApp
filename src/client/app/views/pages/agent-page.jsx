@@ -9,15 +9,15 @@ import DropdownItem from 'muicss/lib/react/dropdown-item';
 import { strings } from '../../constants/strings'
 import Button from 'muicss/lib/react/button'
 import {Agent,AgentPaymentDetails} from '../../model/agent.js';
-var companies = AppStore.getCompanies().concat("")
-var commissionTypes = AppStore.getCommissionTypes().concat("")
-
 
 
 class AgentPage extends React.Component {
 
     constructor(props) {
         super(props);
+
+        this.companies = AppStore.getCompanies().concat("")
+        this.commissionTypes = AppStore.getCommissionTypes().concat("")
 
         var agent = null
         var isNewAgent = true
@@ -282,16 +282,16 @@ class AgentPage extends React.Component {
             {
                 title: "חברה",
                 key: "companyName",
-                width: "col-33-33",
+                width: "33%",
                 type: 'select',
                 color: 'normal',
                 action: this.onSelectCompany.bind(this),
-                options: companies
+                options: this.companies
             },
             {
                 title: "מספר סוכן",
                 key: "agentNumber",
-                width: "col-33-33",
+                width: "33%",
                 type: 'input',
                 color: 'normal',
                 action: this.onAgentNumberChange.bind(this)
@@ -299,16 +299,16 @@ class AgentPage extends React.Component {
             {
                 title: "סוג תשלום",
                 key: "paymentType",
-                width: "col-33-33",
+                width: "33%",
                 type: 'select',
                 color: 'normal',
                 action: this.onSelectPaymentType.bind(this),
-                options: commissionTypes
+                options: this.commissionTypes
             },
             {
                 title: "חלק סוכן %",
                 key: "agentPart",
-                width: "col-33-33",
+                width: "33%",
                 type: 'input',
                 color: 'normal',
                 action: this.onAgentPartChange.bind(this)
@@ -316,7 +316,7 @@ class AgentPage extends React.Component {
             {
                 title: "חלק סוכנות %",
                 key: "agencyPart",
-                width: "col-33-33",
+                width: "33%",
                 type: 'read-only',
                 color: 'normal'
             }

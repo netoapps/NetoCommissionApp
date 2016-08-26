@@ -754,35 +754,35 @@ class Commissions extends React.Component {
             {
                 title: "חברה",
                 key: "companyName",
-                width: "col-33-33",
+                width: "33%",
                 type: 'read-only',
                 color: 'normal'
             },
             {
                 title: "מספר סוכן",
                 key: "agentNumber",
-                width: "col-33-33",
+                width: "33%",
                 type: 'read-only',
                 color: 'normal'
             },
             {
                 title: "שם סוכן",
                 key: "agentName",
-                width: "col-33-33",
+                width: "33%",
                 type: 'read-only',
                 color: 'normal'
             },
             {
                 title: "סוג תשלום",
                 key: "paymentType",
-                width: "col-33-33",
+                width: "33%",
                 type: 'read-only',
                 color: 'normal'
             },
             {
                 title: "סה״כ תשלום",
                 key: "totalPayment",
-                width: "col-33-33",
+                width: "33%",
                 type: 'read-only',
                 format: 'currency',
                 color: 'normal'
@@ -790,7 +790,7 @@ class Commissions extends React.Component {
             {
                 title: "סה״כ גודל תיק",
                 key: "totalInvestments",
-                width: "col-33-33",
+                width: "33%",
                 type: 'read-only',
                 format: 'currency',
                 color: 'normal'
@@ -798,14 +798,14 @@ class Commissions extends React.Component {
             {
                 title: "חודש שכר",
                 key: "paymentDate",
-                width: "col-33-33",
+                width: "33%",
                 type: 'month-year-date',
                 color: 'normal'
             },
             {
                 title: "תאריך העלאה",
                 key: "creationTime",
-                width: "col-33-33",
+                width: "33%",
                 type: 'full-date',
                 color: 'normal'
             }

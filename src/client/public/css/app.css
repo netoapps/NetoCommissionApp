@@ -32,7 +32,8 @@ body
 
 .h-center {
     margin: auto;
-    width: 60%;
+    width: 80%;
+    /*height: 100%;*/
     text-align: center;
 }
 
@@ -1275,40 +1276,46 @@ body
 
 .table-select {
     position:relative;
-    background-color:white;
+    /*background-color:white;*/
     border: none;
-    width:100%;
-    height:25px;
+    /*width:100%;*/
+    height:100%;
     /*margin-left: 1px;*/
-    margin-top: 10px;
-    margin-bottom: 10px;
-    align-content: center;
+    /*margin-top: 10px;*/
+    /*margin-bottom: 10px;*/
+    /*align-content: center;*/
     text-align: center;
-    margin-left:auto;
-    margin-right:auto;
+    /*margin-left:auto;*/
+    /*margin-right:auto;*/
 }
 
 .table-select select {
     direction: rtl;
     vertical-align: middle;
-    position:absolute;
-    top:3px;
-    left:2px;
+    /*position:absolute;*/
+    /*top:3px;*/
+    /*left:2px;*/
     font-size:14px;
     border:none;
     text-align: center;
     /*width:60%;*/
-    height:25px;
-    margin-top: -5px;
-    margin-left:auto;
-    margin-right:auto;
-    line-height: 25px;
+    /*height:25px;*/
+    /*margin-top: -5px;*/
+    /*margin-left:auto;*/
+    /*margin-right:auto;*/
+    line-height: 45px;
     /*color: #000e4b;*!*/
     padding-right: 20px;
     /*padding-left: 2px;*/
     outline: none;
     -webkit-appearance: none;
     background: url(../images/select-arrow.png) no-repeat right transparent;
+
+    text-align-last:center;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    text-align: center;
 }
 
 .table-select-arrow {
@@ -1318,9 +1325,6 @@ body
     background: url(../images/select-arrow.png) no-repeat right transparent;
 }
 
-
-.col-33-33 { width: 50% }
-.col-66-66 { width: 66% }
 
 /*****************/
 
@@ -1746,7 +1750,7 @@ body
 
 .income-modal
 {
-    height: 200px;
+    height: 180px;
     width: 1100px;
 }
 
@@ -1758,7 +1762,7 @@ body
 
 .expense-modal
 {
-    height: 200px;
+    height: 180px;
     width: 1100px;
 }
 

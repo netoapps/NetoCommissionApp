@@ -14,6 +14,9 @@ class PartnershipPage extends React.Component {
     constructor(props) {
         super(props);
 
+        this.companies = AppStore.getCompanies().concat("")
+        this.commissionTypes = AppStore.getCommissionTypes().concat("")
+
         var partnership = null
         var isNewPartnership = true
         if (this.props.params.index != "-1")
@@ -309,21 +312,21 @@ class PartnershipPage extends React.Component {
             {
                 title: "שם",
                 key: "name",
-                width: "col-33-33",
+                width: "33%",
                 type: 'read-only',
                 color: 'normal'
             },
             {
                 title: "מזהה",
                 key: "idNumber",
-                width: "col-33-33",
+                width: "33%",
                 type: 'read-only',
                 color: 'normal'
             },
             {
                 title: "חלק סוכן %",
                 key: "part",
-                width: "col-33-33",
+                width: "33%",
                 type: 'input',
                 color: 'normal',
                 action: this.onAgentPartChange.bind(this)
@@ -362,16 +365,16 @@ class PartnershipPage extends React.Component {
             {
                 title: "חברה",
                 key: "companyName",
-                width: "col-33-33",
+                width: "33%",
                 type: 'select',
                 color: 'normal',
                 action: this.onSelectCompany.bind(this),
-                options: AppStore.getCompanies().concat("")
+                options: this.companies
             },
             {
                 title: "מספר סוכן",
                 key: "partnershipNumber",
-                width: "col-33-33",
+                width: "33%",
                 type: 'input',
                 color: 'normal',
                 action: this.onPartnershipNumberChange.bind(this)
@@ -379,16 +382,16 @@ class PartnershipPage extends React.Component {
             {
                 title: "סוג תשלום",
                 key: "paymentType",
-                width: "col-33-33",
+                width: "33%",
                 type: 'select',
                 color: 'normal',
                 action: this.onSelectPaymentType.bind(this),
-                options: AppStore.getCommissionTypes().concat("")
+                options: this.commissionTypes
             },
             {
                 title: "חלק שותפות %",
                 key: "partnershipPart",
-                width: "col-33-33",
+                width: "33%",
                 type: 'input',
                 color: 'normal',
                 action: this.onPartnershipPartChange.bind(this)
@@ -396,7 +399,7 @@ class PartnershipPage extends React.Component {
             {
                 title: "חלק סוכנות %",
                 key: "agencyPart",
-                width: "col-33-33",
+                width: "33%",
                 type: 'read-only',
                 color: 'normal'
             }

@@ -27,7 +27,6 @@ import LoadSpinner from 'react-loader'
 dispatcher.registerStore(AppStore);
 AppActions.appInit();
 
-
 function isAuthenticated(nextState, replace)
 {
     if (AuthService.loggedIn())

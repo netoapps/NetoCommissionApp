@@ -209,14 +209,14 @@ class DashboardRankTable extends React.Component {
             {
                 title: "שם סוכן",
                 key: "agentName",
-                width: "col-33-33",
+                width: "33%",
                 type: 'read-only',
                 color: 'normal'
             },
             {
                 title: this.state.commissionType,
                 key: "commission",
-                width: "col-33-33",
+                width: "33%",
                 type: 'read-only',
                 format: 'currency',
                 color: 'normal',
@@ -224,7 +224,7 @@ class DashboardRankTable extends React.Component {
             {
                 title: "שינוי",
                 key: "commissionChange",
-                width: "col-33-33",
+                width: "30%",
                 type: 'read-only',
                 format: 'percent',
                 color: 'red-green'
@@ -232,7 +232,7 @@ class DashboardRankTable extends React.Component {
             {
                 title: "גודל תיק",
                 key: "portfolio",
-                width: "col-33-33",
+                width: "36%",
                 type: 'read-only',
                 format: 'currency',
                 color: 'normal'
@@ -240,7 +240,7 @@ class DashboardRankTable extends React.Component {
             {
                 title: "שינוי (גודל תיק)",
                 key: "portfolioChange",
-                width: "col-33-33",
+                width: "33%",
                 type: 'read-only',
                 format: 'percent',
                 color: 'red-green'

@@ -67,7 +67,7 @@ export default class ExpenseModalContent extends React.Component
             {
                 title: "סוג הוצאה",
                 key: "type",
-                width: "col-33-33",
+                width: "33%",
                 type: 'select',
                 color: 'normal',
                 action: this.onExpenseTypeChange.bind(this),
@@ -76,7 +76,7 @@ export default class ExpenseModalContent extends React.Component
             {
                 title: "סה״כ",
                 key: "amount",
-                width: "col-33-33",
+                width: "33%",
                 type: 'input',
                 color: 'normal',
                 action: this.onExpenseAmountChange.bind(this),
@@ -84,7 +84,7 @@ export default class ExpenseModalContent extends React.Component
             {
                 title: "מחזוריות",
                 key: "repeat",
-                width: "col-33-33",
+                width: "33%",
                 type: 'input',
                 color: 'normal',
                 action: this.onExpenseRepeatChange.bind(this)
@@ -92,7 +92,7 @@ export default class ExpenseModalContent extends React.Component
             {
                 title: "הערות",
                 key: "notes",
-                width: "col-66-66",
+                width: "66%",
                 type: 'input',
                 color: 'normal',
                 action: this.onExpenseNoteChange.bind(this)

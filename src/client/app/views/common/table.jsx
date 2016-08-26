@@ -9,6 +9,7 @@ class TableCell extends React.Component {
         this.state = {
             value: (this.props.value == null) ? "":this.props.value,
             column: this.props.column,
+            field: this.props.field,
             rowIndex: this.props.rowIndex
         }
     }
@@ -32,20 +33,19 @@ class TableCell extends React.Component {
         }
 
     }
-    onSelectText()
-    {
-        //console.log("onSelectText")
-    }
-    onClick()
-    {
-        //console.log("onClick")
-    }
+
+
     render()
     {
         var className = "table-cell";
         var color = "table-cell-text-color";
         var node = null;
         var action = null;
+
+        if(this.state.column.type === "read-only-request")
+        {
+            this.state.value = this.state.column.requestCellData(this.state.rowIndex,this.state.column.title)
+        }
 
         if (this.state.column.color === "red-green")
         {
@@ -77,9 +77,9 @@ class TableCell extends React.Component {
             this.state.value = value + " %"
         }
 
-        if (this.state.column.type === "read-only")
+        if (this.state.column.type === "read-only" || this.state.column.type === "read-only-request")
         {
-            node = <div onClick={this.onClick.bind(this)} onSelect={this.onSelectText.bind(this)} className={"table-cell-read-only " + color}>{this.state.value}</div>;
+            node = <div className={"table-cell-read-only " + color}>{this.state.value}</div>;
         }
         if (this.state.column.type === "full-date")
         {
@@ -124,13 +124,16 @@ class TableCell extends React.Component {
         if (this.state.column.type === "input")
         {
             action = this.state.column.action
-            node = <div className="h-center"><input className="table-input"
+            node = <div className="h-center">
+                        <input className="table-input"
                           type="text"
                           value={this.state.value}
-                          onChange={ function(action,event) { action(this.state.rowIndex, event.target.value) }.bind(this,action) }/></div>
+                          onChange={ function(action,event) { action(this.state.rowIndex, event.target.value) }.bind(this,action) }/>
+                   </div>
         }
 
-        return ( <div className={className + " " + this.state.column.width}>
+        var divStyle = {width: this.state.column.width}
+        return ( <div className={className} style={divStyle}>
                     {node}
                  </div>);
     }
@@ -165,12 +168,15 @@ class TableRow extends React.Component {
     render() {
         var tableCells = [];
         for(var cell = 0; cell < this.state.columns.length; cell++)
+        {
+            var value = this.state.columns[cell].key === "-request-" ? "":this.state.data[this.state.columns[cell].key]
             tableCells[cell] = <TableCell key={cell}
                                           field={this.state.columns[cell].key}
                                           rowIndex={this.state.index}
                                           column={this.state.columns[cell]}
-                                          value={this.state.data[this.state.columns[cell].key]}/>
-        var removeRow = null
+                                          value={value}/>
+        }
+         var removeRow = null
         var removeButtonClassName = "table-row-remove-button"
         var removeButtonFunc = function(index)
         {
@@ -222,8 +228,9 @@ class TableColumn extends React.Component {
     }
     render()
     {
-        var className = "table-column " + this.state.column.width;
-        return ( <div className={className} onClick={this.sortBy.bind(this)} >{this.state.column.title}</div>);
+        var divStyle = {width: this.state.column.width}
+        var className = "table-column";
+        return ( <div style={divStyle} className={className} onClick={this.sortBy.bind(this)} >{this.state.column.title}</div>);
     }
 }
 

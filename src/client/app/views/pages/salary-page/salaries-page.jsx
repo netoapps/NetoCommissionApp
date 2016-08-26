@@ -75,21 +75,21 @@ class Salaries extends React.Component {
             {
                 title: "שם",
                 key: "name",
-                width: "col-33-33",
+                width: "33%",
                 type: 'read-only',
                 color: 'blue'
             },
             {
                 title: "מזהה",
                 key: "idNumber",
-                width: "col-33-33",
+                width: "33%",
                 type: 'read-only',
                 color: 'normal'
             },
             {
                 title: "סטטוס",
                 key: "status",
-                width: "col-33-33",
+                width: "33%",
                 type: 'read-only',
                 color: 'normal'
             }
@@ -100,21 +100,21 @@ class Salaries extends React.Component {
             {
                 title: "שותפים",
                 key: "names",
-                width: "col-33-33",
+                width: "33%",
                 type: 'read-only',
                 color: 'normal'
             },
             {
                 title: "מזהה",
                 key: "idNumbers",
-                width: "col-33-33",
+                width: "33%",
                 type: 'read-only',
                 color: 'normal'
             },
             {
                 title: "סטטוס",
                 key: "status",
-                width: "col-33-33",
+                width: "33%",
                 type: 'read-only',
                 color: 'normal'
             }

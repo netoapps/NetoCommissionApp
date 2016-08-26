@@ -96,7 +96,7 @@ class EditFilesPage extends React.Component {
             {
                 title: "שם קובץ",
                 key: "name",
-                width: "col-33-33",
+                width: "33%",
                 type: 'button',
                 color: 'blue',
                 action: this.onFileNameClicked.bind(this)
@@ -104,35 +104,35 @@ class EditFilesPage extends React.Component {
             {
                 title: "חברה",
                 key: "company",
-                width: "col-33-33",
+                width: "33%",
                 type: 'read-only',
                 color: 'normal'
             },
             {
                 title: "חודש תשלום",
                 key: "paymentDate",
-                width: "col-33-33",
+                width: "33%",
                 type: 'month-year-date',
                 color: 'normal'
             },
             {
                 title: "תאריך העלאה",
                 key: "uploadDate",
-                width: "col-33-33",
+                width: "33%",
                 type: 'full-date',
                 color: 'normal'
             },
             {
                 title: "מע״מ",
                 key: "taxState",
-                width: "col-33-33",
+                width: "33%",
                 type: 'read-only',
                 color: 'normal'
             },
             {
                 title: "הערות",
                 key: "note",
-                width: "col-33-33",
+                width: "33%",
                 type: 'read-only',
                 color: 'normal'
             }
