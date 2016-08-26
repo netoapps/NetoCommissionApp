@@ -61,7 +61,7 @@ class AgentsAndPartnerships extends React.Component {
     {
         this.context.router.push('/app/agents-and-partnerships/agent-page/' + (-1))
     }
-    onAgentClicked(rowIndex)
+    onAgentRowClick(rowIndex,rowData)
     {
         this.context.router.push('/app/agents-and-partnerships/agent-page/'+rowIndex)
     }
@@ -190,7 +190,7 @@ class AgentsAndPartnerships extends React.Component {
                 }
             });
     }
-    onPartnershipClicked(rowIndex)
+    onPartnershipRowClick(rowIndex,rowData)
     {
         this.context.router.push('/app/agents-and-partnerships/partnership-page/'+rowIndex)
     }
@@ -209,9 +209,8 @@ class AgentsAndPartnerships extends React.Component {
                 title: "שם",
                 key: "name",
                 width: "33%",
-                type: 'button',
-                color: 'blue',
-                action: this.onAgentClicked.bind(this)
+                type: 'read-only',
+                color: 'normal'
             },
             {
                 title: "מזהה",
@@ -248,9 +247,8 @@ class AgentsAndPartnerships extends React.Component {
                 title: "שותפים",
                 key: "names",
                 width: "33%",
-                type: 'button',
-                color: 'blue',
-                action: this.onPartnershipClicked.bind(this)
+                type: 'read-only',
+                color: 'normal'
             },
             {
                 title: "מזהה",
@@ -293,7 +291,6 @@ class AgentsAndPartnerships extends React.Component {
             partnershipsData.push(partnershipData)
         }
 
-
         return (
             <div className="agents-and-partnerships-page animated fadeIn shadow">
                 <Tabs onChange={this.onChangeTab.bind(this)} justified={true} initialSelectedIndex={selectedTab}>
@@ -303,10 +300,11 @@ class AgentsAndPartnerships extends React.Component {
                             <div className="vertical-spacer-20"/>
                             <Button className="shadow" onClick={this.onNewAgent.bind(this)} color="primary">{strings.newAgent}</Button>
                             <div className="agents-page-table">
-                                <Table onRemoveRow={this.onDeleteAgentClicked.bind(this)} columns={agentsColumns} data={agentsData}/>
+                                <Table onRowClick={this.onAgentRowClick.bind(this)}
+                                       onRemoveRow={this.onDeleteAgentClicked.bind(this)}
+                                       columns={agentsColumns} data={agentsData}/>
                             </div>
                         </div>
-
                     </Tab>
                     <Tab value="pane-2" label={strings.partnerships}>
 
@@ -314,7 +312,10 @@ class AgentsAndPartnerships extends React.Component {
                             <div className="vertical-spacer-20"/>
                             <Button className="shadow" onClick={this.onNewPartnership.bind(this)} color="primary">{strings.newPartnership}</Button>
                             <div className="agents-page-table">
-                                <Table onRemoveRow={this.onDeletePartnershipsClicked.bind(this)} columns={partnershipColumns} data={partnershipsData}/>
+                                <Table onRowClick={this.onPartnershipRowClick.bind(this)}
+                                       onRemoveRow={this.onDeletePartnershipsClicked.bind(this)}
+                                       columns={partnershipColumns}
+                                       data={partnershipsData}/>
                             </div>
                         </div>
                     </Tab>

@@ -1134,7 +1134,12 @@ body
     display: flex;
     width: 100%;
     flex-flow: row nowrap;
+    /*background-color: transparent;*/
+    /*border: none;*/
+    /*outline: none;*/
 }
+
+
 
 
 .table-row-add-button
