@@ -19,9 +19,7 @@ function addExpanseToAgentAtDate(req, res) {
     if (!data.expenseDate) {
         return res.status(400).json({err: 'missing expanseDate'});
     }
-    if (!data.type) {
-        return res.status(400).json({err: 'missing type'});
-    }
+
     if (!data.amount) {
         return res.status(400).json({err: 'missing amount'});
     }
@@ -59,9 +57,7 @@ function addExpanseToPartnershipAtDate(req, res) {
     if (!data.expenseDate) {
         return res.status(400).json({err: 'missing expanseDate'});
     }
-    if (!data.type) {
-        return res.status(400).json({err: 'missing type'});
-    }
+    
     if (!data.amount) {
         return res.status(400).json({err: 'missing amount'});
     }

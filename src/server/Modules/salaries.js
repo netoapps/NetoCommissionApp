@@ -59,7 +59,7 @@ function addAgentSalary(req, res) {
         return res.status(400).json({err: 'missing id Number'});
     }
     var data = req.body;
-    if (!data || !data.agentInCompanyId || !data.paymentDate || !data.amount || !data.type || !data.company) {
+    if (!data || !data.paymentDate || !data.amount || !data.type || !data.company) {
         return res.status(400).json({err: 'missing salary data'});
     }
 
@@ -117,7 +117,7 @@ function addPartnershipSalary(req, res){
         return res.status(400).json({err: 'missing partnership id'});
     }
     var data = req.body;
-    if (!data || !data.agentInCompanyId || !data.paymentDate || !data.amount || !data.type || !data.company) {
+    if (!data || !data.paymentDate || !data.amount || !data.type || !data.company) {
         return res.status(400).json({err: 'missing salary data'});
     }
 
