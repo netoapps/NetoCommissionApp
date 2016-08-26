@@ -57,7 +57,7 @@ function addExpanseToPartnershipAtDate(req, res) {
     if (!data.expenseDate) {
         return res.status(400).json({err: 'missing expanseDate'});
     }
-    
+
     if (!data.amount) {
         return res.status(400).json({err: 'missing amount'});
     }
