@@ -11,20 +11,8 @@ class DataStore extends Store {
         super('DataStore');
         this.logger.debug('Initializing DataStore');
         this.initialize('user', {});
-
-        //var companies = ["כלל ביטוח","כלל גמל","מגדל","מנורה","אלטשולר שחם","ילין לפידות","מיטב דש","הראל","הפניקס","אנליסט","איי בי איי","אקסלנס","הכשרה"]
-        //this.initialize('companies',companies);
         this.initialize('companies',[]);
-
-        //1 - agent number in company
-        //2 - portfolio
-        //3 - nifraim
-        //4 - hekef
-        //5 - bonus
-        //var commissionType = ["היקף","נפרעים","בונוס"]
         var extendedCommissionType = ["וולתסטון", "ידני"]
-
-        //this.initialize('commissionType',commissionType);
         this.initialize('commissionType',[]);
         this.initialize('extendedCommissionType',extendedCommissionType);
         this.initialize('agents',[]);
@@ -401,7 +389,7 @@ class DataStore extends Store {
         switch (actionType)
         {
             case ActionType.APP_INIT:
-                setTimeout((function(){ this.loadData() }).bind(this), 1000);
+                setTimeout((function(){ this.loadData() }).bind(this), 900);
                 break;
 
             case ActionType.DELETE_COMMISSION_FILE:
