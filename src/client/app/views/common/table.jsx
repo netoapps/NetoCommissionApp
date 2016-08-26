@@ -73,7 +73,7 @@ class TableCell extends React.Component {
         if (this.state.column.format === "percent")
         {
             className = "table-cell-read-only " + color
-            var value = this.state.value;
+            var value = parseInt(this.state.value);
             this.state.value = value + " %"
         }
 
