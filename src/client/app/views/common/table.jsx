@@ -263,16 +263,26 @@ class Table extends React.Component {
     constructor(props) {
         super(props);
 
+        var data = props.data
+        if(props.sortedByColumn != null)
+        {
+            this.sortDataBy(data, props.sortedByColumn, false)
+        }
         this.state = {
             columns: props.columns,
-            data: props.data
+            data: data
         }
     }
 
     componentWillReceiveProps(nextProps)
     {
         this.state.columns = nextProps.columns
-        this.state.data = nextProps.data
+        var data = nextProps.data
+        if(nextProps.sortedByColumn != null)
+        {
+            this.sortDataBy(data, nextProps.sortedByColumn, false)
+        }
+        this.state.data = data
         this.setState(this.state)
     }
     onRowClick(index)
@@ -282,7 +292,7 @@ class Table extends React.Component {
             this.props.onRowClick(index)
         }
     }
-    onSortBy(column,ascending)
+    sortDataBy(data, column,ascending)
     {
         var lexicographicSort = function(a, b)
         {
@@ -314,12 +324,16 @@ class Table extends React.Component {
         }
         if(column.format === "currency" || column.format === "percent")
         {
-            this.state.data.sort(numericSort);
+            data.sort(numericSort);
         }
         else
         {
-            this.state.data.sort(lexicographicSort);
+            data.sort(lexicographicSort);
         }
+    }
+    onSortBy(column,ascending)
+    {
+        this.sortDataBy(this.state.data,column,ascending)
         this.setState(this.state)
     }
 

@@ -165,22 +165,6 @@ class DashboardRankTable extends React.Component {
                         }
                     }
 
-                    // var amount = idData[0].amount
-                    // var lastMonthAmount = idData.length > 1 ? idData[1].amount:0
-                    // var amountChange = 100.0
-                    // if (lastMonthAmount != 0)
-                    // {
-                    //     amountChange = (parseFloat(amount)/parseFloat(lastMonthAmount)) * 100.0
-                    // }
-                    //
-                    // var portfolio = idData[0].portfolio
-                    // var lastMonthPortfolio = idData.length > 1 ? idData[1].portfolio:0
-                    // var portfolioChange = 100.0
-                    // if (lastMonthPortfolio != 0)
-                    // {
-                    //     portfolioChange = (parseFloat(portfolio)/parseFloat(lastMonthPortfolio)) * 100.0
-                    // }
-
                     data.push(
                         {
                         agentName: agentName,
@@ -195,6 +179,8 @@ class DashboardRankTable extends React.Component {
             {
                 this.logger.error("Error while loading commission files entries");
             }
+
+
             callback(data)
         })
     }
@@ -209,14 +195,14 @@ class DashboardRankTable extends React.Component {
             {
                 title: "שם סוכן",
                 key: "agentName",
-                width: "33%",
+                width: "25%",
                 type: 'read-only',
                 color: 'normal'
             },
             {
                 title: this.state.commissionType,
                 key: "commission",
-                width: "33%",
+                width: "20%",
                 type: 'read-only',
                 format: 'currency',
                 color: 'normal',
@@ -224,7 +210,7 @@ class DashboardRankTable extends React.Component {
             {
                 title: "שינוי",
                 key: "commissionChange",
-                width: "30%",
+                width: "15%",
                 type: 'read-only',
                 format: 'percent',
                 color: 'red-green'
@@ -232,7 +218,7 @@ class DashboardRankTable extends React.Component {
             {
                 title: "גודל תיק",
                 key: "portfolio",
-                width: "36%",
+                width: "20%",
                 type: 'read-only',
                 format: 'currency',
                 color: 'normal'
@@ -240,7 +226,7 @@ class DashboardRankTable extends React.Component {
             {
                 title: "שינוי (גודל תיק)",
                 key: "portfolioChange",
-                width: "33%",
+                width: "20%",
                 type: 'read-only',
                 format: 'percent',
                 color: 'red-green'
@@ -251,7 +237,8 @@ class DashboardRankTable extends React.Component {
         return (
             <div className="dashboard-rank-table shadow">
                 <Table columns={columns}
-                       data={this.state.data}/>
+                       data={this.state.data}
+                       sortedByColumn={columns[1]}/>
             </div>
         );
     }

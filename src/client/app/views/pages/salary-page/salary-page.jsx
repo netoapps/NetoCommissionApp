@@ -49,7 +49,7 @@ class SalaryPage extends React.Component {
                 color: 'normal'
             },
             {
-                title: "מקור",
+                title: "שם סוכן",
                 key: "",
                 width: "20%",
                 type: 'read-only-request',
@@ -157,7 +157,7 @@ class SalaryPage extends React.Component {
     {
         var cellData = ""
         var income = this.state.incomes[rowIndex]
-        if(title === "מקור")
+        if(title === "שם סוכן")
         {
             if(income.partnershipSalaryId != null)
             {
