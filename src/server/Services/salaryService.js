@@ -4,6 +4,7 @@
 
 var Salary = require('../Models/salary');
 var Agent = require('../Models/agent');
+var Partnership = require('../Models/partnership');
 var AgentService = require('./agentsService');
 var agentService = new AgentService();
 var _ = require('underscore');
@@ -28,9 +29,9 @@ function SalaryService() {
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////PUBLIC FUNCTIONS/////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    this.addAgentSalary = function (idNumber, agentInCompanyId, paymentDate, amount, type, company, notes) {
+    this.addAgentSalary = function (idNumber, agentInCompanyId, paymentDate, amount, calculatedSalary, type, company, notes) {
         return new Promise(function (resolve, reject) {
-            addSalary(idNumber, agentInCompanyId, paymentDate, amount, amount, 0, type, company, 0, null, notes, 'agent',null, function (err, salary) {
+            addSalary(idNumber, agentInCompanyId, paymentDate, amount, calculatedSalary, 0, type, company, 0, null, notes, 'agent',null, function (err, salary) {
                 if (err) {
                     return reject(err);
                 }
@@ -49,14 +50,18 @@ function SalaryService() {
                     return reject('partnership not found');
                 }
                 var agentsDetails = partnership.agentsDetails;
-                var paymentDetails = partnership.paymentsDetails
-                    .filter(function(details){
-                        return details.partnershipNumber = partnershipIdInCompany;
-                    });
-                if(paymentDetails.length!==1){
-                    return reject('could not decide on correct partnership id')
-                }
-                paymentDetails = paymentDetails[0];
+                //var paymentDetails = partnership.paymentsDetails
+                //    .filter(function(details){
+                //        return details.partnershipNumber = partnershipIdInCompany;
+                //    });
+                //if(paymentDetails.length!==1){
+                //    return reject('could not decide on correct partnership id')
+                //}
+
+                //for manual partnership salary, payment details are always 100% for the partnership
+                var paymentDetails = {};
+                paymentDetails.partnershipPart=100;
+                paymentDetails.agencyPart=0;
                 calculatePartnershipSalary(pid, partnershipIdInCompany, agentsDetails, paymentDetails, paymentDate, amount, type, company, 0, null, notes, function(err, salary){
                     if(err){
                         return reject(err);
@@ -108,7 +113,7 @@ function SalaryService() {
             })
         })
     };
-    this.updateSalary = function (id, idNumber, agentInCompanyId, paymentDate, amount, type, company, notes) {
+    this.updateSalary = function (id, idNumber, agentInCompanyId, paymentDate, amount, calculatedAmount, type, company, notes) {
         return new Promise(function (resolve, reject) {
             Salary.findById(id, function (err, salary) {
                 if (err) {
@@ -121,6 +126,7 @@ function SalaryService() {
                 salary.idNumber = idNumber;
                 salary.paymentDate = paymentDate;
                 salary.amount = amount;
+                salary.calculatedAmount = calculatedAmount;
                 salary.type = type;
                 salary.company = company;
                 salary.notes = notes;
@@ -353,7 +359,7 @@ function SalaryService() {
                         'נפרעים': {$sum: {$cond: [{$eq: ['$type', 'נפרעים']}, '$calculatedAmount', 0]}},
                         'בונוס': {$sum: {$cond: [{$eq: ['$type', 'בונוס']}, '$calculatedAmount', 0]}},
                         'היקף': {$sum: {$cond: [{$eq: ['$type', 'היקף']}, '$calculatedAmount', 0]}},
-                        'ידני': {$sum: {$cond: [{$eq: ['$fileId', null]}, '$calculatedAmount', 0]}}
+                        'ידני': {$sum: {$cond: [{$and:[{$eq: ['$fileId', null]},{$eq:['$type','ידני']}]}, '$calculatedAmount', 0]}}
                     }
                 }
             ], function (err, data) {
@@ -546,7 +552,7 @@ function SalaryService() {
                 if(err){
                     return cb(err);
                 }
-                return cb();
+                return cb(null,pSalary);
             })
         });
     }

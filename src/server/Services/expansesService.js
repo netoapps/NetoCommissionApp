@@ -47,7 +47,7 @@ function ExpanseService() {
                         });
                     }else if(!partnership){
                         expense.remove(function(error){
-                            return reject(err);
+                            return reject('partnership id not exist: '+pid);
                         });
                     }else{
                         partnership.agentsDetails.forEach(function(agent){

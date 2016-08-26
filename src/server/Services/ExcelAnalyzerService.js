@@ -151,7 +151,7 @@ function ExcelAnalyzerService() {
                     //    }
                     //}
 
-                    if (ID && ID.indexOf('-') === -1 && aName.indexOf('+') === -1) {
+                    if (ID && aName.indexOf('+') === -1) {
                         delete  agent.ID;
                         delete agent['סוכן'];
                         var splitName = aName.split('/')[0].split(' ');
