@@ -6,7 +6,6 @@
  */
 
 var ExpansesService = require('../Services/expansesService');
-
 var expanseService = new ExpansesService();
 
 function addExpanseToAgentAtDate(req, res) {
@@ -28,13 +27,25 @@ function addExpanseToAgentAtDate(req, res) {
     }
 
 
-    expanseService.addExpanseToAgentAtDate(req.params.idNumber, data.expenseDate, data.type, data.amount, data.notes, null)
-        .then(function (expense) {
-            return res.status(200).json({expense: expense});
+    var repeatCount = data.repeat || 1;
+    var expensesRequests = [];
+    var startDate = new Date(data.expenseDate);
+
+    for(var i=0;i<repeatCount;i++){
+        expensesRequests.push(expanseService.addExpanseToAgentAtDate(req.params.idNumber, startDate.toISOString(), data.type, data.amount, data.notes, null));
+        startDate.setMonth(startDate.getMonth()+1);
+    }
+    Promise.all(expensesRequests)
+        .then(function (expenses) {
+            var expense = expenses.filter(function(e){
+                return e.expenseDate.toISOString() === data.expenseDate;
+            });
+            return res.status(200).json({expense: expense.length == 0 ? null:expense[0]});
         })
         .catch(function (err) {
             return res.status(400).json({err: err});
         })
+
 }
 
 function addExpanseToPartnershipAtDate(req, res) {
@@ -55,14 +66,24 @@ function addExpanseToPartnershipAtDate(req, res) {
         return res.status(400).json({err: 'missing amount'});
     }
 
+    var repeatCount = data.repeat || 1;
+    var expensesRequests = [];
+    var startDate = new Date(data.expenseDate);
 
-    expanseService.addExpanseToPartnershipAtDate(req.params.pid, data.expenseDate, data.type, data.amount, data.notes)
-        .then(function (expense) {
-            return res.status(200).json({expense: expense});
+    for(var i=0;i<repeatCount;i++){
+        expensesRequests.push(expanseService.addExpanseToPartnershipAtDate(req.params.pid, startDate.toISOString(), data.type, data.amount, data.notes));
+        startDate.setMonth(startDate.getMonth()+1);
+    }
+    Promise.all(expensesRequests)
+        .then(function (expenses) {
+            var expense = expenses.filter(function(e){
+                return e.expenseDate.toISOString() === data.expenseDate;
+            });
+            return res.status(200).json({expense: expense.length == 0 ? null:expense[0]});
         })
         .catch(function (err) {
             return res.status(400).json({err: err});
-        })
+        });
 }
 
 function deleteExpanse(req, res) {
