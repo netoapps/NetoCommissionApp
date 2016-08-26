@@ -347,7 +347,7 @@ class DashboardMonthTotalCommissions extends React.Component {
         this.state.date = nextProps.date
         this.reloadData((value,change) => {
             this.state.value = value
-            this.state.change = change
+            this.state.change = parseInt(change)
             this.setState(this.state)
         })
     }
@@ -355,7 +355,7 @@ class DashboardMonthTotalCommissions extends React.Component {
     {
         this.reloadData((value,change) => {
             this.state.value = value
-            this.state.change = change
+            this.state.change = parseInt(change)
             this.setState(this.state)
         })
     }
@@ -501,7 +501,7 @@ class DashboardTotalPortfolio extends React.Component {
         this.state.date = nextProps.date
         this.reloadData((value,change) => {
             this.state.value = value
-            this.state.change = change
+            this.state.change = parseInt(change)
             this.setState(this.state)
         })
     }
@@ -509,7 +509,7 @@ class DashboardTotalPortfolio extends React.Component {
     {
         this.reloadData((value,change) => {
             this.state.value = value
-            this.state.change = change
+            this.state.change = parseInt(change)
             this.setState(this.state)
         })
     }
