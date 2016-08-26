@@ -284,7 +284,7 @@ class Table extends React.Component {
     }
     onSortBy(column,ascending)
     {
-        this.state.data.sort(function(a, b)
+        var lexicographicSort = function(a, b)
         {
             var textA = a[column.key].toUpperCase();
             var textB = b[column.key].toUpperCase();
@@ -293,7 +293,33 @@ class Table extends React.Component {
                 return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
             }
             return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;
-        });
+        }
+        var numericSort = function(a, b)
+        {
+            var numberA = a[column.key];
+            var numberB = b[column.key];
+            if(typeof numberA === 'string' || numberA instanceof String)
+            {
+                numberA = parseFloat(numberA)
+            }
+            if(typeof numberB === 'string' || numberB instanceof String)
+            {
+                numberB = parseFloat(numberB)
+            }
+            if(ascending)
+            {
+                return (numberA < numberB) ? -1 : (numberA > numberB) ? 1 : 0;
+            }
+            return (numberA > numberB) ? -1 : (numberA < numberB) ? 1 : 0;
+        }
+        if(column.format === "currency" || column.format === "percent")
+        {
+            this.state.data.sort(numericSort);
+        }
+        else
+        {
+            this.state.data.sort(lexicographicSort);
+        }
         this.setState(this.state)
     }
 
