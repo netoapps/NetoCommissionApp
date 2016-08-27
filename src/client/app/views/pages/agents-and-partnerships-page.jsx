@@ -63,14 +63,13 @@ class AgentsAndPartnerships extends React.Component {
     }
     onAgentRowClick(rowIndex,rowData)
     {
-        this.context.router.push('/app/agents-and-partnerships/agent-page/'+rowIndex)
+        this.context.router.push('/app/agents-and-partnerships/agent-page/'+rowData.idNumber)
     }
-    onDeleteAgentClicked(rowIndex)
+    onDeleteAgentClicked(rowIndex,rowData)
     {
         var string = "למחוק סוכן "
-        var name = ""
-        var agent = AppStore.getAgentAtIndex(rowIndex)
-        name =  "'" + agent.name + " " + agent.familyName + "'"
+        var agent = AppStore.getAgent(rowData.idNumber)
+        var name = "'" + agent.name + " " + agent.familyName + "'"
         string = string + name + "?"
 
         swal({
@@ -88,7 +87,7 @@ class AgentsAndPartnerships extends React.Component {
             {
                 if (isConfirm)
                 {
-                    AppActions.deleteAgentAtIndex(rowIndex, (response) => {
+                    AppActions.deleteAgent(rowData.idNumber, (response) => {
                         if (response.result) {
                             swal(
                                 {
@@ -128,11 +127,11 @@ class AgentsAndPartnerships extends React.Component {
     {
         this.context.router.push('/app/agents-and-partnerships/partnership-page/' + (-1))
     }
-    onDeletePartnershipsClicked(rowIndex)
+    onDeletePartnershipsClicked(rowIndex,rowData)
     {
         var string = "למחוק שותפות "
         var names = ""
-        var partnership = AppStore.getPartnershipAtIndex(rowIndex)
+        var partnership = AppStore.getPartnership(rowData.partnershipId)
         for(var idIndex = 0; idIndex < partnership.agentsDetails.length ; idIndex++)
         {
             var agentData = AppStore.getAgent(partnership.agentsDetails[idIndex].idNumber)
@@ -162,7 +161,7 @@ class AgentsAndPartnerships extends React.Component {
             {
                 if (isConfirm)
                 {
-                    AppActions.deletePartnershipAtIndex(rowIndex, (response) => {
+                    AppActions.deletePartnership(rowData.partnershipId, (response) => {
                         if (response.result) {
                             swal(
                                 {
@@ -192,7 +191,7 @@ class AgentsAndPartnerships extends React.Component {
     }
     onPartnershipRowClick(rowIndex,rowData)
     {
-        this.context.router.push('/app/agents-and-partnerships/partnership-page/'+rowIndex)
+        this.context.router.push('/app/agents-and-partnerships/partnership-page/'+rowData.partnershipId)
     }
 
     onChangeTab(i, value, tab, ev)
@@ -288,6 +287,7 @@ class AgentsAndPartnerships extends React.Component {
                 }
             }
             partnershipData["status"] = this.state.partnerships[partnershipIndex].active ? "פעיל":"לא פעיל"
+            partnershipData["partnershipId"] = this.state.partnerships[partnershipIndex]._id
             partnershipsData.push(partnershipData)
         }
 

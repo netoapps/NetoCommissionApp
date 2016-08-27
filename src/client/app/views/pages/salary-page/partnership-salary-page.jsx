@@ -7,7 +7,7 @@ class PartnershipSalaryPage extends SalaryPage {
     constructor(props) {
         super(props);
 
-        var partnership = AppStore.getPartnershipAtIndex(this.props.params.index)
+        var partnership = AppStore.getPartnership(this.props.params.partnershipId)
         this.state.context = {
             type: "partnership",
             id: partnership._id,

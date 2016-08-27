@@ -78,18 +78,18 @@ export default class AppActions {
             callback:callback
         });
     }
-    static updateAgentAtIndex(index, agent, callback)
+    static updateAgent(idNumber, agent, callback)
     {
         AppDispatcher.dispatch(ActionType.UPDATE_AGENT,{
-            index: index,
+            idNumber: idNumber,
             agent: agent,
             callback:callback
         });
     }
-    static deleteAgentAtIndex(index, callback)
+    static deleteAgent(idNumber, callback)
     {
         AppDispatcher.dispatch(ActionType.DELETE_AGENT,{
-            index: index,
+            idNumber: idNumber,
             callback:callback
         });
     }
@@ -103,18 +103,18 @@ export default class AppActions {
             callback:callback
         });
     }
-    static updatePartnershipAtIndex(index, partnership, callback)
+    static updatePartnership(partnershipId, partnership, callback)
     {
         AppDispatcher.dispatch(ActionType.UPDATE_PARTNERSHIP,{
-            index: index,
+            partnershipId: partnershipId,
             partnership: partnership,
             callback:callback
         });
     }
-    static deletePartnershipAtIndex(index, callback)
+    static deletePartnership(partnershipId, callback)
     {
         AppDispatcher.dispatch(ActionType.DELETE_PARTNERSHIP,{
-            index: index,
+            partnershipId: partnershipId,
             callback:callback
         });
     }

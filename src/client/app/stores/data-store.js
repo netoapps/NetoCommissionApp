@@ -114,9 +114,9 @@ class DataStore extends Store {
 
         })
     }
-    deleteAgentAtIndex(index,callback)
+    deleteAgent(idNumber,callback)
     {
-        var agent = this.getAgentAtIndex(index)
+        var agent = this.getAgent(idNumber)
         if(agent != null)
         {
             //post to server...
@@ -129,26 +129,33 @@ class DataStore extends Store {
                     success: function(result)
                     {
                         console.log(result);
-                        console.log('deleteAgentAtIndex - Server responded with success!');
+                        console.log('deleteAgent - Server responded with success!');
                         var agents = this.getAgents()
-                        agents.splice(index, 1)
+
+                        for(var index = 0 ; index < agents.length; index++){
+                            if(agents[index].idNumber === idNumber){
+                                agents.splice(index,1);
+                                break;
+                            }
+                        }
+
                         this.eventbus.emit(ActionType.DELETE_AGENT);
-                        this.logger.debug('Delete agent at index ' + index);
+                        this.logger.debug('Delete agent with id ' + idNumber);
                         if(callback != null)
                             callback({result:true});
                     }.bind(this),
                     error: function(jqXHR, textStatus, errorThrown)
                     {
-                        console.error('deleteAgentAtIndex - ', textStatus, errorThrown.toString());
+                        console.error('deleteAgent - ', textStatus, errorThrown.toString());
                         if(callback != null)
                             callback({result:false});
                     }.bind(this)
                 });
         }
     }
-    setAgentAtIndex(index, updatedAgent,callback)
+    setAgent(idNumber, updatedAgent,callback)
     {
-        var agent = this.getAgentAtIndex(index)
+        var agent = this.getAgent(idNumber)
         if(agent != null)
         {
             $.ajax(
@@ -159,30 +166,37 @@ class DataStore extends Store {
                     contentType: 'application/json',
                     success: function (result) {
                         console.log(result);
-                        console.log('setAgentAtIndex - Server responded with success!');
+                        console.log('setAgent - server responded with success!');
                         var agents = this.getAgents()
-                        agents[index] = result.agent
+
+                        for(var index = 0 ; index < agents.length; index++){
+                            if(agents[index].idNumber === idNumber){
+                                agents[index] = result.agent;
+                                break;
+                            }
+                        }
+
                         this.eventbus.emit(ActionType.UPDATE_AGENT);
                         if(callback != null)
                             callback({result:true});
                     }.bind(this),
                     error: function (jqXHR, textStatus, errorThrown) {
-                        console.error('setAgentAtIndex - ', textStatus, errorThrown.toString());
+                        console.error('setAgent error - ', textStatus, errorThrown.toString());
                         if(callback != null)
                             callback({result:false});
                     }.bind(this)
                 });
         }
     }
-    getAgentAtIndex(index)
-    {
-        var agents = this.getAgents();
-        if (agents.length > index)
-        {
-            return agents[index]
-        }
-        return null
-    }
+    // getAgentAtIndex(index)
+    // {
+    //     var agents = this.getAgents();
+    //     if (agents.length > index)
+    //     {
+    //         return agents[index]
+    //     }
+    //     return null
+    // }
     getAgent(idNumber)
     {
         var agents = this.getAgents();
@@ -223,7 +237,7 @@ class DataStore extends Store {
                     console.log(result);
                     console.log('addPartnership - Server responded with success!');
                     var partnerships = this.getPartnerships()
-                    partnerships.push(result.partnership)
+                    partnerships.unshift(result.partnership)
                     this.eventbus.emit(ActionType.ADD_PARTNERSHIP);
                     if(callback != null)
                         callback({result:true});
@@ -236,70 +250,85 @@ class DataStore extends Store {
                 }.bind(this)
             });
     }
-    getPartnershipAtIndex(index)
+    // getPartnershipAtIndex(index)
+    // {
+    //     var partnerships =  this.getPartnerships();
+    //     if (partnerships.length > index)
+    //     {
+    //         return partnerships[index]
+    //     }
+    //     return null
+    // }
+    setPartnership(partnershipId, updatedPartnership,callback)
     {
-        var partnerships =  this.getPartnerships();
-        if (partnerships.length > index)
-        {
-            return partnerships[index]
-        }
-        return null
-    }
-    setPartnershipAtIndex(index, updatedPartnership,callback)
-    {
-        var partnership = this.getPartnershipAtIndex(index)
+        var partnership = this.getPartnership(partnershipId)
         if(partnership != null)
         {
             $.ajax(
                 {
-                    url: '/api/v1/partnership/'+partnership._id,
+                    url: '/api/v1/partnership/'+partnershipId,
                     type: 'PUT',
                     data: JSON.stringify(updatedPartnership),
                     contentType: 'application/json',
                     success: function (result) {
                         console.log(result);
-                        console.log('setPartnershipAtIndex - Server responded with success!');
+                        console.log('setPartnership - Server responded with success!');
+
                         var partnerships = this.getPartnerships()
-                        partnerships[index] = result.partnership
+                        for(var index = 0 ; index < partnerships.length; index++){
+                            if(partnerships[index]._id === partnershipId)
+                            {
+                                partnerships[index] = result.partnership;
+                                break;
+                            }
+                        }
+
                         this.eventbus.emit(ActionType.UPDATE_PARTNERSHIP);
                         if(callback != null)
                             callback({result:true});
                     }.bind(this),
                     error: function (jqXHR, textStatus, errorThrown) {
-                        console.error('setPartnershipAtIndex - ', textStatus, errorThrown.toString());
+                        console.error('setPartnership - ', textStatus, errorThrown.toString());
                         if(callback != null)
                             callback({result:false});
                     }.bind(this)
                 });
         }
     }
-    deletePartnershipAtIndex(index, callback)
+    deletePartnership(partnershipId, callback)
     {
-        var partnership = this.getPartnershipAtIndex(index)
+        var partnership = this.getPartnership(partnershipId)
         if(partnership != null)
         {
             //post to server...
             $.ajax(
                 {
-                    url: '/api/v1/partnership/'+partnership._id,
+                    url: '/api/v1/partnership/'+partnershipId,
                     type: 'DELETE',
                     data: JSON.stringify(partnership),
                     contentType: 'application/json',
                     success: function(result)
                     {
                         console.log(result);
-                        console.log('deletePartnershipAtIndex - Server responded with success!');
+                        console.log('deletePartnership - Server responded with success!');
+
                         var partnerships = this.getPartnerships()
-                        partnerships.splice(index, 1)
+                        for(var index = 0 ; index < partnerships.length; index++){
+                            if(partnerships[index]._id === partnershipId){
+                                partnerships.splice(index,1);
+                                break;
+                            }
+                        }
+
                         this.eventbus.emit(ActionType.DELETE_PARTNERSHIP);
-                        this.logger.debug('Delete partnership at index ' + index);
+                        this.logger.debug('Delete partnership with id ' + partnershipId);
                         if(callback != null)
                             callback({result:true});
 
                     }.bind(this),
                     error: function(jqXHR, textStatus, errorThrown)
                     {
-                        console.error('deletePartnershipAtIndex - ', textStatus, errorThrown.toString());
+                        console.error('deletePartnership - ', textStatus, errorThrown.toString());
                         if(callback != null)
                             callback({result:false});
                     }.bind(this)
@@ -405,11 +434,11 @@ class DataStore extends Store {
                 break;
 
             case ActionType.UPDATE_AGENT:
-                this.setAgentAtIndex(data.index,data.agent,data.callback)
+                this.setAgent(data.idNumber,data.agent,data.callback)
                 break;
 
             case ActionType.DELETE_AGENT:
-                this.deleteAgentAtIndex(data.index,data.callback)
+                this.deleteAgent(data.idNumber,data.callback)
                 break;
 
             case ActionType.ADD_PARTNERSHIP:
@@ -417,11 +446,11 @@ class DataStore extends Store {
                 break;
 
             case ActionType.UPDATE_PARTNERSHIP:
-                this.setPartnershipAtIndex(data.index,data.partnership,data.callback)
+                this.setPartnership(data.partnershipId,data.partnership,data.callback)
                 break;
 
             case ActionType.DELETE_PARTNERSHIP:
-                this.deletePartnershipAtIndex(data.index,data.callback)
+                this.deletePartnership(data.partnershipId,data.callback)
                 break;
 
 

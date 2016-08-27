@@ -110,6 +110,9 @@ class App extends React.Component {
         this.state.showModal = false
         this.setState(this.state)
     }
+    getChildContext() {
+        return {salariesSelectedTab: 0};
+    }
     render () {
         return (
             <div>
@@ -126,9 +129,12 @@ class App extends React.Component {
 
 //Important!! This adds the router object to context
 App.contextTypes = {
-    router: React.PropTypes.object.isRequired
+    router: React.PropTypes.object.isRequired,
 }
 
+App.childContextTypes = {
+    salariesSelectedTab: React.PropTypes.number
+};
 
 render((
     <Router history={browserHistory}>
@@ -139,10 +145,10 @@ render((
             <Route path="/app/commissions" component={Commissions} />
             <Route path="/app/commissions/edit-files" component={EditFiles} />
             <Route path="/app/agents-and-partnerships" component={Agents} />
-            <Route path="/app/agents-and-partnerships/agent-salary-page/:index" component={AgentSalaryPage} />
-            <Route path="/app/agents-and-partnerships/partnership-salary-page/:index" component={PartnershipSalaryPage} />
-            <Route path="/app/agents-and-partnerships/agent-page/:index" component={AgentPage} />
-            <Route path="/app/agents-and-partnerships/partnership-page/:index" component={PartnershipPage} />
+            <Route path="/app/agents-and-partnerships/agent-salary-page/:idNumber" component={AgentSalaryPage} />
+            <Route path="/app/agents-and-partnerships/partnership-salary-page/:partnershipId" component={PartnershipSalaryPage} />
+            <Route path="/app/agents-and-partnerships/agent-page/:idNumber" component={AgentPage} />
+            <Route path="/app/agents-and-partnerships/partnership-page/:partnershipId" component={PartnershipPage} />
         </Route>
    </Router>
 ), document.getElementById('content'))

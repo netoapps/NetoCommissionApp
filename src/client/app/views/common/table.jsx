@@ -160,11 +160,7 @@ class TableRow extends React.Component {
         this.state.removableRow = !(nextProps.onRemoveRow == null)
         this.setState(this.state)
     }
-    onRowClick()
-    {
-        if(this.props.onRowClick != null)
-            this.props.onRowClick(this.state.index)
-    }
+
     render() {
         var tableCells = [];
         for(var cell = 0; cell < this.state.columns.length; cell++)
@@ -176,12 +172,12 @@ class TableRow extends React.Component {
                                           column={this.state.columns[cell]}
                                           value={value}/>
         }
-         var removeRow = null
+        var removeRow = null
         var removeButtonClassName = "table-row-remove-button"
-        var removeButtonFunc = function(index)
+        var removeButtonFunc = function()
         {
-            this.props.onRemoveRow(index)
-        }.bind(this,this.state.index)
+            this.props.onRemoveRow()
+        }.bind(this)
 
         if(this.state.removableRow)
         {
@@ -198,7 +194,7 @@ class TableRow extends React.Component {
         var className = "table-row " + this.props.rowHoverClassName
         return  <div className={className} >
                     {removeRow}
-                    <div className="table-row-data" onClick={ this.onRowClick.bind(this) }>{tableCells} </div>
+                    <div className="table-row-data" onClick={ this.props.onRowClick != null ? this.props.onRowClick:null }>{tableCells} </div>
                  </div>;
     }
 }
@@ -209,7 +205,8 @@ class TableColumn extends React.Component {
         super(props);
 
         this.state = {
-            column: this.props.column
+            column: this.props.column,
+            searchText: ""
         }
         this.sortAscending = true
     }
@@ -226,11 +223,32 @@ class TableColumn extends React.Component {
             this.sortAscending = !this.sortAscending
         }
     }
+    onSearchTextChange(event)
+    {
+        this.state.searchText = event.target.value
+        this.setState(this.state)
+        if(this.props.onSearchTextChange != null)
+        {
+            this.props.onSearchTextChange(this.state.column, this.state.searchText)
+        }
+    }
     render()
     {
         var divStyle = {width: this.state.column.width}
         var className = "table-column";
-        return ( <div style={divStyle} className={className} onClick={this.sortBy.bind(this)} >{this.state.column.title}</div>);
+        var searchBox = null
+        if(this.state.column.searchBox)
+        {
+            searchBox = <div className={"table-column-search-box"} >
+                            <input type="text"
+                                   value={this.state.searchText}
+                                   onChange={ this.onSearchTextChange.bind(this) }/>
+                        </div>
+        }
+        return  <div className="table-column-container" style={divStyle}>
+                    <div className={className} onClick={this.sortBy.bind(this)} >{this.state.column.title}</div>
+                    {searchBox}
+                </div>;
     }
 }
 
@@ -270,7 +288,8 @@ class Table extends React.Component {
         }
         this.state = {
             columns: props.columns,
-            data: data
+            data: data,
+            filteredData: null
         }
     }
 
@@ -336,19 +355,35 @@ class Table extends React.Component {
         this.sortDataBy(this.state.data,column,ascending)
         this.setState(this.state)
     }
-
+    onSearchTextChange(column,searchText)
+    {
+        this.state.filteredData = null
+        if(searchText.length > 0)
+        {
+            this.state.filteredData = this.state.data.filter(function (el) {
+                return (el[column.key].includes(searchText));
+            });
+        }
+        this.setState(this.state)
+    }
     render()
     {
-        var data = this.state.data
+        var data = this.state.filteredData == null ? this.state.data:this.state.filteredData
         var tableColumns = [];
+        var searchBox = false
 
         if(this.props.hideHeader != true)
         {
             for(var col = 0; col < this.state.columns.length; col++)
             {
                 tableColumns[col] = <TableColumn key={col}
+                                                 onSearchTextChange={this.state.columns[col].searchBox ? this.onSearchTextChange.bind(this):null}
                                                  sortBy={this.onSortBy.bind(this)}
                                                  column={this.state.columns[col]} />
+                if(this.state.columns[col].searchBox)
+                {
+                    searchBox = true
+                }
             }
         }
 
@@ -370,7 +405,6 @@ class Table extends React.Component {
             rowHoverClassName = " table-row-hover"
         }
 
-
         for(var row = 0; row < data.length; row++) {
 
             var disableRowClick = false
@@ -385,12 +419,23 @@ class Table extends React.Component {
             var onRowClickFunc = function (index, rowData) {
                 if (this.props.onRowClick != null)  this.props.onRowClick(index, rowData)
             }.bind(this, row, data[row])
+
             if(disableRowClick)
             {
                 onRowClickFunc = null
             }
+
+            var onRemoveRowClickFunc = null
+            if(this.props.onRemoveRow != null)
+            {
+                onRemoveRowClickFunc = function (index, rowData)
+                {
+                    if (this.props.onRemoveRow != null)  this.props.onRemoveRow(index, rowData)
+                }.bind(this, row, data[row])
+            }
+
             tableRows[row] = <TableRow rowHoverClassName={rowHoverClassName}
-                                       onRemoveRow={this.props.onRemoveRow}
+                                       onRemoveRow={onRemoveRowClickFunc}
                                        isEditableRow={this.props.isEditableRow}
                                        onRowClick={onRowClickFunc}
                                        key={row} index={row}
@@ -412,8 +457,6 @@ class Table extends React.Component {
                             {tableColumns}
                           </div>
         }
-
-        //
 
         return <div className="table">
                     <div className="table-title">{title}</div>

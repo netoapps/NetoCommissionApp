@@ -24,7 +24,7 @@ class AgentPage extends React.Component {
         if (this.props.params.index != "-1")
         {
             isNewAgent = false
-            agent = new Agent(AppStore.getAgentAtIndex(this.props.params.index))
+            agent = new Agent(AppStore.getAgent(this.props.params.idNumber))
         }
         else
         {
@@ -33,7 +33,7 @@ class AgentPage extends React.Component {
 
         this.state = {
             isNewAgent: isNewAgent,
-            agentIndex: this.props.params.index,
+            initialIdNumber: this.props.params.idNumber, /*save id number in case its modified so server can update the change*/
             agent: agent
         };
 
@@ -51,7 +51,7 @@ class AgentPage extends React.Component {
 
     onUpdateAgentEvent()
     {
-        this.state.agent = new Agent(AppStore.getAgentAtIndex(this.props.params.index))
+        this.state.agent = new Agent(AppStore.getAgent(this.props.params.idNumber))
         this.setState(this.state)
     }
 
@@ -210,7 +210,7 @@ class AgentPage extends React.Component {
         }
         else
         {
-            AppActions.updateAgentAtIndex(this.state.agentIndex,this.state.agent,(response) => {
+            AppActions.updateAgent(this.state.initialIdNumber,this.state.agent,(response) => {
                 if(response.result)
                 {
                     swal(

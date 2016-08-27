@@ -23,7 +23,7 @@ class PartnershipPage extends React.Component {
         {
             isNewPartnership = false
             //Make a copy of partnership
-            partnership = new Partnership(AppStore.getPartnershipAtIndex(this.props.params.index))
+            partnership = new Partnership(AppStore.getPartnership(this.props.params.partnershipId))
         }
         else
         {
@@ -32,7 +32,7 @@ class PartnershipPage extends React.Component {
 
         this.state = {
             isNewPartnership: isNewPartnership,
-            partnershipIndex: this.props.params.index,
+            partnershipId: this.props.params.partnershipId,
             partnership: partnership,
             agentsData: this.createAgentData(partnership),
             agentsListOpened: false,
@@ -80,7 +80,7 @@ class PartnershipPage extends React.Component {
     }
     onUpdatePartnershipEvent()
     {
-        this.state.partnership = new Partnership(AppStore.getPartnershipAtIndex(this.props.params.index))
+        this.state.partnership = new Partnership(AppStore.getPartnership(this.props.params.partnershipId))
         this.state.agentsData = this.createAgentData(this.state.partnership)
         this.setState(this.state)
     }
@@ -275,7 +275,7 @@ class PartnershipPage extends React.Component {
         }
         else
         {
-            AppActions.updatePartnershipAtIndex(this.state.partnershipIndex,this.state.partnership,(response) => {
+            AppActions.updatePartnership(this.state.partnershipId,this.state.partnership,(response) => {
                 if(response.result)
                 {
                     swal(

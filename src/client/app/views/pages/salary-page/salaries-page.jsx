@@ -9,7 +9,7 @@ import MonthYearBox from '../../common/month-year-box.jsx'
 import Tabs from 'muicss/lib/react/tabs'
 import Tab from 'muicss/lib/react/tab'
 
-var selectedTab = 0
+//var salariesSelectedTab = 0
 
 class Salaries extends React.Component {
 
@@ -20,6 +20,7 @@ class Salaries extends React.Component {
         var date = new Date()
         var currentMonth = getMonthName(date.getMonth().toString());
         var currentYear = date.getFullYear().toString();
+
 
         this.state = {
             agents: AppStore.getAgents(),
@@ -55,18 +56,21 @@ class Salaries extends React.Component {
 
     onAgentRowClick(index,rowData)
     {
-        this.context.router.push('/app/agents-and-partnerships/agent-salary-page/'+index)
+        this.context.router.push('/app/agents-and-partnerships/agent-salary-page/'+rowData.idNumber)
     }
     onPartnershipRowClick(index,rowData)
     {
-        this.context.router.push('/app/agents-and-partnerships/partnership-salary-page/'+index)
+        this.context.router.push('/app/agents-and-partnerships/partnership-salary-page/'+rowData.partnershipId)
     }
     //UI
     onChangeTab(i, value, tab, ev)
     {
-        selectedTab = i
-        this.setState(this.state)
-    }
+        if(!isNaN(i))
+        {
+            this.context.salariesSelectedTab = i
+            this.setState(this.state)
+        }
+     }
 
     render () {
 
@@ -77,21 +81,25 @@ class Salaries extends React.Component {
                 key: "name",
                 width: "33%",
                 type: 'read-only',
-                color: 'blue'
+                color: 'blue',
+                searchBox: true
             },
             {
                 title: "מזהה",
                 key: "idNumber",
                 width: "33%",
                 type: 'read-only',
-                color: 'normal'
+                color: 'normal',
+                searchBox: true
             },
             {
                 title: "סטטוס",
                 key: "status",
                 width: "33%",
                 type: 'read-only',
-                color: 'normal'
+                color: 'normal',
+                searchBox: true
+
             }
         ]
 
@@ -102,21 +110,25 @@ class Salaries extends React.Component {
                 key: "names",
                 width: "33%",
                 type: 'read-only',
-                color: 'normal'
+                color: 'normal',
+                searchBox: true
+
             },
             {
                 title: "מזהה",
                 key: "idNumbers",
                 width: "33%",
                 type: 'read-only',
-                color: 'normal'
+                color: 'normal',
+                searchBox: true
             },
             {
                 title: "סטטוס",
                 key: "status",
                 width: "33%",
                 type: 'read-only',
-                color: 'normal'
+                color: 'normal',
+                searchBox: true
             }
         ]
 
@@ -152,10 +164,11 @@ class Salaries extends React.Component {
                 }
             }
             partnershipData["status"] = this.state.partnerships[partnershipIndex].active ? "פעיל":"לא פעיל"
+            partnershipData["partnershipId"] = this.state.partnerships[partnershipIndex]._id
             partnershipsData.push(partnershipData)
         }
 
-
+        console.log(this.context.salariesSelectedTab)
 
         return (
             <div className="salaries-page animated fadeIn ">
@@ -168,7 +181,7 @@ class Salaries extends React.Component {
                 <div className="vertical-spacer-10"/>
 
                 <div className="salaries-page-tabs-container shadow">
-                    <Tabs onChange={this.onChangeTab.bind(this)} justified={true} initialSelectedIndex={selectedTab}>
+                    <Tabs onChange={this.onChangeTab.bind(this)} justified={true} initialSelectedIndex={this.context.salariesSelectedTab}>
 
                             <Tab value="pane-1" label={strings.agents}>
                                 <div className="vertical-spacer-10"/>
@@ -183,12 +196,9 @@ class Salaries extends React.Component {
                                     <Table onRowClick={this.onPartnershipRowClick.bind(this)} columns={partnershipsColumns} data={partnershipsData}/>
                                 </div>
                             </Tab>
-
                     </Tabs>
                 </div>
             </div>
-
-
         );
     }
 }
@@ -197,7 +207,8 @@ class Salaries extends React.Component {
 
 //Important!! This adds the router object to context
 Salaries.contextTypes = {
-    router: React.PropTypes.object.isRequired
+    router: React.PropTypes.object.isRequired,
+    salariesSelectedTab: React.PropTypes.number
 }
 
 export default Salaries;

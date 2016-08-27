@@ -7,7 +7,7 @@ class AgentSalaryPage extends SalaryPage {
     constructor(props) {
         super(props);
 
-        var agent = AppStore.getAgentAtIndex(this.props.params.index)
+        var agent = AppStore.getAgent(this.props.params.idNumber)
         this.state.context = {
             type: "agent",
             id: agent.idNumber,

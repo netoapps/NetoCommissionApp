@@ -118,15 +118,17 @@ class DashboardRankTable extends React.Component {
             if(response.result == true)
             {
                 var idsData = Object.keys(response.data)
-                for (const item of idsData)
-                {
+                for (const item of idsData) {
                     var idData = response.data[item]
                     var agent = AppStore.getAgent(item)
                     var agentName = ""
                     if (agent != null) {
                         agentName = agent.name + " " + agent.familyName
                     }
-                    agentName = agent.name + " " + agent.familyName
+                    else
+                    {
+                        agentName = "סוכן נמחק מהמערכת"
+                    }
 
                     var portfolio = idData.currentMonth.portfolio
                     var portfolioChange = 0
