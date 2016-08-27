@@ -23,6 +23,7 @@ function Service() {
                     faxNumber:faxNumber,
                     email:email,
                     active:active,
+                    deleted:false,
                     $pushAll: {
                         paymentsDetails: paymentDetails
                     },
