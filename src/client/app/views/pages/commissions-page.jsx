@@ -756,28 +756,32 @@ class Commissions extends React.Component {
                 key: "companyName",
                 width: "20%",
                 type: 'read-only',
-                color: 'normal'
+                color: 'normal',
+                searchBox: true
             },
             {
                 title: "מספר סוכן",
                 key: "agentNumber",
                 width: "10%",
                 type: 'read-only',
-                color: 'normal'
+                color: 'normal',
+                searchBox: true
             },
             {
                 title: "שם סוכן",
                 key: "agentName",
                 width: "20%",
                 type: 'read-only',
-                color: 'normal'
+                color: 'normal',
+                searchBox: true
             },
             {
                 title: "סוג תשלום",
                 key: "paymentType",
                 width: "10%",
                 type: 'read-only',
-                color: 'normal'
+                color: 'normal',
+                searchBox: true
             },
             {
                 title: "סה״כ תשלום",
@@ -785,7 +789,8 @@ class Commissions extends React.Component {
                 width: "10%",
                 type: 'read-only',
                 format: 'currency',
-                color: 'normal'
+                color: 'normal',
+                searchBox: true
             },
             {
                 title: "סה״כ גודל תיק",
@@ -793,21 +798,24 @@ class Commissions extends React.Component {
                 width: "10%",
                 type: 'read-only',
                 format: 'currency',
-                color: 'normal'
+                color: 'normal',
+                searchBox: true
             },
             {
                 title: "חודש שכר",
                 key: "paymentDate",
                 width: "10%",
                 type: 'month-year-date',
-                color: 'normal'
+                color: 'normal',
+                searchBox: true
             },
             {
                 title: "תאריך העלאה",
                 key: "creationTime",
                 width: "10%",
                 type: 'full-date',
-                color: 'normal'
+                color: 'normal',
+                searchBox: true
             }
 
         ]
