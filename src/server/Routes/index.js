@@ -20,7 +20,8 @@ module.exports.registerRoutes = function(app){
 
     var apiRouter = express.Router();
     //APIs
-    apiRouter.post('/excel_columns',upload.single('file'),excel.analyzeColumns)
+    apiRouter.post('/excel_columns',upload.single('file'),excel.analyzeColumns);
+    apiRouter.post('/excel_report',excel.generateAndDownloadSalaryReport);
     //Agents
     apiRouter.get('/agent', agents.getAllAgents);
     apiRouter.get('/agent/:agentId', agents.getAgentById);
