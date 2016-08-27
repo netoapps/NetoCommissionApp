@@ -8,22 +8,54 @@ var async = require('async');
 var _ = require('underscore');
 
 function addAgent(req, res) {
-    var agent = new Agent();
     var data = req.body;
-    agent.name = data.name;
-    agent.familyName = data.familyName;
-    agent.idNumber = data.idNumber;
-    agent.phoneNumber = data.phoneNumber;
-    agent.faxNumber = data.faxNumber;
-    agent.email =data.email;
-    agent.active = data.active;
-    agent.paymentsDetails = data.paymentsDetails;
-    agent.save(function(err){
+    if(!data || !data.idNumber){
+        return res.status(400).json({err:'missing data'});
+    }
+    Agent.findOne({idNumber:data.idNumber}, function(err, agent){
         if(err){
-            return res.status(500).json({err:err});
+            return res.status(500).json(err);
         }
-        return res.status(200).json({agent:agent});
+        if(agent){
+            if(agent.deleted){
+                agent.deleted=false;
+                agent.name = data.name;
+                agent.familyName = data.familyName;
+                agent.idNumber = data.idNumber;
+                agent.phoneNumber = data.phoneNumber;
+                agent.faxNumber = data.faxNumber;
+                agent.email =data.email;
+                agent.active = data.active;
+                agent.paymentsDetails = data.paymentsDetails;
+                agent.save(function(err){
+                    if(err){
+                        return res.status(500).json(err);
+                    }
+                    return res.status(200).json({msg:'agent undeleted'});
+                })
+            }else{
+                return res.status(400).json({err:'agent with idNumber: '+data.idNumber+' already exist'});
+            }
+        }else{
+            agent = new Agent();
+            agent.name = data.name;
+            agent.familyName = data.familyName;
+            agent.idNumber = data.idNumber;
+            agent.phoneNumber = data.phoneNumber;
+            agent.faxNumber = data.faxNumber;
+            agent.email =data.email;
+            agent.active = data.active;
+            agent.paymentsDetails = data.paymentsDetails;
+            agent.deleted=false;
+            agent.save(function(err){
+                if(err){
+                    return res.status(500).json({err:err});
+                }
+                return res.status(200).json({agent:agent});
+            })
+        }
     })
+
 }
 function editAgent(req, res) {
     const agentId = req.params.agentId;
@@ -33,6 +65,12 @@ function editAgent(req, res) {
     Agent.findOne({_id:agentId}, function(err, agent){
         if(err){
             return res.status(500).json({err:err});
+        }
+        if(!agent){
+            return res.status(400).json({err:'agent does not exist'});
+        }
+        if(agent.deleted){
+            return res.status(400).json({err:'agent is deleted'});
         }
         var data = req.body;
         agent.name = data.name;
@@ -44,6 +82,7 @@ function editAgent(req, res) {
         agent.active = data.active;
         agent.paymentsDetails = data.paymentsDetails;
         agent.updateTime = Date.now();
+        agent.deleted=false;
         agent.save(function(err){
             if(err){
                 return res.status(500).json({err:err});
@@ -65,7 +104,11 @@ function deleteAgent(req, res) {
         if(!agent){
             return res.status(400).json({err:'agent not found'});
         }
-        agent.remove(function(err){
+        if(agent.deleted){
+            return res.status(400).json({err:'agent already deleted'});
+        }
+        agent.deleted=true;
+        agent.save(function(err){
             if(err){
                 return res.status(500).json({err:err});
             }

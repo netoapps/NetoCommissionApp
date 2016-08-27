@@ -15,6 +15,7 @@ var schema = new mongoose.Schema({
     faxNumber:String,
     email:String,
     active:Boolean,
+    deleted:{type:Boolean, default:false},
     paymentsDetails:[{
         _id:false,
         companyName:String,
