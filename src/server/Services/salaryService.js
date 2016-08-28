@@ -351,30 +351,33 @@ function SalaryService() {
     this.getAllIdSalariesByTypesForDateSummed = function (idNumber, date, owner) {
         return new Promise(function (resolve, reject) {
             date = new Date(date);
+            var sumQuery = {};
+            commissionTypes.filter(function(type){
+                return type !=='ידני'
+            }).map(function(type){
+                sumQuery[type] = {$sum: {$cond: [{$eq: ['$type', type]}, '$calculatedAmount', 0]}}
+            });
+            sumQuery['ידני'] = {$sum: {$cond: [{$and:[{$eq: ['$fileId', null]},{$eq:['$type','ידני']}]}, '$calculatedAmount', 0]}};
+            sumQuery['_id']=null;
             Salary.aggregate([
                 {$match: {idNumber: idNumber, paymentDate: date, owner:owner}},
                 {
-                    $group: {
-                        _id: null,
-                        'נפרעים': {$sum: {$cond: [{$eq: ['$type', 'נפרעים']}, '$calculatedAmount', 0]}},
-                        'בונוס': {$sum: {$cond: [{$eq: ['$type', 'בונוס']}, '$calculatedAmount', 0]}},
-                        'היקף': {$sum: {$cond: [{$eq: ['$type', 'היקף']}, '$calculatedAmount', 0]}},
-                        'ידני': {$sum: {$cond: [{$and:[{$eq: ['$fileId', null]},{$eq:['$type','ידני']}]}, '$calculatedAmount', 0]}}
-                    }
+                    $group: sumQuery
                 }
             ], function (err, data) {
                 if (err) {
                     return reject(err);
                 }
-                if (data.length === 0) {
-                    return resolve({'נפרעים': 0, 'בונוס': 0, 'היקף': 0, 'ידני': 0});
-                }
-                return resolve({
-                    'נפרעים': data[0]['נפרעים'],
-                    'בונוס': data[0]['בונוס'],
-                    'היקף': data[0]['היקף'],
-                    'ידני': data[0]['ידני']
-                });
+                var sums = {};
+                commissionTypes.forEach(function(type){
+                    if(data.length===0){
+                        sums[type]=0;
+                    }else{
+                        sums[type]=data[0][type];
+                    }
+                })
+                sums['ידני'] = data.length>0?data[0]['ידני']:0;
+                return resolve(sums);
             })
         })
     }
@@ -484,12 +487,12 @@ function SalaryService() {
                     return sal.type;
                 });
 
-                return resolve({
-                    'נפרעים': salaries['נפרעים'] || [],
-                    'בונוס': salaries['בונוס'] || [],
-                    'היקף': salaries['היקף'] || [],
-                    'ידני': salaries['ידני'] || []
-                });
+                var salsObj = {};
+                commissionTypes.forEach(function(type){
+                    salsObj[type] = salaries[type] || []
+                })
+                commissionTypes['ידני'] = salaries['ידני'] || [];
+                return resolve(salsObj);
             })
         });
     }
@@ -561,81 +564,43 @@ function SalaryService() {
         return new Promise(function (resolve, reject) {
             var salaryTasks = [];
             salaries.map(function (s) {
-                if (s[type3]) {
-                    s[type3] *= taxValue;
-                }
-                if (s[type4]) {
-                    s[type4] *= taxValue;
-                }
-                if (s[type5]) {
-                    s[type5] *= taxValue;
-                }
+                commissionTypes.forEach(function(type){
+                    if (s[type]) {
+                        s[type] *= taxValue;
+                    }
+                })
             });
 
 
             _.each(salaries, function (salary) {
-                var salaryIdType3 = company + '-' + salary['מספר סוכן'] + '-' + type3;
-                var salaryIdType4 = company + '-' + salary['מספר סוכן'] + '-' + type4;
-                var salaryIdType5 = company + '-' + salary['מספר סוכן'] + '-' + type5;
-                var agentPaymentDetails, pd, amount = 0, calculatedAmount = 0, agencyAmount = 0,partnershipId=null, partnershipPaymentDetails;
-                var agentsDetails = [];
-                if (agents[salaryIdType3] && salary[type3]) {
-                    agentPaymentDetails = agents[salaryIdType3];
-                    pd = agentPaymentDetails.pd;
-                    amount = Number(salary[type3]);
-                    calculatedAmount = amount;
-                    calculatedAmount *= Number(pd.agentPart) / 100;
-                    agencyAmount = amount;
-                    agencyAmount *= Number(pd.agencyPart) / 100;
-                    salaryTasks.push(addSalary.bind(null, agentPaymentDetails.idNumber, salary['מספר סוכן'], paymentDate, amount, calculatedAmount, agencyAmount, type3, company, salary['גודל תיק']*Number(pd.agentPart)/100, fileId, '', 'agent', null));
-                }
-                if (agents[salaryIdType4] && salary[type4]) {
-                    agentPaymentDetails = agents[salaryIdType4];
-                    pd = agentPaymentDetails.pd;
-                    amount = Number(salary[type4]);
-                    calculatedAmount = amount;
-                    calculatedAmount *= Number(pd.agentPart) / 100;
-                    agencyAmount = amount;
-                    agencyAmount *= Number(pd.agencyPart) / 100;
-                    salaryTasks.push(addSalary.bind(null, agentPaymentDetails.idNumber, salary['מספר סוכן'], paymentDate, amount, calculatedAmount, agencyAmount, type4, company, 0, fileId, '', 'agent',null));
-                }
-                if (agents[salaryIdType5] && salary[type5]) {
-                    agentPaymentDetails = agents[salaryIdType5];
-                    pd = agentPaymentDetails.pd;
-                    amount = Number(salary[type5]);
-                    calculatedAmount = amount;
-                    calculatedAmount *= Number(pd.agentPart) / 100;
-                    agencyAmount = amount;
-                    agencyAmount *= Number(pd.agencyPart) / 100;
-                    salaryTasks.push(addSalary.bind(null, agentPaymentDetails.idNumber, salary['מספר סוכן'], paymentDate, amount, calculatedAmount, agencyAmount, type5, company, 0, fileId, '', 'agent',null));
-                }
+                commissionTypes.forEach(function(type){
+                    var salaryIdType = company + '-' + salary['מספר סוכן'] + '-' + type;
+                    var agentPaymentDetails, pd, amount = 0, calculatedAmount = 0, agencyAmount = 0,partnershipId=null, partnershipPaymentDetails;
+                    var agentsDetails = [];
+                    var portfolio = 0;
+                    if(type==='נפרעים'){
+                        portfolio = Number(salary['גודל תיק']);
+                    }
+                    if (agents[salaryIdType] && salary[type]) {
+                        agentPaymentDetails = agents[salaryIdType];
+                        pd = agentPaymentDetails.pd;
+                        amount = Number(salary[type]);
+                        calculatedAmount = amount;
+                        calculatedAmount *= Number(pd.agentPart) / 100;
+                        agencyAmount = amount;
+                        agencyAmount *= Number(pd.agencyPart) / 100;
+                        salaryTasks.push(addSalary.bind(null, agentPaymentDetails.idNumber, salary['מספר סוכן'], paymentDate, amount, calculatedAmount, agencyAmount, type, company, portfolio*Number(pd.agentPart)/100, fileId, '', 'agent', null));
 
-
-                if (partnerships[salaryIdType3] && salary[type3]) {
-                    partnershipId = partnerships[salaryIdType3].pid;
-                    partnershipPaymentDetails = partnerships[salaryIdType3];
-                    agentsDetails = partnershipPaymentDetails.agentsDetails;
-                    pd = partnershipPaymentDetails.pd;
-                    amount = Number(salary[type3]);
-                    salaryTasks.push(calculatePartnershipSalary.bind(null,partnershipId, salary['מספר סוכן'], agentsDetails, pd, paymentDate, amount, type3, company, salary['גודל תיק'], fileId,''));
-                }
-                if (partnerships[salaryIdType4] && salary[type4]) {
-                    partnershipId = partnerships[salaryIdType4].pid;
-                    partnershipPaymentDetails = partnerships[salaryIdType4];
-                    agentsDetails = partnershipPaymentDetails.agentsDetails;
-                    pd = partnershipPaymentDetails.pd;
-                    amount = Number(salary[type4]);
-                    salaryTasks.push(calculatePartnershipSalary.bind(null,partnershipId, salary['מספר סוכן'], agentsDetails, pd, paymentDate, amount, type4, company, 0, fileId,''));
-                }
-                if (partnerships[salaryIdType5] && salary[type5]) {
-                    partnershipId = partnerships[salaryIdType5].pid;
-                    partnershipPaymentDetails = partnerships[salaryIdType5];
-                    agentsDetails = partnershipPaymentDetails.agentsDetails;
-
-                    pd = partnershipPaymentDetails.pd;
-                    amount = Number(salary[type5]);
-                    salaryTasks.push(calculatePartnershipSalary.bind(null,partnershipId, salary['מספר סוכן'], agentsDetails, pd, paymentDate, amount, type5, company, 0, fileId,''));
-                }
+                    }
+                    if (partnerships[salaryIdType] && salary[type]) {
+                        partnershipId = partnerships[salaryIdType].pid;
+                        partnershipPaymentDetails = partnerships[salaryIdType];
+                        agentsDetails = partnershipPaymentDetails.agentsDetails;
+                        pd = partnershipPaymentDetails.pd;
+                        amount = Number(salary[type]);
+                        salaryTasks.push(calculatePartnershipSalary.bind(null,partnershipId, salary['מספר סוכן'], agentsDetails, pd, paymentDate, amount, type, company, portfolio, fileId,''));
+                    }
+                })
             });
 
             async.parallel(salaryTasks, function (err, result) {
