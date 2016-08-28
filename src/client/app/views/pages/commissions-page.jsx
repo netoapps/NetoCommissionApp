@@ -243,12 +243,7 @@ class ColumnSelectModalContent extends React.Component
         for(var col = 0; col < this.props.columns.length;  col++)
         {
             var selectedType = this.selectedTypeOfColumn(this.props.columns[col])
-            // if(this.props.columns[col] == this.state.columnToClear)
-            // {
-            //     selectedType = notSetValue
-            //     this.state.columnToClear = null
-            // }
-            columns.push(<ColumnSelectModalContentCell selectedType={selectedType} onSelectType={this.onSelectType.bind(this)} types={this.state.types} key={col} value={this.props.columns[col]}/>)
+             columns.push(<ColumnSelectModalContentCell selectedType={selectedType} onSelectType={this.onSelectType.bind(this)} types={this.state.types} key={col} value={this.props.columns[col]}/>)
         }
 
         return <div className="columns-select-modal">
