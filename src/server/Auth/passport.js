@@ -32,7 +32,8 @@ module.exports.init = function(app) {
             if(!user) {
                 return res.status(400).json({err:info});
             }
-            return res.status(200).json({apiToken:user.apiToken});
+            delete user.password;
+            return res.status(200).json({user:user});
 
         })(req,res,next);
     });
@@ -45,8 +46,8 @@ module.exports.init = function(app) {
 
                 return res.status(400).json({err:info});
             }
-
-            return res.status(200).json({apiToken:user.apiToken});
+            delete user.password;
+            return res.status(200).json({user:user});
         })(req,res,next);
     });
 
