@@ -132,12 +132,13 @@ class Salaries extends React.Component {
         var agentsData = []
         for(var agentIndex = 0; agentIndex < this.state.agents.length; agentIndex++)
         {
-            var agentData = {}
-
-            agentData["name"] = this.state.agents[agentIndex].name + " " + this.state.agents[agentIndex].familyName
-            agentData["idNumber"] = this.state.agents[agentIndex].idNumber
-            agentData["status"] = this.state.agents[agentIndex].active ? "פעיל":"לא פעיל"
-            agentsData.push(agentData)
+            if(!this.state.agents[agentIndex].deleted) {
+                var agentData = {}
+                agentData["name"] = this.state.agents[agentIndex].name + " " + this.state.agents[agentIndex].familyName
+                agentData["idNumber"] = this.state.agents[agentIndex].idNumber
+                agentData["status"] = this.state.agents[agentIndex].active ? "פעיל" : "לא פעיל"
+                agentsData.push(agentData)
+            }
         }
 
         var partnershipsData = []
