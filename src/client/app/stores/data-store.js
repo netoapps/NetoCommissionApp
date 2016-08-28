@@ -231,7 +231,7 @@ class DataStore extends Store {
             {
                 url: '/api/v1/constants/companies',
                 type: 'PUT',
-                data: JSON.stringify(companies),
+                data: JSON.stringify({companies:companies}),
                 contentType: 'application/json',
                 success: function(result)
                 {

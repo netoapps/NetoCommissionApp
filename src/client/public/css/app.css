@@ -372,7 +372,7 @@ body
     margin:0;
     padding-right: 50px;
     font-size: 15px;
-    font-weight: lighter;
+    font-weight: normal;
 }
 
 .right-panel-item-button:hover
@@ -405,8 +405,8 @@ body
     margin:0;
     padding-right: 50px;
     font-size: 15px;
-    font-weight: lighter;
-    background: url('../images/agents.png') no-repeat right center;
+    font-weight: normal;
+    background: url('../images/settings.png') no-repeat right center;
 }
 
 .right-panel-item-settings-button:hover
