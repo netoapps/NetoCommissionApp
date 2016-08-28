@@ -570,7 +570,7 @@ class SalaryPage extends React.Component {
         }
 
         var incomesColumnsData = []
-        for(var col = 0; col < this.incomesColumns.length; type++)
+        for(var col = 0; col < this.incomesColumns.length; col++)
         {
             var colData = {title:this.incomesColumns[col].title,
                            key:this.incomesColumns[col].key}
@@ -580,8 +580,9 @@ class SalaryPage extends React.Component {
             }
             incomesColumnsData.push(colData)
         }
+
         var incomesData = []
-        for(var income = 0; income < this.state.incomes; income++)
+        for(var income = 0; income < this.state.incomes.length; income++)
         {
             var incomeData = {}
             Object.assign(incomeData,this.state.incomes[income])

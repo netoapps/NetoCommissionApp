@@ -33,8 +33,10 @@ module.exports.generateAndDownloadSalaryReport = function (req, res) {
     var filename = shordid.generate();
     var reportFileStream = fs.createWriteStream(filename);
     reporter.createReport(data.name, data.date, data.salary, data.agencyAmount, data.portfolio, data.incomes, data.expenses, reportFileStream)
-        .then(function () {
-            return res.download(filename, data.name + '.xlsx', function (err) {
+        .then(function ()
+        {
+            return res.download(filename, data.name + '.xlsx', function (err)
+            {
                 fs.unlink(filename)
             });
         })

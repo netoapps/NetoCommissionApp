@@ -43,8 +43,9 @@ function ReportsService() {
                 var incomeRowData = incomes.data[income]
                 var incomeRowDataOut = []
                 for (incomeCol = 0; incomeCol < incomes.columns.length; incomeCol++) {
-                    if(incomes.columns[incomeCol].key===''){
-                        incomeRowDataOut.push('test');
+                    if(incomes.columns[incomeCol].key==='')
+                    {
+                        incomeRowDataOut.push('');
                     }else {
                         var incomeCellData = incomeRowData[incomes.columns[incomeCol].key].toString()
                         if (incomes.columns[incomeCol].format === "currency") {
