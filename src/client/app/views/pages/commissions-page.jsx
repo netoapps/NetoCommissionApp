@@ -19,6 +19,7 @@ import {Modal} from '../common/app-modal.jsx';
 var notSetValue = "לא נקבע"
 var agentNumberValue = "מספר סוכן"
 var portfolioValue = "גודל תיק"
+
 class ColumnSelectModalContentCell extends React.Component
 {
     constructor(props)
@@ -58,7 +59,10 @@ class ColumnSelectModalContentCell extends React.Component
         }
         for(var type = 0; type < this.state.types.length; type++)
         {
-            types.push(<DropdownItem className="mui--text-right" onClick={this.onTypeChange.bind(this,this.state.types[type])} value={this.state.types[type]} key={type}>{this.state.types[type]}</DropdownItem>)
+            types.push(<DropdownItem className="mui--text-right"
+                                     onClick={this.onTypeChange.bind(this,this.state.types[type])}
+                                     value={this.state.types[type]}
+                                     key={type}>{this.state.types[type]}</DropdownItem>)
         }
 
         return <div className="columns-select-cell">
@@ -88,8 +92,7 @@ class ColumnSelectModalContent extends React.Component
 
         this.state = {
             types: types,
-            typeSelection: typeSelection,
-            columnToClear: null
+            typeSelection: typeSelection
         }
     }
     onSelectType(type,columnName)
@@ -97,20 +100,17 @@ class ColumnSelectModalContent extends React.Component
         if(type === notSetValue)
         {
             var typeOfColumn = this.selectedTypeOfColumn(columnName)
-            if(typeOfColumn != notSetValue)
-            {
-                this.state.columnToClear = columnName
-            }
             this.state.typeSelection[typeOfColumn] = null
         }
         //Clearing other column by settings this one
         else
         {
-            this.state.columnToClear = this.state.typeSelection[type]
+            var keyOfColumn = this.selectedTypeOfColumn(columnName)
+            this.state.typeSelection[keyOfColumn] = null
             this.state.typeSelection[type] = columnName
         }
+        console.log(this.state.typeSelection)
         this.setState(this.state)
-
     }
     validateColumnSettings(callback)
     {
@@ -243,11 +243,11 @@ class ColumnSelectModalContent extends React.Component
         for(var col = 0; col < this.props.columns.length;  col++)
         {
             var selectedType = this.selectedTypeOfColumn(this.props.columns[col])
-            if(this.props.columns[col] == this.state.columnToClear)
-            {
-                selectedType = notSetValue
-                this.state.columnToClear = null
-            }
+            // if(this.props.columns[col] == this.state.columnToClear)
+            // {
+            //     selectedType = notSetValue
+            //     this.state.columnToClear = null
+            // }
             columns.push(<ColumnSelectModalContentCell selectedType={selectedType} onSelectType={this.onSelectType.bind(this)} types={this.state.types} key={col} value={this.props.columns[col]}/>)
         }
 
