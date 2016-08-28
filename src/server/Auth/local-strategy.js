@@ -86,23 +86,15 @@ module.exports.config = function () {
                     if(req.body.name){
                         newUser.name = req.body.name;
                     }
-                    if(req.body.lastName){
-                        newUser.lastName = req.body.lastName;
+                    if(req.body.familyName){
+                        newUser.familyName = req.body.familyName;
                     }
-
+                    newUser.apiToken = newUser.getApiToken();
                     newUser.save(function (err) {
                         if (err)
                             return done(err);
 
-                        newUser.apiToken = newUser.getApiToken();
-                        newUser.save(function (err) {
-                            if (err) {
-                                console.log('err: '+err);
-                                return done(err);
-                            }
-                            return done(null, newUser);
-                        });
-
+                        return done(null, newUser);
                     });
 
                 });
