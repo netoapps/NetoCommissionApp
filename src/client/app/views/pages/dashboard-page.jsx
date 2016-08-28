@@ -6,6 +6,7 @@ import Table from './../common/table.jsx';
 import MonthYearBox from './../common/month-year-box.jsx'
 import {getMonthName,getMonthNumber,getMonths} from './../common/month-year-box.jsx'
 import AppStore from '../../stores/data-store'
+import LoginStore from '../../stores/login-store'
 import DataService from '../../services/data-service.js';
 import Dropdown from '../../../../../node_modules/muicss/lib/react/dropdown'
 import DropdownItem from '../../../../../node_modules/muicss/lib/react/dropdown-item'
@@ -586,7 +587,7 @@ class Dashboard extends React.Component {
         var selectedCommissionType = commissionTypes[0]
 
         this.state = {
-            loginData: AuthService.getLoginData(),
+            loginData: LoginStore.getUserData(),
             date: monthStartDate,
             selectedMonth: currentMonth,
             selectedYear:currentYear,
@@ -596,7 +597,6 @@ class Dashboard extends React.Component {
     componentDidMount()
     {
     }
-
     componentWillUnmount()
     {
     }

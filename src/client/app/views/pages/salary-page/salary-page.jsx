@@ -602,7 +602,7 @@ class SalaryPage extends React.Component {
             this.state.date,salary,this.state.agencyAmountTotal,this.state.portfolio,incomes,expenses,(response) => {
                 if(response.result)
                 {
-                    console.log("ok")
+                    console.log("generateSalaryReport ok")
                 }
             })
     }

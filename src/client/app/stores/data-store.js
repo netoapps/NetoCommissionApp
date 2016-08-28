@@ -4,6 +4,8 @@
 import Store from '../lib/store.js';
 import {ActionType} from '../actions/app-actions.js';
 import DataService from '../services/data-service.js';
+import AuthService from '../services/auth-service.js';
+import LoginData from './login-store.js';
 
 class DataStore extends Store {
 
@@ -18,8 +20,16 @@ class DataStore extends Store {
         this.initialize('agents',[]);
         this.initialize('partnerships',[]);
         this.initialize('files', []);
-    }
 
+       // this._handleUserLoggedIn = this.handleUserLoggedIn.bind(this)
+       // addEventListener(ActionType.USER_LOGGED_IN, this._handleUserLoggedIn);
+    }
+    // handleUserLoggedIn()
+    // {
+    //     // this.loadData()
+    //     console.log("handleUserLoggedIn")
+    //     setTimeout((function(){ this.loadData() }).bind(this), 900);
+    // }
     loadData()
     {
         var promise = []
@@ -126,6 +136,9 @@ class DataStore extends Store {
                     type: 'DELETE',
                     data: JSON.stringify(agent),
                     contentType: 'application/json',
+                    headers: {
+                        'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                    },
                     success: function(result)
                     {
                         console.log(result);
@@ -164,6 +177,9 @@ class DataStore extends Store {
                     type: 'PUT',
                     data: JSON.stringify(updatedAgent),
                     contentType: 'application/json',
+                    headers: {
+                        'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                    },
                     success: function (result) {
                         console.log(result);
                         console.log('setAgent - server responded with success!');
@@ -233,6 +249,9 @@ class DataStore extends Store {
                 type: 'PUT',
                 data: JSON.stringify({companies:companies}),
                 contentType: 'application/json',
+                headers: {
+                    'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                },
                 success: function(result)
                 {
                     console.log(result);
@@ -261,6 +280,9 @@ class DataStore extends Store {
                 type: 'POST',
                 data: JSON.stringify(partnership),
                 contentType: 'application/json',
+                headers: {
+                    'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                },
                 success: function(result)
                 {
                     console.log(result);
@@ -299,6 +321,9 @@ class DataStore extends Store {
                     type: 'PUT',
                     data: JSON.stringify(updatedPartnership),
                     contentType: 'application/json',
+                    headers: {
+                        'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                    },
                     success: function (result) {
                         console.log(result);
                         console.log('setPartnership - Server responded with success!');
@@ -336,6 +361,9 @@ class DataStore extends Store {
                     type: 'DELETE',
                     data: JSON.stringify(partnership),
                     contentType: 'application/json',
+                    headers: {
+                        'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                    },
                     success: function(result)
                     {
                         console.log(result);
@@ -378,6 +406,9 @@ class DataStore extends Store {
                         url: '/api/v1/file/'+files[file]._id,
                         type: 'DELETE',
                         contentType: 'application/json',
+                        headers: {
+                            'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                        },
                         success: function(result)
                         {
                             console.log(result);
@@ -397,8 +428,6 @@ class DataStore extends Store {
                 break;
             }
         }
-
-
     }
     uploadCommissionFile(data)
     {
@@ -408,6 +437,8 @@ class DataStore extends Store {
 
         // now post a new XHR request
         var xhr = new XMLHttpRequest();
+        xhr.setRequestHeader('Authorization','Bearer ' + LoginData.getUserData().apiToken);
+
         xhr.open('POST', '/api/v1/commissions/upload');
         xhr.onload = function ()
         {

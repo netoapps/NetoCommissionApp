@@ -21,9 +21,9 @@ export default class Login extends React.Component {
         this.state.password = this.refs.password.value;
         this.errorMessage = "";
         this.errorMessageClassName = "";
-        AuthService.login(this.state.email, this.state.password, ((loggedIn) =>
+        AuthService.login(this.state.email, this.state.password, ((response) =>
         {
-            if(loggedIn)
+            if(response.authenticated)
             {
                 this.context.router.push('/app/dashboard')
             }
@@ -33,6 +33,12 @@ export default class Login extends React.Component {
                 this.errorMessageClassName = "login-page-alert";
             }
         }).bind(this))
+    }
+
+    signup(e)
+    {
+        console.log("signup")
+        this.context.router.push('/signup')
     }
 
     render() {
@@ -54,7 +60,10 @@ export default class Login extends React.Component {
                         <button type="submit" className="login-page-button" onClick={this.login.bind(this)}>{strings.connect}</button>
                     </form>
                     <div className="login-page-need-account-text">
-                        <p>{strings.needAccount}<a href="/user-signup-request">&nbsp;{strings.sendRegisterRequest}</a></p>
+                        <p>
+                            {strings.needAccount}&nbsp;
+                            <input className="login-page-register-btn" type="button" onClick={this.signup.bind(this)} value={strings.sendRegisterRequest}/>
+                        </p>
                     </div>
                 </div>
             </div>

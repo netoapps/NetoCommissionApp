@@ -5,7 +5,9 @@
 
 var express = require('express');
 var passport = require('passport');
+var auth = require('../Auth/passport');
 var multer = require('multer');
+
 var upload = multer({ dest: '../../uploads/' });
 
 var agents = require('../Modules/agents');
@@ -15,10 +17,12 @@ var constants = require('../Modules/constants');
 var expanses = require('../Modules/expanses');
 var excel = require('../Modules/excel');
 module.exports.registerRoutes = function(app){
+    auth.init(app);
     var publicRouter = express.Router();
     app.use('/',publicRouter);
 
     var apiRouter = express.Router();
+    apiRouter.all('*',passport.authenticate('api', {session:false}))
     //APIs
     apiRouter.post('/excel_columns',upload.single('file'),excel.analyzeColumns);
     apiRouter.post('/excel_report',excel.generateAndDownloadSalaryReport);
