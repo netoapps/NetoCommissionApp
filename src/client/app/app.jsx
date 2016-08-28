@@ -4,6 +4,7 @@ import {render} from 'react-dom';
 import { browserHistory, Router, Route, Link } from 'react-router'
 import AuthService from './services/auth-service'
 import Login from './views/pages/login-page.jsx'
+import Signup from './views/pages/signup-page.jsx'
 import Dashboard from './views/pages/dashboard-page.jsx'
 import Commissions from './views/pages/commissions-page.jsx'
 import Salaries from './views/pages/salary-page/salaries-page.jsx'
@@ -19,6 +20,7 @@ import RightPanel from './views/right-panel.jsx';
 import { strings } from './constants/strings'
 import AppActions from './actions/app-actions'
 import AppStore from './stores/data-store'
+import LoginStore from './stores/login-store'
 import AppModal from './views/common/app-modal.jsx';
 import dispatcher from './dispatcher/app-dispatcher.js';
 import {Modal} from './views/common/app-modal.jsx';
@@ -26,8 +28,8 @@ import {ActionType} from './actions/app-actions.js'
 import LoadSpinner from 'react-loader'
 
 dispatcher.registerStore(AppStore);
-AppActions.appInit();
 var barTitle = ""
+
 
 function isAuthenticated(nextState, replace)
 {
@@ -47,7 +49,7 @@ class App extends React.Component {
         this.state = {
             showModal: false,
             modalContent: null,
-            loginData: AuthService.getLoginData(),
+            loginData: LoginStore.getUserData(),
             dataLoaded: false,
             pageTitle: "ראשי"
         };
@@ -169,6 +171,7 @@ function onEnterPage(nextState, replace)
 render((
     <Router history={browserHistory}>
         <Route path="/" component={Login} onEnter={isAuthenticated}/>
+        <Route path="/signup" component={Signup}/>
         <Route path="/app" component={App} >
             <Route path="/app/dashboard" component={Dashboard} onEnter={onEnterPage}/>
             <Route path="/app/salaries" component={Salaries} onEnter={onEnterPage}/>

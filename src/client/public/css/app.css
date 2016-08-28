@@ -511,6 +511,22 @@ body
     color: #999;
 }
 
+.login-page-register-btn
+{
+    background-color: transparent;
+    outline: 0;
+    color: #4286b4;
+    border: none;
+}
+.login-page-register-btn:hover
+{
+    color: #377096;
+}
+.login-page-register-btn:active
+{
+    color: #2e5b7a;
+}
+
 .login-page-button
 {
     font-family: "Tahoma", Helvetica, Arial, Helvetica Neue , sans-serif; !important;

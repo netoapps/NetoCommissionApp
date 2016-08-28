@@ -17,7 +17,7 @@ class UserBox extends React.Component {
             <div className="user-box hcontainer-no-wrap">
                 <img className="user-avatar" src={this.props.loginData.gender == "0" ? "../public/images/avatar-male.png":"../public/images/avatar-female.png"} alt="" />
                 <div className="user-box-info">
-                    <div className="user-box-name">{this.props.loginData.fullName}</div>
+                    <div className="user-box-name">{this.props.loginData.name + " " + this.props.loginData.familyName}</div>
                     <button className="user-box-logout-button" onClick={this.onLogout.bind(this)}>{strings.disconnect}</button>
                 </div>
             </div>

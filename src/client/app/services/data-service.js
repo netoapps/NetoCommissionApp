@@ -1,6 +1,8 @@
 /**
  * Created by asaf on 29/07/2016.
  */
+import AuthService from '../services/auth-service.js';
+import LoginData from '../stores/login-store.js';
 
 class DataService {
 
@@ -46,6 +48,9 @@ class DataService {
                     url: '/api/v1//constants/companies',
                     type: 'GET',
                     contentType: 'application/json',
+                    headers: {
+                        'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                    },
                     success: function(result)
                     {
                         console.log('load companies - server responded with success!');
@@ -71,6 +76,10 @@ class DataService {
                     url: '/api/v1//constants/commissions',
                     type: 'GET',
                     contentType: 'application/json',
+                    headers: {
+                        'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                    },
+
                     success: function(result)
                     {
                         console.log('load commissionTypes - server responded with success!');
@@ -94,6 +103,10 @@ class DataService {
                     url: '/api/v1/agent',
                     type: 'GET',
                     contentType: 'application/json',
+                    headers: {
+                        'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                    },
+
                     success: function(result)
                     {
                         console.log('load agents - server responded with success!');
@@ -117,6 +130,9 @@ class DataService {
                     url: '/api/v1/partnership',
                     type: 'GET',
                     contentType: 'application/json',
+                    headers: {
+                        'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                    },
                     success: function(result)
                     {
                         console.log('load partnerships - server responded with success!');
@@ -143,6 +159,9 @@ class DataService {
                     url: '/api/v1/file',
                     type: 'GET',
                     contentType: 'application/json',
+                    headers: {
+                        'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                    },
                     success: function(result)
                     {
                         console.log('load commission files - server responded with success!');
@@ -168,6 +187,9 @@ class DataService {
                 url: '/api/v1/salary/' + date + '/count',
                 type: 'GET',
                 contentType: 'application/json',
+                headers: {
+                    'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                },
                 success: function(result)
                 {
                     console.log(result);
@@ -200,6 +222,9 @@ class DataService {
                 type: 'POST',
                 data: JSON.stringify(agent),
                 contentType: 'application/json',
+                headers: {
+                    'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                },
                 success: function(result)
                 {
                     console.log(result);
@@ -232,6 +257,9 @@ class DataService {
                 url: '/api/v1/salary/by_company_types_summed/'+date,
                 type: 'GET',
                 contentType: 'application/json',
+                headers: {
+                    'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                },
                 success: function(result)
                 {
                     console.log('load commission files entries - server responded with success!');
@@ -259,6 +287,9 @@ class DataService {
                 url: '/api/v1/salary/'+ date + '/' + type,
                 type: 'GET',
                 contentType: 'application/json',
+                headers: {
+                    'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                },
                 success: function(result)
                 {
                     console.log('load commission files entries with type '+type+' - server responded with success!');
@@ -286,6 +317,9 @@ class DataService {
                 url: '/api/v1/salary/byid/'+ date + '/' + type,
                 type: 'GET',
                 contentType: 'application/json',
+                headers: {
+                    'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                },
                 success: function(result)
                 {
                     console.log('load commission files entries with type '+type+' - server responded with success!');
@@ -313,6 +347,9 @@ class DataService {
                 url: '/api/v1/salary/bymonths/'+ year + '/' + type,
                 type: 'GET',
                 contentType: 'application/json',
+                headers: {
+                    'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                },
                 success: function(result)
                 {
                     console.log('load commission files entries with year '+year+' and type ' + type + ' - server responded with success!');
@@ -348,6 +385,9 @@ class DataService {
                     url: url,
                     type: 'GET',
                     contentType: 'application/json',
+                    headers: {
+                        'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                    },
                     success: function(result)
                     {
                         console.log('load manual incomes data for date '+ date + ' - server responded with success!');
@@ -375,6 +415,9 @@ class DataService {
                     url: url,
                     type: 'GET',
                     contentType: 'application/json',
+                    headers: {
+                        'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                    },
                     success: function(result)
                     {
                         console.log('load incomes data for date '+ date + ' - server responded with success!');
@@ -403,6 +446,9 @@ class DataService {
                     url: url,
                     type: 'GET',
                     contentType: 'application/json',
+                    headers: {
+                        'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                    },
                     success: function(result)
                     {
                         console.log('load incomes components sum data for date '+ date + ' - server responded with success!');
@@ -431,6 +477,9 @@ class DataService {
                     url: url,
                     type: 'GET',
                     contentType: 'application/json',
+                    headers: {
+                        'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                    },
                     success: function(result)
                     {
                         console.log('load portfolio data for date '+ date + ' - server responded with success!');
@@ -460,6 +509,9 @@ class DataService {
                     url: url,
                     type: 'GET',
                     contentType: 'application/json',
+                    headers: {
+                        'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                    },
                     success: function(result)
                     {
                         console.log('load expenses data for date '+ date + ' - server responded with success!');
@@ -488,6 +540,9 @@ class DataService {
                 type: 'POST',
                 data: JSON.stringify(income),
                 contentType: 'application/json',
+                headers: {
+                    'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                },
                 success: function(result)
                 {
                     console.log(result);
@@ -524,6 +579,9 @@ class DataService {
                 type: 'PUT',
                 data: JSON.stringify(income),
                 contentType: 'application/json',
+                headers: {
+                    'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                },
                 success: function(result)
                 {
                     console.log(result);
@@ -559,6 +617,9 @@ class DataService {
                 url: url,
                 type: 'DELETE',
                 contentType: 'application/json',
+                headers: {
+                    'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                },
                 success: function(result)
                 {
                     console.log(result);
@@ -596,6 +657,9 @@ class DataService {
                 type: 'POST',
                 data: JSON.stringify(expense),
                 contentType: 'application/json',
+                headers: {
+                    'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                },
                 success: function(result)
                 {
                     console.log(result);
@@ -632,6 +696,9 @@ class DataService {
                 type: 'PUT',
                 data: JSON.stringify(expense),
                 contentType: 'application/json',
+                headers: {
+                    'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                },
                 success: function(result)
                 {
                     console.log(result);
@@ -667,6 +734,9 @@ class DataService {
                 url: url,
                 type: 'DELETE',
                 contentType: 'application/json',
+                headers: {
+                    'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                },
                 success: function(result)
                 {
                     console.log(result);

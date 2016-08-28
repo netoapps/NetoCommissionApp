@@ -3,11 +3,14 @@
  */
 
 let strings = {
-    appName: "נטו - עמלות סוכן",
+    appName: "נטו - עמלות",
     email: "דואר אלקטרוני",
+    name: "שם פרטי",
+    familyName: "שם משפחה",
     password: "סיסמה",
     disconnect: "התנתק",
     connect: "התחבר",
+    register: "הרשמה",
     needAccount: "צריך חשבון?",
     sendRegisterRequest: "שלח בקשה להרשם",
     loginErrorMessage: "שם משתמש או סיסמה שגויים",
