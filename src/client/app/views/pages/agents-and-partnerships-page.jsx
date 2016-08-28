@@ -8,8 +8,7 @@ import AppStore from '../../stores/data-store'
 import AppActions from '../../actions/app-actions'
 import {ActionType} from '../../actions/app-actions.js'
 
-//Global since its not save when user comes back to page
-var selectedTab = 0
+var agentsAndPartnershipsSelectedTab = 0
 
 class AgentsAndPartnerships extends React.Component {
 
@@ -196,8 +195,10 @@ class AgentsAndPartnerships extends React.Component {
 
     onChangeTab(i, value, tab, ev)
     {
-        selectedTab = i
-        this.setState(this.state)
+        if(!isNaN(i)) {
+            agentsAndPartnershipsSelectedTab = i
+            this.setState(this.state)
+        }
     }
 
     render () {
@@ -229,8 +230,6 @@ class AgentsAndPartnerships extends React.Component {
                 searchBox: true
             }
         ]
-
-
 
         var agentsData = []
         for(var agentIndex = 0; agentIndex < this.state.agents.length; agentIndex++)
@@ -299,7 +298,7 @@ class AgentsAndPartnerships extends React.Component {
 
         return (
             <div className="agents-and-partnerships-page animated fadeIn shadow">
-                <Tabs onChange={this.onChangeTab.bind(this)} justified={true} initialSelectedIndex={selectedTab}>
+                <Tabs onChange={this.onChangeTab.bind(this)} justified={true} initialSelectedIndex={agentsAndPartnershipsSelectedTab}>
                     <Tab value="pane-1" label={strings.agents}>
 
                         <div className="agents-page-tab-container">

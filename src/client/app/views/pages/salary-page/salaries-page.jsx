@@ -9,14 +9,12 @@ import MonthYearBox from '../../common/month-year-box.jsx'
 import Tabs from 'muicss/lib/react/tabs'
 import Tab from 'muicss/lib/react/tab'
 
-//var salariesSelectedTab = 0
+var salariesSelectedTab = 0
 
 class Salaries extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log("Salaries - constructor")
-
         var date = new Date()
         var currentMonth = getMonthName(date.getMonth().toString());
         var currentYear = date.getFullYear().toString();
@@ -31,7 +29,6 @@ class Salaries extends React.Component {
     }
     componentDidMount()
     {
-        console.log("Salaries - componentDidMount")
     }
     componentWillUnmount()
     {
@@ -67,7 +64,7 @@ class Salaries extends React.Component {
     {
         if(!isNaN(i))
         {
-            this.context.salariesSelectedTab = i
+            salariesSelectedTab = i
             this.setState(this.state)
         }
      }
@@ -168,8 +165,6 @@ class Salaries extends React.Component {
             partnershipsData.push(partnershipData)
         }
 
-        console.log(this.context.salariesSelectedTab)
-
         return (
             <div className="salaries-page animated fadeIn ">
 
@@ -181,7 +176,7 @@ class Salaries extends React.Component {
                 <div className="vertical-spacer-10"/>
 
                 <div className="salaries-page-tabs-container shadow">
-                    <Tabs onChange={this.onChangeTab.bind(this)} justified={true} initialSelectedIndex={this.context.salariesSelectedTab}>
+                    <Tabs onChange={this.onChangeTab.bind(this)} justified={true} initialSelectedIndex={salariesSelectedTab}>
 
                             <Tab value="pane-1" label={strings.agents}>
                                 <div className="vertical-spacer-10"/>
@@ -213,8 +208,7 @@ class Salaries extends React.Component {
 
 //Important!! This adds the router object to context
 Salaries.contextTypes = {
-    router: React.PropTypes.object.isRequired,
-    salariesSelectedTab: React.PropTypes.number
+    router: React.PropTypes.object.isRequired
 }
 
 export default Salaries;

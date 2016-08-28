@@ -14,7 +14,8 @@ function currencyFormattedString(stringFloatValue) {
 }
 
 function ReportsService() {
-    this.createReport = function (name, date, salary, agencyAmount, portfolio, salaries, expenses, outputStream) {
+    this.createReport = function (name, date, salary, agencyAmount, portfolio, salaries, expenses, outputStream)
+    {
         return new Promise(function(resolve, reject){
             var workbook = new Excel.Workbook();
             workbook.creator = 'Neto reporter'

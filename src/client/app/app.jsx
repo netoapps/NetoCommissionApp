@@ -110,9 +110,7 @@ class App extends React.Component {
         this.state.showModal = false
         this.setState(this.state)
     }
-    getChildContext() {
-        return {salariesSelectedTab: 0};
-    }
+
     render () {
         return (
             <div>
@@ -132,9 +130,6 @@ App.contextTypes = {
     router: React.PropTypes.object.isRequired,
 }
 
-App.childContextTypes = {
-    salariesSelectedTab: React.PropTypes.number
-};
 
 render((
     <Router history={browserHistory}>

@@ -568,7 +568,12 @@ class SalaryPage extends React.Component {
         }
         var fullName = this.state.context.fullName
         ExcelService.generateSalaryReport(fullName,
-            this.state.date,salary,this.state.agencyAmountTotal,this.state.portfolio,incomes,expenses)
+            this.state.date,salary,this.state.agencyAmountTotal,this.state.portfolio,incomes,expenses,(response) => {
+                if(response.result)
+                {
+                    console.log("ok")
+                }
+            })
     }
     render () {
 
