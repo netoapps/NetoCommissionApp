@@ -14,7 +14,7 @@ function currencyFormattedString(stringFloatValue) {
 }
 
 function ReportsService() {
-    this.createReport = function (name, date, salary, agencyAmount, portfolio, salaries, expenses, outputStream)
+    this.createReport = function (name, date, salary, agencyAmount, portfolio, incomes, expenses, outputStream)
     {
         return new Promise(function(resolve, reject){
             var workbook = new Excel.Workbook();
@@ -22,7 +22,7 @@ function ReportsService() {
             workbook.created = new Date();
             workbook.modified = new Date();
 
-            var worksheet = workbook.addWorksheed('פירוט שכר - ' + name);
+            var worksheet = workbook.addWorksheet('פירוט שכר - ' + name);
             worksheet.addRow(1, ["חודש שכר", date])
 
             for (var salaryItem in salary) {
@@ -43,11 +43,15 @@ function ReportsService() {
                 var incomeRowData = incomes.data[income]
                 var incomeRowDataOut = []
                 for (incomeCol = 0; incomeCol < incomes.columns.length; incomeCol++) {
-                    var incomeCellData = incomeRowData[incomes.columns[incomeCol].key].toString()
-                    if (incomes.columns[incomeCol].format === "currency") {
-                        incomeCellData = currencyFormattedString(incomeCellData)
+                    if(incomes.columns[incomeCol].key===''){
+                        incomeRowDataOut.push('test');
+                    }else {
+                        var incomeCellData = incomeRowData[incomes.columns[incomeCol].key].toString()
+                        if (incomes.columns[incomeCol].format === "currency") {
+                            incomeCellData = currencyFormattedString(incomeCellData)
+                        }
+                        incomeRowDataOut.push(incomeCellData)
                     }
-                    incomeRowDataOut.push(incomeCellData)
                 }
                 worksheet.addRow(incomeRowDataOut)
             }

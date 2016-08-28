@@ -34,7 +34,7 @@ module.exports.generateAndDownloadSalaryReport = function (req, res) {
     var reportFileStream = fs.createWriteStream(filename);
     reporter.createReport(data.name, data.date, data.salary, data.agencyAmount, data.portfolio, data.incomes, data.expenses, reportFileStream)
         .then(function () {
-            res.download(filename, data.name + 'xlsx', function (err) {
+            return res.download(filename, data.name + '.xlsx', function (err) {
                 fs.unlink(filename)
             });
         })
