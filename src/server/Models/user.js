@@ -10,7 +10,7 @@ var userModel = function() {
     var schema = new mongoose.Schema({
         username: String,
         name:String,
-        lastName:String,
+        familyName:String,
         password:String,
         creationTime: {type: Date, default: Date.now},
         updateTime: {type: Date, default: Date.now},
