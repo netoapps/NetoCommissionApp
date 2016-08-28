@@ -111,7 +111,7 @@ class AuthService {
                 // localStorage.apiToken = response.apiToken
                 // localStorage.fullName = name + " " + familyName
                 // localStorage.gender = "0"
-                LoginStore.setUserData(response.apiToken,response.name,response.familyName,response.gender)
+                LoginStore.setUserData(response.user.apiToken,response.user.name,response.user.familyName,response.gender)
                 callback({
                     authenticated: true,
                     apiToken: response.apiToken,
