@@ -51,8 +51,8 @@ module.exports.updateCompaniesList = function(req, res){
         return res.status(400).json({err:'missing companies list'});
     }
     constantsService.updateCompanies(req.body.companies)
-        .then(function(){
-            return res.status(200).json({msg:'ok'});
+        .then(function(companies){
+            return res.status(200).json({companies:companies});
         })
         .catch(function(err){
             return res.status(400).json({err:err});
