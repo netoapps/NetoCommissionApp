@@ -30,6 +30,11 @@ module.exports.generateAndDownloadSalaryReport = function (req, res) {
     if (!data) {
         return res.status(400).json({err: 'missing report data'});
     }
+    try{
+        data = JSON.parse(data.data);
+    }catch(err){
+        return res.status(400).json(err);
+    }
     var filename = shordid.generate();
     var reportFileStream = fs.createWriteStream(filename);
     reporter.createReport(data.name, data.date, data.salary, data.agencyAmount, data.portfolio, data.incomes, data.expenses, reportFileStream)

@@ -19,32 +19,57 @@ class ExcelService
     }
     generateSalaryReport(name,date,salary,agencyAmount,portfolio,incomes,expenses, callback)
     {
-        $.ajax(
-            {
-                url: '/api/v1/excel_report/',
-                type: 'POST',
-                data: JSON.stringify({name:name,date:date,salary:salary,agencyAmount:agencyAmount,portfolio:portfolio,incomes:incomes,expenses:expenses}),
-                contentType: 'application/json',
-                success: function(result)
-                {
-                    console.log(result);
-                    console.log('generateSalaryReport - Server responded with success!');
+        function post(path, params, method) {
+            method = method || "post"; // Set method to post by default if not specified.
 
-                    if(callback != null)
-                        callback({
-                            result:true
-                        });
+            // The rest of this code assumes you are not using a library.
+            // It can be made less wordy if you use one.
+            var form = document.createElement("form");
+            form.setAttribute("method", method);
+            form.setAttribute("action", path);
 
-                }.bind(this),
-                error: function(jqXHR, textStatus, errorThrown)
-                {
-                    console.error('generateSalaryReport - ', textStatus, errorThrown.toString());
-                    if(callback != null)
-                        callback({
-                            result:false
-                        });
-                }.bind(this)
-            });
+            for(var key in params) {
+                if(params.hasOwnProperty(key)) {
+                    var hiddenField = document.createElement("input");
+                    hiddenField.setAttribute("type", "hidden");
+                    hiddenField.setAttribute("name", key);
+                    hiddenField.setAttribute("value", params[key]);
+
+                    form.appendChild(hiddenField);
+                }
+            }
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+        post('/api/v1/excel_report',{data:JSON.stringify({name:name,date:date,salary:salary,agencyAmount:agencyAmount,portfolio:portfolio,incomes:incomes,expenses:expenses})});
+
+        //$.ajax(
+        //    {
+        //        url: '/api/v1/excel_report/',
+        //        type: 'POST',
+        //        data: JSON.stringify({name:name,date:date,salary:salary,agencyAmount:agencyAmount,portfolio:portfolio,incomes:incomes,expenses:expenses}),
+        //        contentType: 'application/json',
+        //        success: function(result)
+        //        {
+        //            console.log(result);
+        //            console.log('generateSalaryReport - Server responded with success!');
+        //
+        //            if(callback != null)
+        //                callback({
+        //                    result:true
+        //                });
+        //
+        //        }.bind(this),
+        //        error: function(jqXHR, textStatus, errorThrown)
+        //        {
+        //            console.error('generateSalaryReport - ', textStatus, errorThrown.toString());
+        //            if(callback != null)
+        //                callback({
+        //                    result:false
+        //                });
+        //        }.bind(this)
+        //    });
 
         // var ep = new ExcelPlus();
         // var worksheet = ep.createFile("פירוט שכר - " + name )
