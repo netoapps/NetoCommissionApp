@@ -39,14 +39,16 @@ class SalaryPage extends React.Component {
                 key: "company",
                 width: "18%",
                 type: 'read-only',
-                color: 'normal'
+                color: 'normal',
+                searchBox: true
             },
             {
                 title: "מספר סוכן",
                 key: "agentInCompanyId",
                 width: "10%",
                 type: 'read-only',
-                color: 'normal'
+                color: 'normal',
+                searchBox: true
             },
             {
                 title: "שם סוכן",
@@ -54,14 +56,16 @@ class SalaryPage extends React.Component {
                 width: "20%",
                 type: 'read-only-request',
                 color: 'normal',
-                requestCellData: this.onRequestIncomeCellData.bind(this)
+                requestCellData: this.onRequestIncomeCellData.bind(this),
+                searchBox: true
             },
             {
                 title: "סוג תשלום",
                 key: "type",
                 width: "10%",
                 type: 'read-only',
-                color: 'normal'
+                color: 'normal',
+                searchBox: true
             },
             {
                 title: "סה״כ תשלום",
@@ -69,7 +73,8 @@ class SalaryPage extends React.Component {
                 width: "10%",
                 type: 'read-only',
                 format: "currency",
-                color: 'normal'
+                color: 'normal',
+                searchBox: true
             },
             {
                 title: "גודל תיק",
@@ -77,14 +82,16 @@ class SalaryPage extends React.Component {
                 width: "15%",
                 type: 'read-only',
                 format: "currency",
-                color: 'normal'
+                color: 'normal',
+                searchBox: true
             },
             {
                 title: "הערות",
                 key: "notes",
                 width: "17%",
                 type: 'read-only',
-                color: 'normal'
+                color: 'normal',
+                searchBox: true
             }
         ]
 
@@ -94,7 +101,8 @@ class SalaryPage extends React.Component {
                 key: "type",
                 width: "33%",
                 type: 'read-only',
-                color: 'normal'
+                color: 'normal',
+                searchBox: true
             },
             {
                 title: "סה״כ",
@@ -102,14 +110,16 @@ class SalaryPage extends React.Component {
                 width: "33%",
                 type: 'read-only',
                 format: "currency",
-                color: 'normal'
+                color: 'normal',
+                searchBox: true
             },
             {
                 title: "הערות",
                 key: "notes",
                 width: "33%",
                 type: 'read-only',
-                color: 'normal'
+                color: 'normal',
+                searchBox: true
             }
         ]
 
@@ -558,9 +568,29 @@ class SalaryPage extends React.Component {
         {
             salary[this.commissionTypes[type]] = this.state.incomeComponentsSum[this.commissionTypes[type]]
         }
+
+        var incomesColumnsData = []
+        for(var col = 0; col < this.incomesColumns.length; type++)
+        {
+            var colData = {title:this.incomesColumns[col].title,
+                           key:this.incomesColumns[col].key}
+            if(colData.title === "שם סוכן")
+            {
+                colData.key = "_agentName_"
+            }
+            incomesColumnsData.push(colData)
+        }
+        var incomesData = []
+        for(var income = 0; income < this.state.incomes; income++)
+        {
+            var incomeData = {}
+            Object.assign(incomeData,this.state.incomes[income])
+            incomeData._agentName_ = this.onRequestIncomeCellData(income,"שם סוכן")
+            incomesData.push(incomeData)
+        }
         var incomes = {
-            columns: this.incomesColumns,
-            data: this.state.incomes
+            columns: incomesColumnsData,
+            data: incomesData
         }
         var expenses = {
             columns: this.expensesColumns,

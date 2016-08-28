@@ -100,42 +100,48 @@ class EditFilesPage extends React.Component {
                 width: "33%",
                 type: 'button',
                 color: 'blue',
-                action: this.onFileNameClicked.bind(this)
+                action: this.onFileNameClicked.bind(this),
+                searchBox: true
             },
             {
                 title: "חברה",
                 key: "company",
                 width: "33%",
                 type: 'read-only',
-                color: 'normal'
+                color: 'normal',
+                searchBox: true
             },
             {
                 title: "חודש תשלום",
                 key: "paymentDate",
                 width: "33%",
                 type: 'month-year-date',
-                color: 'normal'
+                color: 'normal',
+                searchBox: true
             },
             {
                 title: "תאריך העלאה",
                 key: "uploadDate",
                 width: "33%",
                 type: 'full-date',
-                color: 'normal'
+                color: 'normal',
+                searchBox: true
             },
             {
                 title: "מע״מ",
                 key: "taxState",
                 width: "33%",
                 type: 'read-only',
-                color: 'normal'
+                color: 'normal',
+                searchBox: true
             },
             {
                 title: "הערות",
                 key: "note",
                 width: "33%",
                 type: 'read-only',
-                color: 'normal'
+                color: 'normal',
+                searchBox: true
             }
         ]
 
