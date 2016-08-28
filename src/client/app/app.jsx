@@ -46,7 +46,8 @@ class App extends React.Component {
             showModal: false,
             modalContent: null,
             loginData: AuthService.getLoginData(),
-            dataLoaded: false
+            dataLoaded: false,
+            pageTitle: "ראשי"
         };
         this.appModalShowBinding = null
         this.appModalHideBinding = null
@@ -77,18 +78,23 @@ class App extends React.Component {
     {
         if(strings.dashboard === item)
         {
+            this.state.pageTitle = strings.dashboard
             this.context.router.push('/app/dashboard')
+
         }
         if(strings.salaries === item)
         {
+            this.state.pageTitle = strings.salaries
             this.context.router.push('/app/salaries')
         }
         if(strings.commissions === item)
         {
+            this.state.pageTitle = strings.commissions
             this.context.router.push('/app/commissions')
         }
         if(strings.agentsAndPartnerships === item)
         {
+            this.state.pageTitle = strings.agentsAndPartnerships
             this.context.router.push('/app/agents-and-partnerships')
         }
     }
@@ -115,7 +121,7 @@ class App extends React.Component {
         return (
             <div>
                 { this.state.showModal ? <AppModal modalContent={this.state.modalContent} /> : null }
-                <TopBar loginData={this.state.loginData}  onLogout={this.onLogout.bind(this)}/>
+                <TopBar loginData={this.state.loginData}  onLogout={this.onLogout.bind(this)} pageTitle={this.state.pageTitle}/>
                 <RightPanel onPanelItemClick={this.onPanelItemClick.bind(this)}/>
                 <LoadSpinner loadedClassName="load-spinner" top={'50%'} left={'45%'} loaded={this.state.dataLoaded}>
                     {this.props.children}

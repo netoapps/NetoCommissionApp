@@ -1,20 +1,5 @@
 <component name="libraryTable">
   <library name="Generated files" type="javaScript">
-    <properties>
-      <sourceFilesUrls>
-        <item url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/inpath/example-compiled.js" />
-        <item url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/pidof/lib/pidof-compiled.js" />
-        <item url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/read/node_modules/mute-stream/mute-compiled.js" />
-        <item url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/read/lib/read-compiled.js" />
-        <item url="file://$PROJECT_DIR$/node_modules/sudo/lib/sudo-compiled.js" />
-        <item url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/inpath/lib/inpath-compiled.js" />
-        <item url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/read/node_modules/mute-stream/test/basic-compiled.js" />
-        <item url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/pidof/test/pidof-compiled.js" />
-        <item url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/inpath/test/inpath-compiled.js" />
-        <item url="file://$PROJECT_DIR$/node_modules/sudo/node_modules/pidof/example-compiled.js" />
-        <item url="file://$PROJECT_DIR$/src/client/public/js/bundle-compiled.js" />
-      </sourceFilesUrls>
-    </properties>
     <CLASSES>
       <root url="file://$PROJECT_DIR$/node_modules/lodash/fp/ceil-compiled.js" />
       <root url="file://$PROJECT_DIR$/node_modules/lodash/fp/date-compiled.js" />

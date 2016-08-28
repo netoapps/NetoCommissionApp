@@ -212,7 +212,7 @@ class DashboardRankTable extends React.Component {
             {
                 title: "שינוי",
                 key: "commissionChange",
-                width: "15%",
+                width: "13%",
                 type: 'read-only',
                 format: 'percent',
                 color: 'red-green'
@@ -228,7 +228,7 @@ class DashboardRankTable extends React.Component {
             {
                 title: "שינוי (גודל תיק)",
                 key: "portfolioChange",
-                width: "20%",
+                width: "22%",
                 type: 'read-only',
                 format: 'percent',
                 color: 'red-green'

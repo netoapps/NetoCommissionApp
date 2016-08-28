@@ -452,7 +452,8 @@ class Table extends React.Component {
         var tableHeader = null
         if(this.props.hideHeader != true)
         {
-            tableHeader = <div className="table-header">
+            var headerColor = this.props.headerColor != null ? this.props.headerColor:"deafult-table-header-color"
+            tableHeader = <div className={"table-header " + headerColor}>
                             {tableTrashColumn}
                             {tableColumns}
                           </div>

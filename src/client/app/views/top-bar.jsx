@@ -12,6 +12,7 @@ class TopBar extends React.Component {
             <div className="fixed top-bar animated fadeInDown">
                 <div className="top-bar-container hcontainer-no-wrap">
                     <UserBox loginData={this.props.loginData} onLogout={this.props.onLogout}/>
+                    <div className="top-bar-title">{this.props.pageTitle}</div>
                 </div>
             </div>
         </div>
