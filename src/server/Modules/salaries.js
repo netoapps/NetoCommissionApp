@@ -395,7 +395,7 @@ function getPartnershipIdSalariesByCompanyAndTypesForDateSummed(req, res){
         return res.status(400).json({err: 'invalid payment date'});
     }
 
-    salaryService.getSalariesByCompanyAndTypesForDateSummedManual(pid, pd,'partnership')
+    salaryService.getSalariesByCompanyAndTypesForDateSummed(pid, pd,'partnership')
         .then(function (salaries) {
             return res.status(200).json({salaries:salaries});
         })
