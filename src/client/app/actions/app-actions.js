@@ -11,6 +11,9 @@ let ActionType = {
     USER_LOGGED_IN: 'USER_LOGGED_IN',
     USER_LOGGED_OUT: 'USER_LOGGED_OUT',
 
+    UPDATE_COMPANIES: 'UPDATE_COMPANIES',
+    UPDATE_COMPANIES_COMPLETED: 'UPDATE_COMPANIES_COMPLETED',
+
     DELETE_COMMISSION_FILE: 'DELETE_COMMISSION_FILE',
     DELETE_COMMISSION_FILE_COMPLETED: 'DELETE_COMMISSION_FILE_COMPLETED',
     UPLOAD_COMMISSION_FILE: 'UPLOAD_COMMISSION_FILE',
@@ -26,6 +29,7 @@ let ActionType = {
     UPDATE_PARTNERSHIP: 'UPDATE_PARTNERSHIP',
     DELETE_PARTNERSHIP: 'DELETE_PARTNERSHIP',
     PARTNERSHIPS_LOADED: 'PARTNERSHIPS_LOADED'
+
 
 }
 export {ActionType}
@@ -118,5 +122,13 @@ export default class AppActions {
             callback:callback
         });
     }
+    static updateCompanies(companies, callback)
+    {
+        AppDispatcher.dispatch(ActionType.UPDATE_COMPANIES,{
+            companies: companies,
+            callback:callback
+        });
+    }
+
 }
 

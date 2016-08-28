@@ -16,6 +16,7 @@ let strings = {
     salaries: "שכר",
     agents: "סוכנים",
     agentsAndPartnerships: "סוכנים ושותפויות",
+    settings: "הגדרות",
     partnerships: "שותפויות",
     totalValue: "סה״כ ",
     totalAgents: "סה״כ סוכנים פעילים",
@@ -67,7 +68,8 @@ let strings = {
     editIncome: "עריכת הכנסה",
     newExpense: "הוצאה חדשה",
     editExpense: "עריכת הוצאה",
-    generateExcelFile: "יצא לקובץ אקסל"
+    generateExcelFile: "יצא לקובץ אקסל",
+    newCompany: "חברה חדשה"
 
 }
 

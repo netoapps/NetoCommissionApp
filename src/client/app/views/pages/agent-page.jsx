@@ -60,10 +60,7 @@ class AgentPage extends React.Component {
         this.state.agent.paymentsDetails.splice(rowIndex, 1)
         this.setState(this.state)
     }
-    onSavePayment(income,index) {
 
-
-    }
     onNewPaymentRow()
     {
          this.state.agent.paymentsDetails.unshift(new AgentPaymentDetails())

@@ -223,6 +223,35 @@ class DataStore extends Store {
         }
         return null
     }
+
+
+    updateCompanies(companies, callback)
+    {
+        $.ajax(
+            {
+                url: '/api/v1/constants/companies',
+                type: 'PUT',
+                data: JSON.stringify(companies),
+                contentType: 'application/json',
+                success: function(result)
+                {
+                    console.log(result);
+                    console.log('updateCompanies - Server responded with success!');
+                    this.set('companies',result.companies,true);
+                    this.eventbus.emit(ActionType.UPDATE_COMPANIES_COMPLETED);
+
+                    if(callback != null)
+                        callback({result:true});
+                }.bind(this),
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+                    console.error('updateCompanies - ', textStatus, errorThrown.toString());
+                    if(callback != null)
+                        callback({result:false});
+                }.bind(this)
+            });
+    }
+
     addPartnership(partnership,callback)
     {
         //post to server...
@@ -451,6 +480,10 @@ class DataStore extends Store {
 
             case ActionType.DELETE_PARTNERSHIP:
                 this.deletePartnership(data.partnershipId,data.callback)
+                break;
+
+            case ActionType.UPDATE_COMPANIES:
+                this.updateCompanies(data.companies,data.callback)
                 break;
 
 

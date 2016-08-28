@@ -393,6 +393,40 @@ body
     outline:none;
 }
 
+.right-panel-item-settings-button
+{
+    position: absolute;
+    bottom: 5px;
+    text-align: right;
+    height: 50px;
+    width: 100%;
+    color: #b9b9b9;
+    border:none;
+    margin:0;
+    padding-right: 50px;
+    font-size: 15px;
+    font-weight: lighter;
+    background: url('../images/agents.png') no-repeat right center;
+}
+
+.right-panel-item-settings-button:hover
+{
+    outline:none;
+    background-color: #282d2f;
+}
+
+.right-panel-item-settings-button:focus
+{
+    outline:none;
+    color: #ffffff;
+    background-color: #282d2f;}
+
+.right-panel-item-settings-button:active
+{
+    outline:none;
+}
+
+
 .login-page
 {
     width: 100%;
@@ -988,7 +1022,8 @@ body
     margin-bottom: 20px;
     width: 100%;
     padding: 20px;
-    height: 100%;
+    height: calc(100% - 317px);
+    max-height: calc(100% - 317px);
 }
 
 .commissions-page-table-height
@@ -1954,3 +1989,22 @@ body
     margin: auto;
     text-align: center;
 }
+
+
+.settings-page-companies-table
+{
+    width: 50%;
+    min-width: 610px;
+    background-color: white;
+
+    height: calc(100% - 40px);
+    max-height: calc(100% - 40px);
+
+}
+
+.settings-page-companies-table-height
+{
+    height: calc(100% - 55px);
+    max-height: calc(100% - 55px);
+}
+

@@ -7,6 +7,7 @@ import Login from './views/pages/login-page.jsx'
 import Dashboard from './views/pages/dashboard-page.jsx'
 import Commissions from './views/pages/commissions-page.jsx'
 import Salaries from './views/pages/salary-page/salaries-page.jsx'
+import SettingsPage from './views/pages/settings-page.jsx'
 import Agents from './views/pages/agents-and-partnerships-page.jsx'
 import EditFiles from './views/pages/commission-files-page.jsx'
 import AgentPage from './views/pages/agent-page.jsx'
@@ -26,6 +27,7 @@ import LoadSpinner from 'react-loader'
 
 dispatcher.registerStore(AppStore);
 AppActions.appInit();
+var barTitle = ""
 
 function isAuthenticated(nextState, replace)
 {
@@ -76,26 +78,26 @@ class App extends React.Component {
 
     onPanelItemClick(item)
     {
+        this.state.pageTitle = item
         if(strings.dashboard === item)
         {
-            this.state.pageTitle = strings.dashboard
             this.context.router.push('/app/dashboard')
-
         }
         if(strings.salaries === item)
         {
-            this.state.pageTitle = strings.salaries
             this.context.router.push('/app/salaries')
         }
         if(strings.commissions === item)
         {
-            this.state.pageTitle = strings.commissions
             this.context.router.push('/app/commissions')
         }
         if(strings.agentsAndPartnerships === item)
         {
-            this.state.pageTitle = strings.agentsAndPartnerships
             this.context.router.push('/app/agents-and-partnerships')
+        }
+        if(strings.settings === item)
+        {
+            this.context.router.push('/app/settings')
         }
     }
     onLogout()
@@ -121,7 +123,7 @@ class App extends React.Component {
         return (
             <div>
                 { this.state.showModal ? <AppModal modalContent={this.state.modalContent} /> : null }
-                <TopBar loginData={this.state.loginData}  onLogout={this.onLogout.bind(this)} pageTitle={this.state.pageTitle}/>
+                <TopBar loginData={this.state.loginData}  onLogout={this.onLogout.bind(this)} pageTitle={barTitle}/>
                 <RightPanel onPanelItemClick={this.onPanelItemClick.bind(this)}/>
                 <LoadSpinner loadedClassName="load-spinner" top={'50%'} left={'45%'} loaded={this.state.dataLoaded}>
                     {this.props.children}
@@ -136,20 +138,48 @@ App.contextTypes = {
     router: React.PropTypes.object.isRequired,
 }
 
+function onEnterPage(nextState, replace)
+{
+    if(nextState.location.pathname === '/app/dashboard')
+    {
+        barTitle = strings.dashboard
+    }
+    if(nextState.location.pathname === '/app/salaries')
+    {
+        barTitle = strings.salaries
+    }
+    if(nextState.location.pathname === '/app/commissions')
+    {
+        barTitle = strings.commissions
+    }
+    if(nextState.location.pathname === '/app/agents-and-partnerships')
+    {
+        barTitle = strings.agentsAndPartnerships
+    }
+    if(nextState.location.pathname === '/app/commissions/edit-files')
+    {
+        barTitle = strings.editFiles
+    }
+    if(nextState.location.pathname === '/app/settings')
+    {
+        barTitle = strings.settings
+    }
+}
 
 render((
     <Router history={browserHistory}>
         <Route path="/" component={Login} onEnter={isAuthenticated}/>
         <Route path="/app" component={App} >
-            <Route path="/app/dashboard" component={Dashboard} />
-            <Route path="/app/salaries" component={Salaries} />
-            <Route path="/app/commissions" component={Commissions} />
-            <Route path="/app/commissions/edit-files" component={EditFiles} />
-            <Route path="/app/agents-and-partnerships" component={Agents} />
-            <Route path="/app/agents-and-partnerships/agent-salary-page/:idNumber" component={AgentSalaryPage} />
-            <Route path="/app/agents-and-partnerships/partnership-salary-page/:partnershipId" component={PartnershipSalaryPage} />
-            <Route path="/app/agents-and-partnerships/agent-page/:idNumber" component={AgentPage} />
-            <Route path="/app/agents-and-partnerships/partnership-page/:partnershipId" component={PartnershipPage} />
+            <Route path="/app/dashboard" component={Dashboard} onEnter={onEnterPage}/>
+            <Route path="/app/salaries" component={Salaries} onEnter={onEnterPage}/>
+            <Route path="/app/commissions" component={Commissions} onEnter={onEnterPage}/>
+            <Route path="/app/commissions/edit-files" component={EditFiles} onEnter={onEnterPage}/>
+            <Route path="/app/agents-and-partnerships" component={Agents} onEnter={onEnterPage}/>
+            <Route path="/app/settings" component={SettingsPage} onEnter={onEnterPage}/>
+            <Route path="/app/agents-and-partnerships/agent-salary-page/:idNumber" component={AgentSalaryPage} onEnter={onEnterPage}/>
+            <Route path="/app/agents-and-partnerships/partnership-salary-page/:partnershipId" component={PartnershipSalaryPage} onEnter={onEnterPage}/>
+            <Route path="/app/agents-and-partnerships/agent-page/:idNumber" component={AgentPage} onEnter={onEnterPage}/>
+            <Route path="/app/agents-and-partnerships/partnership-page/:partnershipId" component={PartnershipPage} onEnter={onEnterPage}/>
         </Route>
    </Router>
 ), document.getElementById('content'))
