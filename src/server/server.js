@@ -57,10 +57,10 @@ function NetoCommisionAppServer(){
     };
 }
 
-var server = new NetoCommisionAppServer();
-server.init();
-server.start();
-
+// var server = new NetoCommisionAppServer();
+// server.init();
+// server.start();
+//
 // var Ea = require('./Services/ExcelAnalyzerService');
 // ea = new Ea();
 // ea.analyzeAgentsFile('agents.xlsx', function(err){
@@ -80,4 +80,4 @@ server.start();
 //        })
 //        console.log(mapping);
 //    });
-//
+

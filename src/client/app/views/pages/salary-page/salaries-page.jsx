@@ -186,14 +186,20 @@ class Salaries extends React.Component {
                             <Tab value="pane-1" label={strings.agents}>
                                 <div className="vertical-spacer-10"/>
                                 <div className="salaries-page-tab-container">
-                                    <Table onRowClick={this.onAgentRowClick.bind(this)} columns={agentsColumns} data={agentsData}/>
+                                    <Table  heightClass="salaries-page-tab-container-height"
+                                            onRowClick={this.onAgentRowClick.bind(this)}
+                                            columns={agentsColumns}
+                                            data={agentsData}/>
                                 </div>
                             </Tab>
 
                             <Tab value="pane-2" label={strings.partnerships}>
                                 <div className="vertical-spacer-10"/>
                                 <div className="salaries-page-tab-container">
-                                    <Table onRowClick={this.onPartnershipRowClick.bind(this)} columns={partnershipsColumns} data={partnershipsData}/>
+                                    <Table  heightClass="salaries-page-tab-container-height"
+                                            onRowClick={this.onPartnershipRowClick.bind(this)}
+                                            columns={partnershipsColumns}
+                                            data={partnershipsData}/>
                                 </div>
                             </Tab>
                     </Tabs>

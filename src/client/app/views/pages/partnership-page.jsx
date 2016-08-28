@@ -369,7 +369,8 @@ class PartnershipPage extends React.Component {
                 type: 'select',
                 color: 'normal',
                 action: this.onSelectCompany.bind(this),
-                options: this.companies
+                options: this.companies,
+                searchBox: true
             },
             {
                 title: "מספר סוכן",
@@ -377,7 +378,8 @@ class PartnershipPage extends React.Component {
                 width: "33%",
                 type: 'input',
                 color: 'normal',
-                action: this.onPartnershipNumberChange.bind(this)
+                action: this.onPartnershipNumberChange.bind(this),
+                searchBox: true
             },
             {
                 title: "סוג תשלום",
@@ -386,7 +388,8 @@ class PartnershipPage extends React.Component {
                 type: 'select',
                 color: 'normal',
                 action: this.onSelectPaymentType.bind(this),
-                options: this.commissionTypes
+                options: this.commissionTypes,
+                searchBox: true
             },
             {
                 title: "חלק שותפות %",
@@ -394,14 +397,16 @@ class PartnershipPage extends React.Component {
                 width: "33%",
                 type: 'input',
                 color: 'normal',
-                action: this.onPartnershipPartChange.bind(this)
+                action: this.onPartnershipPartChange.bind(this),
+                searchBox: true
             },
             {
                 title: "חלק סוכנות %",
                 key: "agencyPart",
                 width: "33%",
                 type: 'read-only',
-                color: 'normal'
+                color: 'normal',
+                searchBox: true
             }
         ]
 
@@ -420,12 +425,17 @@ class PartnershipPage extends React.Component {
                     {agentsList}
                 </div>
                 <div className="partnership-page-form-agents-table">
-                    <Table onRemoveRow={this.onDeleteAgentRowClicked.bind(this)} columns={agentsTableColumns} data={this.state.agentsData}/>
+                    <Table  heightClass="partnership-page-form-agents-table-height"
+                            onRemoveRow={this.onDeleteAgentRowClicked.bind(this)}
+                            columns={agentsTableColumns}
+                            data={this.state.agentsData}/>
                 </div>
-
                 <Button className="shadow" onClick={this.onNewPaymentRow.bind(this)} color="primary">{strings.newPayment}</Button>
                 <div className="partnership-page-form-payments-details-table">
-                    <Table onRemoveRow={this.onDeletePaymentRowClicked.bind(this)} columns={columns} data={this.state.partnership.paymentsDetails}/>
+                    <Table  heightClass="partnership-page-form-payments-details-table-height"
+                            onRemoveRow={this.onDeletePaymentRowClicked.bind(this)}
+                            columns={columns}
+                            data={this.state.partnership.paymentsDetails}/>
                 </div>
                 <div className="hcontainer-no-wrap">
                     <div className="horizontal-spacer-90"/>

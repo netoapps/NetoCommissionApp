@@ -9,8 +9,9 @@ class EditFilesPage extends React.Component {
     constructor(props) {
         super(props);
 
+        var commissionFiles = AppStore.getCommissionFiles()
         this.state = {
-            commissionFiles: AppStore.getCommissionFiles()
+            commissionFiles: commissionFiles
         };
         this._reloadCommissionFiles = this.reloadCommissionFiles.bind(this)
     }
@@ -141,7 +142,10 @@ class EditFilesPage extends React.Component {
         return (
             <div className="edit-files-page animated fadeIn">
                 <div className="edit-files-table shadow">
-                    <Table onRemoveRow={this.onDeleteFileClicked.bind(this)} columns={columns} data={this.state.commissionFiles}/>
+                    <Table  heightClass="edit-files-table-height"
+                            onRemoveRow={this.onDeleteFileClicked.bind(this)}
+                            columns={columns}
+                            data={this.state.commissionFiles}/>
                 </div>
             </div>
         );

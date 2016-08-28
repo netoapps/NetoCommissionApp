@@ -644,11 +644,12 @@ class SalaryPage extends React.Component {
                         <Button className="shadow" onClick={this.onNewIncome.bind(this)} color="primary">{strings.newIncome}</Button>
                     </div>
                     <div className="agent-salary-page-income-table">
-                        <Table onRowClick={this.onIncomeRowClick.bind(this)}
-                               onRemoveRow={this.onDeleteIncome.bind(this)}
-                               columns={this.incomesColumns}
-                               data={this.state.incomes}
-                               isEditableRow={this.isEditableRow.bind(this)}/>
+                        <Table  heightClass="agent-salary-page-income-table-height"
+                                onRowClick={this.onIncomeRowClick.bind(this)}
+                                onRemoveRow={this.onDeleteIncome.bind(this)}
+                                columns={this.incomesColumns}
+                                data={this.state.incomes}
+                                isEditableRow={this.isEditableRow.bind(this)}/>
                     </div>
                 </div>
 
@@ -658,10 +659,11 @@ class SalaryPage extends React.Component {
                         <Button className="shadow" onClick={this.onNewExpense.bind(this)} color="primary">{strings.newExpense}</Button>
                     </div>
                     <div className="agent-salary-page-expense-table">
-                        <Table onRowClick={this.onExpenseRowClick.bind(this)}
-                               onRemoveRow={this.onDeleteExpense.bind(this)}
-                               columns={this.expensesColumns}
-                               data={this.state.expenses}/>
+                        <Table  heightClass="agent-salary-page-income-table-height"
+                                onRowClick={this.onExpenseRowClick.bind(this)}
+                                onRemoveRow={this.onDeleteExpense.bind(this)}
+                                columns={this.expensesColumns}
+                                data={this.state.expenses}/>
                     </div>
                 </div>
 

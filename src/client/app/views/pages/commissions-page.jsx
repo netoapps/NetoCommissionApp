@@ -705,6 +705,10 @@ class Commissions extends React.Component {
                         {
                             name = agent.name + " " + agent.familyName
                         }
+                        else
+                        {
+                            name = "סוכן לא קיים"
+                        }
                     }
 
                     data.unshift({companyName: item.company,
@@ -836,7 +840,8 @@ class Commissions extends React.Component {
 
                 <div className="commissions-page-table shadow">
                     <LoadSpinner loadedClassName="load-spinner" top={'60%'} loaded={this.state.dataLoaded}>
-                        <Table columns={columns}
+                        <Table heightClass="commissions-page-table-height"
+                               columns={columns}
                                data={this.state.commissions}/>
                     </LoadSpinner>
                 </div>

@@ -458,10 +458,14 @@ class Table extends React.Component {
                           </div>
         }
 
-        return <div className="table">
-                    <div className="table-title">{title}</div>
+        var containerClass = searchBox ? "table-data-with-search-container":"table-data-container"
+        var heightClass =  this.props.heightClass != null ? this.props.heightClass:""
+        var tableTitle = title != null ? <div className="table-title">{title}</div>:null
+
+        return <div className={"table " + heightClass}>
+                        {tableTitle}
                         {tableHeader}
-                    <div className="table-data-container">
+                    <div className={containerClass}>
                         <div className="table-data">
                             {tableRows}
                         </div>

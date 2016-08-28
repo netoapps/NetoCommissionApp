@@ -127,7 +127,7 @@ class DashboardRankTable extends React.Component {
                     }
                     else
                     {
-                        agentName = "סוכן נמחק מהמערכת"
+                        agentName = "סוכן לא קיים"
                     }
 
                     var portfolio = idData.currentMonth.portfolio
@@ -238,7 +238,8 @@ class DashboardRankTable extends React.Component {
 
         return (
             <div className="dashboard-rank-table shadow">
-                <Table columns={columns}
+                <Table heightClass="dashboard-rank-table-height"
+                       columns={columns}
                        data={this.state.data}
                        sortedByColumn={columns[1]}/>
             </div>
