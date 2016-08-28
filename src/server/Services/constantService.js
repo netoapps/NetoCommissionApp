@@ -56,6 +56,17 @@ function ConstantsService(){
         })
     }
 
+    this.updateCompanies = function(companies){
+        return new Promise(function(resolve, reject) {
+            Constant.update({name: 'companies'}, {value:companies}, function (err, numAffected) {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(companies);
+            });
+        })
+    }
+
     //Private functions
     function init(){
         Constant.update({name:'companies'},{$setOnInsert:{value:companies}},{upsert:true},function(err, n){
