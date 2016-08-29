@@ -30,6 +30,10 @@ import LoadSpinner from 'react-loader'
 dispatcher.registerStore(AppStore);
 var barTitle = ""
 
+if (AuthService.loggedIn())
+{
+    AppActions.appInit();
+}
 
 function isAuthenticated(nextState, replace)
 {

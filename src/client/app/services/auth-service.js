@@ -42,7 +42,7 @@ class AuthService {
            },
            success: function (response)
            {
-               LoginStore.setUserData(response.apiToken,response.name,response.familyName,response.gender)
+               LoginStore.setUserData(response.user.apiToken,response.user.name,response.user.familyName)
                callback({
                    authenticated: true,
                    apiToken: response.apiToken,
@@ -85,10 +85,6 @@ class AuthService {
     logout()
     {
         LoginStore.setUserData("","","","")
-
-        // delete localStorage.apiToken
-        // delete localStorage.fullName
-        // delete localStorage.gender
     }
     signup(email, password,name,familyName, callback)
     {
@@ -111,7 +107,7 @@ class AuthService {
                 // localStorage.apiToken = response.apiToken
                 // localStorage.fullName = name + " " + familyName
                 // localStorage.gender = "0"
-                LoginStore.setUserData(response.user.apiToken,response.user.name,response.user.familyName,response.gender)
+                LoginStore.setUserData(response.user.apiToken,response.user.name,response.user.familyName)
                 callback({
                     authenticated: true,
                     apiToken: response.apiToken,

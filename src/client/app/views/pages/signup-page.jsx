@@ -26,11 +26,12 @@ export default class Signup extends React.Component {
         this.state.name = nameInput.value;
         this.state.familyName = familyNameInput.value;
 
-        if((this.state.username === "") || (this.state.password === ""))
+        if((this.state.username === "") || (this.state.password === "") ||
+            (this.state.name === "") || (this.state.familyName === ""))
         {
             swal({
                 title: "שגיאה",
-                text: "שם משתמש או סיסמה לא תקינים",
+                text: "חובה למלא את כל השדות",
                 type: "error",
                 showCancelButton: false,
                 confirmButtonColor: "#DD6B55",

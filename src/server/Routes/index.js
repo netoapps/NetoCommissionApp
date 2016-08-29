@@ -22,10 +22,12 @@ module.exports.registerRoutes = function(app){
     app.use('/',publicRouter);
 
     var apiRouter = express.Router();
-    apiRouter.all('*',passport.authenticate('api', {session:false}))
+
     //APIs
     apiRouter.post('/excel_columns',upload.single('file'),excel.analyzeColumns);
     apiRouter.post('/excel_report',excel.generateAndDownloadSalaryReport);
+    apiRouter.post('/commissions/upload',upload.single('file'),salaries.uploadSalariesFile);
+    apiRouter.all('*',passport.authenticate('api', {session:false}))
     //Agents
     apiRouter.get('/agent', agents.getAllAgents);
     apiRouter.get('/agent/:agentId', agents.getAgentById);
@@ -39,7 +41,6 @@ module.exports.registerRoutes = function(app){
     apiRouter.delete('/partnership/:partnershipId', agents.deletePartnership);
 
     //Salary
-    apiRouter.post('/commissions/upload',upload.single('file'),salaries.uploadSalariesFile);
     apiRouter.get('/agent/:idNumber/salary/bytypes/:paymentDate',salaries.getAgentSalariesForDate);
     apiRouter.get('/agent/:idNumber/salary/bytypes_summed/:paymentDate',salaries.getAllAgentSalariesByTypesForDateSummed);
     apiRouter.get('/partnership/:pid/salary/bytypes_summed/:paymentDate',salaries.getAllPartnershipSalariesByTypesForDateSummed);

@@ -123,10 +123,12 @@ class SalaryPage extends React.Component {
             }
         ]
 
-        var date = new Date()
-        var currentMonth = getMonthName(date.getMonth().toString());
-        var currentYear = date.getFullYear().toString();
-        var monthStartDate = new Date(date.getFullYear(), date.getMonth(), 1, 0, 0, 0, 0);
+        var lastMonth = new Date();
+        lastMonth.setMonth(lastMonth.getMonth()-1);
+
+        var currentMonth = getMonthName(lastMonth.getMonth().toString());
+        var currentYear = lastMonth.getFullYear().toString();
+        var monthStartDate = new Date(lastMonth.getFullYear(), lastMonth.getMonth(), 1, 0, 0, 0, 0);
         var incomeComponentsSum = {}
 
         // for(var type = 0; type < this.commissionTypes.length; type++)

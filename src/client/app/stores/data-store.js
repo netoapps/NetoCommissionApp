@@ -437,7 +437,6 @@ class DataStore extends Store {
 
         // now post a new XHR request
         var xhr = new XMLHttpRequest();
-        xhr.setRequestHeader('Authorization','Bearer ' + LoginData.getUserData().apiToken);
 
         xhr.open('POST', '/api/v1/commissions/upload');
         xhr.onload = function ()

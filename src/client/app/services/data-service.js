@@ -697,7 +697,7 @@ class DataService {
                 data: JSON.stringify(expense),
                 contentType: 'application/json',
                 headers: {
-                    'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                    'Authorization': 'Bearer ' + AuthService.getLoginData().apiToken
                 },
                 success: function(result)
                 {
@@ -735,7 +735,7 @@ class DataService {
                 type: 'DELETE',
                 contentType: 'application/json',
                 headers: {
-                    'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                    'Authorization': 'Bearer ' + AuthService.getLoginData().apiToken
                 },
                 success: function(result)
                 {

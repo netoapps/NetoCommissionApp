@@ -15,10 +15,12 @@ class Salaries extends React.Component {
 
     constructor(props) {
         super(props);
-        var date = new Date()
-        var currentMonth = getMonthName(date.getMonth().toString());
-        var currentYear = date.getFullYear().toString();
 
+        var lastMonth = new Date();
+        lastMonth.setMonth(lastMonth.getMonth()-1);
+
+        var currentMonth = getMonthName(lastMonth.getMonth().toString());
+        var currentYear = lastMonth.getFullYear().toString();
 
         this.state = {
             agents: AppStore.getAgents(),

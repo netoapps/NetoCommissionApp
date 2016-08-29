@@ -12,9 +12,12 @@ export class CommissionFile {
         }
         else
         {
+            var lastMonth = new Date();
+            lastMonth.setMonth(lastMonth.getMonth()-1);
+
             this.name = "";
             this.company = "";
-            this.paymentDate = new Date();
+            this.paymentDate = lastMonth;
             this.uploadDate = new Date();
             this.note = "";
             this.taxState = strings.taxIncluded;

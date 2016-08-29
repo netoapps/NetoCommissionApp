@@ -13,34 +13,42 @@ class LoginStore extends Store {
     {
         super('LoginStore');
         this.logger.debug('Initializing DataStore');
+
         this.initialize('user',
             {
-                apiToken: "",
-                name:"",
-                familyName: "",
-                gender: ""
+                apiToken: localStorage.apiToken,
+                name:localStorage.name,
+                familyName: localStorage.familyName
             });
     }
 
-    setUserData(apiToken,name,familyName,gender)
+    setUserData(apiToken,name,familyName)
     {
         this.set('user',
             {
                 apiToken: apiToken,
                 name:name,
-                familyName: familyName,
-                gender: gender
+                familyName: familyName
             });
+
+
         if(apiToken === "")
         {
+            delete localStorage.apiToken
+            delete localStorage.fullName
+            delete localStorage.gender
+
             console.log("USER_LOGGED_OUT")
             this.eventbus.emit(ActionType.USER_LOGGED_OUT);
         }
         else
         {
+            localStorage.apiToken = apiToken
+            localStorage.name = name
+            localStorage.familyName = familyName
+
             console.log("USER_LOGGED_IN")
             AppActions.appInit();
-            //this.eventbus.emit(ActionType.USER_LOGGED_IN);
         }
     }
     getUserData()
