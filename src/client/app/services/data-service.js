@@ -252,7 +252,8 @@ class DataService {
     //Salaries
     loadAllCompanyPaymentTypesForMonth(date,callback)
     {
-        $.ajax(
+        //Catch request so it can be aborted if unmounting component
+        return $.ajax(
             {
                 url: '/api/v1/salary/by_company_types_summed/'+date,
                 type: 'GET',
