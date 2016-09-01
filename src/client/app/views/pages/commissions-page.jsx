@@ -36,6 +36,7 @@ class ColumnSelectModalContentCell extends React.Component
         this.state.types = nextProps.types
         this.state.selectedType = nextProps.selectedType
         this.setState(this.state)
+
     }
     onTypeChange(item)
     {
@@ -647,6 +648,7 @@ class Commissions extends React.Component {
 
     componentWillUnmount()
     {
+        this.reloadDataReq.abort()
         AppStore.removeEventListener(ActionType.UPLOAD_COMMISSION_FILE_COMPLETED,this._handleUploadCompleted);
     }
     componentDidMount()
@@ -661,15 +663,18 @@ class Commissions extends React.Component {
         this.state.date = date
         this.setState(this.state)
 
-        this.reloadData( (data)  => {
-            this.state.commissions = data
-            this.state.dataLoaded = true
-            this.setState(this.state)
-        })
+        this.reloadData( (response)  => {
+            if(response.result)
+            {
+                this.state.commissions = response.data
+                this.state.dataLoaded = true
+                this.setState(this.state)
+            }
+         })
     }
     reloadData(callback)
     {
-        DataService.loadAllCompanyPaymentTypesForMonth(this.state.date,  (response) => {
+        this.reloadDataReq = DataService.loadAllCompanyPaymentTypesForMonth(this.state.date,  (response) => {
             var data = []
             if(response.result == true)
             {
@@ -721,9 +726,10 @@ class Commissions extends React.Component {
             }
             else
             {
-                this.logger.error("Error while loading commission files entries");
+                console.error("Error while loading commission files entries");
             }
-            callback(data)
+            callback({result: response.result,
+                      data: data})
         })
     }
     handleUploadCompleted()
