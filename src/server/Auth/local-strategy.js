@@ -40,8 +40,11 @@ module.exports.config = function () {
                     if (!user)
                         return done(null, false, 'The username address you\'ve provided doesn\'t match any account.');
 
-                    if (!user.checkPassword(password))
+                    if(user.password!==password){
                         return done(null, false,  'The password you\'ve entered is incorrect.');
+                    }
+                    //if (!user.checkPassword(password))
+                    //    return done(null, false,  'The password you\'ve entered is incorrect.');
 
                     return done(null, user);
                 });
@@ -81,8 +84,8 @@ module.exports.config = function () {
                     // create the user
                     var newUser = new User();
                     newUser.username = username;
-                    newUser.password = newUser.getHash(password);
-
+                    //newUser.password = newUser.getHash(password);
+                    newUser.password = password;
                     if(req.body.name){
                         newUser.name = req.body.name;
                     }
