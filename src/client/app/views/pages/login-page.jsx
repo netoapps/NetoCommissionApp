@@ -31,6 +31,7 @@ export default class Login extends React.Component {
             {
                 this.errorMessage = strings.loginErrorMessage
                 this.errorMessageClassName = "login-page-alert";
+                this.setState(this.state)
             }
         }).bind(this))
     }
