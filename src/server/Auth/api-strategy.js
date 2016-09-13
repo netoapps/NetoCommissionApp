@@ -19,7 +19,7 @@ module.exports.config = function() {
                     console.log('JwtBearerStrategy: error getting user by id: ' + token.username);
                     return done(null, false);
                 }
-                console.log('found user by id: '+ user.name + ' ' + user.lastName);
+                console.log('found user by id: '+ user.name + ' ' + user.familyName);
                 return done(null, user, token);
 
             });
