@@ -11,7 +11,7 @@ let strings = {
     disconnect: "התנתק",
     connect: "התחבר",
     register: "הרשמה",
-    needAccount: "צריך חשבון?",
+    needAccount: "",
     sendRegisterRequest: "שלח בקשה להרשם",
     loginErrorMessage: "שם משתמש או סיסמה שגויים",
     dashboard: "ראשי",

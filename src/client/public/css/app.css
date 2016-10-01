@@ -517,6 +517,8 @@ body
     outline: 0;
     color: #4286b4;
     border: none;
+    width: 40px;
+    height: 40px;
 }
 .login-page-register-btn:hover
 {
