@@ -19,7 +19,7 @@ class PartnershipPage extends React.Component {
 
         var partnership = null
         var isNewPartnership = true
-        if (this.props.params.index != "-1")
+        if (this.props.params.partnershipId != "-1")
         {
             isNewPartnership = false
             //Make a copy of partnership

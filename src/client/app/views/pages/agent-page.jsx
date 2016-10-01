@@ -21,7 +21,7 @@ class AgentPage extends React.Component {
 
         var agent = null
         var isNewAgent = true
-        if (this.props.params.index != "-1")
+        if (this.props.params.idNumber != "-1")
         {
             isNewAgent = false
             agent = new Agent(AppStore.getAgent(this.props.params.idNumber))
