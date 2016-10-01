@@ -2,7 +2,7 @@
  * Created by efishtain on 25/04/2016.
  */
 
-var ExcelAnalyzerService = require('../Services/ExcelAnalyzerService');
+var ExcelAnalyzerService = require('../Services/excelAnalyzerService');
 var ExcelReportsService = require('../Services/excelReportsService');
 var config = require('../config');
 var fs = require('fs');
