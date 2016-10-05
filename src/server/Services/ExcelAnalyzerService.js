@@ -5,9 +5,7 @@ var xlsx = require('xlsx');
 var AgentsService = require('./agentsService');
 var _ = require('underscore');
 var async = require('async');
-const companies = ["כלל ביטוח","כלל גמל","מגדל","מנורה","אלטשולר שחם","ילין לפידות","מיטב דש","הראל","הפניקס","אנליסט",
-    "איי בי איי","אקסלנס","הכשרה",'אקסלנס IRA','אלטשולר שחם ביטוח','כלל ביטוח','מגדל גמל','מגדל ביטוח','אינפיניטי'
-    ,'וולתסטון','פסגות','מגדל קשת/ביטוח','מילניום'];
+
 
 function ExcelAnalyzerService() {
     this.analyzeSalaryFile = function (filePath, columnSettings,headersRowNumber, cb) {
@@ -122,9 +120,6 @@ function ExcelAnalyzerService() {
                 var pds = Object.keys(agent)
                     .filter(function(property){return property!=='ID'&&property!=='סוכן'})
                     .reduce(function(pds, company){
-                        if(companies.indexOf(company)===-1){
-                            console.log(company)
-                        }
                         const pd = [
                             {
                                 companyName: company,
@@ -180,9 +175,6 @@ function ExcelAnalyzerService() {
             var pds = partnershipsArray.reduce(function(allGroupPds, entity) {
                 const pd =
                     Object.keys(entity).filter(function(key){return key!=='ID'&&key!=='סוכן'}).reduce(function(allPds,company){
-                        if(companies.indexOf(company)===-1){
-                            console.log(company)
-                        }
                         const compPd = [
                             {
                                 companyName: company,
