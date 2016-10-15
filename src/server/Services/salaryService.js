@@ -168,6 +168,7 @@ function SalaryService() {
                     })
                 })
             })
+            .then(constantService.getCompanyIdByName.bind(null,company))
             .then(checkAgentIds.bind(null, agents, partnerships, company, salaries))
             .then(assignSalariesToAgents.bind(null, agents, partnerships, salaries, paymentDate, company, taxValue, fid))
             .then(function () {

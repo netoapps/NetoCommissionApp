@@ -12,12 +12,10 @@ var schema = new mongoose.Schema({
     _id: {type: String, default: shortid.generate},
     creationTime: {type: Date, default: Date.now},
     updateTime: {type: Date, default: Date.now},
-    name: String,
-    value: [String]
+    name: {type:String,index:true,unique:true},
+    value: [String],
+    type:String
 });
-
-
-schema.index({name: 1});
 
 
 module.exports = mongoose.model('Constant', schema);

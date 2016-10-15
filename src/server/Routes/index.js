@@ -88,8 +88,9 @@ module.exports.registerRoutes = function(app){
     apiRouter.get('/constants/companies', constants.getCompanies);
     apiRouter.get('/constants/commissions', constants.getCommissions);
     apiRouter.post('/constants/companies/:company', constants.addCompany);
-    apiRouter.put('/constants/companies', constants.updateCompaniesList);
-    apiRouter.delete('/constants/companies/:company', constants.removeCompany);
+    //apiRouter.put('/constants/companies', constants.updateCompaniesList);
+    apiRouter.put('/constants/companies/:companyId/name/:name', constants.updateCompany);
+    apiRouter.delete('/constants/companies/:companyId', constants.removeCompany);
 
     app.use('/api/v1',apiRouter);
 

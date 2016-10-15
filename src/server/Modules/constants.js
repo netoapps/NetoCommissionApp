@@ -37,7 +37,17 @@ module.exports.addCompany = function(req, res){
 }
 
 module.exports.removeCompany = function(req, res){
-    constantsService.removeCompany(req.params.company)
+    constantsService.removeCompany(req.params.companyId)
+        .then(function(){
+            return res.status(200).json({msg:'ok'});
+        })
+        .catch(function(err){
+            return res.status(400).json({err:err});
+        });
+}
+
+module.exports.updateCompany = function(req, res){
+    constantsService.updateCompany(req.params.companyId, req.params.name)
         .then(function(){
             return res.status(200).json({msg:'ok'});
         })
