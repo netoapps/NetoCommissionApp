@@ -27,7 +27,7 @@ var schema = new mongoose.Schema({
 });
 
 
-schema.index({agentIds: 1});
+schema.index({idNumber: 1});
 
 
 module.exports = mongoose.model('Agent', schema);

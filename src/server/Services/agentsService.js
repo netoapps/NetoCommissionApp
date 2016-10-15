@@ -14,7 +14,7 @@ function Service() {
                 return reject('missing id or name');
             }
 
-            Agent.update(
+            Agent.findOneAndUpdate(
                 {idNumber: id},
                 {
                     name: name,
