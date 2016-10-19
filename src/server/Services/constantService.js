@@ -3,13 +3,52 @@
  */
 
 const commissionType = ["נפרעים","היקף","בונוס"];
-const companies = ["כלל ביטוח","כלל גמל","מגדל","מנורה","אלטשולר שחם","ילין לפידות","מיטב דש","הראל","הפניקס","אנליסט",
-    "איי בי איי","אקסלנס","הכשרה",'אקסלנס IRA','אלטשולר שחם ביטוח','מגדל גמל','מגדל ביטוח','אינפיניטי'
-,'וולתסטון','פסגות'];
+const companies = [
+    "כלל ביטוח",
+    "כלל גמל",
+    "מגדל",
+    "מנורה",
+    "אלטשולר שחם",
+    "ילין לפידות",
+    "מיטב דש",
+    "מיטב דש חדש",
+    "הראל",
+    "הפניקס",
+    "אנליסט",
+    "אי בי אי",
+    "אקסלנס",
+    "הכשרה",
+    'אקסלנס IRA',
+    'אלטשולר שחם ביטוח',
+    'מגדל גמל',
+    'מגדל ביטוח',
+    'אינפיניטי',
+    'וולתסטון',
+    'פסגות',
+    'מגדל ביטוח ישן ',
+    "מגדל קשת/ביטוח"];
+
 var Constant = require('../Models/constant');
 
 function ConstantsService(){
-    init();
+    this.init = function()
+    {
+        companies.forEach(function(c){
+            addCompany(c)
+            console.log(c)
+        })
+        //Constant.update({name:'companies'},{$setOnInsert:{value:companies}},{upsert:true},function(err, n){
+        //    if(err){
+        //        console.log(err);
+        //    }
+        //
+        //});
+        Constant.update({name:'commissionType'},{$setOnInsert:{value:commissionType}},{upsert:true},function(err, n) {
+            if (err) {
+                console.log(err);
+            }
+        })
+    };
 
     this.getCommissionTypes = function(){
         return new Promise(function(resolve, reject){
@@ -115,22 +154,23 @@ function ConstantsService(){
     //}
 
     //Private functions
-    function init(){
-        companies.forEach(function(c){
-            addCompany(c)
-        })
-        //Constant.update({name:'companies'},{$setOnInsert:{value:companies}},{upsert:true},function(err, n){
-        //    if(err){
-        //        console.log(err);
-        //    }
-        //
-        //});
-        Constant.update({name:'commissionType'},{$setOnInsert:{value:commissionType}},{upsert:true},function(err, n) {
-            if (err) {
-                console.log(err);
-            }
-        })
-    }
+    // function init(){
+    //     companies.forEach(function(c){
+    //         addCompany(c)
+    //         console.log(c)
+    //     })
+    //     //Constant.update({name:'companies'},{$setOnInsert:{value:companies}},{upsert:true},function(err, n){
+    //     //    if(err){
+    //     //        console.log(err);
+    //     //    }
+    //     //
+    //     //});
+    //     Constant.update({name:'commissionType'},{$setOnInsert:{value:commissionType}},{upsert:true},function(err, n) {
+    //         if (err) {
+    //             console.log(err);
+    //         }
+    //     })
+    // }
 
     function addCompany(company){
         return new Promise(function(resolve, reject){

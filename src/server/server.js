@@ -9,6 +9,9 @@ var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var routing = require('./Routes');
 var passport = require('./Auth/passport');
+var ConstantService = require('./Services/constantService');
+var constantService = new ConstantService();
+constantService.init()
 
 function NetoCommisionAppServer(){
     var self = this;

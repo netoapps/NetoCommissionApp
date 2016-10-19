@@ -272,18 +272,28 @@ class AgentPage extends React.Component {
         }
         this.setState(this.state)
     }
-
+    onRequestCompanyCellData(rowIndex, title)
+    {
+        var companyId = this.state.agent.paymentsDetails[rowIndex].companyName
+        var companyName =  AppStore.getCompanyNameFromId(companyId)
+        if (companyName == null)
+        {
+            console.error("Agent page - Could not find company name from id " + companyId)
+        }
+        return companyName
+    }
     render () {
 
         var paymentColumns = [
             {
                 title: "חברה",
-                key: "companyName",
+                key: "-request-",
                 width: "33%",
-                type: 'select',
+                type: 'select-request',
                 color: 'normal',
                 action: this.onSelectCompany.bind(this),
                 options: this.companies,
+                requestCellData: this.onRequestCompanyCellData.bind(this),
                 searchBox: true
             },
             {

@@ -46,6 +46,10 @@ class TableCell extends React.Component {
         {
             this.state.value = this.state.column.requestCellData(this.state.rowIndex,this.state.column.title)
         }
+        if(this.state.column.type === "select-request")
+        {
+            this.state.value = this.state.column.requestCellData(this.state.rowIndex,this.state.column.title)
+        }
 
         if (this.state.column.color === "red-green")
         {
@@ -100,7 +104,7 @@ class TableCell extends React.Component {
                 <button className={className} onClick={ function(action) { action(this.state.rowIndex) }.bind(this,action)}>{this.state.value}</button>
             </div>;
         }
-        if (this.state.column.type === "select")
+        if (this.state.column.type === "select" || this.state.column.type === "select-request")
         {
             const options = []
             for(let option = 0; option < this.state.column.options.length; option++)
@@ -110,9 +114,10 @@ class TableCell extends React.Component {
                                      >{this.state.column.options[option]}</option>)
             }
 
+            var selectedValue = this.state.column.options.indexOf(this.state.value) != -1 ? this.state.value:""
             node = <div className="h-center">
                         <div className="table-select">
-                            <select onChange={this.onChange.bind(this)} value={this.state.value}>
+                            <select onChange={this.onChange.bind(this)} value={selectedValue}>
                                 {options}
                             </select>
                         </div>

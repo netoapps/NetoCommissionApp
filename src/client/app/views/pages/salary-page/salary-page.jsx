@@ -52,7 +52,7 @@ class SalaryPage extends React.Component {
             },
             {
                 title: "שם סוכן",
-                key: "",
+                key: "-request-",
                 width: "20%",
                 type: 'read-only-request',
                 color: 'normal',

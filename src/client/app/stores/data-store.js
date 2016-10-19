@@ -61,6 +61,23 @@ class DataStore extends Store {
                     return 1;
                 return 0;
             });
+
+            //////////////////////patch - modify company name to id //////////////////////////
+            for(var aIndex = 0; aIndex < agents.length; aIndex++)
+            {
+                var agent = agents[aIndex]
+                for(var pIndex = 0; pIndex < agent.paymentsDetails.length; pIndex++)
+                {
+                    var companyId = this.getCompanyIdFromName(agent.paymentsDetails[pIndex].companyName)
+                    agent.paymentsDetails[pIndex].companyName = companyId
+                    if (companyId == null)
+                    {
+                        console.error("Data store - Could not find company id from name " + agent.paymentsDetails[pIndex].companyName)
+                    }
+                }
+            }
+            //////////////////////////////////////////////////////////////////////////////////
+
             this.set('agents',agents,true)
             this.eventbus.emit(ActionType.AGENTS_LOADED)
 
@@ -80,7 +97,37 @@ class DataStore extends Store {
     //Companies
     getCompanies()
     {
-        return this.get('companies');
+        var companyObjArray = this.get('companies')
+        var companies = []
+        for(var index = 0; index < companyObjArray.length; index++)
+        {
+            companies[index] = companyObjArray[index].name
+        }
+        return companies
+    }
+    getCompanyNameFromId(companyId)
+    {
+        var companyObjArray = this.get('companies')
+        for(var index = 0; index < companyObjArray.length; index++)
+        {
+            if (companyId === companyObjArray[index]._id)
+            {
+                return companyObjArray[index].name
+            }
+        }
+        return null
+    }
+    getCompanyIdFromName(companyName)
+    {
+        var companyObjArray = this.get('companies')
+        for(var index = 0; index < companyObjArray.length; index++)
+        {
+            if (companyName === companyObjArray[index].name)
+            {
+                return companyObjArray[index]._id
+            }
+        }
+        return null
     }
 
     //Commissions
