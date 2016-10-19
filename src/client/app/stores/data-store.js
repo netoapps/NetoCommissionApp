@@ -43,14 +43,13 @@ class DataStore extends Store {
             var companies = values[0]
             companies.sort(function (a,b)
             {
-                if (a < b)
+                if (a.name < b.name)
                     return -1;
-                if (a > b)
+                if (a.name > b.name)
                     return 1;
                 return 0;
             });
             this.set('companies',companies,true);
-
             this.set('commissionType',values[1],true);
 
             var agents = values[2]

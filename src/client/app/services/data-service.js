@@ -45,7 +45,7 @@ class DataService {
         {
             $.ajax(
                 {
-                    url: '/api/v1//constants/companies',
+                    url: '/api/v1/constants/companies',
                     type: 'GET',
                     contentType: 'application/json',
                     headers: {
@@ -73,7 +73,7 @@ class DataService {
         {
             $.ajax(
                 {
-                    url: '/api/v1//constants/commissions',
+                    url: '/api/v1/constants/commissions',
                     type: 'GET',
                     contentType: 'application/json',
                     headers: {
