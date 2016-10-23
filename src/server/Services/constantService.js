@@ -26,6 +26,11 @@ const companies = [
     'וולתסטון',
     'פסגות',
     'מגדל ביטוח ישן ',
+    'תמיר פישמן ',
+    'מילניום',
+    'פניקס ישן',
+    'ניהול תיק הראל /בטוחה',
+    'אינפינטי',
     "מגדל קשת/ביטוח"];
 
 var Constant = require('../Models/constant');
@@ -35,7 +40,6 @@ function ConstantsService(){
     {
         companies.forEach(function(c){
             addCompany(c)
-            console.log(c)
         })
         //Constant.update({name:'companies'},{$setOnInsert:{value:companies}},{upsert:true},function(err, n){
         //    if(err){

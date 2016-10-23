@@ -241,7 +241,7 @@ class AgentPage extends React.Component {
     //Table changes
     onSelectCompany(index,value)
     {
-        this.state.agent.paymentsDetails[index].companyName = value
+        this.state.agent.paymentsDetails[index].companyName = AppStore.getCompanyIdFromName(value)
         this.setState(this.state)
     }
     onSelectPaymentType(index,value)
@@ -278,7 +278,7 @@ class AgentPage extends React.Component {
         var companyName =  AppStore.getCompanyNameFromId(companyId)
         if (companyName == null)
         {
-            console.error("Agent page - Could not find company name from id " + companyId)
+            console.error("Agent page - could not convert company name from id " + companyId)
         }
         return companyName
     }

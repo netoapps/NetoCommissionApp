@@ -36,9 +36,10 @@ class SalaryPage extends React.Component {
         var incomesColumns = [
             {
                 title: "חברה",
-                key: "company",
+                key: "-request-",
                 width: "18%",
-                type: 'read-only',
+                type: 'read-only-request',
+                requestCellData: this.onRequestCompanyCellData.bind(this),
                 color: 'normal',
                 searchBox: true
             },
@@ -165,6 +166,16 @@ class SalaryPage extends React.Component {
     {
 
     }
+    onRequestCompanyCellData(rowIndex, title)
+    {
+        var companyId = this.state.incomes[rowIndex].company
+        var companyName =  AppStore.getCompanyNameFromId(companyId)
+        if (companyName == null)
+        {
+            console.error("Agent page - could not convert company name from id " + companyId)
+        }
+        return companyName
+    }
     onRequestIncomeCellData(rowIndex, title)
     {
         var cellData = ""
@@ -174,22 +185,6 @@ class SalaryPage extends React.Component {
             if(income.partnershipSalaryId != null)
             {
                 cellData = "שותפות"
-                // var partnership = AppStore.getPartnership(income.partnershipSalaryId)
-                // if(partnership != null)
-                // {
-                //     for(var idIndex = 0; idIndex < partnership.agentsDetails.length ; idIndex++)
-                //     {
-                //         var agentData = AppStore.getAgent(partnership.agentsDetails[idIndex].idNumber)
-                //         if(agentData != null)
-                //         {
-                //             cellData += agentData.name + " " + agentData.familyName
-                //             if(idIndex < (partnership.agentsDetails.length-1))
-                //             {
-                //                 cellData += ", "
-                //             }
-                //         }
-                //     }
-                // }
             }
             else
             {
@@ -248,7 +243,7 @@ class SalaryPage extends React.Component {
             callback(values[0],values[1],values[2],values[3],values[4])
         }).catch(function (reason){
             callback(null,null,null,null)
-            console.log("failed to income data - " + reason)
+            console.error("failed to income data - " + reason)
         })
     }
 
@@ -315,9 +310,12 @@ class SalaryPage extends React.Component {
 
     onSaveIncome(income,index)
     {
+        var incomeCopy = new Income(income)
+        incomeCopy.company = AppStore.getCompanyIdFromName(incomeCopy.company)
+
         if(index != -1)
         {
-            DataService.updateSalaryIncome(this.state.context.type,this.state.selectedIncome._id,income,this.state.context.id, (response) => {
+            DataService.updateSalaryIncome(this.state.context.type,this.state.selectedIncome._id,incomeCopy,this.state.context.id, (response) => {
 
                 if(response.result == true)
                 {
@@ -336,8 +334,8 @@ class SalaryPage extends React.Component {
         }
         else
         {
-            income.paymentDate = this.state.date
-            DataService.addSalaryIncome(this.state.context.type, income, this.state.context.id, (response) => {
+            incomeCopy.paymentDate = this.state.date
+            DataService.addSalaryIncome(this.state.context.type, incomeCopy, this.state.context.id, (response) => {
 
                 if(response.result == true)
                 {
@@ -536,13 +534,6 @@ class SalaryPage extends React.Component {
         {
             sum += parseFloat(this.state.incomeComponentsSum[type])
         }
-        // for(var index = 0; index < this.state.incomes.length; index++)
-        // {
-        //     if(this.state.incomes[index].fileId == null )
-        //     {
-        //         sum += parseFloat(this.state.incomes[index].amount)
-        //     }
-        // }
         return sum.toString()
     }
 
