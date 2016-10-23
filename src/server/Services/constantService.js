@@ -125,12 +125,21 @@ function ConstantsService(){
     //}
 
     this.removeCompany = function(companyId){
-        return new Promise(function(resolve, reject) {
-            Constant.remove(companyId, function(err){
+        return new Promise(function(resolve, reject)
+        {
+            Constant.findById(companyId,function(err,company){
                 if(err){
                     return reject(err)
                 }
-                return resolve()
+                if(!company){
+                    return reject(err)
+                }
+                company.remove(function(err){
+                    if(err){
+                        return reject(err)
+                    }
+                    return resolve()
+                })
             })
         })
     }
