@@ -42,6 +42,7 @@ class DataStore extends Store {
         });
 
         //////////////////////patch - modify company name to id //////////////////////////
+        console.log("----- REMOVE WHEN AGENTS FILE IS LOADED AGAIN ----------")
         for(var aIndex = 0; aIndex < agents.length; aIndex++)
         {
             var agent = agents[aIndex]
@@ -269,15 +270,7 @@ class DataStore extends Store {
                 });
         }
     }
-    // getAgentAtIndex(index)
-    // {
-    //     var agents = this.getAgents();
-    //     if (agents.length > index)
-    //     {
-    //         return agents[index]
-    //     }
-    //     return null
-    // }
+
     getAgent(idNumber)
     {
         var agents = this.getAgents();
