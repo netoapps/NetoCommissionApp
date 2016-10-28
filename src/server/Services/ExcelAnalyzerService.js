@@ -5,10 +5,10 @@ var xlsx = require('xlsx');
 var AgentsService = require('./agentsService');
 var _ = require('underscore');
 var async = require('async');
-
+var sha1 = require('sha1')
 
 function ExcelAnalyzerService() {
-    this.analyzeSalaryFile = function (filePath, columnSettings,headersRowNumber, cb) {
+    this.analyzeSalaryFile = function (filePath, columnSettings, headersRowNumber, cb) {
         try {
             var workbook = xlsx.readFile(filePath);
         } catch (err) {
@@ -16,30 +16,30 @@ function ExcelAnalyzerService() {
         }
 
         var worksheet = workbook.Sheets[workbook.SheetNames[0]];
-        var salaries = xlsx.utils.sheet_to_json(worksheet, {range: headersRowNumber-1});
-        columnSettings = _.omit(columnSettings, function(value, key, object){
-           return value===null;
+        var salaries = xlsx.utils.sheet_to_json(worksheet, {range: headersRowNumber - 1});
+        columnSettings = _.omit(columnSettings, function (value, key, object) {
+            return value === null;
         });
         salaries = salaries
-            .filter(function(s){
+            .filter(function (s) {
                 return s[columnSettings['מספר סוכן']];
             })
-            .map(function(s){
+            .map(function (s) {
                 var obj = {};
-                Object.keys(columnSettings).map(function(setting){
+                Object.keys(columnSettings).map(function (setting) {
                     try {
-                    if(setting=='מספר סוכן'){
-                        if(isNaN(s[columnSettings[setting]])){
-                            obj[setting] = s[columnSettings[setting]].trim();
-                        }else{
-                            obj[setting] = Number(s[columnSettings[setting]]);
+                        if (setting == 'מספר סוכן') {
+                            if (isNaN(s[columnSettings[setting]])) {
+                                obj[setting] = s[columnSettings[setting]].trim();
+                            } else {
+                                obj[setting] = Number(s[columnSettings[setting]]);
+                            }
+                        } else {
+                            if (s[columnSettings[setting]] != null) {
+                                obj[setting] = Number(s[columnSettings[setting]].replace(/,/g, '').trim());
+                            }
                         }
-                    }else {
-                        if(s[columnSettings[setting]] != null) {
-                            obj[setting] = Number(s[columnSettings[setting]].replace(/,/g, '').trim());
-                        }
-                    }
-                    }catch(err){
+                    } catch (err) {
                         return cb(err);
                     }
                 });
@@ -49,7 +49,7 @@ function ExcelAnalyzerService() {
         return cb(null, salaries);
 
     };
-    this.analyzeColumns = function(filePath, cb){
+    this.analyzeColumns = function (filePath, cb) {
         try {
             var workbook = xlsx.readFile(filePath);
         } catch (err) {
@@ -57,20 +57,20 @@ function ExcelAnalyzerService() {
         }
 
         var sheet = workbook.Sheets[workbook.SheetNames[0]];
-        var cols = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
-                    'AA','AB','AC','AD','AE','AF','AG','AH','AI','AJ','AK','AL','AM','AN','AO','AP','AQ','AR','AS','AT','AU','AV','AW','AX','AY','AZ',
-                    'BA','BB','BC','BD','BE','BF','BG','BH','BI','BJ','BK','BL','BM','BN','BO','BP','BQ','BR','BS','BT','BU','BV','BW','BX','BY','BZ',
-                    'CA','CB','CC','CD','CE','CF','CG','CH','CI','CJ','CK','CL','CM','CN','CO','CP','CQ','CR','CS','CT','CU','CV','CW','CX','CY','CZ'];
-        var rows = [1,2,3,4,5,6,7,8,9];
+        var cols = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+            'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ',
+            'BA', 'BB', 'BC', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BK', 'BL', 'BM', 'BN', 'BO', 'BP', 'BQ', 'BR', 'BS', 'BT', 'BU', 'BV', 'BW', 'BX', 'BY', 'BZ',
+            'CA', 'CB', 'CC', 'CD', 'CE', 'CF', 'CG', 'CH', 'CI', 'CJ', 'CK', 'CL', 'CM', 'CN', 'CO', 'CP', 'CQ', 'CR', 'CS', 'CT', 'CU', 'CV', 'CW', 'CX', 'CY', 'CZ'];
+        var rows = [1, 2, 3, 4, 5, 6, 7, 8, 9];
         var headersRow = -1;
-        var stopExecution=false;
-        var headers=[];
-        rows.forEach(function(row){
-            if(!stopExecution) {
+        var stopExecution = false;
+        var headers = [];
+        rows.forEach(function (row) {
+            if (!stopExecution) {
                 cols.forEach(function (col) {
-                    if (sheet[col + row] !== undefined && sheet[col+row] !== '!' && sheet[col+row].v) {
+                    if (sheet[col + row] !== undefined && sheet[col + row] !== '!' && sheet[col + row].v) {
                         headersRow = row;
-                        headers.push(sheet[col+row].v);
+                        headers.push(sheet[col + row].v);
                         stopExecution = true;
                     }
                 })
@@ -78,15 +78,17 @@ function ExcelAnalyzerService() {
         })
 
         //var salaries = xlsx.utils.sheet_to_json(sheet, {range: headersRow-1});
-        if(headersRow!==-1) {
-            return cb(null, {headers: headers,
-                             dataRowNumber:headersRow});
-        }else{
+        if (headersRow !== -1) {
+            return cb(null, {
+                headers: headers,
+                dataRowNumber: headersRow
+            });
+        } else {
             return cb('could not find headers');
         }
 
     }
-    this.analyzeAgentsFileNew = function(filePath, cb){
+    this.analyzeAgentsFileNew = function (filePath, cb) {
         try {
             var workbook = xlsx.readFile(filePath);
         } catch (err) {
@@ -96,30 +98,32 @@ function ExcelAnalyzerService() {
         var worksheet = workbook.Sheets[workbook.SheetNames[0]];
 
         const data = xlsx.utils.sheet_to_json(worksheet);
-        const validData = _.partition(data, function(a){
-            return a['סוכן'].indexOf('+')===-1
+        const validData = _.partition(data, function (a) {
+            return a['סוכן'].indexOf('+') === -1
         })
         const agents = validData[0]
-        const partnerships = _.groupBy(validData[1],'סוכן')
+        const partnerships = _.groupBy(validData[1], 'סוכן')
 
         const nameToIds = agents
-            .filter(function(agent){
+            .filter(function (agent) {
                 return agent['ID']
             })
-            .reduce(function(accum, agent){
+            .reduce(function (accum, agent) {
                 var name = agent['סוכן'].split('/');
                 var ID = agent['ID'].trim();
-                accum[name[0]]=ID;
+                accum[name[0]] = ID;
                 return accum;
-            },{})
+            }, {})
 
         const agentsActions = agents
-            .reduce(function(actions, agent){
+            .reduce(function (actions, agent) {
                 var splitName = agent['סוכן'].split('/')[0].split(' ')
                 var ID = agent['ID'].trim()
                 var pds = Object.keys(agent)
-                    .filter(function(property){return property!=='ID'&&property!=='סוכן'})
-                    .reduce(function(pds, company){
+                    .filter(function (property) {
+                        return property !== 'ID' && property !== 'סוכן'
+                    })
+                    .reduce(function (pds, company) {
                         const pd = [
                             {
                                 companyName: company,
@@ -145,16 +149,16 @@ function ExcelAnalyzerService() {
                         ]
                         return pds.concat(pd)
 
-                    },[])
-                if(pds.length>0){
+                    }, [])
+                if (pds.length > 0) {
                     actions.push(agentService.addAgent(ID, splitName[0].trim(), splitName.slice(1, splitName.length).join(' ').trim(), '', '', '', true, pds))
-                }else{
+                } else {
                     actions.push(agentService.addAgent(ID, splitName[0].trim(), splitName.slice(1, splitName.length).join(' ').trim(), '', '', '', true, []))
                 }
                 return actions
-            },[])
+            }, [])
         var pActions = []
-        for(var key in partnerships){
+        for (var key in partnerships) {
             var partnershipsArray = partnerships[key]
             var ids = partnershipsArray[0]['סוכן'].split('+').map(function (name) {
                 return nameToIds[name]
@@ -172,9 +176,11 @@ function ExcelAnalyzerService() {
             } else {
                 continue
             }
-            var pds = partnershipsArray.reduce(function(allGroupPds, entity) {
+            var pds = partnershipsArray.reduce(function (allGroupPds, entity) {
                 const pd =
-                    Object.keys(entity).filter(function(key){return key!=='ID'&&key!=='סוכן'}).reduce(function(allPds,company){
+                    Object.keys(entity).filter(function (key) {
+                        return key !== 'ID' && key !== 'סוכן'
+                    }).reduce(function (allPds, company) {
                         const compPd = [
                             {
                                 companyName: company,
@@ -199,20 +205,20 @@ function ExcelAnalyzerService() {
                             }
                         ]
                         return allPds.concat(compPd)
-                    },[])
+                    }, [])
 
                 return allGroupPds.concat(pd)
-            },[])
+            }, [])
             pActions.push(agentService.addPartnership(agentsDetails, true, pds))
         }
 
 
         const actions = agentsActions.concat(pActions);
         Promise.all(actions)
-            .then(function(){
+            .then(function () {
                 return cb(null)
             })
-            .catch(function(err){
+            .catch(function (err) {
                 return cb(err)
             })
     }
@@ -457,6 +463,226 @@ function ExcelAnalyzerService() {
     //
     //
     //}
+
+
+    this.analyzeAgentsIdsFile = function (filePath, cb) {
+        try {
+            var workbook = xlsx.readFile(filePath);
+        } catch (err) {
+            return cb(err);
+        }
+        const headersRowNumber = 2
+        var worksheet = workbook.Sheets[workbook.SheetNames[0]];
+        const data = xlsx.utils.sheet_to_json(worksheet, {range: headersRowNumber - 1})
+        var agentService = new AgentsService();
+        var agents = data.map(function (agent) {
+                var fullname = agent['סוכן'].split(' ')
+                var firstname = fullname[0].trim()
+                fullname.splice(0, 1)
+                var lastname = fullname.join(' ').trim()
+                return {ID: agent.ID, firstname: firstname, lastName: lastname}
+            })
+            .reduce(function (all, agent) {
+                if (!all[agent.ID]) {
+                    all[agent.ID] = agent
+                    return all
+                }
+                var prevAgent = all[agent.ID]
+
+                if (prevAgent.firstname !== agent.firstname || prevAgent.lastName !== agent.lastName) {
+                    throw 'problem with the file, agent defined twice: ' + JSON.stringify(agent)
+                }
+                return all
+            }, {})
+        var tasks = Object.keys(agents).map(function (id) {
+            var agent = agents[id]
+            return agentService.createBasicAgent.bind(null, agent.ID, agent.firstname, agent.lastName)
+        })
+
+        async.series(tasks,
+            function (err, result) {
+                if (err) {
+                    return cb(err)
+                }
+                return cb(null)
+            })
+
+    }
+
+    this.analyzeAgentNumbersFile = function (company, filePath, cb) {
+        try {
+            var workbook = xlsx.readFile(filePath);
+        } catch (err) {
+            return cb(err);
+        }
+        const headersRowNumber = 1
+        var worksheet = workbook.Sheets[workbook.SheetNames[0]];
+        const data = xlsx.utils.sheet_to_json(worksheet, {range: headersRowNumber - 1})
+        var agentService = new AgentsService();
+        agentService.getAllAgents()
+            .then(function (agents) {
+
+                const nameToIdMapping = agents.map(function (agent) {
+                    var fullname = (agent.name + ' ' + agent.familyName).trim()
+
+                    return {idNumber: agent.idNumber, name: fullname}
+                }).reduce(function (all, agent) {
+                    all[agent.name.trim()] = agent.idNumber.trim()
+                    return all
+                }, {})
+
+                var agentsTasks = data.filter(function (agent) {
+                    return agent.FullName.indexOf('+') === -1
+                }).map(function (agent) {
+                    if (!nameToIdMapping[agent.FullName.trim()]) {
+                        throw 'invalid agent found: ' + JSON.stringify(agent)
+                    }
+                    var pd = [
+                        {
+                            companyName: company,
+                            agentNumber: agent.AgentNumber,
+                            paymentType: 'נפרעים',
+                            agentPart: 70,
+                            agencyPart: 30
+                        },
+                        {
+                            companyName: company,
+                            agentNumber: agent.AgentNumber,
+                            paymentType: 'בונוס',
+                            agentPart: 50,
+                            agencyPart: 50
+                        },
+                        {
+                            companyName: company,
+                            agentNumber: agent.AgentNumber,
+                            paymentType: 'היקף',
+                            agentPart: 55,
+                            agencyPart: 45
+                        }
+                    ]
+                    return {idNumber: nameToIdMapping[agent.FullName], pd: pd}
+                }).reduce(function (all, agent) {
+                    all.push(agentService.addAgentPaymentDetails.bind(null, agent.idNumber, agent.pd))
+                    return all
+                }, [])
+
+                var partnershipsTasks = data.filter(function (agent) {
+                    return agent.FullName.indexOf('+') !== -1
+                }).map(function (agent) {
+                    var agentsNames = agent.FullName.split('+')
+                    var agentsDetails = agentsNames.map(function (name, index) {
+                        if (!nameToIdMapping[name.trim()]) {
+                            throw 'invalid agent: ' + name
+                        }
+                        if (agentsNames.length === 2) {
+                            return {idNumber: nameToIdMapping[name], part: 50}
+                        } else {
+                            if (index === 2) {
+                                return {idNumber: nameToIdMapping[name], part: 34}
+                            } else {
+                                return {idNumber: nameToIdMapping[name], part: 33}
+                            }
+                        }
+                    })
+                    var compPd = [
+                        {
+                            companyName: company,
+                            partnershipNumber: agent.AgentNumber,
+                            paymentType: 'נפרעים',
+                            partnershipPart: 70,
+                            agencyPart: 30
+                        },
+                        {
+                            companyName: company,
+                            partnershipNumber: agent.AgentNumber,
+                            paymentType: 'בונוס',
+                            partnershipPart: 50,
+                            agencyPart: 50
+                        },
+                        {
+                            companyName: company,
+                            partnershipNumber: agent.AgentNumber,
+                            paymentType: 'היקף',
+                            partnershipPart: 55,
+                            agencyPart: 45
+                        }
+                    ]
+                    var sortedIds = agentsDetails.map(function (a) {
+                        return a.idNumber
+                    }).sort()
+                    var hash = sha1(sortedIds)
+                    return agentService.addPartnershipDetails.bind(null, agentsDetails, true, compPd, hash)
+                })
+                async.series(agentsTasks.concat(partnershipsTasks),
+                    function (err, result) {
+                        if (err) {
+                            return cb(err)
+                        }
+                        return cb()
+                    })
+            })
+
+
+            .catch(function (err) {
+                return cb(err)
+            })
+    }
+
+
+    this.analyzeMissingNamesInFile = function (filePath, sheetNumber, cb) {
+        try {
+            var workbook = xlsx.readFile(filePath);
+        } catch (err) {
+            return cb(err);
+        }
+        const headersRowNumber = 1
+        var worksheet = workbook.Sheets[workbook.SheetNames[sheetNumber]];
+        const data = xlsx.utils.sheet_to_json(worksheet, {range: headersRowNumber - 1})
+        var agentService = new AgentsService();
+        agentService.getAllAgents()
+            .then(function (agents) {
+
+                const nameToIdMapping = agents.map(function (agent) {
+                    var fullname = (agent.name + ' ' + agent.familyName).trim()
+
+                    return {idNumber: agent.idNumber, name: fullname}
+                }).reduce(function (all, agent) {
+                    all[agent.name.trim()] = agent.idNumber.trim()
+                    return all
+                }, {})
+
+                var missingNames = data.filter(function (agent) {
+                        return agent.FullName.indexOf('+') === -1
+                    })
+                    .reduce(function (all, a) {
+                        if (!nameToIdMapping[a.FullName.trim()]) {
+                            all.push(a.FullName)
+                        }
+                        return all
+                    }, [])
+
+
+                var missingNames2 = data.filter(function (agent) {
+                    return agent.FullName.indexOf('+') !== -1
+                }).reduce(function (missing, agents) {
+                    var agentsNames = agents.FullName.split('+')
+                    var miss = agentsNames.reduce(function (all, name) {
+                        if (!nameToIdMapping[name.trim()]) {
+                            all.push(name)
+                        }
+                       return all
+                    },[])
+                    missing = missing.concat(miss)
+                    return missing
+                },[])
+                console.log(missingNames.concat(missingNames2))
+            })
+
+
+            .catch(function (err) {
+                return cb(err)
+            })
+    }
 }
 
 

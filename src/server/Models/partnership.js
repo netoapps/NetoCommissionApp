@@ -9,6 +9,7 @@ var schema = new mongoose.Schema({
     creationTime: {type: Date, default: Date.now},
     updateTime: {type: Date, default: Date.now},
     active:Boolean,
+    agentsIdsSha1:{type:String,index:true},
     agentsDetails:[{_id:false,idNumber:String, part:String}],
     paymentsDetails:[{
         _id:false,
