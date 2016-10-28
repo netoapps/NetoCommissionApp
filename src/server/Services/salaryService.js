@@ -12,7 +12,6 @@ var async = require('async');
 var ConstantService = require('./constantService');
 var constantService = new ConstantService();
 
-
 var _ = require('underscore');
 
 function SalaryService() {

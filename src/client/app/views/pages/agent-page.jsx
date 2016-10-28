@@ -241,7 +241,7 @@ class AgentPage extends React.Component {
     //Table changes
     onSelectCompany(index,value)
     {
-        this.state.agent.paymentsDetails[index].companyName = value
+        this.state.agent.paymentsDetails[index].companyName = AppStore.getCompanyIdFromName(value)
         this.setState(this.state)
     }
     onSelectPaymentType(index,value)
@@ -272,18 +272,28 @@ class AgentPage extends React.Component {
         }
         this.setState(this.state)
     }
-
+    onRequestCompanyCellData(rowIndex, title)
+    {
+        var companyId = this.state.agent.paymentsDetails[rowIndex].companyName
+        var companyName =  AppStore.getCompanyNameFromId(companyId)
+        if (companyName == null)
+        {
+            console.error("Agent page - could not convert company name from id " + companyId)
+        }
+        return companyName
+    }
     render () {
 
         var paymentColumns = [
             {
                 title: "חברה",
-                key: "companyName",
+                key: "-request-",
                 width: "33%",
-                type: 'select',
+                type: 'select-request',
                 color: 'normal',
                 action: this.onSelectCompany.bind(this),
                 options: this.companies,
+                requestCellData: this.onRequestCompanyCellData.bind(this),
                 searchBox: true
             },
             {

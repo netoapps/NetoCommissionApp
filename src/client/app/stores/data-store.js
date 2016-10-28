@@ -4,8 +4,8 @@
 import Store from '../lib/store.js';
 import {ActionType} from '../actions/app-actions.js';
 import DataService from '../services/data-service.js';
-import AuthService from '../services/auth-service.js';
 import LoginData from './login-store.js';
+import Agent from '../model/agent.js';
 
 class DataStore extends Store {
 
@@ -30,6 +30,61 @@ class DataStore extends Store {
     //     console.log("handleUserLoggedIn")
     //     setTimeout((function(){ this.loadData() }).bind(this), 900);
     // }
+    handleAgentsDataResult(agents)
+    {
+        agents.sort(function (a,b)
+        {
+            if (a.name < b.name)
+                return -1;
+            if (a.name > b.name)
+                return 1;
+            return 0;
+        });
+
+        //////////////////////patch - modify company name to id //////////////////////////
+        console.log("----- REMOVE WHEN AGENTS FILE IS LOADED AGAIN ----------")
+        for(var aIndex = 0; aIndex < agents.length; aIndex++)
+        {
+            var agent = agents[aIndex]
+            for(var pIndex = 0; pIndex < agent.paymentsDetails.length; pIndex++)
+            {
+                var companyName = agent.paymentsDetails[pIndex].companyName
+                var companyId = this.getCompanyIdFromName(companyName)
+                if (companyId != null)
+                {
+                    agent.paymentsDetails[pIndex].companyName = companyId
+                }
+                else
+                {
+                    console.error("Could not convert company name '" + companyName + "' to id")
+                }
+            }
+        }
+        //////////////////////////////////////////////////////////////////////////////////
+
+        this.set('agents',agents,true)
+    }
+    handleCompaniesDataResult(companies)
+    {
+        companies.sort(function (a,b)
+        {
+            if (a.name < b.name)
+                return -1;
+            if (a.name > b.name)
+                return 1;
+            return 0;
+        });
+        this.set('companies',companies,true);
+    }
+    loadCompanies()
+    {
+        var p = DataService.loadCompanies()
+        p.then(function (result) {
+            this.handleCompaniesDataResult(result)
+        }.bind(this)).catch(function (reason) {
+            console.error("Failed to load companies data - " + reason)
+        })
+    }
     loadData()
     {
         var promise = []
@@ -40,29 +95,10 @@ class DataStore extends Store {
         promise.push(DataService.loadCommissionFiles())
         Promise.all(promise).then((function (values)
         {
-            var companies = values[0]
-            companies.sort(function (a,b)
-            {
-                if (a < b)
-                    return -1;
-                if (a > b)
-                    return 1;
-                return 0;
-            });
-            this.set('companies',companies,true);
-
+            this.handleCompaniesDataResult(values[0])
             this.set('commissionType',values[1],true);
+            this.handleAgentsDataResult(values[2])
 
-            var agents = values[2]
-            agents.sort(function (a,b)
-            {
-                if (a.name < b.name)
-                    return -1;
-                if (a.name > b.name)
-                    return 1;
-                return 0;
-            });
-            this.set('agents',agents,true)
             this.eventbus.emit(ActionType.AGENTS_LOADED)
 
             this.set('partnerships',values[3],true)
@@ -81,7 +117,37 @@ class DataStore extends Store {
     //Companies
     getCompanies()
     {
-        return this.get('companies');
+        var companyObjArray = this.get('companies')
+        var companies = []
+        for(var index = 0; index < companyObjArray.length; index++)
+        {
+            companies[index] = companyObjArray[index].name
+        }
+        return companies
+    }
+    getCompanyNameFromId(companyId)
+    {
+        var companyObjArray = this.get('companies')
+        for(var index = 0; index < companyObjArray.length; index++)
+        {
+            if (companyId === companyObjArray[index]._id)
+            {
+                return companyObjArray[index].name
+            }
+        }
+        return null
+    }
+    getCompanyIdFromName(companyName)
+    {
+        var companyObjArray = this.get('companies')
+        for(var index = 0; index < companyObjArray.length; index++)
+        {
+            if (companyName === companyObjArray[index].name)
+            {
+                return companyObjArray[index]._id
+            }
+        }
+        return null
     }
 
     //Commissions
@@ -173,7 +239,7 @@ class DataStore extends Store {
         {
             $.ajax(
                 {
-                    url: '/api/v1/agent/'+agent._id,
+                    url: '/api/v1/agent/'+updatedAgent._id,
                     type: 'PUT',
                     data: JSON.stringify(updatedAgent),
                     contentType: 'application/json',
@@ -204,15 +270,7 @@ class DataStore extends Store {
                 });
         }
     }
-    // getAgentAtIndex(index)
-    // {
-    //     var agents = this.getAgents();
-    //     if (agents.length > index)
-    //     {
-    //         return agents[index]
-    //     }
-    //     return null
-    // }
+
     getAgent(idNumber)
     {
         var agents = this.getAgents();
@@ -240,36 +298,134 @@ class DataStore extends Store {
         return null
     }
 
-
-    updateCompanies(companies, callback)
+    updateCompanyName(companyId, newName)
     {
-        $.ajax(
-            {
-                url: '/api/v1/constants/companies',
-                type: 'PUT',
-                data: JSON.stringify({companies:companies}),
-                contentType: 'application/json',
-                headers: {
-                    'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
-                },
-                success: function(result)
+        var url = '/api/v1/constants/companies/'+ companyId + '/name/' + newName
+        return new Promise(function (resolve, reject)
+        {
+            $.ajax(
                 {
-                    console.log(result);
-                    console.log('updateCompanies - Server responded with success!');
-                    this.set('companies',result.companies,true);
-                    this.eventbus.emit(ActionType.UPDATE_COMPANIES_COMPLETED);
+                    url: url,
+                    type: 'PUT',
+                    contentType: 'application/json',
+                    headers: {
+                        'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                    },
+                    success: function(result)
+                    {
+                        console.log('Updated company to name '+ newName);
+                        resolve({
+                            result: true,
+                            message: "ok"
+                        })
+                    }.bind(this),
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        console.error('Error while updating company to name '+ newName + ' - ', textStatus, errorThrown.toString());
+                        reject({
+                            result: false,
+                            message: "שגיאה בעת עדכון שם חברה - " + newName
+                        });
 
-                    if(callback != null)
-                        callback({result:true});
-                }.bind(this),
-                error: function(jqXHR, textStatus, errorThrown)
-                {
-                    console.error('updateCompanies - ', textStatus, errorThrown.toString());
-                    if(callback != null)
-                        callback({result:false});
-                }.bind(this)
-            });
+                    }.bind(this)
+                });
+        });
     }
+    addCompany(companyName)
+    {
+        var url = '/api/v1/constants/companies/'+ companyName
+        return new Promise(function (resolve, reject)
+        {
+            $.ajax(
+                {
+                    url: url,
+                    type: 'POST',
+                    contentType: 'application/json',
+                    headers: {
+                        'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                    },
+                    success: function(result)
+                    {
+                        console.log('Added company name '+ companyName);
+                        resolve({
+                            result: true,
+                            message: "ok"
+                        })
+
+                    }.bind(this),
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        console.error('Error while adding company name '+ companyName + ' - ', textStatus, errorThrown.toString());
+                        reject({
+                            result: false,
+                            message: "שגיאה בעת הוספת חברה - " + companyName
+                        });
+
+                    }.bind(this)
+                });
+        });
+    }
+    deleteCompany(companyId)
+    {
+        var url = '/api/v1/constants/companies/'+ companyId
+        return new Promise(function (resolve, reject)
+        {
+            $.ajax(
+                {
+                    url: url,
+                    type: 'DELETE',
+                    contentType: 'application/json',
+                    headers: {
+                        'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+                    },
+                    success: function(result)
+                    {
+                        console.log('Deleted company name '+ companyId);
+                        resolve({
+                            result: true,
+                            message: "ok"
+                        })
+                    }.bind(this),
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        console.error('Error while deleting company name '+ companyId + ' - ', textStatus, errorThrown.toString());
+                        reject({
+                            result: false,
+                            message: "שגיאה בעת מחיקת חברה"
+                        });
+
+                    }.bind(this)
+                });
+        });
+    }
+    // updateCompanies(companies, callback)
+    // {
+    //     $.ajax(
+    //         {
+    //             url: '/api/v1/constants/companies',
+    //             type: 'PUT',
+    //             data: JSON.stringify({companies:companies}),
+    //             contentType: 'application/json',
+    //             headers: {
+    //                 'Authorization': 'Bearer ' + LoginData.getUserData().apiToken
+    //             },
+    //             success: function(result)
+    //             {
+    //                 console.log(result);
+    //                 console.log('updateCompanies - Server responded with success!');
+    //                 this.set('companies',result.companies,true);
+    //                 this.eventbus.emit(ActionType.UPDATE_COMPANIES_COMPLETED);
+    //                 if(callback != null)
+    //                     callback({result:true});
+    //             }.bind(this),
+    //             error: function(jqXHR, textStatus, errorThrown)
+    //             {
+    //                 console.error('updateCompanies - ', textStatus, errorThrown.toString());
+    //                 if(callback != null)
+    //                     callback({result:false});
+    //             }.bind(this)
+    //         });
+    // }
 
     addPartnership(partnership,callback)
     {
@@ -301,15 +457,7 @@ class DataStore extends Store {
                 }.bind(this)
             });
     }
-    // getPartnershipAtIndex(index)
-    // {
-    //     var partnerships =  this.getPartnerships();
-    //     if (partnerships.length > index)
-    //     {
-    //         return partnerships[index]
-    //     }
-    //     return null
-    // }
+
     setPartnership(partnershipId, updatedPartnership,callback)
     {
         var partnership = this.getPartnership(partnershipId)
@@ -512,8 +660,8 @@ class DataStore extends Store {
                 this.deletePartnership(data.partnershipId,data.callback)
                 break;
 
-            case ActionType.UPDATE_COMPANIES:
-                this.updateCompanies(data.companies,data.callback)
+            case ActionType.LOAD_COMPANIES:
+                this.loadCompanies()
                 break;
 
 

@@ -3,6 +3,9 @@
  */
 import AuthService from '../services/auth-service.js';
 import LoginData from '../stores/login-store.js';
+import AppStore from '../stores/data-store';
+
+
 
 class DataService {
 
@@ -45,7 +48,7 @@ class DataService {
         {
             $.ajax(
                 {
-                    url: '/api/v1//constants/companies',
+                    url: '/api/v1/constants/companies',
                     type: 'GET',
                     contentType: 'application/json',
                     headers: {
@@ -73,7 +76,7 @@ class DataService {
         {
             $.ajax(
                 {
-                    url: '/api/v1//constants/commissions',
+                    url: '/api/v1/constants/commissions',
                     type: 'GET',
                     contentType: 'application/json',
                     headers: {
@@ -392,6 +395,15 @@ class DataService {
                     success: function(result)
                     {
                         console.log('load manual incomes data for date '+ date + ' - server responded with success!');
+
+                        //////////////////////patch - modify company name to id //////////////////////////
+                        for(var index = 0; index < result.salaries.length; index++)
+                        {
+                            var salary = result.salaries[index]
+                            salary.company = AppStore.getCompanyIdFromName(salary.company)
+                        }
+                        //////////////////////////////////////////////////////////////////////////////////
+
                         resolve(result.salaries)
                     },
                     error: function(jqXHR, textStatus, errorThrown)
@@ -422,6 +434,15 @@ class DataService {
                     success: function(result)
                     {
                         console.log('load incomes data for date '+ date + ' - server responded with success!');
+
+                        //////////////////////patch - modify company name to id //////////////////////////
+                        for(var index = 0; index < result.salaries.length; index++)
+                        {
+                            var salary = result.salaries[index]
+                            salary.company = AppStore.getCompanyIdFromName(salary.company)
+                        }
+                        //////////////////////////////////////////////////////////////////////////////////
+
                         resolve(result.salaries)
                     },
                     error: function(jqXHR, textStatus, errorThrown)
@@ -516,6 +537,7 @@ class DataService {
                     success: function(result)
                     {
                         console.log('load expenses data for date '+ date + ' - server responded with success!');
+
                         resolve(result.expenses)
                     }.bind(this),
                     error: function(jqXHR, textStatus, errorThrown)

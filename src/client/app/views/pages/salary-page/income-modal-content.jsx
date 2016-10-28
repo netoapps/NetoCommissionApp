@@ -4,6 +4,7 @@ import { strings } from '../../../constants/strings'
 import Button from 'muicss/lib/react/button'
 import {Modal} from '../../common/app-modal.jsx';
 import Income from '../../../model/income.js';
+import AppStore from '../../../stores/data-store.js';
 
 export default class IncomeModalContent extends React.Component
 {
@@ -31,9 +32,9 @@ export default class IncomeModalContent extends React.Component
         }
         return income
     }
-    onIncomeCompanyChange(index,value)
+    onSelectCompany(index,value)
     {
-        this.state.income.company = value
+        this.state.income.company = AppStore.getCompanyIdFromName(value)
         this.setState(this.state)
     }
     onIncomeCommissionTypeChange(index,value)
@@ -69,17 +70,28 @@ export default class IncomeModalContent extends React.Component
     {
         this.props.onSaveIncome(this.state.income,this.state.incomeIndex)
     }
+    onRequestCompanyCellData(rowIndex, title)
+    {
+        var companyId = this.state.income.company
+        var companyName =  AppStore.getCompanyNameFromId(companyId)
+        if (companyName == null)
+        {
+            console.error("Income modal content - could not convert company name from id " + companyId)
+        }
+        return companyName
+    }
     render(){
 
         var columns = [
             {
                 title: "חברה",
-                key: "company",
+                key: "-request-",
                 width: "20%",
-                type: 'select',
+                type: 'select-request',
                 color: 'normal',
-                action: this.onIncomeCompanyChange.bind(this),
-                options: this.state.companies
+                action: this.onSelectCompany.bind(this),
+                options: this.state.companies,
+                requestCellData: this.onRequestCompanyCellData.bind(this),
             },
             {
                 title: "מספר סוכן",

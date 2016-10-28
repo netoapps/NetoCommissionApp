@@ -10,16 +10,16 @@ var config = {
         path: BUILD_DIR,
         filename: 'bundle.js'
     },
-     plugins: [
-         new webpack.DefinePlugin({
-             'process.env.NODE_ENV': JSON.stringify('production')
-         }),
-         new webpack.optimize.UglifyJsPlugin({
-             compress: {
-                 warnings: false
-             }
-         })
-     ],
+     // plugins: [
+     //     new webpack.DefinePlugin({
+     //         'process.env.NODE_ENV': JSON.stringify('production')
+     //     }),
+     //     new webpack.optimize.UglifyJsPlugin({
+     //         compress: {
+     //             warnings: false
+     //         }
+     //     })
+     // ],
     devtool: 'cheap-source-map',
     module : {
         loaders : [

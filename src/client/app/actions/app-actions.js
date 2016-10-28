@@ -11,8 +11,7 @@ let ActionType = {
     USER_LOGGED_IN: 'USER_LOGGED_IN',
     USER_LOGGED_OUT: 'USER_LOGGED_OUT',
 
-    UPDATE_COMPANIES: 'UPDATE_COMPANIES',
-    UPDATE_COMPANIES_COMPLETED: 'UPDATE_COMPANIES_COMPLETED',
+    LOAD_COMPANIES: 'LOAD_COMPANIES',
 
     DELETE_COMMISSION_FILE: 'DELETE_COMMISSION_FILE',
     DELETE_COMMISSION_FILE_COMPLETED: 'DELETE_COMMISSION_FILE_COMPLETED',
@@ -122,12 +121,9 @@ export default class AppActions {
             callback:callback
         });
     }
-    static updateCompanies(companies, callback)
+    static loadCompanies()
     {
-        AppDispatcher.dispatch(ActionType.UPDATE_COMPANIES,{
-            companies: companies,
-            callback:callback
-        });
+        AppDispatcher.dispatch(ActionType.LOAD_COMPANIES);
     }
 
 }

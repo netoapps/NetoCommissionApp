@@ -437,7 +437,12 @@ class FileBin extends React.Component {
         this.state.dataLoaded = false
         this.setState(this.state);
         this.state.commissionFile.columnSettings = this.state.columnSettings
-        AppActions.uploadCommissionFile(this.state.commissionFile,this.state.draggedFile, function (response) {
+
+        //Convert company name to id
+        var commissionFileCopy = new CommissionFile(this.state.commissionFile)
+        commissionFileCopy.company = AppStore.getCompanyIdFromName(commissionFileCopy.company)
+
+        AppActions.uploadCommissionFile(commissionFileCopy,this.state.draggedFile, function (response) {
            if(response.result)
            {
                  swal(
