@@ -480,7 +480,7 @@ function ExcelAnalyzerService() {
                 var firstname = fullname[0].trim()
                 fullname.splice(0, 1)
                 var lastname = fullname.join(' ').trim()
-                return {ID: agent.ID, firstname: firstname, lastName: lastname}
+                return {ID: agent.ID.trim(), firstname: firstname, lastName: lastname}
             })
             .reduce(function (all, agent) {
                 if (!all[agent.ID]) {
@@ -535,7 +535,7 @@ function ExcelAnalyzerService() {
                     return agent.FullName.indexOf('+') === -1
                 }).map(function (agent) {
                     if (!nameToIdMapping[agent.FullName.trim()]) {
-                        throw 'invalid agent found: ' + JSON.stringify(agent)
+                        throw 'invalid agent found in company file: ' + JSON.stringify(agent)
                     }
                     var pd = [
                         {

@@ -87,6 +87,20 @@ function ConstantsService(){
         });
     };
 
+    this.getCompanyIdByNameCB = function(name, cb){
+        return new Promise(function(resolve, reject){
+            Constant.findOne({type:'company', name:name}, function(err, company){
+                if(err){
+                    return cb(err)
+                }
+                if(!company){
+                    return cb('company not found')
+                }
+                return cb(null, company._id)
+            })
+        })
+    }
+
     this.getCompanyIdByName = function(name){
         return new Promise(function(resolve, reject){
             Constant.findOne({type:'company', name:name}, function(err, company){
