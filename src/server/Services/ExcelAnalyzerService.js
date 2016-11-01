@@ -475,37 +475,43 @@ function ExcelAnalyzerService() {
         var worksheet = workbook.Sheets[workbook.SheetNames[0]];
         const data = xlsx.utils.sheet_to_json(worksheet, {range: headersRowNumber - 1})
         var agentService = new AgentsService();
-        var agents = data.map(function (agent) {
-                var fullname = agent['סוכן'].split(' ')
-                var firstname = fullname[0].trim()
-                fullname.splice(0, 1)
-                var lastname = fullname.join(' ').trim()
-                return {ID: agent.ID.trim(), firstname: firstname, lastName: lastname}
-            })
-            .reduce(function (all, agent) {
-                if (!all[agent.ID]) {
-                    all[agent.ID] = agent
-                    return all
-                }
-                var prevAgent = all[agent.ID]
+        agentService.clearAgentsAndPartnerships(function(err){
+            if(err){
+                return cb(err)
+            }
+            var agents = data.map(function (agent) {
+                    var fullname = agent['סוכן'].split(' ')
+                    var firstname = fullname[0].trim()
+                    fullname.splice(0, 1)
+                    var lastname = fullname.join(' ').trim()
+                    return {ID: agent.ID.trim(), firstname: firstname, lastName: lastname}
+                })
+                .reduce(function (all, agent) {
+                    if (!all[agent.ID]) {
+                        all[agent.ID] = agent
+                        return all
+                    }
+                    var prevAgent = all[agent.ID]
 
-                if (prevAgent.firstname !== agent.firstname || prevAgent.lastName !== agent.lastName) {
-                    throw 'problem with the file, agent defined twice: ' + JSON.stringify(agent)
-                }
-                return all
-            }, {})
-        var tasks = Object.keys(agents).map(function (id) {
-            var agent = agents[id]
-            return agentService.createBasicAgent.bind(null, agent.ID, agent.firstname, agent.lastName)
+                    if (prevAgent.firstname !== agent.firstname || prevAgent.lastName !== agent.lastName) {
+                        throw 'problem with the file, agent defined twice: ' + JSON.stringify(agent)
+                    }
+                    return all
+                }, {})
+            var tasks = Object.keys(agents).map(function (id) {
+                var agent = agents[id]
+                return agentService.createBasicAgent.bind(null, agent.ID, agent.firstname, agent.lastName)
+            })
+
+            async.series(tasks,
+                function (err, result) {
+                    if (err) {
+                        return cb(err)
+                    }
+                    return cb(null)
+                })
         })
 
-        async.series(tasks,
-            function (err, result) {
-                if (err) {
-                    return cb(err)
-                }
-                return cb(null)
-            })
 
     }
 

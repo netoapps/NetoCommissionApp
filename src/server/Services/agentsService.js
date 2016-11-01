@@ -9,6 +9,20 @@ var shortid = require('shortid');
 
 function Service() {
 
+    this.clearAgentsAndPartnerships = function(cb){
+        Agent.remove({},function(err){
+            if(err){
+                return cb(err)
+            }
+            Partnership.remove({},function(err){
+                if(err){
+                    return cb(err)
+                }
+                return cb()
+            })
+        })
+    }
+
     this.createBasicAgent = function(id, name, familyName, cb){
         Agent.count({idNumber:id}, function(err, count){
             if(err){

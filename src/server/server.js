@@ -92,7 +92,9 @@ function analyzeCompanies(cb) {
             console.log(err)
             process.exit(1)
         }
-        var tasks = files.filter(function(f){return f.indexOf('~')===-1}).reduce(function (all, file) {
+        var tasks = files.filter(function(f){
+            return path.extname(f)==='.xlsx' && f.indexOf('~')===-1
+        }).reduce(function (all, file) {
             all.push(analyzeAgentNumbers.bind(null, file))
             return all
         }, [])
@@ -128,6 +130,6 @@ function analyzeAgents(cb) {
 
 //run this function ones to add all agents to db
 //then comment the line the unmark the second function and restart the server
-analyzeAgents()
-//analyzeCompanies()
+//analyzeAgents()
+analyzeCompanies()
 
