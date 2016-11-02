@@ -566,7 +566,7 @@ function ExcelAnalyzerService() {
                             agencyPart: 45
                         }
                     ]
-                    return {idNumber: nameToIdMapping[agent.FullName], pd: pd}
+                    return {idNumber: nameToIdMapping[agent.FullName.trim()], pd: pd}
                 }).reduce(function (all, agent) {
                     all.push(agentService.addAgentPaymentDetails.bind(null, agent.idNumber, agent.pd))
                     return all
