@@ -1,7 +1,9 @@
 /**
  * Created by efishtain on 25/04/2016.
  */
-
+var ConstantService = require('./Services/constantService');
+var constantService = new ConstantService();
+constantService.init()
 var config = require('./config');
 var mongoose = require('mongoose');
 var express = require('express');
@@ -9,9 +11,7 @@ var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var routing = require('./Routes');
 var passport = require('./Auth/passport');
-var ConstantService = require('./Services/constantService');
-var constantService = new ConstantService();
-constantService.init()
+
 var async = require('async')
 var fs = require('fs')
 var path = require('path')
@@ -131,5 +131,5 @@ function analyzeAgents(cb) {
 //run this function ones to add all agents to db
 //then comment the line the unmark the second function and restart the server
 //analyzeAgents()
-analyzeCompanies()
+//analyzeCompanies()
 
