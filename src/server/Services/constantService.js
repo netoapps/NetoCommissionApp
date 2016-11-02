@@ -47,11 +47,19 @@ function ConstantsService(){
         //    }
         //
         //});
-        Constant.update({name:'commissionType'},{$setOnInsert:{value:commissionType}},{upsert:true},function(err, n) {
-            if (err) {
-                console.log(err);
+        var c = new Constant()
+        c.name = 'commissionType'
+        c.value = commissionType
+        c.save(function(err){
+            if(err){
+                console.log(err)
             }
         })
+        //Constant.update({name:'commissionType'},{$setOnInsert:{value:commissionType}},{upsert:true},function(err, n) {
+        //    if (err) {
+        //        console.log(err);
+        //    }
+        //})
     };
 
     this.getCommissionTypes = function(){
